@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#! /usr/bin/perl
+>>>>>>> origin/master
 
 use strict;
 use warnings;
@@ -14,7 +18,11 @@ my @directory_vars = ( "dir", "certs", "crl_dir", "new_certs_dir" );
 my @file_vars = ( "database", "certificate", "serial", "crlnumber",
 		  "crl", "private_key", "RANDFILE" );
 while(<STDIN>) {
+<<<<<<< HEAD
     s|\R$||;
+=======
+    chomp;
+>>>>>>> origin/master
     foreach my $d (@directory_vars) {
 	if (/^(\s*\#?\s*${d}\s*=\s*)\.\/([^\s\#]*)([\s\#].*)$/) {
 	    $_ = "$1sys\\\$disk:\[.$2$3";

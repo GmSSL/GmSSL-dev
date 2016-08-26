@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -5,6 +6,9 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
+=======
+#!/usr/local/bin/perl
+>>>>>>> origin/master
 
 push(@INC,"perlasm","../../perlasm");
 require "x86asm.pl";
@@ -17,9 +21,12 @@ require("x86/add.pl");
 require("x86/sub.pl");
 require("x86/comba.pl");
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 &bn_mul_add_words("bn_mul_add_words");
@@ -35,4 +42,7 @@ open STDOUT,">$output";
 
 &asm_finish();
 
+<<<<<<< HEAD
 close STDOUT;
+=======
+>>>>>>> origin/master

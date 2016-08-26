@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # require 'x86asm.pl';
 # &asm_init(<flavor>,"des-586.pl"[,$i386only]);
@@ -172,11 +176,14 @@ sub ::vprotd
     {	&::generic("vprotd",@_);	}
 }
 
+<<<<<<< HEAD
 sub ::endbranch
 {
     &::data_byte(0xf3,0x0f,0x1e,0xfb);
 }
 
+=======
+>>>>>>> origin/master
 # label management
 $lbdecor="L";		# local label decoration, set by package
 $label="000";

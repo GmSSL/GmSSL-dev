@@ -7,7 +7,10 @@ dsa - DSA key processing
 =head1 SYNOPSIS
 
 B<openssl> B<dsa>
+<<<<<<< HEAD
 [B<-help>]
+=======
+>>>>>>> origin/master
 [B<-inform PEM|DER>]
 [B<-outform PEM|DER>]
 [B<-in filename>]
@@ -41,10 +44,13 @@ applications should use the more secure PKCS#8 format using the B<pkcs8>
 
 =over 4
 
+<<<<<<< HEAD
 =item B<-help>
 
 Print out a usage message.
 
+=======
+>>>>>>> origin/master
 =item B<-inform DER|PEM>
 
 This specifies the input format. The B<DER> option with a private key uses
@@ -59,7 +65,11 @@ PKCS#8 format is also accepted.
 
 =item B<-outform DER|PEM>
 
+<<<<<<< HEAD
 This specifies the output format, the options have the same meaning as the
+=======
+This specifies the output format, the options have the same meaning as the 
+>>>>>>> origin/master
 B<-inform> option.
 
 =item B<-in filename>
@@ -71,7 +81,11 @@ prompted for.
 =item B<-passin arg>
 
 the input file password source. For more information about the format of B<arg>
+<<<<<<< HEAD
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
+=======
+see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-out filename>
 
@@ -83,7 +97,11 @@ filename.
 =item B<-passout arg>
 
 the output file password source. For more information about the format of B<arg>
+<<<<<<< HEAD
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
+=======
+see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-aes128|-aes192|-aes256|-camellia128|-camellia192|-camellia256|-des|-des3|-idea>
 
@@ -149,7 +167,11 @@ To encrypt a private key using triple DES:
 
  openssl dsa -in key.pem -des3 -out keyout.pem
 
+<<<<<<< HEAD
 To convert a private key from PEM to DER format:
+=======
+To convert a private key from PEM to DER format: 
+>>>>>>> origin/master
 
  openssl dsa -in key.pem -outform DER -out keyout.der
 
@@ -163,6 +185,7 @@ To just output the public part of a private key:
 
 =head1 SEE ALSO
 
+<<<<<<< HEAD
 L<dsaparam(1)>, L<gendsa(1)>, L<rsa(1)>,
 L<genrsa(1)>
 
@@ -174,5 +197,9 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
+=======
+L<dsaparam(1)|dsaparam(1)>, L<gendsa(1)|gendsa(1)>, L<rsa(1)|rsa(1)>,
+L<genrsa(1)|genrsa(1)>
+>>>>>>> origin/master
 
 =cut

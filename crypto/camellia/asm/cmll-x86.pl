@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Copyright (c) 2008 Andy Polyakov <appro@openssl.org>
@@ -49,9 +53,12 @@ require "x86asm.pl";
 
 $OPENSSL=1;
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],"cmll-586.pl",$ARGV[$#ARGV] eq "386");
 
 @T=("eax","ebx","ecx","edx");
@@ -733,11 +740,19 @@ my $bias=int(@T[0])?shift(@T):0;
 &function_end("Camellia_Ekeygen");
 
 if ($OPENSSL) {
+<<<<<<< HEAD
 # int Camellia_set_key (
 #		const unsigned char *userKey,
 #		int bits,
 #		CAMELLIA_KEY *key)
 &function_begin_B("Camellia_set_key");
+=======
+# int private_Camellia_set_key (
+#		const unsigned char *userKey,
+#		int bits,
+#		CAMELLIA_KEY *key)
+&function_begin_B("private_Camellia_set_key");
+>>>>>>> origin/master
 	&push	("ebx");
 	&mov	("ecx",&wparam(0));	# pull arguments
 	&mov	("ebx",&wparam(1));
@@ -770,7 +785,11 @@ if ($OPENSSL) {
 &set_label("done",4);
 	&pop	("ebx");
 	&ret	();
+<<<<<<< HEAD
 &function_end_B("Camellia_set_key");
+=======
+&function_end_B("private_Camellia_set_key");
+>>>>>>> origin/master
 }
 
 @SBOX=(
@@ -1146,5 +1165,8 @@ my ($s0,$s1,$s2,$s3) = @T;
 &asciz("Camellia for x86 by <appro\@openssl.org>");
 
 &asm_finish();
+<<<<<<< HEAD
 
 close STDOUT;
+=======
+>>>>>>> origin/master

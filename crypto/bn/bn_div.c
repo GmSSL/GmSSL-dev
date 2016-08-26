@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,6 +10,69 @@
 
 #include <openssl/bn.h>
 #include "internal/cryptlib.h"
+=======
+/* crypto/bn/bn_div.c */
+/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+ * All rights reserved.
+ *
+ * This package is an SSL implementation written
+ * by Eric Young (eay@cryptsoft.com).
+ * The implementation was written so as to conform with Netscapes SSL.
+ *
+ * This library is free for commercial and non-commercial use as long as
+ * the following conditions are aheared to.  The following conditions
+ * apply to all code found in this distribution, be it the RC4, RSA,
+ * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+ * included with this distribution is covered by the same copyright terms
+ * except that the holder is Tim Hudson (tjh@cryptsoft.com).
+ *
+ * Copyright remains Eric Young's, and as such any Copyright notices in
+ * the code are not to be removed.
+ * If this package is used in a product, Eric Young should be given attribution
+ * as the author of the parts of the library used.
+ * This can be in the form of a textual message at program startup or
+ * in documentation (online or textual) provided with the package.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *    "This product includes cryptographic software written by
+ *     Eric Young (eay@cryptsoft.com)"
+ *    The word 'cryptographic' can be left out if the rouines from the library
+ *    being used are not cryptographic related :-).
+ * 4. If you include any Windows specific code (or a derivative thereof) from
+ *    the apps directory (application code) you must include an acknowledgement:
+ *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * The licence and distribution terms for any publically available version or
+ * derivative of this code cannot be changed.  i.e. this code cannot simply be
+ * copied and put under another distribution licence
+ * [including the GNU Public Licence.]
+ */
+
+#include <stdio.h>
+#include <openssl/bn.h>
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include "bn_lcl.h"
 
 /* The old slow way */
@@ -130,7 +194,11 @@ int BN_div(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m, const BIGNUM *d,
 # endif                         /* OPENSSL_NO_ASM */
 
 /*-
+<<<<<<< HEAD
  * BN_div computes  dv := num / divisor, rounding towards
+=======
+ * BN_div computes  dv := num / divisor,  rounding towards
+>>>>>>> origin/master
  * zero, and sets up rm  such that  dv*divisor + rm = num  holds.
  * Thus:
  *     dv->neg == num->neg ^ divisor->neg  (unless the result is zero)
@@ -278,9 +346,12 @@ int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
             res->top--;
     }
 
+<<<<<<< HEAD
     /* Increase the resp pointer so that we never create an invalid pointer. */
     resp++;
 
+=======
+>>>>>>> origin/master
     /*
      * if res->top == 0 then clear the neg value otherwise decrease the resp
      * pointer
@@ -290,7 +361,11 @@ int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
     else
         resp--;
 
+<<<<<<< HEAD
     for (i = 0; i < loop - 1; i++, wnump--) {
+=======
+    for (i = 0; i < loop - 1; i++, wnump--, resp--) {
+>>>>>>> origin/master
         BN_ULONG q, l0;
         /*
          * the first part of the loop uses the top two words of snum and sdiv
@@ -315,6 +390,13 @@ int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
             q = (BN_ULONG)(((((BN_ULLONG) n0) << BN_BITS2) | n1) / d0);
 #   else
             q = bn_div_words(n0, n1, d0);
+<<<<<<< HEAD
+=======
+#    ifdef BN_DEBUG_LEVITTE
+            fprintf(stderr, "DEBUG: bn_div_words(0x%08X,0x%08X,0x%08\
+X) -> 0x%08X\n", n0, n1, d0, q);
+#    endif
+>>>>>>> origin/master
 #   endif
 
 #   ifndef REMAINDER_IS_ALREADY_CALCULATED
@@ -339,6 +421,13 @@ int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
             BN_ULONG t2l, t2h;
 
             q = bn_div_words(n0, n1, d0);
+<<<<<<< HEAD
+=======
+#   ifdef BN_DEBUG_LEVITTE
+            fprintf(stderr, "DEBUG: bn_div_words(0x%08X,0x%08X,0x%08\
+X) -> 0x%08X\n", n0, n1, d0, q);
+#   endif
+>>>>>>> origin/master
 #   ifndef REMAINDER_IS_ALREADY_CALCULATED
             rem = (n1 - q * d0) & BN_MASK2;
 #   endif
@@ -396,7 +485,10 @@ int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
                 (*wnump)++;
         }
         /* store part of the result */
+<<<<<<< HEAD
         resp--;
+=======
+>>>>>>> origin/master
         *resp = q;
     }
     bn_correct_top(snum);

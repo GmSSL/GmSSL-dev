@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -67,8 +71,11 @@
 # hereafter less for longer keys, while verify - by 74-13%.
 # DSA performance improves by 115-30%.
 
+<<<<<<< HEAD
 $output=pop;
 
+=======
+>>>>>>> origin/master
 if ($^O eq "hpux") {
     $ADDP="addp4";
     for (@ARGV) { $ADDP="add" if (/[\+DD|\-mlp]64/); }
@@ -855,6 +862,10 @@ copyright:
 stringz	"Montgomery multiplication for IA-64, CRYPTOGAMS by <appro\@openssl.org>"
 ___
 
+<<<<<<< HEAD
 open STDOUT,">$output" if $output;
+=======
+$output=shift and open STDOUT,">$output";
+>>>>>>> origin/master
 print $code;
 close STDOUT;

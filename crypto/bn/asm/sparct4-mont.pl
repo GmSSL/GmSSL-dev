@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by David S. Miller <davem@devemloft.net> and Andy Polyakov
@@ -83,9 +87,12 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "sparcv9_modes.pl";
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 $code.=<<___;
 #include "sparc_arch.h"
 

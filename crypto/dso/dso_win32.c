@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,6 +11,78 @@
 #include "dso_locl.h"
 
 #if defined(DSO_WIN32)
+=======
+/* dso_win32.c -*- mode:C; c-file-style: "eay" -*- */
+/*
+ * Written by Geoff Thorpe (geoff@geoffthorpe.net) for the OpenSSL project
+ * 2000.
+ */
+/* ====================================================================
+ * Copyright (c) 2000 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include <stdio.h>
+#include <string.h>
+#include "cryptlib.h"
+#include <openssl/dso.h>
+
+#if !defined(DSO_WIN32)
+DSO_METHOD *DSO_METHOD_win32(void)
+{
+    return NULL;
+}
+#else
+>>>>>>> origin/master
 
 # ifdef _WIN32_WCE
 #  if _WIN32_WCE < 300
@@ -59,10 +132,26 @@ static HINSTANCE LoadLibraryA(LPCSTR lpLibFileName)
 
 static int win32_load(DSO *dso);
 static int win32_unload(DSO *dso);
+<<<<<<< HEAD
 static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname);
 static char *win32_name_converter(DSO *dso, const char *filename);
 static char *win32_merger(DSO *dso, const char *filespec1,
                           const char *filespec2);
+=======
+static void *win32_bind_var(DSO *dso, const char *symname);
+static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname);
+# if 0
+static int win32_unbind_var(DSO *dso, char *symname, void *symptr);
+static int win32_unbind_func(DSO *dso, char *symname, DSO_FUNC_TYPE symptr);
+static int win32_init(DSO *dso);
+static int win32_finish(DSO *dso);
+static long win32_ctrl(DSO *dso, int cmd, long larg, void *parg);
+# endif
+static char *win32_name_converter(DSO *dso, const char *filename);
+static char *win32_merger(DSO *dso, const char *filespec1,
+                          const char *filespec2);
+static int win32_pathbyaddr(void *addr, char *path, int sz);
+>>>>>>> origin/master
 static void *win32_globallookup(const char *name);
 
 static const char *openssl_strnchr(const char *string, int c, size_t len);
@@ -71,18 +160,38 @@ static DSO_METHOD dso_meth_win32 = {
     "OpenSSL 'win32' shared library method",
     win32_load,
     win32_unload,
+<<<<<<< HEAD
     win32_bind_func,
+=======
+    win32_bind_var,
+    win32_bind_func,
+/* For now, "unbind" doesn't exist */
+# if 0
+    NULL,                       /* unbind_var */
+    NULL,                       /* unbind_func */
+# endif
+>>>>>>> origin/master
     NULL,                       /* ctrl */
     win32_name_converter,
     win32_merger,
     NULL,                       /* init */
     NULL,                       /* finish */
+<<<<<<< HEAD
     win32_globallookup
 };
 
 DSO_METHOD *DSO_METHOD_openssl(void)
 {
     return &dso_meth_win32;
+=======
+    win32_pathbyaddr,
+    win32_globallookup
+};
+
+DSO_METHOD *DSO_METHOD_win32(void)
+{
+    return (&dso_meth_win32);
+>>>>>>> origin/master
 }
 
 /*
@@ -106,7 +215,11 @@ static int win32_load(DSO *dso)
         ERR_add_error_data(3, "filename(", filename, ")");
         goto err;
     }
+<<<<<<< HEAD
     p = OPENSSL_malloc(sizeof(*p));
+=======
+    p = (HINSTANCE *) OPENSSL_malloc(sizeof(HINSTANCE));
+>>>>>>> origin/master
     if (p == NULL) {
         DSOerr(DSO_F_WIN32_LOAD, ERR_R_MALLOC_FAILURE);
         goto err;
@@ -121,8 +234,15 @@ static int win32_load(DSO *dso)
     return (1);
  err:
     /* Cleanup ! */
+<<<<<<< HEAD
     OPENSSL_free(filename);
     OPENSSL_free(p);
+=======
+    if (filename != NULL)
+        OPENSSL_free(filename);
+    if (p != NULL)
+        OPENSSL_free(p);
+>>>>>>> origin/master
     if (h != NULL)
         FreeLibrary(h);
     return (0);
@@ -155,6 +275,7 @@ static int win32_unload(DSO *dso)
     return (1);
 }
 
+<<<<<<< HEAD
 static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname)
 {
     HINSTANCE *ptr;
@@ -162,6 +283,43 @@ static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname)
         void *p;
         FARPROC f;
     } sym;
+=======
+/*
+ * Using GetProcAddress for variables? TODO: Check this out in the Win32 API
+ * docs, there's probably a variant for variables.
+ */
+static void *win32_bind_var(DSO *dso, const char *symname)
+{
+    HINSTANCE *ptr;
+    void *sym;
+
+    if ((dso == NULL) || (symname == NULL)) {
+        DSOerr(DSO_F_WIN32_BIND_VAR, ERR_R_PASSED_NULL_PARAMETER);
+        return (NULL);
+    }
+    if (sk_void_num(dso->meth_data) < 1) {
+        DSOerr(DSO_F_WIN32_BIND_VAR, DSO_R_STACK_ERROR);
+        return (NULL);
+    }
+    ptr = sk_void_value(dso->meth_data, sk_void_num(dso->meth_data) - 1);
+    if (ptr == NULL) {
+        DSOerr(DSO_F_WIN32_BIND_VAR, DSO_R_NULL_HANDLE);
+        return (NULL);
+    }
+    sym = GetProcAddress(*ptr, symname);
+    if (sym == NULL) {
+        DSOerr(DSO_F_WIN32_BIND_VAR, DSO_R_SYM_FAILURE);
+        ERR_add_error_data(3, "symname(", symname, ")");
+        return (NULL);
+    }
+    return (sym);
+}
+
+static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname)
+{
+    HINSTANCE *ptr;
+    void *sym;
+>>>>>>> origin/master
 
     if ((dso == NULL) || (symname == NULL)) {
         DSOerr(DSO_F_WIN32_BIND_FUNC, ERR_R_PASSED_NULL_PARAMETER);
@@ -176,13 +334,22 @@ static DSO_FUNC_TYPE win32_bind_func(DSO *dso, const char *symname)
         DSOerr(DSO_F_WIN32_BIND_FUNC, DSO_R_NULL_HANDLE);
         return (NULL);
     }
+<<<<<<< HEAD
     sym.f = GetProcAddress(*ptr, symname);
     if (sym.p == NULL) {
+=======
+    sym = GetProcAddress(*ptr, symname);
+    if (sym == NULL) {
+>>>>>>> origin/master
         DSOerr(DSO_F_WIN32_BIND_FUNC, DSO_R_SYM_FAILURE);
         ERR_add_error_data(3, "symname(", symname, ")");
         return (NULL);
     }
+<<<<<<< HEAD
     return ((DSO_FUNC_TYPE)sym.f);
+=======
+    return ((DSO_FUNC_TYPE)sym);
+>>>>>>> origin/master
 }
 
 struct file_st {
@@ -214,12 +381,20 @@ static struct file_st *win32_splitter(DSO *dso, const char *filename,
         return (NULL);
     }
 
+<<<<<<< HEAD
     result = OPENSSL_zalloc(sizeof(*result));
+=======
+    result = OPENSSL_malloc(sizeof(struct file_st));
+>>>>>>> origin/master
     if (result == NULL) {
         DSOerr(DSO_F_WIN32_SPLITTER, ERR_R_MALLOC_FAILURE);
         return (NULL);
     }
 
+<<<<<<< HEAD
+=======
+    memset(result, 0, sizeof(struct file_st));
+>>>>>>> origin/master
     position = IN_DEVICE;
 
     if ((filename[0] == '\\' && filename[1] == '\\')
@@ -337,7 +512,11 @@ static char *win32_joiner(DSO *dso, const struct file_st *file_split)
     }
 
     result = OPENSSL_malloc(len + 1);
+<<<<<<< HEAD
     if (result == NULL) {
+=======
+    if (!result) {
+>>>>>>> origin/master
         DSOerr(DSO_F_WIN32_JOINER, ERR_R_MALLOC_FAILURE);
         return (NULL);
     }
@@ -371,6 +550,16 @@ static char *win32_joiner(DSO *dso, const struct file_st *file_split)
         offset++;
         start = end + 1;
     }
+<<<<<<< HEAD
+=======
+# if 0                          /* Not needed, since the directory converter
+                                 * above already appeneded a backslash */
+    if (file_split->predir && (file_split->dir || file_split->file)) {
+        result[offset] = '\\';
+        offset++;
+    }
+# endif
+>>>>>>> origin/master
     start = file_split->dir;
     while (file_split->dirlen > (start - file_split->dir)) {
         const char *end = openssl_strnchr(start, '/',
@@ -384,6 +573,16 @@ static char *win32_joiner(DSO *dso, const struct file_st *file_split)
         offset++;
         start = end + 1;
     }
+<<<<<<< HEAD
+=======
+# if 0                          /* Not needed, since the directory converter
+                                 * above already appeneded a backslash */
+    if (file_split->dir && file_split->file) {
+        result[offset] = '\\';
+        offset++;
+    }
+# endif
+>>>>>>> origin/master
     strncpy(&result[offset], file_split->file, file_split->filelen);
     offset += file_split->filelen;
     result[offset] = '\0';
@@ -403,14 +602,22 @@ static char *win32_merger(DSO *dso, const char *filespec1,
     }
     if (!filespec2) {
         merged = OPENSSL_malloc(strlen(filespec1) + 1);
+<<<<<<< HEAD
         if (merged == NULL) {
+=======
+        if (!merged) {
+>>>>>>> origin/master
             DSOerr(DSO_F_WIN32_MERGER, ERR_R_MALLOC_FAILURE);
             return (NULL);
         }
         strcpy(merged, filespec1);
     } else if (!filespec1) {
         merged = OPENSSL_malloc(strlen(filespec2) + 1);
+<<<<<<< HEAD
         if (merged == NULL) {
+=======
+        if (!merged) {
+>>>>>>> origin/master
             DSOerr(DSO_F_WIN32_MERGER, ERR_R_MALLOC_FAILURE);
             return (NULL);
         }
@@ -506,6 +713,109 @@ typedef HANDLE(WINAPI *CREATETOOLHELP32SNAPSHOT) (DWORD, DWORD);
 typedef BOOL(WINAPI *CLOSETOOLHELP32SNAPSHOT) (HANDLE);
 typedef BOOL(WINAPI *MODULE32) (HANDLE, MODULEENTRY32 *);
 
+<<<<<<< HEAD
+=======
+static int win32_pathbyaddr(void *addr, char *path, int sz)
+{
+    HMODULE dll;
+    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
+    MODULEENTRY32 me32;
+    CREATETOOLHELP32SNAPSHOT create_snap;
+    CLOSETOOLHELP32SNAPSHOT close_snap;
+    MODULE32 module_first, module_next;
+
+    if (addr == NULL) {
+        union {
+            int (*f) (void *, char *, int);
+            void *p;
+        } t = {
+            win32_pathbyaddr
+        };
+        addr = t.p;
+    }
+
+    dll = LoadLibrary(TEXT(DLLNAME));
+    if (dll == NULL) {
+        DSOerr(DSO_F_WIN32_PATHBYADDR, DSO_R_UNSUPPORTED);
+        return -1;
+    }
+
+    create_snap = (CREATETOOLHELP32SNAPSHOT)
+        GetProcAddress(dll, "CreateToolhelp32Snapshot");
+    if (create_snap == NULL) {
+        FreeLibrary(dll);
+        DSOerr(DSO_F_WIN32_PATHBYADDR, DSO_R_UNSUPPORTED);
+        return -1;
+    }
+    /* We take the rest for granted... */
+# ifdef _WIN32_WCE
+    close_snap = (CLOSETOOLHELP32SNAPSHOT)
+        GetProcAddress(dll, "CloseToolhelp32Snapshot");
+# else
+    close_snap = (CLOSETOOLHELP32SNAPSHOT) CloseHandle;
+# endif
+    module_first = (MODULE32) GetProcAddress(dll, "Module32First");
+    module_next = (MODULE32) GetProcAddress(dll, "Module32Next");
+
+    hModuleSnap = (*create_snap) (TH32CS_SNAPMODULE, 0);
+    if (hModuleSnap == INVALID_HANDLE_VALUE) {
+        FreeLibrary(dll);
+        DSOerr(DSO_F_WIN32_PATHBYADDR, DSO_R_UNSUPPORTED);
+        return -1;
+    }
+
+    me32.dwSize = sizeof(me32);
+
+    if (!(*module_first) (hModuleSnap, &me32)) {
+        (*close_snap) (hModuleSnap);
+        FreeLibrary(dll);
+        DSOerr(DSO_F_WIN32_PATHBYADDR, DSO_R_FAILURE);
+        return -1;
+    }
+
+    do {
+        if ((BYTE *) addr >= me32.modBaseAddr &&
+            (BYTE *) addr < me32.modBaseAddr + me32.modBaseSize) {
+            (*close_snap) (hModuleSnap);
+            FreeLibrary(dll);
+# ifdef _WIN32_WCE
+#  if _WIN32_WCE >= 101
+            return WideCharToMultiByte(CP_ACP, 0, me32.szExePath, -1,
+                                       path, sz, NULL, NULL);
+#  else
+            {
+                int i, len = (int)wcslen(me32.szExePath);
+                if (sz <= 0)
+                    return len + 1;
+                if (len >= sz)
+                    len = sz - 1;
+                for (i = 0; i < len; i++)
+                    path[i] = (char)me32.szExePath[i];
+                path[len++] = 0;
+                return len;
+            }
+#  endif
+# else
+            {
+                int len = (int)strlen(me32.szExePath);
+                if (sz <= 0)
+                    return len + 1;
+                if (len >= sz)
+                    len = sz - 1;
+                memcpy(path, me32.szExePath, len);
+                path[len++] = 0;
+                return len;
+            }
+# endif
+        }
+    } while ((*module_next) (hModuleSnap, &me32));
+
+    (*close_snap) (hModuleSnap);
+    FreeLibrary(dll);
+    return 0;
+}
+
+>>>>>>> origin/master
 static void *win32_globallookup(const char *name)
 {
     HMODULE dll;
@@ -514,10 +824,14 @@ static void *win32_globallookup(const char *name)
     CREATETOOLHELP32SNAPSHOT create_snap;
     CLOSETOOLHELP32SNAPSHOT close_snap;
     MODULE32 module_first, module_next;
+<<<<<<< HEAD
     union {
         void *p;
         FARPROC f;
     } ret = { NULL };
+=======
+    FARPROC ret = NULL;
+>>>>>>> origin/master
 
     dll = LoadLibrary(TEXT(DLLNAME));
     if (dll == NULL) {
@@ -558,10 +872,17 @@ static void *win32_globallookup(const char *name)
     }
 
     do {
+<<<<<<< HEAD
         if ((ret.f = GetProcAddress(me32.hModule, name))) {
             (*close_snap) (hModuleSnap);
             FreeLibrary(dll);
             return ret.p;
+=======
+        if ((ret = GetProcAddress(me32.hModule, name))) {
+            (*close_snap) (hModuleSnap);
+            FreeLibrary(dll);
+            return ret;
+>>>>>>> origin/master
         }
     } while ((*module_next) (hModuleSnap, &me32));
 

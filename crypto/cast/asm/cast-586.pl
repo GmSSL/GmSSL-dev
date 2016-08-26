@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -11,6 +12,11 @@
 # code that runs %30 faster on the pentium pro/II, 44% faster
 # of PIII, while only %7 slower on the pentium.
 # By default, this flag is on.
+=======
+#!/usr/local/bin/perl
+
+# define for pentium pro friendly version
+>>>>>>> origin/master
 $ppro=1;
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
@@ -18,9 +24,12 @@ push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 require "cbc.pl";
 
+<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],"cast-586.pl",$ARGV[$#ARGV] eq "386");
 
 $CAST_ROUNDS=16;
@@ -46,8 +55,11 @@ $S4="CAST_S_table3";
 
 &asm_finish();
 
+<<<<<<< HEAD
 close STDOUT;
 
+=======
+>>>>>>> origin/master
 sub CAST_encrypt {
     local($name,$enc)=@_;
 
@@ -155,11 +167,19 @@ sub E_CAST {
     &rotl(	$tmp4,		&LB($tmp1));
 
     if ($ppro) {
+<<<<<<< HEAD
 	&xor(	$tmp1,		$tmp1);
 	&mov(	$tmp2,		0xff);
 	
 	&movb(	&LB($tmp1),	&HB($tmp4));	# A
 	&and(	$tmp2,		$tmp4);
+=======
+	&mov(	$tmp2,		$tmp4);		# B
+	&xor(	$tmp1,		$tmp1);
+	
+	&movb(	&LB($tmp1),	&HB($tmp4));	# A
+	&and(	$tmp2,		0xff);
+>>>>>>> origin/master
 
 	&shr(	$tmp4,		16); 		#
 	&xor(	$tmp3,		$tmp3);

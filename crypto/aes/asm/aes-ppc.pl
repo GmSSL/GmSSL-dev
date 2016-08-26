@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -26,7 +30,11 @@
 # February 2010
 #
 # Rescheduling instructions to favour Power6 pipeline gave 10%
+<<<<<<< HEAD
 # performance improvement on the platform in question (and marginal
+=======
+# performance improvement on the platfrom in question (and marginal
+>>>>>>> origin/master
 # improvement even on others). It should be noted that Power6 fails
 # to process byte in 18 cycles, only in 23, because it fails to issue
 # 4 load instructions in two cycles, only in 3. As result non-compact
@@ -597,7 +605,11 @@ Lenc_loop:
 	xor	$s2,$t2,$acc14
 	xor	$s3,$t3,$acc15
 	addi	$key,$key,16
+<<<<<<< HEAD
 	bdnz	Lenc_loop
+=======
+	bdnz-	Lenc_loop
+>>>>>>> origin/master
 
 	addi	$Tbl2,$Tbl0,2048
 	nop
@@ -1075,7 +1087,11 @@ Ldec_loop:
 	xor	$s2,$t2,$acc14
 	xor	$s3,$t3,$acc15
 	addi	$key,$key,16
+<<<<<<< HEAD
 	bdnz	Ldec_loop
+=======
+	bdnz-	Ldec_loop
+>>>>>>> origin/master
 
 	addi	$Tbl2,$Tbl0,2048
 	nop

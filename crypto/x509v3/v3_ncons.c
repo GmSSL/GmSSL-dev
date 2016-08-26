@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2003-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,13 +11,79 @@
 #include <stdio.h>
 #include "internal/cryptlib.h"
 #include "internal/asn1_int.h"
+=======
+/* v3_ncons.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
+ * project.
+ */
+/* ====================================================================
+ * Copyright (c) 2003 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include <stdio.h>
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/asn1t.h>
 #include <openssl/conf.h>
 #include <openssl/x509v3.h>
 
+<<<<<<< HEAD
 #include "internal/x509_int.h"
 #include "ext_dat.h"
 
+=======
+>>>>>>> origin/master
 static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
                                   X509V3_CTX *ctx,
                                   STACK_OF(CONF_VALUE) *nval);
@@ -24,7 +91,11 @@ static int i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
                                 BIO *bp, int ind);
 static int do_i2r_name_constraints(const X509V3_EXT_METHOD *method,
                                    STACK_OF(GENERAL_SUBTREE) *trees, BIO *bp,
+<<<<<<< HEAD
                                    int ind, const char *name);
+=======
+                                   int ind, char *name);
+>>>>>>> origin/master
 static int print_nc_ipadd(BIO *bp, ASN1_OCTET_STRING *ip);
 
 static int nc_match(GENERAL_NAME *gen, NAME_CONSTRAINTS *nc);
@@ -33,7 +104,10 @@ static int nc_dn(X509_NAME *sub, X509_NAME *nm);
 static int nc_dns(ASN1_IA5STRING *sub, ASN1_IA5STRING *dns);
 static int nc_email(ASN1_IA5STRING *sub, ASN1_IA5STRING *eml);
 static int nc_uri(ASN1_IA5STRING *uri, ASN1_IA5STRING *base);
+<<<<<<< HEAD
 static int nc_ip(ASN1_OCTET_STRING *ip, ASN1_OCTET_STRING *base);
+=======
+>>>>>>> origin/master
 
 const X509V3_EXT_METHOD v3_name_constraints = {
     NID_name_constraints, 0,
@@ -70,6 +144,7 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
     STACK_OF(GENERAL_SUBTREE) **ptree = NULL;
     NAME_CONSTRAINTS *ncons = NULL;
     GENERAL_SUBTREE *sub = NULL;
+<<<<<<< HEAD
 
     ncons = NAME_CONSTRAINTS_new();
     if (ncons == NULL)
@@ -80,6 +155,17 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
             ptree = &ncons->permittedSubtrees;
             tval.name = val->name + 10;
         } else if (strncmp(val->name, "excluded", 8) == 0 && val->name[8]) {
+=======
+    ncons = NAME_CONSTRAINTS_new();
+    if (!ncons)
+        goto memerr;
+    for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
+        val = sk_CONF_VALUE_value(nval, i);
+        if (!strncmp(val->name, "permitted", 9) && val->name[9]) {
+            ptree = &ncons->permittedSubtrees;
+            tval.name = val->name + 10;
+        } else if (!strncmp(val->name, "excluded", 8) && val->name[8]) {
+>>>>>>> origin/master
             ptree = &ncons->excludedSubtrees;
             tval.name = val->name + 9;
         } else {
@@ -88,6 +174,7 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
         }
         tval.value = val->value;
         sub = GENERAL_SUBTREE_new();
+<<<<<<< HEAD
         if (sub == NULL)
             goto memerr;
         if (!v2i_GENERAL_NAME_ex(sub->base, method, ctx, &tval, 1))
@@ -95,6 +182,13 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
         if (*ptree == NULL)
             *ptree = sk_GENERAL_SUBTREE_new_null();
         if (*ptree == NULL || !sk_GENERAL_SUBTREE_push(*ptree, sub))
+=======
+        if (!v2i_GENERAL_NAME_ex(sub->base, method, ctx, &tval, 1))
+            goto err;
+        if (!*ptree)
+            *ptree = sk_GENERAL_SUBTREE_new_null();
+        if (!*ptree || !sk_GENERAL_SUBTREE_push(*ptree, sub))
+>>>>>>> origin/master
             goto memerr;
         sub = NULL;
     }
@@ -104,8 +198,15 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
  memerr:
     X509V3err(X509V3_F_V2I_NAME_CONSTRAINTS, ERR_R_MALLOC_FAILURE);
  err:
+<<<<<<< HEAD
     NAME_CONSTRAINTS_free(ncons);
     GENERAL_SUBTREE_free(sub);
+=======
+    if (ncons)
+        NAME_CONSTRAINTS_free(ncons);
+    if (sub)
+        GENERAL_SUBTREE_free(sub);
+>>>>>>> origin/master
 
     return NULL;
 }
@@ -123,7 +224,11 @@ static int i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
 
 static int do_i2r_name_constraints(const X509V3_EXT_METHOD *method,
                                    STACK_OF(GENERAL_SUBTREE) *trees,
+<<<<<<< HEAD
                                    BIO *bp, int ind, const char *name)
+=======
+                                   BIO *bp, int ind, char *name)
+>>>>>>> origin/master
 {
     GENERAL_SUBTREE *tree;
     int i;
@@ -199,8 +304,12 @@ int NAME_CONSTRAINTS_check(X509 *x, NAME_CONSTRAINTS *nc)
         /* Process any email address attributes in subject name */
 
         for (i = -1;;) {
+<<<<<<< HEAD
             const X509_NAME_ENTRY *ne;
 
+=======
+            X509_NAME_ENTRY *ne;
+>>>>>>> origin/master
             i = X509_NAME_get_index_by_NID(nm, NID_pkcs9_emailAddress, i);
             if (i == -1)
                 break;
@@ -228,6 +337,7 @@ int NAME_CONSTRAINTS_check(X509 *x, NAME_CONSTRAINTS *nc)
 
 }
 
+<<<<<<< HEAD
 int NAME_CONSTRAINTS_check_CN(X509 *x, NAME_CONSTRAINTS *nc)
 {
     int r, i;
@@ -273,6 +383,8 @@ int NAME_CONSTRAINTS_check_CN(X509 *x, NAME_CONSTRAINTS *nc)
     return X509_V_OK;
 }
 
+=======
+>>>>>>> origin/master
 static int nc_match(GENERAL_NAME *gen, NAME_CONSTRAINTS *nc)
 {
     GENERAL_SUBTREE *sub;
@@ -341,9 +453,12 @@ static int nc_match_single(GENERAL_NAME *gen, GENERAL_NAME *base)
         return nc_uri(gen->d.uniformResourceIdentifier,
                       base->d.uniformResourceIdentifier);
 
+<<<<<<< HEAD
     case GEN_IPADD:
         return nc_ip(gen->d.iPAddress, base->d.iPAddress);
 
+=======
+>>>>>>> origin/master
     default:
         return X509_V_ERR_UNSUPPORTED_CONSTRAINT_TYPE;
     }
@@ -403,11 +518,19 @@ static int nc_email(ASN1_IA5STRING *eml, ASN1_IA5STRING *base)
     const char *emlat = strchr(emlptr, '@');
     if (!emlat)
         return X509_V_ERR_UNSUPPORTED_NAME_SYNTAX;
+<<<<<<< HEAD
     /* Special case: initial '.' is RHS match */
     if (!baseat && (*baseptr == '.')) {
         if (eml->length > base->length) {
             emlptr += eml->length - base->length;
             if (strcasecmp(baseptr, emlptr) == 0)
+=======
+    /* Special case: inital '.' is RHS match */
+    if (!baseat && (*baseptr == '.')) {
+        if (eml->length > base->length) {
+            emlptr += eml->length - base->length;
+            if (!strcasecmp(baseptr, emlptr))
+>>>>>>> origin/master
                 return X509_V_OK;
         }
         return X509_V_ERR_PERMITTED_VIOLATION;
@@ -463,11 +586,19 @@ static int nc_uri(ASN1_IA5STRING *uri, ASN1_IA5STRING *base)
     if (hostlen == 0)
         return X509_V_ERR_UNSUPPORTED_NAME_SYNTAX;
 
+<<<<<<< HEAD
     /* Special case: initial '.' is RHS match */
     if (*baseptr == '.') {
         if (hostlen > base->length) {
             p = hostptr + hostlen - base->length;
             if (strncasecmp(p, baseptr, base->length) == 0)
+=======
+    /* Special case: inital '.' is RHS match */
+    if (*baseptr == '.') {
+        if (hostlen > base->length) {
+            p = hostptr + hostlen - base->length;
+            if (!strncasecmp(p, baseptr, base->length))
+>>>>>>> origin/master
                 return X509_V_OK;
         }
         return X509_V_ERR_PERMITTED_VIOLATION;
@@ -480,6 +611,7 @@ static int nc_uri(ASN1_IA5STRING *uri, ASN1_IA5STRING *base)
     return X509_V_OK;
 
 }
+<<<<<<< HEAD
 
 static int nc_ip(ASN1_OCTET_STRING *ip, ASN1_OCTET_STRING *base)
 {
@@ -511,3 +643,5 @@ static int nc_ip(ASN1_OCTET_STRING *ip, ASN1_OCTET_STRING *base)
     return X509_V_OK;
 
 }
+=======
+>>>>>>> origin/master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by David Mosberger <David.Mosberger@acm.org> based on the
@@ -171,9 +175,12 @@
 #     random input data).
 #
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 $phases = 4;		# number of stages/phases in the pipelined-loop
 $unroll_count = 6;	# number of times we unrolled it
 $pComI = (1 << 0);
@@ -763,5 +770,8 @@ $code.=<<___;
 ___
 
 print $code;
+<<<<<<< HEAD
 
 close STDOUT;
+=======
+>>>>>>> origin/master

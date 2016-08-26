@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #include <openssl/whrlpool.h>
 
 void whirlpool_block(WHIRLPOOL_CTX *, const void *, size_t);

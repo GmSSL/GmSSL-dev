@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,6 +7,8 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
+=======
+>>>>>>> origin/master
 
 #ifdef NAML$C_MAXRSS
 

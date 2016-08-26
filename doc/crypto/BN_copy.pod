@@ -2,7 +2,11 @@
 
 =head1 NAME
 
+<<<<<<< HEAD
 BN_copy, BN_dup, BN_with_flags - copy BIGNUMs
+=======
+BN_copy, BN_dup - copy BIGNUMs
+>>>>>>> origin/master
 
 =head1 SYNOPSIS
 
@@ -12,13 +16,17 @@ BN_copy, BN_dup, BN_with_flags - copy BIGNUMs
 
  BIGNUM *BN_dup(const BIGNUM *from);
 
+<<<<<<< HEAD
  void BN_with_flags(BIGNUM *dest, const BIGNUM *b, int flags);
 
+=======
+>>>>>>> origin/master
 =head1 DESCRIPTION
 
 BN_copy() copies B<from> to B<to>. BN_dup() creates a new B<BIGNUM>
 containing the value B<from>.
 
+<<<<<<< HEAD
 BN_with_flags creates a B<temporary> shallow copy of B<b> in B<dest>. It places
 significant restrictions on the copied data. Applications that do no adhere to
 these restrictions may encounter unexpected side effects or crashes. For that
@@ -47,10 +55,13 @@ B<dest> must be used and freed before any further subsequent use of B<b>
 
 =back
 
+=======
+>>>>>>> origin/master
 =head1 RETURN VALUES
 
 BN_copy() returns B<to> on success, NULL on error. BN_dup() returns
 the new B<BIGNUM>, and NULL on error. The error codes can be obtained
+<<<<<<< HEAD
 by L<ERR_get_error(3)>.
 
 =head1 SEE ALSO
@@ -65,5 +76,16 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
+=======
+by L<ERR_get_error(3)|ERR_get_error(3)>.
+
+=head1 SEE ALSO
+
+L<bn(3)|bn(3)>, L<ERR_get_error(3)|ERR_get_error(3)>
+
+=head1 HISTORY
+
+BN_copy() and BN_dup() are available in all versions of SSLeay and OpenSSL.
+>>>>>>> origin/master
 
 =cut

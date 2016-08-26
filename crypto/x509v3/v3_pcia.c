@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,6 +9,14 @@
  */
 
 /* Copyright (c) 2004 Kungliga Tekniska HÃ¶gskolan
+=======
+/* v3_pcia.c -*- mode:C; c-file-style: "eay" -*- */
+/*
+ * Contributed to the OpenSSL Project 2004 by Richard Levitte
+ * (richard@levitte.org)
+ */
+/* Copyright (c) 2004 Kungliga Tekniska Högskolan
+>>>>>>> origin/master
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
  *

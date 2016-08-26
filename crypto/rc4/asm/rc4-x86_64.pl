@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -57,13 +61,21 @@
 # As was shown by Zou Nanhai loop unrolling can improve Intel EM64T
 # performance by >30% [unlike P4 32-bit case that is]. But this is
 # provided that loads are reordered even more aggressively! Both code
+<<<<<<< HEAD
 # paths, AMD64 and EM64T, reorder loads in essentially same manner
+=======
+# pathes, AMD64 and EM64T, reorder loads in essentially same manner
+>>>>>>> origin/master
 # as my IA-64 implementation. On Opteron this resulted in modest 5%
 # improvement [I had to test it], while final Intel P4 performance
 # achieves respectful 432MBps on 2.8GHz processor now. For reference.
 # If executed on Xeon, current RC4_CHAR code-path is 2.7x faster than
 # RC4_INT code-path. While if executed on Opteron, it's only 25%
+<<<<<<< HEAD
 # slower than the RC4_INT one [meaning that if CPU Âµ-arch detection
+=======
+# slower than the RC4_INT one [meaning that if CPU µ-arch detection
+>>>>>>> origin/master
 # is not implemented, then this final RC4_CHAR code-path should be
 # preferred, as it provides better *all-round* performance].
 
@@ -99,9 +111,12 @@
 # Westmere	4.2/+60%
 # Sandy Bridge	4.2/+120%
 # Atom		9.3/+80%
+<<<<<<< HEAD
 # VIA Nano	6.4/+4%
 # Ivy Bridge	4.1/+30%
 # Bulldozer	4.5/+30%(*)
+=======
+>>>>>>> origin/master
 #
 # (*)	But corresponding loop has less instructions, which should have
 #	positive effect on upcoming Bulldozer, which has one less ALU.
@@ -122,7 +137,11 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
+<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
+=======
+open OUT,"| \"$^X\" $xlate $flavour $output";
+>>>>>>> origin/master
 *STDOUT=*OUT;
 
 $dat="%rdi";	    # arg1
@@ -440,10 +459,17 @@ $idx="%r8";
 $ido="%r9";
 
 $code.=<<___;
+<<<<<<< HEAD
 .globl	RC4_set_key
 .type	RC4_set_key,\@function,3
 .align	16
 RC4_set_key:
+=======
+.globl	private_RC4_set_key
+.type	private_RC4_set_key,\@function,3
+.align	16
+private_RC4_set_key:
+>>>>>>> origin/master
 	lea	8($dat),$dat
 	lea	($inp,$len),$inp
 	neg	$len
@@ -510,7 +536,11 @@ RC4_set_key:
 	mov	%eax,-8($dat)
 	mov	%eax,-4($dat)
 	ret
+<<<<<<< HEAD
 .size	RC4_set_key,.-RC4_set_key
+=======
+.size	private_RC4_set_key,.-private_RC4_set_key
+>>>>>>> origin/master
 
 .globl	RC4_options
 .type	RC4_options,\@abi-omnipotent
@@ -655,16 +685,26 @@ key_se_handler:
 	.rva	.LSEH_end_RC4
 	.rva	.LSEH_info_RC4
 
+<<<<<<< HEAD
 	.rva	.LSEH_begin_RC4_set_key
 	.rva	.LSEH_end_RC4_set_key
 	.rva	.LSEH_info_RC4_set_key
+=======
+	.rva	.LSEH_begin_private_RC4_set_key
+	.rva	.LSEH_end_private_RC4_set_key
+	.rva	.LSEH_info_private_RC4_set_key
+>>>>>>> origin/master
 
 .section	.xdata
 .align	8
 .LSEH_info_RC4:
 	.byte	9,0,0,0
 	.rva	stream_se_handler
+<<<<<<< HEAD
 .LSEH_info_RC4_set_key:
+=======
+.LSEH_info_private_RC4_set_key:
+>>>>>>> origin/master
 	.byte	9,0,0,0
 	.rva	key_se_handler
 ___

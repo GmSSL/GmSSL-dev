@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2001-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,6 +6,61 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* crypto/engine/eng_ctrl.c */
+/* ====================================================================
+ * Copyright (c) 1999-2001 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include "eng_int.h"
@@ -88,7 +144,11 @@ static int int_ctrl_helper(ENGINE *e, int cmd, long i, void *p,
         return e->cmd_defns[idx].cmd_num;
     }
     /*
+<<<<<<< HEAD
      * For the rest of the commands, the 'long' argument must specify a valid
+=======
+     * For the rest of the commands, the 'long' argument must specify a valie
+>>>>>>> origin/master
      * command number - so we need to conduct a search.
      */
     if ((e->cmd_defns == NULL) || ((idx = int_ctrl_cmd_by_num(e->cmd_defns,
@@ -137,9 +197,15 @@ int ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
         ENGINEerr(ENGINE_F_ENGINE_CTRL, ERR_R_PASSED_NULL_PARAMETER);
         return 0;
     }
+<<<<<<< HEAD
     CRYPTO_THREAD_write_lock(global_engine_lock);
     ref_exists = ((e->struct_ref > 0) ? 1 : 0);
     CRYPTO_THREAD_unlock(global_engine_lock);
+=======
+    CRYPTO_w_lock(CRYPTO_LOCK_ENGINE);
+    ref_exists = ((e->struct_ref > 0) ? 1 : 0);
+    CRYPTO_w_unlock(CRYPTO_LOCK_ENGINE);
+>>>>>>> origin/master
     ctrl_exists = ((e->ctrl == NULL) ? 0 : 1);
     if (!ref_exists) {
         ENGINEerr(ENGINE_F_ENGINE_CTRL, ENGINE_R_NO_REFERENCE);
@@ -203,6 +269,7 @@ int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
 {
     int num;
 
+<<<<<<< HEAD
     if (e == NULL || cmd_name == NULL) {
         ENGINEerr(ENGINE_F_ENGINE_CTRL_CMD, ERR_R_PASSED_NULL_PARAMETER);
         return 0;
@@ -210,6 +277,16 @@ int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
     if (e->ctrl == NULL
         || (num = ENGINE_ctrl(e, ENGINE_CTRL_GET_CMD_FROM_NAME,
                               0, (void *)cmd_name, NULL)) <= 0) {
+=======
+    if ((e == NULL) || (cmd_name == NULL)) {
+        ENGINEerr(ENGINE_F_ENGINE_CTRL_CMD, ERR_R_PASSED_NULL_PARAMETER);
+        return 0;
+    }
+    if ((e->ctrl == NULL) || ((num = ENGINE_ctrl(e,
+                                                 ENGINE_CTRL_GET_CMD_FROM_NAME,
+                                                 0, (void *)cmd_name,
+                                                 NULL)) <= 0)) {
+>>>>>>> origin/master
         /*
          * If the command didn't *have* to be supported, we fake success.
          * This allows certain settings to be specified for multiple ENGINEs
@@ -240,6 +317,7 @@ int ENGINE_ctrl_cmd_string(ENGINE *e, const char *cmd_name, const char *arg,
     int num, flags;
     long l;
     char *ptr;
+<<<<<<< HEAD
 
     if (e == NULL || cmd_name == NULL) {
         ENGINEerr(ENGINE_F_ENGINE_CTRL_CMD_STRING, ERR_R_PASSED_NULL_PARAMETER);
@@ -248,6 +326,17 @@ int ENGINE_ctrl_cmd_string(ENGINE *e, const char *cmd_name, const char *arg,
     if (e->ctrl == NULL
         || (num = ENGINE_ctrl(e, ENGINE_CTRL_GET_CMD_FROM_NAME,
                               0, (void *)cmd_name, NULL)) <= 0) {
+=======
+    if ((e == NULL) || (cmd_name == NULL)) {
+        ENGINEerr(ENGINE_F_ENGINE_CTRL_CMD_STRING,
+                  ERR_R_PASSED_NULL_PARAMETER);
+        return 0;
+    }
+    if ((e->ctrl == NULL) || ((num = ENGINE_ctrl(e,
+                                                 ENGINE_CTRL_GET_CMD_FROM_NAME,
+                                                 0, (void *)cmd_name,
+                                                 NULL)) <= 0)) {
+>>>>>>> origin/master
         /*
          * If the command didn't *have* to be supported, we fake success.
          * This allows certain settings to be specified for multiple ENGINEs
@@ -268,9 +357,14 @@ int ENGINE_ctrl_cmd_string(ENGINE *e, const char *cmd_name, const char *arg,
                   ENGINE_R_CMD_NOT_EXECUTABLE);
         return 0;
     }
+<<<<<<< HEAD
 
     flags = ENGINE_ctrl(e, ENGINE_CTRL_GET_CMD_FLAGS, num, NULL, NULL);
     if (flags < 0) {
+=======
+    if ((flags =
+         ENGINE_ctrl(e, ENGINE_CTRL_GET_CMD_FLAGS, num, NULL, NULL)) < 0) {
+>>>>>>> origin/master
         /*
          * Shouldn't happen, given that ENGINE_cmd_is_executable() returned
          * success.

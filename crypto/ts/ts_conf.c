@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,17 +6,88 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* crypto/ts/ts_conf.c */
+/*
+ * Written by Zoltan Glozik (zglozik@stones.com) for the OpenSSL project
+ * 2002.
+ */
+/* ====================================================================
+ * Copyright (c) 2006 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include <string.h>
 
 #include <openssl/crypto.h>
+<<<<<<< HEAD
 #include "internal/cryptlib.h"
 #include <openssl/pem.h>
 #include <openssl/engine.h>
 #include <openssl/ts.h>
 
 /* Macro definitions for the configuration file. */
+=======
+#include "cryptlib.h"
+#include <openssl/pem.h>
+#ifndef OPENSSL_NO_ENGINE
+# include <openssl/engine.h>
+#endif
+#include <openssl/ts.h>
+
+/* Macro definitions for the configuration file. */
+
+>>>>>>> origin/master
 #define BASE_SECTION                    "tsa"
 #define ENV_DEFAULT_TSA                 "default_tsa"
 #define ENV_SERIAL                      "serial"
@@ -23,7 +95,10 @@
 #define ENV_SIGNER_CERT                 "signer_cert"
 #define ENV_CERTS                       "certs"
 #define ENV_SIGNER_KEY                  "signer_key"
+<<<<<<< HEAD
 #define ENV_SIGNER_DIGEST               "signer_digest"
+=======
+>>>>>>> origin/master
 #define ENV_DEFAULT_POLICY              "default_policy"
 #define ENV_OTHER_POLICIES              "other_policies"
 #define ENV_DIGESTS                     "digests"
@@ -50,7 +125,11 @@ X509 *TS_CONF_load_cert(const char *file)
     x = PEM_read_bio_X509_AUX(cert, NULL, NULL, NULL);
  end:
     if (x == NULL)
+<<<<<<< HEAD
         TSerr(TS_F_TS_CONF_LOAD_CERT, TS_R_CANNOT_LOAD_CERT);
+=======
+        fprintf(stderr, "unable to load certificate: %s\n", file);
+>>>>>>> origin/master
     BIO_free(cert);
     return x;
 }
@@ -62,11 +141,19 @@ STACK_OF(X509) *TS_CONF_load_certs(const char *file)
     STACK_OF(X509_INFO) *allcerts = NULL;
     int i;
 
+<<<<<<< HEAD
     if ((certs = BIO_new_file(file, "r")) == NULL)
         goto end;
     if ((othercerts = sk_X509_new_null()) == NULL)
         goto end;
 
+=======
+    if (!(certs = BIO_new_file(file, "r")))
+        goto end;
+
+    if (!(othercerts = sk_X509_new_null()))
+        goto end;
+>>>>>>> origin/master
     allcerts = PEM_X509_INFO_read_bio(certs, NULL, NULL, NULL);
     for (i = 0; i < sk_X509_INFO_num(allcerts); i++) {
         X509_INFO *xi = sk_X509_INFO_value(allcerts, i);
@@ -77,7 +164,11 @@ STACK_OF(X509) *TS_CONF_load_certs(const char *file)
     }
  end:
     if (othercerts == NULL)
+<<<<<<< HEAD
         TSerr(TS_F_TS_CONF_LOAD_CERTS, TS_R_CANNOT_LOAD_CERT);
+=======
+        fprintf(stderr, "unable to load certificates: %s\n", file);
+>>>>>>> origin/master
     sk_X509_INFO_pop_free(allcerts, X509_INFO_free);
     BIO_free(certs);
     return othercerts;
@@ -88,18 +179,27 @@ EVP_PKEY *TS_CONF_load_key(const char *file, const char *pass)
     BIO *key = NULL;
     EVP_PKEY *pkey = NULL;
 
+<<<<<<< HEAD
     if ((key = BIO_new_file(file, "r")) == NULL)
+=======
+    if (!(key = BIO_new_file(file, "r")))
+>>>>>>> origin/master
         goto end;
     pkey = PEM_read_bio_PrivateKey(key, NULL, NULL, (char *)pass);
  end:
     if (pkey == NULL)
+<<<<<<< HEAD
         TSerr(TS_F_TS_CONF_LOAD_KEY, TS_R_CANNOT_LOAD_KEY);
+=======
+        fprintf(stderr, "unable to load private key: %s\n", file);
+>>>>>>> origin/master
     BIO_free(key);
     return pkey;
 }
 
 /* Function definitions for handling configuration options. */
 
+<<<<<<< HEAD
 static void ts_CONF_lookup_fail(const char *name, const char *tag)
 {
     TSerr(TS_F_TS_CONF_LOOKUP_FAIL, TS_R_VAR_LOOKUP_FAILURE);
@@ -110,6 +210,16 @@ static void ts_CONF_invalid(const char *name, const char *tag)
 {
     TSerr(TS_F_TS_CONF_INVALID, TS_R_VAR_BAD_VALUE);
     ERR_add_error_data(3, name, "::", tag);
+=======
+static void TS_CONF_lookup_fail(const char *name, const char *tag)
+{
+    fprintf(stderr, "variable lookup failed for %s::%s\n", name, tag);
+}
+
+static void TS_CONF_invalid(const char *name, const char *tag)
+{
+    fprintf(stderr, "invalid variable value for %s::%s\n", name, tag);
+>>>>>>> origin/master
 }
 
 const char *TS_CONF_get_tsa_section(CONF *conf, const char *section)
@@ -117,7 +227,11 @@ const char *TS_CONF_get_tsa_section(CONF *conf, const char *section)
     if (!section) {
         section = NCONF_get_string(conf, BASE_SECTION, ENV_DEFAULT_TSA);
         if (!section)
+<<<<<<< HEAD
             ts_CONF_lookup_fail(BASE_SECTION, ENV_DEFAULT_TSA);
+=======
+            TS_CONF_lookup_fail(BASE_SECTION, ENV_DEFAULT_TSA);
+>>>>>>> origin/master
     }
     return section;
 }
@@ -128,7 +242,11 @@ int TS_CONF_set_serial(CONF *conf, const char *section, TS_serial_cb cb,
     int ret = 0;
     char *serial = NCONF_get_string(conf, section, ENV_SERIAL);
     if (!serial) {
+<<<<<<< HEAD
         ts_CONF_lookup_fail(section, ENV_SERIAL);
+=======
+        TS_CONF_lookup_fail(section, ENV_SERIAL);
+>>>>>>> origin/master
         goto err;
     }
     TS_RESP_CTX_set_serial_cb(ctx, cb, serial);
@@ -145,11 +263,19 @@ int TS_CONF_set_crypto_device(CONF *conf, const char *section,
 {
     int ret = 0;
 
+<<<<<<< HEAD
     if (device == NULL)
         device = NCONF_get_string(conf, section, ENV_CRYPTO_DEVICE);
 
     if (device && !TS_CONF_set_default_engine(device)) {
         ts_CONF_invalid(section, ENV_CRYPTO_DEVICE);
+=======
+    if (!device)
+        device = NCONF_get_string(conf, section, ENV_CRYPTO_DEVICE);
+
+    if (device && !TS_CONF_set_default_engine(device)) {
+        TS_CONF_invalid(section, ENV_CRYPTO_DEVICE);
+>>>>>>> origin/master
         goto err;
     }
     ret = 1;
@@ -162,6 +288,7 @@ int TS_CONF_set_default_engine(const char *name)
     ENGINE *e = NULL;
     int ret = 0;
 
+<<<<<<< HEAD
     if (strcmp(name, "builtin") == 0)
         return 1;
 
@@ -173,12 +300,32 @@ int TS_CONF_set_default_engine(const char *name)
         goto err;
     ret = 1;
 
+=======
+    /* Leave the default if builtin specified. */
+    if (strcmp(name, "builtin") == 0)
+        return 1;
+
+    if (!(e = ENGINE_by_id(name)))
+        goto err;
+    /* Enable the use of the NCipher HSM for forked children. */
+    if (strcmp(name, "chil") == 0)
+        ENGINE_ctrl(e, ENGINE_CTRL_CHIL_SET_FORKCHECK, 1, 0, 0);
+    /* All the operations are going to be carried out by the engine. */
+    if (!ENGINE_set_default(e, ENGINE_METHOD_ALL))
+        goto err;
+    ret = 1;
+>>>>>>> origin/master
  err:
     if (!ret) {
         TSerr(TS_F_TS_CONF_SET_DEFAULT_ENGINE, TS_R_COULD_NOT_SET_ENGINE);
         ERR_add_error_data(2, "engine:", name);
     }
+<<<<<<< HEAD
     ENGINE_free(e);
+=======
+    if (e)
+        ENGINE_free(e);
+>>>>>>> origin/master
     return ret;
 }
 
@@ -189,6 +336,7 @@ int TS_CONF_set_signer_cert(CONF *conf, const char *section,
 {
     int ret = 0;
     X509 *cert_obj = NULL;
+<<<<<<< HEAD
 
     if (cert == NULL) {
         cert = NCONF_get_string(conf, section, ENV_SIGNER_CERT);
@@ -198,6 +346,15 @@ int TS_CONF_set_signer_cert(CONF *conf, const char *section,
         }
     }
     if ((cert_obj = TS_CONF_load_cert(cert)) == NULL)
+=======
+    if (!cert)
+        cert = NCONF_get_string(conf, section, ENV_SIGNER_CERT);
+    if (!cert) {
+        TS_CONF_lookup_fail(section, ENV_SIGNER_CERT);
+        goto err;
+    }
+    if (!(cert_obj = TS_CONF_load_cert(cert)))
+>>>>>>> origin/master
         goto err;
     if (!TS_RESP_CTX_set_signer_cert(ctx, cert_obj))
         goto err;
@@ -213,6 +370,7 @@ int TS_CONF_set_certs(CONF *conf, const char *section, const char *certs,
 {
     int ret = 0;
     STACK_OF(X509) *certs_obj = NULL;
+<<<<<<< HEAD
 
     if (certs == NULL) {
         /* Certificate chain is optional. */
@@ -220,6 +378,14 @@ int TS_CONF_set_certs(CONF *conf, const char *section, const char *certs,
             goto end;
     }
     if ((certs_obj = TS_CONF_load_certs(certs)) == NULL)
+=======
+    if (!certs)
+        certs = NCONF_get_string(conf, section, ENV_CERTS);
+    /* Certificate chain is optional. */
+    if (!certs)
+        goto end;
+    if (!(certs_obj = TS_CONF_load_certs(certs)))
+>>>>>>> origin/master
         goto err;
     if (!TS_RESP_CTX_set_certs(ctx, certs_obj))
         goto err;
@@ -239,10 +405,17 @@ int TS_CONF_set_signer_key(CONF *conf, const char *section,
     if (!key)
         key = NCONF_get_string(conf, section, ENV_SIGNER_KEY);
     if (!key) {
+<<<<<<< HEAD
         ts_CONF_lookup_fail(section, ENV_SIGNER_KEY);
         goto err;
     }
     if ((key_obj = TS_CONF_load_key(key, pass)) == NULL)
+=======
+        TS_CONF_lookup_fail(section, ENV_SIGNER_KEY);
+        goto err;
+    }
+    if (!(key_obj = TS_CONF_load_key(key, pass)))
+>>>>>>> origin/master
         goto err;
     if (!TS_RESP_CTX_set_signer_key(ctx, key_obj))
         goto err;
@@ -253,6 +426,7 @@ int TS_CONF_set_signer_key(CONF *conf, const char *section,
     return ret;
 }
 
+<<<<<<< HEAD
 int TS_CONF_set_signer_digest(CONF *conf, const char *section,
                               const char *md, TS_RESP_CTX *ctx)
 {
@@ -277,6 +451,8 @@ int TS_CONF_set_signer_digest(CONF *conf, const char *section,
     return ret;
 }
 
+=======
+>>>>>>> origin/master
 int TS_CONF_set_def_policy(CONF *conf, const char *section,
                            const char *policy, TS_RESP_CTX *ctx)
 {
@@ -285,11 +461,19 @@ int TS_CONF_set_def_policy(CONF *conf, const char *section,
     if (!policy)
         policy = NCONF_get_string(conf, section, ENV_DEFAULT_POLICY);
     if (!policy) {
+<<<<<<< HEAD
         ts_CONF_lookup_fail(section, ENV_DEFAULT_POLICY);
         goto err;
     }
     if ((policy_obj = OBJ_txt2obj(policy, 0)) == NULL) {
         ts_CONF_invalid(section, ENV_DEFAULT_POLICY);
+=======
+        TS_CONF_lookup_fail(section, ENV_DEFAULT_POLICY);
+        goto err;
+    }
+    if (!(policy_obj = OBJ_txt2obj(policy, 0))) {
+        TS_CONF_invalid(section, ENV_DEFAULT_POLICY);
+>>>>>>> origin/master
         goto err;
     }
     if (!TS_RESP_CTX_set_def_policy(ctx, policy_obj))
@@ -306,20 +490,33 @@ int TS_CONF_set_policies(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     int ret = 0;
     int i;
     STACK_OF(CONF_VALUE) *list = NULL;
+<<<<<<< HEAD
     char *policies = NCONF_get_string(conf, section, ENV_OTHER_POLICIES);
 
     /* If no other policy is specified, that's fine. */
     if (policies && (list = X509V3_parse_list(policies)) == NULL) {
         ts_CONF_invalid(section, ENV_OTHER_POLICIES);
+=======
+    char *policies = NCONF_get_string(conf, section,
+                                      ENV_OTHER_POLICIES);
+    /* If no other policy is specified, that's fine. */
+    if (policies && !(list = X509V3_parse_list(policies))) {
+        TS_CONF_invalid(section, ENV_OTHER_POLICIES);
+>>>>>>> origin/master
         goto err;
     }
     for (i = 0; i < sk_CONF_VALUE_num(list); ++i) {
         CONF_VALUE *val = sk_CONF_VALUE_value(list, i);
         const char *extval = val->value ? val->value : val->name;
         ASN1_OBJECT *objtmp;
+<<<<<<< HEAD
 
         if ((objtmp = OBJ_txt2obj(extval, 0)) == NULL) {
             ts_CONF_invalid(section, ENV_OTHER_POLICIES);
+=======
+        if (!(objtmp = OBJ_txt2obj(extval, 0))) {
+            TS_CONF_invalid(section, ENV_OTHER_POLICIES);
+>>>>>>> origin/master
             goto err;
         }
         if (!TS_RESP_CTX_add_policy(ctx, objtmp))
@@ -339,6 +536,7 @@ int TS_CONF_set_digests(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     int i;
     STACK_OF(CONF_VALUE) *list = NULL;
     char *digests = NCONF_get_string(conf, section, ENV_DIGESTS);
+<<<<<<< HEAD
 
     if (digests == NULL) {
         ts_CONF_lookup_fail(section, ENV_DIGESTS);
@@ -350,15 +548,32 @@ int TS_CONF_set_digests(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     }
     if (sk_CONF_VALUE_num(list) == 0) {
         ts_CONF_invalid(section, ENV_DIGESTS);
+=======
+    if (!digests) {
+        TS_CONF_lookup_fail(section, ENV_DIGESTS);
+        goto err;
+    }
+    if (!(list = X509V3_parse_list(digests))) {
+        TS_CONF_invalid(section, ENV_DIGESTS);
+        goto err;
+    }
+    if (sk_CONF_VALUE_num(list) == 0) {
+        TS_CONF_invalid(section, ENV_DIGESTS);
+>>>>>>> origin/master
         goto err;
     }
     for (i = 0; i < sk_CONF_VALUE_num(list); ++i) {
         CONF_VALUE *val = sk_CONF_VALUE_value(list, i);
         const char *extval = val->value ? val->value : val->name;
         const EVP_MD *md;
+<<<<<<< HEAD
 
         if ((md = EVP_get_digestbyname(extval)) == NULL) {
             ts_CONF_invalid(section, ENV_DIGESTS);
+=======
+        if (!(md = EVP_get_digestbyname(extval))) {
+            TS_CONF_invalid(section, ENV_DIGESTS);
+>>>>>>> origin/master
             goto err;
         }
         if (!TS_RESP_CTX_add_md(ctx, md))
@@ -379,8 +594,13 @@ int TS_CONF_set_accuracy(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     STACK_OF(CONF_VALUE) *list = NULL;
     char *accuracy = NCONF_get_string(conf, section, ENV_ACCURACY);
 
+<<<<<<< HEAD
     if (accuracy && (list = X509V3_parse_list(accuracy)) == NULL) {
         ts_CONF_invalid(section, ENV_ACCURACY);
+=======
+    if (accuracy && !(list = X509V3_parse_list(accuracy))) {
+        TS_CONF_invalid(section, ENV_ACCURACY);
+>>>>>>> origin/master
         goto err;
     }
     for (i = 0; i < sk_CONF_VALUE_num(list); ++i) {
@@ -395,7 +615,11 @@ int TS_CONF_set_accuracy(CONF *conf, const char *section, TS_RESP_CTX *ctx)
             if (val->value)
                 micros = atoi(val->value);
         } else {
+<<<<<<< HEAD
             ts_CONF_invalid(section, ENV_ACCURACY);
+=======
+            TS_CONF_invalid(section, ENV_ACCURACY);
+>>>>>>> origin/master
             goto err;
         }
     }
@@ -421,7 +645,11 @@ int TS_CONF_set_clock_precision_digits(CONF *conf, const char *section,
                             &digits))
         digits = 0;
     if (digits < 0 || digits > TS_MAX_CLOCK_PRECISION_DIGITS) {
+<<<<<<< HEAD
         ts_CONF_invalid(section, ENV_CLOCK_PRECISION_DIGITS);
+=======
+        TS_CONF_invalid(section, ENV_CLOCK_PRECISION_DIGITS);
+>>>>>>> origin/master
         goto err;
     }
 
@@ -433,16 +661,28 @@ int TS_CONF_set_clock_precision_digits(CONF *conf, const char *section,
     return ret;
 }
 
+<<<<<<< HEAD
 static int ts_CONF_add_flag(CONF *conf, const char *section,
                             const char *field, int flag, TS_RESP_CTX *ctx)
 {
     const char *value = NCONF_get_string(conf, section, field);
 
+=======
+static int TS_CONF_add_flag(CONF *conf, const char *section,
+                            const char *field, int flag, TS_RESP_CTX *ctx)
+{
+    /* Default is false. */
+    const char *value = NCONF_get_string(conf, section, field);
+>>>>>>> origin/master
     if (value) {
         if (strcmp(value, ENV_VALUE_YES) == 0)
             TS_RESP_CTX_add_flags(ctx, flag);
         else if (strcmp(value, ENV_VALUE_NO) != 0) {
+<<<<<<< HEAD
             ts_CONF_invalid(section, field);
+=======
+            TS_CONF_invalid(section, field);
+>>>>>>> origin/master
             return 0;
         }
     }
@@ -452,17 +692,29 @@ static int ts_CONF_add_flag(CONF *conf, const char *section,
 
 int TS_CONF_set_ordering(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
+<<<<<<< HEAD
     return ts_CONF_add_flag(conf, section, ENV_ORDERING, TS_ORDERING, ctx);
+=======
+    return TS_CONF_add_flag(conf, section, ENV_ORDERING, TS_ORDERING, ctx);
+>>>>>>> origin/master
 }
 
 int TS_CONF_set_tsa_name(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
+<<<<<<< HEAD
     return ts_CONF_add_flag(conf, section, ENV_TSA_NAME, TS_TSA_NAME, ctx);
+=======
+    return TS_CONF_add_flag(conf, section, ENV_TSA_NAME, TS_TSA_NAME, ctx);
+>>>>>>> origin/master
 }
 
 int TS_CONF_set_ess_cert_id_chain(CONF *conf, const char *section,
                                   TS_RESP_CTX *ctx)
 {
+<<<<<<< HEAD
     return ts_CONF_add_flag(conf, section, ENV_ESS_CERT_ID_CHAIN,
+=======
+    return TS_CONF_add_flag(conf, section, ENV_ESS_CERT_ID_CHAIN,
+>>>>>>> origin/master
                             TS_ESS_CERT_ID_CHAIN, ctx);
 }

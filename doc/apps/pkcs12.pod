@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 =pod
 
 =head1 NAME
@@ -7,7 +11,10 @@ pkcs12 - PKCS#12 file utility
 =head1 SYNOPSIS
 
 B<openssl> B<pkcs12>
+<<<<<<< HEAD
 [B<-help>]
+=======
+>>>>>>> origin/master
 [B<-export>]
 [B<-chain>]
 [B<-inkey filename>]
@@ -39,8 +46,11 @@ B<openssl> B<pkcs12>
 [B<-rand file(s)>]
 [B<-CAfile file>]
 [B<-CApath dir>]
+<<<<<<< HEAD
 [B<-no-CAfile>]
 [B<-no-CApath>]
+=======
+>>>>>>> origin/master
 [B<-CSP name>]
 
 =head1 DESCRIPTION
@@ -59,10 +69,13 @@ file can be created by using the B<-export> option (see below).
 
 =over 4
 
+<<<<<<< HEAD
 =item B<-help>
 
 Print out a usage message.
 
+=======
+>>>>>>> origin/master
 =item B<-in filename>
 
 This specifies filename of the PKCS#12 file to be parsed. Standard input is used
@@ -77,13 +90,21 @@ default.  They are all written in PEM format.
 
 the PKCS#12 file (i.e. input file) password source. For more information about
 the format of B<arg> see the B<PASS PHRASE ARGUMENTS> section in
+<<<<<<< HEAD
 L<openssl(1)>.
+=======
+L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-passout arg>
 
 pass phrase source to encrypt any outputted private keys with. For more
 information about the format of B<arg> see the B<PASS PHRASE ARGUMENTS> section
+<<<<<<< HEAD
 in L<openssl(1)>.
+=======
+in L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-password arg>
 
@@ -198,13 +219,21 @@ displays them.
 
 the PKCS#12 file (i.e. output file) password source. For more information about
 the format of B<arg> see the B<PASS PHRASE ARGUMENTS> section in
+<<<<<<< HEAD
 L<openssl(1)>.
+=======
+L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-passin password>
 
 pass phrase source to decrypt any input private keys with. For more information
 about the format of B<arg> see the B<PASS PHRASE ARGUMENTS> section in
+<<<<<<< HEAD
 L<openssl(1)>.
+=======
+L<openssl(1)|openssl(1)>.
+>>>>>>> origin/master
 
 =item B<-chain>
 
@@ -222,7 +251,11 @@ key is encrypted using triple DES and the certificate using 40 bit RC2.
 
 these options allow the algorithm used to encrypt the private key and
 certificates to be selected. Any PKCS#5 v1.5 or PKCS#12 PBE algorithm name
+<<<<<<< HEAD
 can be used (see B<NOTES> section for more information). If a cipher name
+=======
+can be used (see B<NOTES> section for more information). If a a cipher name
+>>>>>>> origin/master
 (as output by the B<list-cipher-algorithms> command is specified then it
 is used with PKCS#5 v2.0. For interoperability reasons it is advisable to only
 use PKCS#12 algorithms.
@@ -272,8 +305,13 @@ don't attempt to provide the MAC integrity.
 =item B<-rand file(s)>
 
 a file or files containing random data used to seed the random number
+<<<<<<< HEAD
 generator, or an EGD socket (see L<RAND_egd(3)>).
 Multiple files can be specified separated by an OS-dependent character.
+=======
+generator, or an EGD socket (see L<RAND_egd(3)|RAND_egd(3)>).
+Multiple files can be specified separated by a OS-dependent character.
+>>>>>>> origin/master
 The separator is B<;> for MS-Windows, B<,> for OpenVMS, and B<:> for
 all others.
 
@@ -287,6 +325,7 @@ CA storage as a directory. This directory must be a standard certificate
 directory: that is a hash of each subject name (using B<x509 -hash>) should be
 linked to each certificate.
 
+<<<<<<< HEAD
 =item B<-no-CAfile>
 
 Do not load the trusted CA certificates from the default file location
@@ -295,6 +334,8 @@ Do not load the trusted CA certificates from the default file location
 
 Do not load the trusted CA certificates from the default directory location
 
+=======
+>>>>>>> origin/master
 =item B<-CSP name>
 
 write B<name> as a Microsoft CSP name.
@@ -325,6 +366,7 @@ encrypted private keys, then the option B<-keypbe PBE-SHA1-RC2-40> can
 be used to reduce the private key encryption to 40 bit RC2. A complete
 description of all algorithms is contained in the B<pkcs8> manual page.
 
+<<<<<<< HEAD
 Prior 1.1 release passwords containing non-ASCII characters were encoded
 in non-compliant manner, which limited interoperability, in first hand
 with Windows. But switching to standard-compliant password encoding
@@ -335,6 +377,8 @@ to convert the data, because implemented heuristic approach is not
 MT-safe, its sole goal is to facilitate the data upgrade with this
 utility.
 
+=======
+>>>>>>> origin/master
 =head1 EXAMPLES
 
 Parse a PKCS#12 file and output it to a file:
@@ -346,7 +390,11 @@ Output only client certificates to a file:
  openssl pkcs12 -in file.p12 -clcerts -out file.pem
 
 Don't encrypt the private key:
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> origin/master
  openssl pkcs12 -in file.p12 -out file.pem -nodes
 
 Print some info about a PKCS#12 file:
@@ -362,6 +410,7 @@ Include some extra certificates:
  openssl pkcs12 -export -in file.pem -out file.p12 -name "My Certificate" \
   -certfile othercerts.pem
 
+<<<<<<< HEAD
 =head1 SEE ALSO
 
 L<pkcs8(1)>
@@ -376,3 +425,33 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
+=======
+=head1 BUGS
+
+Some would argue that the PKCS#12 standard is one big bug :-)
+
+Versions of OpenSSL before 0.9.6a had a bug in the PKCS#12 key generation
+routines. Under rare circumstances this could produce a PKCS#12 file encrypted
+with an invalid key. As a result some PKCS#12 files which triggered this bug
+from other implementations (MSIE or Netscape) could not be decrypted
+by OpenSSL and similarly OpenSSL could produce PKCS#12 files which could
+not be decrypted by other implementations. The chances of producing such
+a file are relatively small: less than 1 in 256.
+
+A side effect of fixing this bug is that any old invalidly encrypted PKCS#12
+files cannot no longer be parsed by the fixed version. Under such circumstances
+the B<pkcs12> utility will report that the MAC is OK but fail with a decryption
+error when extracting private keys.
+
+This problem can be resolved by extracting the private keys and certificates
+from the PKCS#12 file using an older version of OpenSSL and recreating the PKCS#12
+file from the keys and certificates using a newer version of OpenSSL. For example:
+
+ old-openssl -in bad.p12 -out keycerts.pem
+ openssl -in keycerts.pem -export -name "My PKCS#12 file" -out fixed.p12
+
+=head1 SEE ALSO
+
+L<pkcs8(1)|pkcs8(1)>
+
+>>>>>>> origin/master

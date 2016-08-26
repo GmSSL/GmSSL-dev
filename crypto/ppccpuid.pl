@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 $flavour = shift;
 
@@ -30,6 +34,7 @@ $code=<<___;
 .machine	"any"
 .text
 
+<<<<<<< HEAD
 .globl	.OPENSSL_fpu_probe
 .align	4
 .OPENSSL_fpu_probe:
@@ -38,6 +43,8 @@ $code=<<___;
 	.long	0
 	.byte	0,12,0x14,0,0,0,0,0
 .size	.OPENSSL_fpu_probe,.-.OPENSSL_fpu_probe
+=======
+>>>>>>> origin/master
 .globl	.OPENSSL_ppc64_probe
 .align	4
 .OPENSSL_ppc64_probe:
@@ -67,6 +74,7 @@ $code=<<___;
 	.byte	0,12,0x14,0,0,0,0,0
 .size	.OPENSSL_crypto207_probe,.-.OPENSSL_crypto207_probe
 
+<<<<<<< HEAD
 .globl	.OPENSSL_madd300_probe
 .align	4
 .OPENSSL_madd300_probe:
@@ -77,6 +85,8 @@ $code=<<___;
 	.long	0
 	.byte	0,12,0x14,0,0,0,0,0
 
+=======
+>>>>>>> origin/master
 .globl	.OPENSSL_wipe_cpu
 .align	4
 .OPENSSL_wipe_cpu:
@@ -127,6 +137,7 @@ Ladd:	lwarx	r5,0,r3
 .globl	.OPENSSL_rdtsc
 .align	4
 .OPENSSL_rdtsc:
+<<<<<<< HEAD
 ___
 $code.=<<___	if ($flavour =~ /64/);
 	mftb	r3
@@ -140,6 +151,10 @@ Loop_rdtsc:
 	bne	Loop_rdtsc
 ___
 $code.=<<___;
+=======
+	mftb	r3
+	mftbu	r4
+>>>>>>> origin/master
 	blr
 	.long	0
 	.byte	0,12,0x14,0,0,0,0,0
@@ -177,6 +192,7 @@ Laligned:
 	.byte	0,12,0x14,0,0,0,2,0
 	.long	0
 .size	.OPENSSL_cleanse,.-.OPENSSL_cleanse
+<<<<<<< HEAD
 
 globl	.CRYPTO_memcmp
 .align	4
@@ -295,6 +311,9 @@ Ldone2:
 .size	.OPENSSL_instrument_bus2,.-.OPENSSL_instrument_bus2
 ___
 }
+=======
+___
+>>>>>>> origin/master
 
 $code =~ s/\`([^\`]*)\`/eval $1/gem;
 print $code;

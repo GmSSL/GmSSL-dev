@@ -10,12 +10,21 @@ BIO_rw_filename - FILE bio
 
  #include <openssl/bio.h>
 
+<<<<<<< HEAD
  const BIO_METHOD *     BIO_s_file(void);
  BIO *BIO_new_file(const char *filename, const char *mode);
  BIO *BIO_new_fp(FILE *stream, int flags);
 
  BIO_set_fp(BIO *b, FILE *fp, int flags);
  BIO_get_fp(BIO *b, FILE **fpp);
+=======
+ BIO_METHOD *	BIO_s_file(void);
+ BIO *BIO_new_file(const char *filename, const char *mode);
+ BIO *BIO_new_fp(FILE *stream, int flags);
+
+ BIO_set_fp(BIO *b,FILE *fp, int flags);
+ BIO_get_fp(BIO *b,FILE **fpp);
+>>>>>>> origin/master
 
  int BIO_read_filename(BIO *b, char *name)
  int BIO_write_filename(BIO *b, char *name)
@@ -92,15 +101,24 @@ Alternative technique:
 
  BIO *bio_out;
  bio_out = BIO_new(BIO_s_file());
+<<<<<<< HEAD
  if (bio_out == NULL) /* Error ... */
  if (!BIO_set_fp(bio_out, stdout, BIO_NOCLOSE)) /* Error ... */
+=======
+ if(bio_out == NULL) /* Error ... */
+ if(!BIO_set_fp(bio_out, stdout, BIO_NOCLOSE)) /* Error ... */
+>>>>>>> origin/master
  BIO_printf(bio_out, "Hello World\n");
 
 Write to a file:
 
  BIO *out;
  out = BIO_new_file("filename.txt", "w");
+<<<<<<< HEAD
  if (!out) /* Error occurred */
+=======
+ if(!out) /* Error occurred */
+>>>>>>> origin/master
  BIO_printf(out, "Hello World\n");
  BIO_free(out);
 
@@ -108,8 +126,13 @@ Alternative technique:
 
  BIO *out;
  out = BIO_new(BIO_s_file());
+<<<<<<< HEAD
  if (out == NULL) /* Error ... */
  if (!BIO_write_filename(out, "filename.txt")) /* Error ... */
+=======
+ if(out == NULL) /* Error ... */
+ if(!BIO_write_filename(out, "filename.txt")) /* Error ... */
+>>>>>>> origin/master
  BIO_printf(out, "Hello World\n");
  BIO_free(out);
 
@@ -128,7 +151,11 @@ BIO_seek() returns the same value as the underlying fseek() function:
 
 BIO_tell() returns the current file position.
 
+<<<<<<< HEAD
 BIO_read_filename(), BIO_write_filename(), BIO_append_filename() and
+=======
+BIO_read_filename(), BIO_write_filename(),  BIO_append_filename() and
+>>>>>>> origin/master
 BIO_rw_filename() return 1 for success or 0 for failure.
 
 =head1 BUGS
@@ -140,6 +167,7 @@ occurred this differs from other types of BIO which will typically return
 
 =head1 SEE ALSO
 
+<<<<<<< HEAD
 L<BIO_seek(3)>, L<BIO_tell(3)>,
 L<BIO_reset(3)>, L<BIO_flush(3)>,
 L<BIO_read(3)>,
@@ -157,3 +185,11 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
+=======
+L<BIO_seek(3)|BIO_seek(3)>, L<BIO_tell(3)|BIO_tell(3)>,
+L<BIO_reset(3)|BIO_reset(3)>, L<BIO_flush(3)|BIO_flush(3)>,
+L<BIO_read(3)|BIO_read(3)>,
+L<BIO_write(3)|BIO_write(3)>, L<BIO_puts(3)|BIO_puts(3)>,
+L<BIO_gets(3)|BIO_gets(3)>, L<BIO_printf(3)|BIO_printf(3)>,
+L<BIO_set_close(3)|BIO_set_close(3)>, L<BIO_get_close(3)|BIO_get_close(3)>
+>>>>>>> origin/master

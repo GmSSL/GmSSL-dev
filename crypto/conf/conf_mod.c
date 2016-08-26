@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,14 +6,79 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* conf_mod.c */
+/*
+ * Written by Stephen Henson (steve@openssl.org) for the OpenSSL project
+ * 2001.
+ */
+/* ====================================================================
+ * Copyright (c) 2001 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <ctype.h>
 #include <openssl/crypto.h>
+<<<<<<< HEAD
 #include "internal/cryptlib.h"
 #include "internal/conf.h"
 #include "internal/dso.h"
+=======
+#include "cryptlib.h"
+#include <openssl/conf.h>
+#include <openssl/dso.h>
+>>>>>>> origin/master
 #include <openssl/x509.h>
 
 #define DSO_mod_init_name "OPENSSL_init"
@@ -56,16 +122,28 @@ static STACK_OF(CONF_IMODULE) *initialized_modules = NULL;
 
 static void module_free(CONF_MODULE *md);
 static void module_finish(CONF_IMODULE *imod);
+<<<<<<< HEAD
 static int module_run(const CONF *cnf, const char *name, const char *value,
+=======
+static int module_run(const CONF *cnf, char *name, char *value,
+>>>>>>> origin/master
                       unsigned long flags);
 static CONF_MODULE *module_add(DSO *dso, const char *name,
                                conf_init_func *ifunc,
                                conf_finish_func *ffunc);
+<<<<<<< HEAD
 static CONF_MODULE *module_find(const char *name);
 static int module_init(CONF_MODULE *pmod, const char *name, const char *value,
                        const CONF *cnf);
 static CONF_MODULE *module_load_dso(const CONF *cnf, const char *name,
                                     const char *value);
+=======
+static CONF_MODULE *module_find(char *name);
+static int module_init(CONF_MODULE *pmod, char *name, char *value,
+                       const CONF *cnf);
+static CONF_MODULE *module_load_dso(const CONF *cnf, char *name, char *value,
+                                    unsigned long flags);
+>>>>>>> origin/master
 
 /* Main function: load modules from a CONF structure */
 
@@ -116,7 +194,11 @@ int CONF_modules_load_file(const char *filename, const char *appname,
     CONF *conf = NULL;
     int ret = 0;
     conf = NCONF_new(NULL);
+<<<<<<< HEAD
     if (conf == NULL)
+=======
+    if (!conf)
+>>>>>>> origin/master
         goto err;
 
     if (filename == NULL) {
@@ -145,7 +227,11 @@ int CONF_modules_load_file(const char *filename, const char *appname,
     return ret;
 }
 
+<<<<<<< HEAD
 static int module_run(const CONF *cnf, const char *name, const char *value,
+=======
+static int module_run(const CONF *cnf, char *name, char *value,
+>>>>>>> origin/master
                       unsigned long flags)
 {
     CONF_MODULE *md;
@@ -155,7 +241,11 @@ static int module_run(const CONF *cnf, const char *name, const char *value,
 
     /* Module not found: try to load DSO */
     if (!md && !(flags & CONF_MFLAGS_NO_DSO))
+<<<<<<< HEAD
         md = module_load_dso(cnf, name, value);
+=======
+        md = module_load_dso(cnf, name, value, flags);
+>>>>>>> origin/master
 
     if (!md) {
         if (!(flags & CONF_MFLAGS_SILENT)) {
@@ -181,13 +271,22 @@ static int module_run(const CONF *cnf, const char *name, const char *value,
 }
 
 /* Load a module from a DSO */
+<<<<<<< HEAD
 static CONF_MODULE *module_load_dso(const CONF *cnf,
                                     const char *name, const char *value)
+=======
+static CONF_MODULE *module_load_dso(const CONF *cnf, char *name, char *value,
+                                    unsigned long flags)
+>>>>>>> origin/master
 {
     DSO *dso = NULL;
     conf_init_func *ifunc;
     conf_finish_func *ffunc;
+<<<<<<< HEAD
     const char *path = NULL;
+=======
+    char *path = NULL;
+>>>>>>> origin/master
     int errcode = 0;
     CONF_MODULE *md;
     /* Look for alternative path in module section */
@@ -216,7 +315,12 @@ static CONF_MODULE *module_load_dso(const CONF *cnf,
     return md;
 
  err:
+<<<<<<< HEAD
     DSO_free(dso);
+=======
+    if (dso)
+        DSO_free(dso);
+>>>>>>> origin/master
     CONFerr(CONF_F_MODULE_LOAD_DSO, errcode);
     ERR_add_error_data(4, "module=", name, ", path=", path);
     return NULL;
@@ -231,11 +335,16 @@ static CONF_MODULE *module_add(DSO *dso, const char *name,
         supported_modules = sk_CONF_MODULE_new_null();
     if (supported_modules == NULL)
         return NULL;
+<<<<<<< HEAD
     tmod = OPENSSL_zalloc(sizeof(*tmod));
+=======
+    tmod = OPENSSL_malloc(sizeof(CONF_MODULE));
+>>>>>>> origin/master
     if (tmod == NULL)
         return NULL;
 
     tmod->dso = dso;
+<<<<<<< HEAD
     tmod->name = OPENSSL_strdup(name);
     tmod->init = ifunc;
     tmod->finish = ffunc;
@@ -246,6 +355,14 @@ static CONF_MODULE *module_add(DSO *dso, const char *name,
 
     if (!sk_CONF_MODULE_push(supported_modules, tmod)) {
         OPENSSL_free(tmod->name);
+=======
+    tmod->name = BUF_strdup(name);
+    tmod->init = ifunc;
+    tmod->finish = ffunc;
+    tmod->links = 0;
+
+    if (!sk_CONF_MODULE_push(supported_modules, tmod)) {
+>>>>>>> origin/master
         OPENSSL_free(tmod);
         return NULL;
     }
@@ -259,7 +376,11 @@ static CONF_MODULE *module_add(DSO *dso, const char *name,
  * initialized more than once.
  */
 
+<<<<<<< HEAD
 static CONF_MODULE *module_find(const char *name)
+=======
+static CONF_MODULE *module_find(char *name)
+>>>>>>> origin/master
 {
     CONF_MODULE *tmod;
     int i, nchar;
@@ -273,7 +394,11 @@ static CONF_MODULE *module_find(const char *name)
 
     for (i = 0; i < sk_CONF_MODULE_num(supported_modules); i++) {
         tmod = sk_CONF_MODULE_value(supported_modules, i);
+<<<<<<< HEAD
         if (strncmp(tmod->name, name, nchar) == 0)
+=======
+        if (!strncmp(tmod->name, name, nchar))
+>>>>>>> origin/master
             return tmod;
     }
 
@@ -282,7 +407,11 @@ static CONF_MODULE *module_find(const char *name)
 }
 
 /* initialize a module */
+<<<<<<< HEAD
 static int module_init(CONF_MODULE *pmod, const char *name, const char *value,
+=======
+static int module_init(CONF_MODULE *pmod, char *name, char *value,
+>>>>>>> origin/master
                        const CONF *cnf)
 {
     int ret = 1;
@@ -290,6 +419,7 @@ static int module_init(CONF_MODULE *pmod, const char *name, const char *value,
     CONF_IMODULE *imod = NULL;
 
     /* Otherwise add initialized module to list */
+<<<<<<< HEAD
     imod = OPENSSL_malloc(sizeof(*imod));
     if (imod == NULL)
         goto err;
@@ -297,6 +427,15 @@ static int module_init(CONF_MODULE *pmod, const char *name, const char *value,
     imod->pmod = pmod;
     imod->name = OPENSSL_strdup(name);
     imod->value = OPENSSL_strdup(value);
+=======
+    imod = OPENSSL_malloc(sizeof(CONF_IMODULE));
+    if (!imod)
+        goto err;
+
+    imod->pmod = pmod;
+    imod->name = BUF_strdup(name);
+    imod->value = BUF_strdup(value);
+>>>>>>> origin/master
     imod->usr_data = NULL;
 
     if (!imod->name || !imod->value)
@@ -336,8 +475,15 @@ static int module_init(CONF_MODULE *pmod, const char *name, const char *value,
 
  memerr:
     if (imod) {
+<<<<<<< HEAD
         OPENSSL_free(imod->name);
         OPENSSL_free(imod->value);
+=======
+        if (imod->name)
+            OPENSSL_free(imod->name);
+        if (imod->value)
+            OPENSSL_free(imod->value);
+>>>>>>> origin/master
         OPENSSL_free(imod);
     }
 
@@ -375,7 +521,12 @@ void CONF_modules_unload(int all)
 /* unload a single module */
 static void module_free(CONF_MODULE *md)
 {
+<<<<<<< HEAD
     DSO_free(md->dso);
+=======
+    if (md->dso)
+        DSO_free(md->dso);
+>>>>>>> origin/master
     OPENSSL_free(md->name);
     OPENSSL_free(md);
 }
@@ -397,8 +548,11 @@ void CONF_modules_finish(void)
 
 static void module_finish(CONF_IMODULE *imod)
 {
+<<<<<<< HEAD
     if (!imod)
         return;
+=======
+>>>>>>> origin/master
     if (imod->pmod->finish)
         imod->pmod->finish(imod);
     imod->pmod->links--;
@@ -418,7 +572,11 @@ int CONF_module_add(const char *name, conf_init_func *ifunc,
         return 0;
 }
 
+<<<<<<< HEAD
 void conf_modules_free_int(void)
+=======
+void CONF_modules_free(void)
+>>>>>>> origin/master
 {
     CONF_modules_finish();
     CONF_modules_unload(1);
@@ -480,7 +638,11 @@ char *CONF_get1_default_config_file(void)
 
     file = getenv("OPENSSL_CONF");
     if (file)
+<<<<<<< HEAD
         return OPENSSL_strdup(file);
+=======
+        return BUF_strdup(file);
+>>>>>>> origin/master
 
     len = strlen(X509_get_default_cert_area());
 #ifndef OPENSSL_SYS_VMS
@@ -490,6 +652,7 @@ char *CONF_get1_default_config_file(void)
 
     file = OPENSSL_malloc(len + 1);
 
+<<<<<<< HEAD
     if (file == NULL)
         return NULL;
     OPENSSL_strlcpy(file, X509_get_default_cert_area(), len + 1);
@@ -497,6 +660,15 @@ char *CONF_get1_default_config_file(void)
     OPENSSL_strlcat(file, "/", len + 1);
 #endif
     OPENSSL_strlcat(file, OPENSSL_CONF, len + 1);
+=======
+    if (!file)
+        return NULL;
+    BUF_strlcpy(file, X509_get_default_cert_area(), len + 1);
+#ifndef OPENSSL_SYS_VMS
+    BUF_strlcat(file, "/", len + 1);
+#endif
+    BUF_strlcat(file, OPENSSL_CONF, len + 1);
+>>>>>>> origin/master
 
     return file;
 }

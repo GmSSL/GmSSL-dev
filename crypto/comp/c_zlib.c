@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,15 +8,22 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/objects.h>
+<<<<<<< HEAD
 #include "internal/comp.h"
 #include <openssl/err.h>
 #include "internal/cryptlib_int.h"
 #include "internal/bio.h"
 #include "comp_lcl.h"
+=======
+#include <openssl/comp.h>
+#include <openssl/err.h>
+>>>>>>> origin/master
 
 COMP_METHOD *COMP_zlib(void);
 
@@ -26,6 +34,11 @@ static COMP_METHOD zlib_method_nozlib = {
     NULL,
     NULL,
     NULL,
+<<<<<<< HEAD
+=======
+    NULL,
+    NULL,
+>>>>>>> origin/master
 };
 
 #ifndef ZLIB
@@ -43,12 +56,22 @@ static int zlib_stateful_expand_block(COMP_CTX *ctx, unsigned char *out,
                                       unsigned int olen, unsigned char *in,
                                       unsigned int ilen);
 
+<<<<<<< HEAD
 /* memory allocations functions for zlib initialisation */
+=======
+/* memory allocations functions for zlib intialization */
+>>>>>>> origin/master
 static void *zlib_zalloc(void *opaque, unsigned int no, unsigned int size)
 {
     void *p;
 
+<<<<<<< HEAD
     p = OPENSSL_zalloc(no * size);
+=======
+    p = OPENSSL_malloc(no * size);
+    if (p)
+        memset(p, 0, no * size);
+>>>>>>> origin/master
     return p;
 }
 
@@ -57,6 +80,31 @@ static void zlib_zfree(void *opaque, void *address)
     OPENSSL_free(address);
 }
 
+<<<<<<< HEAD
+=======
+# if 0
+static int zlib_compress_block(COMP_CTX *ctx, unsigned char *out,
+                               unsigned int olen, unsigned char *in,
+                               unsigned int ilen);
+static int zlib_expand_block(COMP_CTX *ctx, unsigned char *out,
+                             unsigned int olen, unsigned char *in,
+                             unsigned int ilen);
+
+static int zz_uncompress(Bytef *dest, uLongf * destLen, const Bytef *source,
+                         uLong sourceLen);
+
+static COMP_METHOD zlib_stateless_method = {
+    NID_zlib_compression,
+    LN_zlib_compression,
+    NULL,
+    NULL,
+    zlib_compress_block,
+    zlib_expand_block,
+    NULL,
+    NULL,
+};
+# endif
+>>>>>>> origin/master
 
 static COMP_METHOD zlib_stateful_method = {
     NID_zlib_compression,
@@ -64,7 +112,13 @@ static COMP_METHOD zlib_stateful_method = {
     zlib_stateful_init,
     zlib_stateful_finish,
     zlib_stateful_compress_block,
+<<<<<<< HEAD
     zlib_stateful_expand_block
+=======
+    zlib_stateful_expand_block,
+    NULL,
+    NULL,
+>>>>>>> origin/master
 };
 
 /*
@@ -79,7 +133,11 @@ static COMP_METHOD zlib_stateful_method = {
                                  * OPENSSL_SYS_WIN32) */
 
 # ifdef ZLIB_SHARED
+<<<<<<< HEAD
 #  include "internal/dso.h"
+=======
+#  include <openssl/dso.h>
+>>>>>>> origin/master
 
 /* Function pointers */
 typedef int (*compress_ft) (Bytef *dest, uLongf * destLen,
@@ -120,10 +178,20 @@ struct zlib_state {
     z_stream ostream;
 };
 
+<<<<<<< HEAD
 static int zlib_stateful_init(COMP_CTX *ctx)
 {
     int err;
     struct zlib_state *state = OPENSSL_zalloc(sizeof(*state));
+=======
+static int zlib_stateful_ex_idx = -1;
+
+static int zlib_stateful_init(COMP_CTX *ctx)
+{
+    int err;
+    struct zlib_state *state =
+        (struct zlib_state *)OPENSSL_malloc(sizeof(struct zlib_state));
+>>>>>>> origin/master
 
     if (state == NULL)
         goto err;
@@ -133,6 +201,11 @@ static int zlib_stateful_init(COMP_CTX *ctx)
     state->istream.opaque = Z_NULL;
     state->istream.next_in = Z_NULL;
     state->istream.next_out = Z_NULL;
+<<<<<<< HEAD
+=======
+    state->istream.avail_in = 0;
+    state->istream.avail_out = 0;
+>>>>>>> origin/master
     err = inflateInit_(&state->istream, ZLIB_VERSION, sizeof(z_stream));
     if (err != Z_OK)
         goto err;
@@ -142,24 +215,48 @@ static int zlib_stateful_init(COMP_CTX *ctx)
     state->ostream.opaque = Z_NULL;
     state->ostream.next_in = Z_NULL;
     state->ostream.next_out = Z_NULL;
+<<<<<<< HEAD
+=======
+    state->ostream.avail_in = 0;
+    state->ostream.avail_out = 0;
+>>>>>>> origin/master
     err = deflateInit_(&state->ostream, Z_DEFAULT_COMPRESSION,
                        ZLIB_VERSION, sizeof(z_stream));
     if (err != Z_OK)
         goto err;
 
+<<<<<<< HEAD
     ctx->data = state;
     return 1;
  err:
     OPENSSL_free(state);
+=======
+    CRYPTO_new_ex_data(CRYPTO_EX_INDEX_COMP, ctx, &ctx->ex_data);
+    CRYPTO_set_ex_data(&ctx->ex_data, zlib_stateful_ex_idx, state);
+    return 1;
+ err:
+    if (state)
+        OPENSSL_free(state);
+>>>>>>> origin/master
     return 0;
 }
 
 static void zlib_stateful_finish(COMP_CTX *ctx)
 {
+<<<<<<< HEAD
     struct zlib_state *state = ctx->data;
     inflateEnd(&state->istream);
     deflateEnd(&state->ostream);
     OPENSSL_free(state);
+=======
+    struct zlib_state *state =
+        (struct zlib_state *)CRYPTO_get_ex_data(&ctx->ex_data,
+                                                zlib_stateful_ex_idx);
+    inflateEnd(&state->istream);
+    deflateEnd(&state->ostream);
+    OPENSSL_free(state);
+    CRYPTO_free_ex_data(CRYPTO_EX_INDEX_COMP, ctx, &ctx->ex_data);
+>>>>>>> origin/master
 }
 
 static int zlib_stateful_compress_block(COMP_CTX *ctx, unsigned char *out,
@@ -167,7 +264,13 @@ static int zlib_stateful_compress_block(COMP_CTX *ctx, unsigned char *out,
                                         unsigned int ilen)
 {
     int err = Z_OK;
+<<<<<<< HEAD
     struct zlib_state *state = ctx->data;
+=======
+    struct zlib_state *state =
+        (struct zlib_state *)CRYPTO_get_ex_data(&ctx->ex_data,
+                                                zlib_stateful_ex_idx);
+>>>>>>> origin/master
 
     if (state == NULL)
         return -1;
@@ -180,6 +283,14 @@ static int zlib_stateful_compress_block(COMP_CTX *ctx, unsigned char *out,
         err = deflate(&state->ostream, Z_SYNC_FLUSH);
     if (err != Z_OK)
         return -1;
+<<<<<<< HEAD
+=======
+# ifdef DEBUG_ZLIB
+    fprintf(stderr, "compress(%4d)->%4d %s\n",
+            ilen, olen - state->ostream.avail_out,
+            (ilen != olen - state->ostream.avail_out) ? "zlib" : "clear");
+# endif
+>>>>>>> origin/master
     return olen - state->ostream.avail_out;
 }
 
@@ -188,7 +299,14 @@ static int zlib_stateful_expand_block(COMP_CTX *ctx, unsigned char *out,
                                       unsigned int ilen)
 {
     int err = Z_OK;
+<<<<<<< HEAD
     struct zlib_state *state = ctx->data;
+=======
+
+    struct zlib_state *state =
+        (struct zlib_state *)CRYPTO_get_ex_data(&ctx->ex_data,
+                                                zlib_stateful_ex_idx);
+>>>>>>> origin/master
 
     if (state == NULL)
         return 0;
@@ -201,9 +319,111 @@ static int zlib_stateful_expand_block(COMP_CTX *ctx, unsigned char *out,
         err = inflate(&state->istream, Z_SYNC_FLUSH);
     if (err != Z_OK)
         return -1;
+<<<<<<< HEAD
     return olen - state->istream.avail_out;
 }
 
+=======
+# ifdef DEBUG_ZLIB
+    fprintf(stderr, "expand(%4d)->%4d %s\n",
+            ilen, olen - state->istream.avail_out,
+            (ilen != olen - state->istream.avail_out) ? "zlib" : "clear");
+# endif
+    return olen - state->istream.avail_out;
+}
+
+# if 0
+static int zlib_compress_block(COMP_CTX *ctx, unsigned char *out,
+                               unsigned int olen, unsigned char *in,
+                               unsigned int ilen)
+{
+    unsigned long l;
+    int i;
+    int clear = 1;
+
+    if (ilen > 128) {
+        out[0] = 1;
+        l = olen - 1;
+        i = compress(&(out[1]), &l, in, (unsigned long)ilen);
+        if (i != Z_OK)
+            return (-1);
+        if (ilen > l) {
+            clear = 0;
+            l++;
+        }
+    }
+    if (clear) {
+        out[0] = 0;
+        memcpy(&(out[1]), in, ilen);
+        l = ilen + 1;
+    }
+#  ifdef DEBUG_ZLIB
+    fprintf(stderr, "compress(%4d)->%4d %s\n",
+            ilen, (int)l, (clear) ? "clear" : "zlib");
+#  endif
+    return ((int)l);
+}
+
+static int zlib_expand_block(COMP_CTX *ctx, unsigned char *out,
+                             unsigned int olen, unsigned char *in,
+                             unsigned int ilen)
+{
+    unsigned long l;
+    int i;
+
+    if (in[0]) {
+        l = olen;
+        i = zz_uncompress(out, &l, &(in[1]), (unsigned long)ilen - 1);
+        if (i != Z_OK)
+            return (-1);
+    } else {
+        memcpy(out, &(in[1]), ilen - 1);
+        l = ilen - 1;
+    }
+#  ifdef DEBUG_ZLIB
+    fprintf(stderr, "expand  (%4d)->%4d %s\n",
+            ilen, (int)l, in[0] ? "zlib" : "clear");
+#  endif
+    return ((int)l);
+}
+
+static int zz_uncompress(Bytef *dest, uLongf * destLen, const Bytef *source,
+                         uLong sourceLen)
+{
+    z_stream stream;
+    int err;
+
+    stream.next_in = (Bytef *)source;
+    stream.avail_in = (uInt) sourceLen;
+    /* Check for source > 64K on 16-bit machine: */
+    if ((uLong) stream.avail_in != sourceLen)
+        return Z_BUF_ERROR;
+
+    stream.next_out = dest;
+    stream.avail_out = (uInt) * destLen;
+    if ((uLong) stream.avail_out != *destLen)
+        return Z_BUF_ERROR;
+
+    stream.zalloc = (alloc_func) 0;
+    stream.zfree = (free_func) 0;
+
+    err = inflateInit_(&stream, ZLIB_VERSION, sizeof(z_stream));
+    if (err != Z_OK)
+        return err;
+
+    err = inflate(&stream, Z_FINISH);
+    if (err != Z_STREAM_END) {
+        inflateEnd(&stream);
+        return err;
+    }
+    *destLen = stream.total_out;
+
+    err = inflateEnd(&stream);
+    return err;
+}
+# endif
+
+>>>>>>> origin/master
 #endif
 
 COMP_METHOD *COMP_zlib(void)
@@ -211,6 +431,7 @@ COMP_METHOD *COMP_zlib(void)
     COMP_METHOD *meth = &zlib_method_nozlib;
 
 #ifdef ZLIB_SHARED
+<<<<<<< HEAD
     /* LIBZ may be externally defined, and we should respect that value */
 # ifndef LIBZ
 #  if defined(OPENSSL_SYS_WINDOWS) || defined(OPENSSL_SYS_WIN32)
@@ -224,6 +445,14 @@ COMP_METHOD *COMP_zlib(void)
 
     if (!zlib_loaded) {
         zlib_dso = DSO_load(NULL, LIBZ, NULL, 0);
+=======
+    if (!zlib_loaded) {
+# if defined(OPENSSL_SYS_WINDOWS) || defined(OPENSSL_SYS_WIN32)
+        zlib_dso = DSO_load(NULL, "ZLIB1", NULL, 0);
+# else
+        zlib_dso = DSO_load(NULL, "z", NULL, 0);
+# endif
+>>>>>>> origin/master
         if (zlib_dso != NULL) {
             p_compress = (compress_ft) DSO_bind_func(zlib_dso, "compress");
             p_inflateEnd
@@ -242,6 +471,7 @@ COMP_METHOD *COMP_zlib(void)
                 && p_inflateInit_ && p_deflateEnd
                 && p_deflate && p_deflateInit_ && p_zError)
                 zlib_loaded++;
+<<<<<<< HEAD
 
             if (!OPENSSL_init_crypto(OPENSSL_INIT_ZLIB, NULL)) {
                 comp_zlib_cleanup_int();
@@ -254,17 +484,54 @@ COMP_METHOD *COMP_zlib(void)
 #endif
 #if defined(ZLIB)
     meth = &zlib_stateful_method;
+=======
+        }
+    }
+#endif
+#ifdef ZLIB_SHARED
+    if (zlib_loaded)
+#endif
+#if defined(ZLIB) || defined(ZLIB_SHARED)
+    {
+        /*
+         * init zlib_stateful_ex_idx here so that in a multi-process
+         * application it's enough to intialize openssl before forking (idx
+         * will be inherited in all the children)
+         */
+        if (zlib_stateful_ex_idx == -1) {
+            CRYPTO_w_lock(CRYPTO_LOCK_COMP);
+            if (zlib_stateful_ex_idx == -1)
+                zlib_stateful_ex_idx =
+                    CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_COMP,
+                                            0, NULL, NULL, NULL, NULL);
+            CRYPTO_w_unlock(CRYPTO_LOCK_COMP);
+            if (zlib_stateful_ex_idx == -1)
+                goto err;
+        }
+
+        meth = &zlib_stateful_method;
+    }
+ err:
+>>>>>>> origin/master
 #endif
 
     return (meth);
 }
 
+<<<<<<< HEAD
 void comp_zlib_cleanup_int(void)
 {
 #ifdef ZLIB_SHARED
     if (zlib_dso != NULL)
         DSO_free(zlib_dso);
     zlib_dso = NULL;
+=======
+void COMP_zlib_cleanup(void)
+{
+#ifdef ZLIB_SHARED
+    if (zlib_dso)
+        DSO_free(zlib_dso);
+>>>>>>> origin/master
 #endif
 }
 
@@ -294,7 +561,11 @@ static int bio_zlib_write(BIO *b, const char *in, int inl);
 static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr);
 static long bio_zlib_callback_ctrl(BIO *b, int cmd, bio_info_cb *fp);
 
+<<<<<<< HEAD
 static const BIO_METHOD bio_meth_zlib = {
+=======
+static BIO_METHOD bio_meth_zlib = {
+>>>>>>> origin/master
     BIO_TYPE_COMP,
     "zlib",
     bio_zlib_write,
@@ -307,7 +578,11 @@ static const BIO_METHOD bio_meth_zlib = {
     bio_zlib_callback_ctrl
 };
 
+<<<<<<< HEAD
 const BIO_METHOD *BIO_f_zlib(void)
+=======
+BIO_METHOD *BIO_f_zlib(void)
+>>>>>>> origin/master
 {
     return &bio_meth_zlib;
 }
@@ -322,21 +597,49 @@ static int bio_zlib_new(BIO *bi)
         return 0;
     }
 # endif
+<<<<<<< HEAD
     ctx = OPENSSL_zalloc(sizeof(*ctx));
     if (ctx == NULL) {
         COMPerr(COMP_F_BIO_ZLIB_NEW, ERR_R_MALLOC_FAILURE);
         return 0;
     }
+=======
+    ctx = OPENSSL_malloc(sizeof(BIO_ZLIB_CTX));
+    if (!ctx) {
+        COMPerr(COMP_F_BIO_ZLIB_NEW, ERR_R_MALLOC_FAILURE);
+        return 0;
+    }
+    ctx->ibuf = NULL;
+    ctx->obuf = NULL;
+>>>>>>> origin/master
     ctx->ibufsize = ZLIB_DEFAULT_BUFSIZE;
     ctx->obufsize = ZLIB_DEFAULT_BUFSIZE;
     ctx->zin.zalloc = Z_NULL;
     ctx->zin.zfree = Z_NULL;
+<<<<<<< HEAD
     ctx->zout.zalloc = Z_NULL;
     ctx->zout.zfree = Z_NULL;
     ctx->comp_level = Z_DEFAULT_COMPRESSION;
     BIO_set_init(bi, 1);
     BIO_set_data(bi, ctx);
 
+=======
+    ctx->zin.next_in = NULL;
+    ctx->zin.avail_in = 0;
+    ctx->zin.next_out = NULL;
+    ctx->zin.avail_out = 0;
+    ctx->zout.zalloc = Z_NULL;
+    ctx->zout.zfree = Z_NULL;
+    ctx->zout.next_in = NULL;
+    ctx->zout.avail_in = 0;
+    ctx->zout.next_out = NULL;
+    ctx->zout.avail_out = 0;
+    ctx->odone = 0;
+    ctx->comp_level = Z_DEFAULT_COMPRESSION;
+    bi->init = 1;
+    bi->ptr = (char *)ctx;
+    bi->flags = 0;
+>>>>>>> origin/master
     return 1;
 }
 
@@ -345,7 +648,11 @@ static int bio_zlib_free(BIO *bi)
     BIO_ZLIB_CTX *ctx;
     if (!bi)
         return 0;
+<<<<<<< HEAD
     ctx = BIO_get_data(bi);
+=======
+    ctx = (BIO_ZLIB_CTX *) bi->ptr;
+>>>>>>> origin/master
     if (ctx->ibuf) {
         /* Destroy decompress context */
         inflateEnd(&ctx->zin);
@@ -357,9 +664,15 @@ static int bio_zlib_free(BIO *bi)
         OPENSSL_free(ctx->obuf);
     }
     OPENSSL_free(ctx);
+<<<<<<< HEAD
     BIO_set_data(bi, NULL);
     BIO_set_init(bi, 0);
 
+=======
+    bi->ptr = NULL;
+    bi->init = 0;
+    bi->flags = 0;
+>>>>>>> origin/master
     return 1;
 }
 
@@ -368,16 +681,26 @@ static int bio_zlib_read(BIO *b, char *out, int outl)
     BIO_ZLIB_CTX *ctx;
     int ret;
     z_stream *zin;
+<<<<<<< HEAD
     BIO *next = BIO_next(b);
 
     if (!out || !outl)
         return 0;
     ctx = BIO_get_data(b);
+=======
+    if (!out || !outl)
+        return 0;
+    ctx = (BIO_ZLIB_CTX *) b->ptr;
+>>>>>>> origin/master
     zin = &ctx->zin;
     BIO_clear_retry_flags(b);
     if (!ctx->ibuf) {
         ctx->ibuf = OPENSSL_malloc(ctx->ibufsize);
+<<<<<<< HEAD
         if (ctx->ibuf == NULL) {
+=======
+        if (!ctx->ibuf) {
+>>>>>>> origin/master
             COMPerr(COMP_F_BIO_ZLIB_READ, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -407,7 +730,11 @@ static int bio_zlib_read(BIO *b, char *out, int outl)
          * No data in input buffer try to read some in, if an error then
          * return the total data read.
          */
+<<<<<<< HEAD
         ret = BIO_read(next, ctx->ibuf, ctx->ibufsize);
+=======
+        ret = BIO_read(b->next_bio, ctx->ibuf, ctx->ibufsize);
+>>>>>>> origin/master
         if (ret <= 0) {
             /* Total data read */
             int tot = outl - zin->avail_out;
@@ -426,11 +753,17 @@ static int bio_zlib_write(BIO *b, const char *in, int inl)
     BIO_ZLIB_CTX *ctx;
     int ret;
     z_stream *zout;
+<<<<<<< HEAD
     BIO *next = BIO_next(b);
 
     if (!in || !inl)
         return 0;
     ctx = BIO_get_data(b);
+=======
+    if (!in || !inl)
+        return 0;
+    ctx = (BIO_ZLIB_CTX *) b->ptr;
+>>>>>>> origin/master
     if (ctx->odone)
         return 0;
     zout = &ctx->zout;
@@ -438,7 +771,11 @@ static int bio_zlib_write(BIO *b, const char *in, int inl)
     if (!ctx->obuf) {
         ctx->obuf = OPENSSL_malloc(ctx->obufsize);
         /* Need error here */
+<<<<<<< HEAD
         if (ctx->obuf == NULL) {
+=======
+        if (!ctx->obuf) {
+>>>>>>> origin/master
             COMPerr(COMP_F_BIO_ZLIB_WRITE, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -454,7 +791,11 @@ static int bio_zlib_write(BIO *b, const char *in, int inl)
     for (;;) {
         /* If data in output buffer write it first */
         while (ctx->ocount) {
+<<<<<<< HEAD
             ret = BIO_write(next, ctx->optr, ctx->ocount);
+=======
+            ret = BIO_write(b->next_bio, ctx->optr, ctx->ocount);
+>>>>>>> origin/master
             if (ret <= 0) {
                 /* Total data written */
                 int tot = inl - zout->avail_in;
@@ -493,9 +834,13 @@ static int bio_zlib_flush(BIO *b)
     BIO_ZLIB_CTX *ctx;
     int ret;
     z_stream *zout;
+<<<<<<< HEAD
     BIO *next = BIO_next(b);
 
     ctx = BIO_get_data(b);
+=======
+    ctx = (BIO_ZLIB_CTX *) b->ptr;
+>>>>>>> origin/master
     /* If no data written or already flush show success */
     if (!ctx->obuf || (ctx->odone && !ctx->ocount))
         return 1;
@@ -507,7 +852,11 @@ static int bio_zlib_flush(BIO *b)
     for (;;) {
         /* If data in output buffer write it first */
         while (ctx->ocount) {
+<<<<<<< HEAD
             ret = BIO_write(next, ctx->optr, ctx->ocount);
+=======
+            ret = BIO_write(b->next_bio, ctx->optr, ctx->ocount);
+>>>>>>> origin/master
             if (ret <= 0) {
                 BIO_copy_next_retry(b);
                 return ret;
@@ -542,11 +891,17 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
     BIO_ZLIB_CTX *ctx;
     int ret, *ip;
     int ibs, obs;
+<<<<<<< HEAD
     BIO *next = BIO_next(b);
 
     if (next == NULL)
         return 0;
     ctx = BIO_get_data(b);
+=======
+    if (!b->next_bio)
+        return 0;
+    ctx = (BIO_ZLIB_CTX *) b->ptr;
+>>>>>>> origin/master
     switch (cmd) {
 
     case BIO_CTRL_RESET:
@@ -558,7 +913,11 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
     case BIO_CTRL_FLUSH:
         ret = bio_zlib_flush(b);
         if (ret > 0)
+<<<<<<< HEAD
             ret = BIO_flush(next);
+=======
+            ret = BIO_flush(b->next_bio);
+>>>>>>> origin/master
         break;
 
     case BIO_C_SET_BUFF_SIZE:
@@ -576,14 +935,28 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
         }
 
         if (ibs != -1) {
+<<<<<<< HEAD
             OPENSSL_free(ctx->ibuf);
             ctx->ibuf = NULL;
+=======
+            if (ctx->ibuf) {
+                OPENSSL_free(ctx->ibuf);
+                ctx->ibuf = NULL;
+            }
+>>>>>>> origin/master
             ctx->ibufsize = ibs;
         }
 
         if (obs != -1) {
+<<<<<<< HEAD
             OPENSSL_free(ctx->obuf);
             ctx->obuf = NULL;
+=======
+            if (ctx->obuf) {
+                OPENSSL_free(ctx->obuf);
+                ctx->obuf = NULL;
+            }
+>>>>>>> origin/master
             ctx->obufsize = obs;
         }
         ret = 1;
@@ -591,12 +964,20 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
 
     case BIO_C_DO_STATE_MACHINE:
         BIO_clear_retry_flags(b);
+<<<<<<< HEAD
         ret = BIO_ctrl(next, cmd, num, ptr);
+=======
+        ret = BIO_ctrl(b->next_bio, cmd, num, ptr);
+>>>>>>> origin/master
         BIO_copy_next_retry(b);
         break;
 
     default:
+<<<<<<< HEAD
         ret = BIO_ctrl(next, cmd, num, ptr);
+=======
+        ret = BIO_ctrl(b->next_bio, cmd, num, ptr);
+>>>>>>> origin/master
         break;
 
     }
@@ -606,10 +987,16 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
 
 static long bio_zlib_callback_ctrl(BIO *b, int cmd, bio_info_cb *fp)
 {
+<<<<<<< HEAD
     BIO *next = BIO_next(b);
     if (next == NULL)
         return 0;
     return BIO_callback_ctrl(next, cmd, fp);
+=======
+    if (!b->next_bio)
+        return 0;
+    return BIO_callback_ctrl(b->next_bio, cmd, fp);
+>>>>>>> origin/master
 }
 
 #endif

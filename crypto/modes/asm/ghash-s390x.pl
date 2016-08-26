@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -54,7 +58,11 @@ if ($flavour =~ /3[12]/) {
 	$g="g";
 }
 
+<<<<<<< HEAD
 while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {}
+=======
+while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
+>>>>>>> origin/master
 open STDOUT,">$output";
 
 $softonly=0;
@@ -92,7 +100,13 @@ $code.=<<___ if(!$softonly && 0);	# hardware is slow for single block...
 	tmhl	%r0,0x4000	# check for message-security-assist
 	jz	.Lsoft_gmult
 	lghi	%r0,0
+<<<<<<< HEAD
 	lg	%r1,24(%r1)	# load second word of kimd capabilities vector
+=======
+	la	%r1,16($sp)
+	.long	0xb93e0004	# kimd %r0,%r4
+	lg	%r1,24($sp)
+>>>>>>> origin/master
 	tmhh	%r1,0x4000	# check for function 65
 	jz	.Lsoft_gmult
 	stg	%r0,16($sp)	# arrange 16 bytes of zero input

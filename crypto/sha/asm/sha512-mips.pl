@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -59,7 +63,10 @@
 $flavour = shift || "o32"; # supported flavours are o32,n32,64,nubi32,nubi64
 
 if ($flavour =~ /64|n32/i) {
+<<<<<<< HEAD
 	$PTR_LA="dla";
+=======
+>>>>>>> origin/master
 	$PTR_ADD="dadd";	# incidentally works even on n32
 	$PTR_SUB="dsub";	# incidentally works even on n32
 	$REG_S="sd";
@@ -67,7 +74,10 @@ if ($flavour =~ /64|n32/i) {
 	$PTR_SLL="dsll";	# incidentally works even on n32
 	$SZREG=8;
 } else {
+<<<<<<< HEAD
 	$PTR_LA="la";
+=======
+>>>>>>> origin/master
 	$PTR_ADD="add";
 	$PTR_SUB="sub";
 	$REG_S="sw";
@@ -83,7 +93,11 @@ $pf = ($flavour =~ /nubi/i) ? $t0 : $t2;
 
 $big_endian=(`echo MIPSEL | $ENV{CC} -E -`=~/MIPSEL/)?1:0 if ($ENV{CC});
 
+<<<<<<< HEAD
 for (@ARGV) {	$output=$_ if (/\w[\w\-]*\.\w+$/);	}
+=======
+for (@ARGV) {	$output=$_ if (/^\w[\w\-]*\.\w+$/);	}
+>>>>>>> origin/master
 open STDOUT,">$output";
 
 if (!defined($big_endian)) { $big_endian=(unpack('L',pack('N',1))==1); }
@@ -295,7 +309,11 @@ ___
 }
 
 $FRAMESIZE=16*$SZ+16*$SZREG;
+<<<<<<< HEAD
 $SAVED_REGS_MASK = ($flavour =~ /nubi/i) ? "0xc0fff008" : "0xc0ff0000";
+=======
+$SAVED_REGS_MASK = ($flavour =~ /nubi/i) ? 0xc0fff008 : 0xc0ff0000;
+>>>>>>> origin/master
 
 $code.=<<___;
 #ifdef OPENSSL_FIPSCANISTER
@@ -352,7 +370,11 @@ $code.=<<___ if ($flavour !~ /o32/i);	# non-o32 PIC-ification
 ___
 $code.=<<___;
 	.set	reorder
+<<<<<<< HEAD
 	$PTR_LA	$Ktbl,K${label}		# PIC-ified 'load address'
+=======
+	la	$Ktbl,K${label}		# PIC-ified 'load address'
+>>>>>>> origin/master
 
 	$LD	$A,0*$SZ($ctx)		# load context
 	$LD	$B,1*$SZ($ctx)

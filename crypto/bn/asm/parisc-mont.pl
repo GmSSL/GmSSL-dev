@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -133,7 +137,11 @@ $fp="%r3";
 $hi1="%r2";
 $hi0="%r1";
 
+<<<<<<< HEAD
 $xfer=$n0;	# accommodates [-16..15] offset in fld[dw]s
+=======
+$xfer=$n0;	# accomodates [-16..15] offset in fld[dw]s
+>>>>>>> origin/master
 
 $fm0="%fr4";	$fti=$fm0;
 $fbi="%fr5L";

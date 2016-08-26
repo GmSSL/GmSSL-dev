@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 /* Simple S/MIME verification example */
 #include <openssl/pem.h>
 #include <openssl/pkcs7.h>
@@ -70,14 +73,37 @@ int main(int argc, char **argv)
     ret = 0;
 
  err:
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     if (ret) {
         fprintf(stderr, "Error Verifying Data\n");
         ERR_print_errors_fp(stderr);
     }
+<<<<<<< HEAD
     PKCS7_free(p7);
     X509_free(cacert);
     BIO_free(in);
     BIO_free(out);
     BIO_free(tbio);
     return ret;
+=======
+
+    if (p7)
+        PKCS7_free(p7);
+
+    if (cacert)
+        X509_free(cacert);
+
+    if (in)
+        BIO_free(in);
+    if (out)
+        BIO_free(out);
+    if (tbio)
+        BIO_free(tbio);
+
+    return ret;
+
+>>>>>>> origin/master
 }

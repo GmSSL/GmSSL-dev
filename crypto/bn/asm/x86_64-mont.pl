@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -57,7 +61,11 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
+<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
+=======
+open OUT,"| \"$^X\" $xlate $flavour $output";
+>>>>>>> origin/master
 *STDOUT=*OUT;
 
 if (`$ENV{CC} -Wa,-v -c -o /dev/null -x assembler /dev/null 2>&1`
@@ -75,11 +83,14 @@ if (!$addx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	$addx = ($1>=12);
 }
 
+<<<<<<< HEAD
 if (!$addx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9])\.([0-9]+)/) {
 	my $ver = $2 + $3/100.0;	# 3.1->3.01, 3.10->3.10
 	$addx = ($ver>=3.03);
 }
 
+=======
+>>>>>>> origin/master
 # int bn_mul_mont(
 $rp="%rdi";	# BN_ULONG *rp,
 $ap="%rsi";	# const BN_ULONG *ap,
@@ -104,8 +115,11 @@ $code=<<___;
 .type	bn_mul_mont,\@function,6
 .align	16
 bn_mul_mont:
+<<<<<<< HEAD
 	mov	${num}d,${num}d
 	mov	%rsp,%rax
+=======
+>>>>>>> origin/master
 	test	\$3,${num}d
 	jnz	.Lmul_enter
 	cmp	\$8,${num}d
@@ -130,6 +144,7 @@ $code.=<<___;
 	push	%r14
 	push	%r15
 
+<<<<<<< HEAD
 	neg	$num
 	mov	%rsp,%r11
 	lea	-16(%rsp,$num,8),%r10	# future alloca(8*(num+2))
@@ -161,6 +176,16 @@ $code.=<<___;
 .Lmul_page_walk_done:
 
 	mov	%rax,8(%rsp,$num,8)	# tp[num+1]=%rsp
+=======
+	mov	${num}d,${num}d
+	lea	2($num),%r10
+	mov	%rsp,%r11
+	neg	%r10
+	lea	(%rsp,%r10,8),%rsp	# tp=alloca(8*(num+2))
+	and	\$-1024,%rsp		# minimize TLB usage
+
+	mov	%r11,8(%rsp,$num,8)	# tp[num+1]=%rsp
+>>>>>>> origin/master
 .Lmul_body:
 	mov	$bp,%r12		# reassign $bp
 ___
@@ -332,6 +357,7 @@ $code.=<<___;
 
 	mov	8(%rsp,$num,8),%rsi	# restore %rsp
 	mov	\$1,%rax
+<<<<<<< HEAD
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -339,6 +365,15 @@ $code.=<<___;
 	mov	-16(%rsi),%rbp
 	mov	-8(%rsi),%rbx
 	lea	(%rsi),%rsp
+=======
+	mov	(%rsi),%r15
+	mov	8(%rsi),%r14
+	mov	16(%rsi),%r13
+	mov	24(%rsi),%r12
+	mov	32(%rsi),%rbp
+	mov	40(%rsi),%rbx
+	lea	48(%rsi),%rsp
+>>>>>>> origin/master
 .Lmul_epilogue:
 	ret
 .size	bn_mul_mont,.-bn_mul_mont
@@ -350,8 +385,11 @@ $code.=<<___;
 .type	bn_mul4x_mont,\@function,6
 .align	16
 bn_mul4x_mont:
+<<<<<<< HEAD
 	mov	${num}d,${num}d
 	mov	%rsp,%rax
+=======
+>>>>>>> origin/master
 .Lmul4x_enter:
 ___
 $code.=<<___ if ($addx);
@@ -367,6 +405,7 @@ $code.=<<___;
 	push	%r14
 	push	%r15
 
+<<<<<<< HEAD
 	neg	$num
 	mov	%rsp,%r11
 	lea	-32(%rsp,$num,8),%r10	# future alloca(8*(num+4))
@@ -389,6 +428,16 @@ $code.=<<___;
 .Lmul4x_page_walk_done:
 
 	mov	%rax,8(%rsp,$num,8)	# tp[num+1]=%rsp
+=======
+	mov	${num}d,${num}d
+	lea	4($num),%r10
+	mov	%rsp,%r11
+	neg	%r10
+	lea	(%rsp,%r10,8),%rsp	# tp=alloca(8*(num+4))
+	and	\$-1024,%rsp		# minimize TLB usage
+
+	mov	%r11,8(%rsp,$num,8)	# tp[num+1]=%rsp
+>>>>>>> origin/master
 .Lmul4x_body:
 	mov	$rp,16(%rsp,$num,8)	# tp[num+2]=$rp
 	mov	%rdx,%r12		# reassign $bp
@@ -768,6 +817,7 @@ ___
 $code.=<<___;
 	mov	8(%rsp,$num,8),%rsi	# restore %rsp
 	mov	\$1,%rax
+<<<<<<< HEAD
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -775,6 +825,15 @@ $code.=<<___;
 	mov	-16(%rsi),%rbp
 	mov	-8(%rsi),%rbx
 	lea	(%rsi),%rsp
+=======
+	mov	(%rsi),%r15
+	mov	8(%rsi),%r14
+	mov	16(%rsi),%r13
+	mov	24(%rsi),%r12
+	mov	32(%rsi),%rbp
+	mov	40(%rsi),%rbx
+	lea	48(%rsi),%rsp
+>>>>>>> origin/master
 .Lmul4x_epilogue:
 	ret
 .size	bn_mul4x_mont,.-bn_mul4x_mont
@@ -804,15 +863,23 @@ $code.=<<___;
 .type	bn_sqr8x_mont,\@function,6
 .align	32
 bn_sqr8x_mont:
+<<<<<<< HEAD
 	mov	%rsp,%rax
 .Lsqr8x_enter:
+=======
+.Lsqr8x_enter:
+	mov	%rsp,%rax
+>>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
+<<<<<<< HEAD
 .Lsqr8x_prologue:
+=======
+>>>>>>> origin/master
 
 	mov	${num}d,%r10d
 	shl	\$3,${num}d		# convert $num to bytes
@@ -824,19 +891,29 @@ bn_sqr8x_mont:
 	# 4096. this is done to allow memory disambiguation logic
 	# do its job.
 	#
+<<<<<<< HEAD
 	lea	-64(%rsp,$num,2),%r11
 	mov	%rsp,%rbp
+=======
+	lea	-64(%rsp,$num,4),%r11
+>>>>>>> origin/master
 	mov	($n0),$n0		# *n0
 	sub	$aptr,%r11
 	and	\$4095,%r11
 	cmp	%r11,%r10
 	jb	.Lsqr8x_sp_alt
+<<<<<<< HEAD
 	sub	%r11,%rbp		# align with $aptr
 	lea	-64(%rbp,$num,2),%rbp	# future alloca(frame+2*$num)
+=======
+	sub	%r11,%rsp		# align with $aptr
+	lea	-64(%rsp,$num,4),%rsp	# alloca(frame+4*$num)
+>>>>>>> origin/master
 	jmp	.Lsqr8x_sp_done
 
 .align	32
 .Lsqr8x_sp_alt:
+<<<<<<< HEAD
 	lea	4096-64(,$num,2),%r10	# 4096-frame-2*$num
 	lea	-64(%rbp,$num,2),%rbp	# future alloca(frame+2*$num)
 	sub	%r10,%r11
@@ -865,22 +942,64 @@ bn_sqr8x_mont:
 	mov	$num,%r10
 	neg	$num
 
+=======
+	lea	4096-64(,$num,4),%r10	# 4096-frame-4*$num
+	lea	-64(%rsp,$num,4),%rsp	# alloca(frame+4*$num)
+	sub	%r10,%r11
+	mov	\$0,%r10
+	cmovc	%r10,%r11
+	sub	%r11,%rsp
+.Lsqr8x_sp_done:
+	and	\$-64,%rsp
+	mov	$num,%r10	
+	neg	$num
+
+	lea	64(%rsp,$num,2),%r11	# copy of modulus
+>>>>>>> origin/master
 	mov	$n0,  32(%rsp)
 	mov	%rax, 40(%rsp)		# save original %rsp
 .Lsqr8x_body:
 
+<<<<<<< HEAD
 	movq	$nptr, %xmm2		# save pointer to modulus
+=======
+	mov	$num,$i
+	movq	%r11, %xmm2		# save pointer to modulus copy
+	shr	\$3+2,$i
+	mov	OPENSSL_ia32cap_P+8(%rip),%eax
+	jmp	.Lsqr8x_copy_n
+
+.align	32
+.Lsqr8x_copy_n:
+	movq	8*0($nptr),%xmm0
+	movq	8*1($nptr),%xmm1
+	movq	8*2($nptr),%xmm3
+	movq	8*3($nptr),%xmm4
+	lea	8*4($nptr),$nptr
+	movdqa	%xmm0,16*0(%r11)
+	movdqa	%xmm1,16*1(%r11)
+	movdqa	%xmm3,16*2(%r11)
+	movdqa	%xmm4,16*3(%r11)
+	lea	16*4(%r11),%r11
+	dec	$i
+	jnz	.Lsqr8x_copy_n
+
+>>>>>>> origin/master
 	pxor	%xmm0,%xmm0
 	movq	$rptr,%xmm1		# save $rptr
 	movq	%r10, %xmm3		# -$num
 ___
 $code.=<<___ if ($addx);
+<<<<<<< HEAD
 	mov	OPENSSL_ia32cap_P+8(%rip),%eax
+=======
+>>>>>>> origin/master
 	and	\$0x80100,%eax
 	cmp	\$0x80100,%eax
 	jne	.Lsqr8x_nox
 
 	call	bn_sqrx8x_internal	# see x86_64-mont5 module
+<<<<<<< HEAD
 					# %rax	top-most carry
 					# %rbp	nptr
 					# %rcx	-8*num
@@ -891,12 +1010,22 @@ $code.=<<___ if ($addx);
 	movq	%xmm1,$rptr
 	sar	\$3+2,%rcx		# %cf=0
 	jmp	.Lsqr8x_sub
+=======
+
+	pxor	%xmm0,%xmm0
+	lea	48(%rsp),%rax
+	lea	64(%rsp,$num,2),%rdx
+	shr	\$3+2,$num
+	mov	40(%rsp),%rsi		# restore %rsp
+	jmp	.Lsqr8x_zero
+>>>>>>> origin/master
 
 .align	32
 .Lsqr8x_nox:
 ___
 $code.=<<___;
 	call	bn_sqr8x_internal	# see x86_64-mont5 module
+<<<<<<< HEAD
 					# %rax	top-most carry
 					# %rbp	nptr
 					# %r8	-8*num
@@ -962,6 +1091,30 @@ $code.=<<___;
 	movdqu	%xmm5,-16*1($rptr)
 	add	\$32,$num
 	jnz	.Lsqr8x_cond_copy
+=======
+
+	pxor	%xmm0,%xmm0
+	lea	48(%rsp),%rax
+	lea	64(%rsp,$num,2),%rdx
+	shr	\$3+2,$num
+	mov	40(%rsp),%rsi		# restore %rsp
+	jmp	.Lsqr8x_zero
+
+.align	32
+.Lsqr8x_zero:
+	movdqa	%xmm0,16*0(%rax)	# wipe t
+	movdqa	%xmm0,16*1(%rax)
+	movdqa	%xmm0,16*2(%rax)
+	movdqa	%xmm0,16*3(%rax)
+	lea	16*4(%rax),%rax
+	movdqa	%xmm0,16*0(%rdx)	# wipe n
+	movdqa	%xmm0,16*1(%rdx)
+	movdqa	%xmm0,16*2(%rdx)
+	movdqa	%xmm0,16*3(%rdx)
+	lea	16*4(%rdx),%rdx
+	dec	$num
+	jnz	.Lsqr8x_zero
+>>>>>>> origin/master
 
 	mov	\$1,%rax
 	mov	-48(%rsi),%r15
@@ -984,14 +1137,20 @@ $code.=<<___;
 .type	bn_mulx4x_mont,\@function,6
 .align	32
 bn_mulx4x_mont:
+<<<<<<< HEAD
 	mov	%rsp,%rax
 .Lmulx4x_enter:
+=======
+.Lmulx4x_enter:
+	mov	%rsp,%rax
+>>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
+<<<<<<< HEAD
 .Lmulx4x_prologue:
 
 	shl	\$3,${num}d		# convert $num to bytes
@@ -1018,6 +1177,17 @@ bn_mulx4x_mont:
 .Lmulx4x_page_walk_done:
 
 	lea	($bp,$num),%r10
+=======
+
+	shl	\$3,${num}d		# convert $num to bytes
+	.byte	0x67
+	xor	%r10,%r10
+	sub	$num,%r10		# -$num
+	mov	($n0),$n0		# *n0
+	lea	-72(%rsp,%r10),%rsp	# alloca(frame+$num+8)
+	lea	($bp,$num),%r10
+	and	\$-128,%rsp
+>>>>>>> origin/master
 	##############################################################
 	# Stack layout
 	# +0	num
@@ -1245,12 +1415,17 @@ $code.=<<___;
 	adc	$zero,%r15		# modulo-scheduled
 	sub	0*8($tptr),$zero	# pull top-most carry
 	adc	%r15,%r14
+<<<<<<< HEAD
+=======
+	mov	-8($nptr),$mi
+>>>>>>> origin/master
 	sbb	%r15,%r15		# top-most carry
 	mov	%r14,-1*8($tptr)
 
 	cmp	16(%rsp),$bptr
 	jne	.Lmulx4x_outer
 
+<<<<<<< HEAD
 	lea	64(%rsp),$tptr
 	sub	$num,$nptr		# rewind $nptr
 	neg	%r15
@@ -1314,6 +1489,59 @@ $code.=<<___;
 
 	mov	%rdx,($tptr)
 
+=======
+	sub	%r14,$mi		# compare top-most words
+	sbb	$mi,$mi
+	or	$mi,%r15
+
+	neg	$num
+	xor	%rdx,%rdx
+	mov	32(%rsp),$rptr		# restore rp
+	lea	64(%rsp),$tptr
+
+	pxor	%xmm0,%xmm0
+	mov	0*8($nptr,$num),%r8
+	mov	1*8($nptr,$num),%r9
+	neg	%r8
+	jmp	.Lmulx4x_sub_entry
+
+.align	32
+.Lmulx4x_sub:
+	mov	0*8($nptr,$num),%r8
+	mov	1*8($nptr,$num),%r9
+	not	%r8
+.Lmulx4x_sub_entry:
+	mov	2*8($nptr,$num),%r10
+	not	%r9
+	and	%r15,%r8
+	mov	3*8($nptr,$num),%r11
+	not	%r10
+	and	%r15,%r9
+	not	%r11
+	and	%r15,%r10
+	and	%r15,%r11
+
+	neg	%rdx			# mov %rdx,%cf
+	adc	0*8($tptr),%r8
+	adc	1*8($tptr),%r9
+	movdqa	%xmm0,($tptr)
+	adc	2*8($tptr),%r10
+	adc	3*8($tptr),%r11
+	movdqa	%xmm0,16($tptr)
+	lea	4*8($tptr),$tptr
+	sbb	%rdx,%rdx		# mov %cf,%rdx
+
+	mov	%r8,0*8($rptr)
+	mov	%r9,1*8($rptr)
+	mov	%r10,2*8($rptr)
+	mov	%r11,3*8($rptr)
+	lea	4*8($rptr),$rptr
+
+	add	\$32,$num
+	jnz	.Lmulx4x_sub
+
+	mov	40(%rsp),%rsi		# restore %rsp
+>>>>>>> origin/master
 	mov	\$1,%rax
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
@@ -1376,8 +1604,27 @@ mul_handler:
 
 	mov	192($context),%r10	# pull $num
 	mov	8(%rax,%r10,8),%rax	# pull saved stack pointer
+<<<<<<< HEAD
 
 	jmp	.Lcommon_pop_regs
+=======
+	lea	48(%rax),%rax
+
+	mov	-8(%rax),%rbx
+	mov	-16(%rax),%rbp
+	mov	-24(%rax),%r12
+	mov	-32(%rax),%r13
+	mov	-40(%rax),%r14
+	mov	-48(%rax),%r15
+	mov	%rbx,144($context)	# restore context->Rbx
+	mov	%rbp,160($context)	# restore context->Rbp
+	mov	%r12,216($context)	# restore context->R12
+	mov	%r13,224($context)	# restore context->R13
+	mov	%r14,232($context)	# restore context->R14
+	mov	%r15,240($context)	# restore context->R15
+
+	jmp	.Lcommon_seh_tail
+>>>>>>> origin/master
 .size	mul_handler,.-mul_handler
 
 .type	sqr_handler,\@abi-omnipotent
@@ -1405,6 +1652,7 @@ sqr_handler:
 	cmp	%r10,%rbx		# context->Rip<.Lsqr_body
 	jb	.Lcommon_seh_tail
 
+<<<<<<< HEAD
 	mov	4(%r11),%r10d		# HandlerData[1]
 	lea	(%rsi,%r10),%r10	# body label
 	cmp	%r10,%rbx		# context->Rip>=.Lsqr_epilogue
@@ -1413,13 +1661,21 @@ sqr_handler:
 	mov	152($context),%rax	# pull context->Rsp
 
 	mov	8(%r11),%r10d		# HandlerData[2]
+=======
+	mov	152($context),%rax	# pull context->Rsp
+
+	mov	4(%r11),%r10d		# HandlerData[1]
+>>>>>>> origin/master
 	lea	(%rsi,%r10),%r10	# epilogue label
 	cmp	%r10,%rbx		# context->Rip>=.Lsqr_epilogue
 	jae	.Lcommon_seh_tail
 
 	mov	40(%rax),%rax		# pull saved stack pointer
 
+<<<<<<< HEAD
 .Lcommon_pop_regs:
+=======
+>>>>>>> origin/master
 	mov	-8(%rax),%rbx
 	mov	-16(%rax),%rbp
 	mov	-24(%rax),%r12
@@ -1506,15 +1762,23 @@ $code.=<<___;
 .LSEH_info_bn_sqr8x_mont:
 	.byte	9,0,0,0
 	.rva	sqr_handler
+<<<<<<< HEAD
 	.rva	.Lsqr8x_prologue,.Lsqr8x_body,.Lsqr8x_epilogue		# HandlerData[]
 .align	8
+=======
+	.rva	.Lsqr8x_body,.Lsqr8x_epilogue	# HandlerData[]
+>>>>>>> origin/master
 ___
 $code.=<<___ if ($addx);
 .LSEH_info_bn_mulx4x_mont:
 	.byte	9,0,0,0
 	.rva	sqr_handler
+<<<<<<< HEAD
 	.rva	.Lmulx4x_prologue,.Lmulx4x_body,.Lmulx4x_epilogue	# HandlerData[]
 .align	8
+=======
+	.rva	.Lmulx4x_body,.Lmulx4x_epilogue	# HandlerData[]
+>>>>>>> origin/master
 ___
 }
 

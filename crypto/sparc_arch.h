@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #ifndef __SPARC_ARCH_H__
 # define __SPARC_ARCH_H__
 
@@ -14,16 +17,23 @@
 # define SPARCV9_PREFER_FPU      (1<<1)
 # define SPARCV9_VIS1            (1<<2)
 # define SPARCV9_VIS2            (1<<3)/* reserved */
+<<<<<<< HEAD
 # define SPARCV9_FMADD           (1<<4)
+=======
+# define SPARCV9_FMADD           (1<<4)/* reserved for SPARC64 V */
+>>>>>>> origin/master
 # define SPARCV9_BLK             (1<<5)/* VIS1 block copy */
 # define SPARCV9_VIS3            (1<<6)
 # define SPARCV9_RANDOM          (1<<7)
 # define SPARCV9_64BIT_STACK     (1<<8)
+<<<<<<< HEAD
 # define SPARCV9_FJAESX          (1<<9)/* Fujitsu SPARC64 X AES */
 # define SPARCV9_FJDESX          (1<<10)/* Fujitsu SPARC64 X DES, reserved */
 # define SPARCV9_FJHPCACE        (1<<11)/* Fujitsu HPC-ACE, reserved */
 # define SPARCV9_IMA             (1<<13)/* reserved */
 # define SPARCV9_VIS4            (1<<14)/* reserved */
+=======
+>>>>>>> origin/master
 
 /*
  * OPENSSL_sparcv9cap_P[1] is copy of Compatibility Feature Register,
@@ -42,9 +52,12 @@
 # define CFR_MONTMUL     0x00000200/* Supports MONTMUL opcodes */
 # define CFR_MONTSQR     0x00000400/* Supports MONTSQR opcodes */
 # define CFR_CRC32C      0x00000800/* Supports CRC32C opcodes */
+<<<<<<< HEAD
 # define CFR_XMPMUL      0x00001000/* Supports XMPMUL opcodes */
 # define CFR_XMONTMUL    0x00002000/* Supports XMONTMUL opcodes */
 # define CFR_XMONTSQR    0x00004000/* Supports XMONTSQR opcodes */
+=======
+>>>>>>> origin/master
 
 # if defined(OPENSSL_PIC) && !defined(__PIC__)
 #  define __PIC__

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #define APPMACROS_ONLY
 #include "applink.c"
 

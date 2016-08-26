@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -8,6 +9,9 @@
 
 $output = pop;
 open STDOUT,">$output";
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}.");
@@ -57,5 +61,8 @@ for ($i=1;$i<=$N;$i++) {   print "      data8   \@fptr(lazy$i#)\n";   }
 print <<___;
 .size   OPENSSL_UplinkTable,.-OPENSSL_UplinkTable#
 ___
+<<<<<<< HEAD
 
 close STDOUT;
+=======
+>>>>>>> origin/master

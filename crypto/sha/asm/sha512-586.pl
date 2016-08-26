@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -44,7 +48,11 @@
 #
 # IALU code-path is optimized for elder Pentiums. On vanilla Pentium
 # performance improvement over compiler generated code reaches ~60%,
+<<<<<<< HEAD
 # while on PIII - ~35%. On newer Âµ-archs improvement varies from 15%
+=======
+# while on PIII - ~35%. On newer µ-archs improvement varies from 15%
+>>>>>>> origin/master
 # to 50%, but it's less important as they are expected to execute SSE2
 # code-path, which is commonly ~2-3x faster [than compiler generated
 # code]. SSE2 code-path is as fast as original sha512-sse2.pl, even
@@ -57,9 +65,12 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
+<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],"sha512-586.pl",$ARGV[$#ARGV] eq "386");
 
 $sse2=0;
@@ -919,5 +930,8 @@ sub BODY_00_15_ssse3 {		# "phase-less" copy of BODY_00_15_sse2
 &asciz("SHA512 block transform for x86, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
+<<<<<<< HEAD
 
 close STDOUT;
+=======
+>>>>>>> origin/master

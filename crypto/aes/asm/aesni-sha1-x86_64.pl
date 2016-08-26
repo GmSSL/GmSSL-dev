@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -32,7 +36,10 @@
 # Sandy Bridge	5.05[+5.0(6.1)]	10.06(11.15)	5.98(7.05)  +68%(+58%)
 # Ivy Bridge	5.05[+4.6]	9.65		5.54        +74%
 # Haswell	4.43[+3.6(4.2)]	8.00(8.58)	4.55(5.21)  +75%(+65%)
+<<<<<<< HEAD
 # Skylake	2.63[+3.5(4.1)]	6.17(6.69)	4.23(4.44)  +46%(+51%)
+=======
+>>>>>>> origin/master
 # Bulldozer	5.77[+6.0]	11.72		6.37        +84%
 #
 #		AES-192-CBC
@@ -47,7 +54,10 @@
 # Sandy Bridge	7.05		12.06(13.15)	7.12(7.72)  +69%(+70%)
 # Ivy Bridge	7.05		11.65		7.12        +64%
 # Haswell	6.19		9.76(10.34)	6.21(6.25)  +57%(+65%)
+<<<<<<< HEAD
 # Skylake	3.62		7.16(7.68)	4.56(4.76)  +57%(+61$)
+=======
+>>>>>>> origin/master
 # Bulldozer	8.00		13.95		8.25        +69%
 #
 # (*)	There are two code paths: SSSE3 and AVX. See sha1-568.pl for
@@ -103,13 +113,21 @@ $avx=1 if (!$avx && $win64 && ($flavour =~ /nasm/ || $ENV{ASM} =~ /nasm/) &&
 $avx=1 if (!$avx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	   `ml64 2>&1` =~ /Version ([0-9]+)\./ &&
 	   $1>=10);
+<<<<<<< HEAD
 $avx=1 if (!$avx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9]\.[0-9]+)/ && $2>=3.0);
+=======
+$avx=1 if (!$avx && `$ENV{CC} -v 2>&1` =~ /(^clang version|based on LLVM) ([3-9]\.[0-9]+)/ && $2>=3.0);
+>>>>>>> origin/master
 
 $shaext=1;	### set to zero if compiling for 1.0.1
 
 $stitched_decrypt=0;
 
+<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
+=======
+open OUT,"| \"$^X\" $xlate $flavour $output";
+>>>>>>> origin/master
 *STDOUT=*OUT;
 
 # void aesni_cbc_sha1_enc(const void *inp,

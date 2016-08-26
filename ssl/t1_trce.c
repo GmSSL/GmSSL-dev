@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,6 +6,61 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* ssl/t1_trce.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
+ * project.
+ */
+/* ====================================================================
+ * Copyright (c) 2012 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+>>>>>>> origin/master
  */
 
 #include "ssl_locl.h"
@@ -19,11 +75,19 @@ typedef struct {
 } ssl_trace_tbl;
 
 # define ssl_trace_str(val, tbl) \
+<<<<<<< HEAD
         do_ssl_trace_str(val, tbl, OSSL_NELEM(tbl))
 
 # define ssl_trace_list(bio, indent, msg, msglen, value, table) \
         do_ssl_trace_list(bio, indent, msg, msglen, value, \
          table, OSSL_NELEM(table))
+=======
+        do_ssl_trace_str(val, tbl, sizeof(tbl)/sizeof(ssl_trace_tbl))
+
+# define ssl_trace_list(bio, indent, msg, msglen, value, table) \
+        do_ssl_trace_list(bio, indent, msg, msglen, value, \
+         table, sizeof(table)/sizeof(ssl_trace_tbl))
+>>>>>>> origin/master
 
 static const char *do_ssl_trace_str(int val, ssl_trace_tbl *tbl, size_t ntbl)
 {
@@ -57,6 +121,10 @@ static int do_ssl_trace_list(BIO *bio, int indent,
 /* Version number */
 
 static ssl_trace_tbl ssl_version_tbl[] = {
+<<<<<<< HEAD
+=======
+    {SSL2_VERSION, "SSL 2.0"},
+>>>>>>> origin/master
     {SSL3_VERSION, "SSL 3.0"},
     {TLS1_VERSION, "TLS 1.0"},
     {TLS1_1_VERSION, "TLS 1.1"},
@@ -71,7 +139,11 @@ static ssl_trace_tbl ssl_content_tbl[] = {
     {SSL3_RT_ALERT, "Alert"},
     {SSL3_RT_HANDSHAKE, "Handshake"},
     {SSL3_RT_APPLICATION_DATA, "ApplicationData"},
+<<<<<<< HEAD
     {DTLS1_RT_HEARTBEAT, "HeartBeat"}
+=======
+    {TLS1_RT_HEARTBEAT, "HeartBeat"}
+>>>>>>> origin/master
 };
 
 /* Handshake types */
@@ -138,9 +210,12 @@ static ssl_trace_tbl ssl_ciphers_tbl[] = {
     {0x0029, "TLS_KRB5_EXPORT_WITH_DES_CBC_40_MD5"},
     {0x002A, "TLS_KRB5_EXPORT_WITH_RC2_CBC_40_MD5"},
     {0x002B, "TLS_KRB5_EXPORT_WITH_RC4_40_MD5"},
+<<<<<<< HEAD
     {0x002C, "TLS_PSK_WITH_NULL_SHA"},
     {0x002D, "TLS_DHE_PSK_WITH_NULL_SHA"},
     {0x002E, "TLS_RSA_PSK_WITH_NULL_SHA"},
+=======
+>>>>>>> origin/master
     {0x002F, "TLS_RSA_WITH_AES_128_CBC_SHA"},
     {0x0030, "TLS_DH_DSS_WITH_AES_128_CBC_SHA"},
     {0x0031, "TLS_DH_RSA_WITH_AES_128_CBC_SHA"},
@@ -239,7 +314,10 @@ static ssl_trace_tbl ssl_ciphers_tbl[] = {
     {0x00C4, "TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256"},
     {0x00C5, "TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256"},
     {0x00FF, "TLS_EMPTY_RENEGOTIATION_INFO_SCSV"},
+<<<<<<< HEAD
     {0x5600, "TLS_FALLBACK_SCSV"},
+=======
+>>>>>>> origin/master
     {0xC001, "TLS_ECDH_ECDSA_WITH_NULL_SHA"},
     {0xC002, "TLS_ECDH_ECDSA_WITH_RC4_128_SHA"},
     {0xC003, "TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA"},
@@ -290,6 +368,7 @@ static ssl_trace_tbl ssl_ciphers_tbl[] = {
     {0xC030, "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"},
     {0xC031, "TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256"},
     {0xC032, "TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384"},
+<<<<<<< HEAD
     {0xC033, "TLS_ECDHE_PSK_WITH_RC4_128_SHA"},
     {0xC034, "TLS_ECDHE_PSK_WITH_3DES_EDE_CBC_SHA"},
     {0xC035, "TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA"},
@@ -422,6 +501,8 @@ static ssl_trace_tbl ssl_ciphers_tbl[] = {
     {0xCCAC, "TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305"},
     {0xCCAD, "TLS_DHE_PSK_WITH_CHACHA20_POLY1305"},
     {0xCCAE, "TLS_RSA_PSK_WITH_CHACHA20_POLY1305"},
+=======
+>>>>>>> origin/master
     {0xFEFE, "SSL_RSA_FIPS_WITH_DES_CBC_SHA"},
     {0xFEFF, "SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA"},
 };
@@ -451,6 +532,7 @@ static ssl_trace_tbl ssl_exts_tbl[] = {
     {TLSEXT_TYPE_use_srtp, "use_srtp"},
     {TLSEXT_TYPE_heartbeat, "heartbeat"},
     {TLSEXT_TYPE_session_ticket, "session_ticket"},
+<<<<<<< HEAD
     {TLSEXT_TYPE_renegotiate, "renegotiate"},
 # ifndef OPENSSL_NO_NEXTPROTONEG
     {TLSEXT_TYPE_next_proto_neg, "next_proto_neg"},
@@ -459,6 +541,14 @@ static ssl_trace_tbl ssl_exts_tbl[] = {
     {TLSEXT_TYPE_padding, "padding"},
     {TLSEXT_TYPE_encrypt_then_mac, "encrypt_then_mac"},
     {TLSEXT_TYPE_extended_master_secret, "extended_master_secret"}
+=======
+# ifdef TLSEXT_TYPE_opaque_prf_input
+    {TLSEXT_TYPE_opaque_prf_input, "opaque_prf_input"},
+# endif
+    {TLSEXT_TYPE_renegotiate, "renegotiate"},
+    {TLSEXT_TYPE_next_proto_neg, "next_proto_neg"},
+    {TLSEXT_TYPE_padding, "padding"}
+>>>>>>> origin/master
 };
 
 static ssl_trace_tbl ssl_curve_tbl[] = {
@@ -501,6 +591,7 @@ static ssl_trace_tbl ssl_point_tbl[] = {
 };
 
 static ssl_trace_tbl ssl_md_tbl[] = {
+<<<<<<< HEAD
     {TLSEXT_hash_none, "none"},
     {TLSEXT_hash_md5, "md5"},
     {TLSEXT_hash_sha1, "sha1"},
@@ -521,6 +612,22 @@ static ssl_trace_tbl ssl_sig_tbl[] = {
     {TLSEXT_signature_gostr34102001, "gost2001"},
     {TLSEXT_signature_gostr34102012_256, "gost2012_256"},
     {TLSEXT_signature_gostr34102012_512, "gost2012_512"}
+=======
+    {0, "none"},
+    {1, "md5"},
+    {2, "sha1"},
+    {3, "sha224"},
+    {4, "sha256"},
+    {5, "sha384"},
+    {6, "sha512"}
+};
+
+static ssl_trace_tbl ssl_sig_tbl[] = {
+    {0, "anonymous"},
+    {1, "rsa"},
+    {2, "dsa"},
+    {3, "ecdsa"}
+>>>>>>> origin/master
 };
 
 static ssl_trace_tbl ssl_hb_tbl[] = {
@@ -657,7 +764,12 @@ static int ssl_print_extension(BIO *bio, int indent, int server, int extype,
         xlen = ext[0];
         if (extlen != xlen + 1)
             return 0;
+<<<<<<< HEAD
         return ssl_trace_list(bio, indent + 2, ext + 1, xlen, 1, ssl_point_tbl);
+=======
+        return ssl_trace_list(bio, indent + 2,
+                              ext + 1, xlen, 1, ssl_point_tbl);
+>>>>>>> origin/master
 
     case TLSEXT_TYPE_elliptic_curves:
         if (extlen < 2)
@@ -665,7 +777,12 @@ static int ssl_print_extension(BIO *bio, int indent, int server, int extype,
         xlen = (ext[0] << 8) | ext[1];
         if (extlen != xlen + 2)
             return 0;
+<<<<<<< HEAD
         return ssl_trace_list(bio, indent + 2, ext + 2, xlen, 2, ssl_curve_tbl);
+=======
+        return ssl_trace_list(bio, indent + 2,
+                              ext + 2, xlen, 2, ssl_curve_tbl);
+>>>>>>> origin/master
 
     case TLSEXT_TYPE_signature_algorithms:
 
@@ -703,7 +820,12 @@ static int ssl_print_extension(BIO *bio, int indent, int server, int extype,
             ssl_print_hex(bio, indent + 4, "client_verify_data", ext, xlen);
             if (server) {
                 ext += xlen;
+<<<<<<< HEAD
                 ssl_print_hex(bio, indent + 4, "server_verify_data", ext, xlen);
+=======
+                ssl_print_hex(bio, indent + 4,
+                              "server_verify_data", ext, xlen);
+>>>>>>> origin/master
             }
         } else {
             BIO_indent(bio, indent + 4, 80);
@@ -725,7 +847,11 @@ static int ssl_print_extension(BIO *bio, int indent, int server, int extype,
         break;
 
     default:
+<<<<<<< HEAD
         BIO_dump_indent(bio, (const char *)ext, extlen, indent + 2);
+=======
+        BIO_dump_indent(bio, (char *)ext, extlen, indent + 2);
+>>>>>>> origin/master
     }
     return 1;
 }
@@ -755,7 +881,12 @@ static int ssl_print_extensions(BIO *bio, int indent, int server,
         if (msglen < extlen + 4)
             return 0;
         msg += 4;
+<<<<<<< HEAD
         if (!ssl_print_extension(bio, indent + 2, server, extype, msg, extlen))
+=======
+        if (!ssl_print_extension(bio, indent + 2, server,
+                                 extype, msg, extlen))
+>>>>>>> origin/master
             return 0;
         msg += extlen;
         msglen -= extlen + 4;
@@ -819,7 +950,12 @@ static int ssl_print_client_hello(BIO *bio, SSL *ssl, int indent,
 }
 
 static int dtls_print_hello_vfyrequest(BIO *bio, int indent,
+<<<<<<< HEAD
                                        const unsigned char *msg, size_t msglen)
+=======
+                                       const unsigned char *msg,
+                                       size_t msglen)
+>>>>>>> origin/master
 {
     if (!ssl_print_version(bio, indent, "server_version", &msg, &msglen))
         return 0;
@@ -865,6 +1001,7 @@ static int ssl_get_keyex(const char **pname, SSL *ssl)
         *pname = "rsa";
         return SSL_kRSA;
     }
+<<<<<<< HEAD
     if (alg_k & SSL_kDHE) {
         *pname = "DHE";
         return SSL_kDHE;
@@ -888,6 +1025,39 @@ static int ssl_get_keyex(const char **pname, SSL *ssl)
     if (alg_k & SSL_kECDHEPSK) {
         *pname = "ECDHEPSK";
         return SSL_kECDHEPSK;
+=======
+    if (alg_k & SSL_kDHr) {
+        *pname = "dh_rsa";
+        return SSL_kDHr;
+    }
+    if (alg_k & SSL_kDHd) {
+        *pname = "dh_dss";
+        return SSL_kDHd;
+    }
+    if (alg_k & SSL_kKRB5) {
+        *pname = "krb5";
+        return SSL_kKRB5;
+    }
+    if (alg_k & SSL_kEDH) {
+        *pname = "edh";
+        return SSL_kEDH;
+    }
+    if (alg_k & SSL_kEECDH) {
+        *pname = "EECDH";
+        return SSL_kEECDH;
+    }
+    if (alg_k & SSL_kECDHr) {
+        *pname = "ECDH RSA";
+        return SSL_kECDHr;
+    }
+    if (alg_k & SSL_kECDHe) {
+        *pname = "ECDH ECDSA";
+        return SSL_kECDHe;
+    }
+    if (alg_k & SSL_kPSK) {
+        *pname = "PSK";
+        return SSL_kPSK;
+>>>>>>> origin/master
     }
     if (alg_k & SSL_kSRP) {
         *pname = "SRP";
@@ -909,6 +1079,7 @@ static int ssl_print_client_keyex(BIO *bio, int indent, SSL *ssl,
     id = ssl_get_keyex(&algname, ssl);
     BIO_indent(bio, indent, 80);
     BIO_printf(bio, "KeyExchangeAlgorithm=%s\n", algname);
+<<<<<<< HEAD
     if (id & SSL_PSK) {
         if (!ssl_print_hexbuf(bio, indent + 2,
                               "psk_identity", 2, &msg, &msglen))
@@ -918,22 +1089,45 @@ static int ssl_print_client_keyex(BIO *bio, int indent, SSL *ssl,
 
     case SSL_kRSA:
     case SSL_kRSAPSK:
+=======
+    switch (id) {
+
+    case SSL_kRSA:
+>>>>>>> origin/master
         if (TLS1_get_version(ssl) == SSL3_VERSION) {
             ssl_print_hex(bio, indent + 2,
                           "EncyptedPreMasterSecret", msg, msglen);
         } else {
             if (!ssl_print_hexbuf(bio, indent + 2,
+<<<<<<< HEAD
                                   "EncyptedPreMasterSecret", 2, &msg, &msglen))
+=======
+                                  "EncyptedPreMasterSecret", 2,
+                                  &msg, &msglen))
+>>>>>>> origin/master
                 return 0;
         }
         break;
 
+<<<<<<< HEAD
     case SSL_kDHE:
     case SSL_kDHEPSK:
+=======
+        /* Implicit parameters only allowed for static DH */
+    case SSL_kDHd:
+    case SSL_kDHr:
+        if (msglen == 0) {
+            BIO_indent(bio, indent + 2, 80);
+            BIO_puts(bio, "implicit\n");
+            break;
+        }
+    case SSL_kEDH:
+>>>>>>> origin/master
         if (!ssl_print_hexbuf(bio, indent + 2, "dh_Yc", 2, &msg, &msglen))
             return 0;
         break;
 
+<<<<<<< HEAD
     case SSL_kECDHE:
     case SSL_kECDHEPSK:
         if (!ssl_print_hexbuf(bio, indent + 2, "ecdh_Yc", 1, &msg, &msglen))
@@ -943,6 +1137,22 @@ static int ssl_print_client_keyex(BIO *bio, int indent, SSL *ssl,
     }
 
     return !msglen;
+=======
+    case SSL_kECDHr:
+    case SSL_kECDHe:
+        if (msglen == 0) {
+            BIO_indent(bio, indent + 2, 80);
+            BIO_puts(bio, "implicit\n");
+            break;
+        }
+    case SSL_kEECDH:
+        if (!ssl_print_hexbuf(bio, indent + 2, "ecdh_Yc", 1, &msg, &msglen))
+            return 0;
+        break;
+    }
+
+    return 1;
+>>>>>>> origin/master
 }
 
 static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
@@ -953,6 +1163,7 @@ static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
     id = ssl_get_keyex(&algname, ssl);
     BIO_indent(bio, indent, 80);
     BIO_printf(bio, "KeyExchangeAlgorithm=%s\n", algname);
+<<<<<<< HEAD
     if (id & SSL_PSK) {
         if (!ssl_print_hexbuf(bio, indent + 2,
                               "psk_identity_hint", 2, &msg, &msglen))
@@ -962,14 +1173,34 @@ static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
     case SSL_kRSA:
 
         if (!ssl_print_hexbuf(bio, indent + 2, "rsa_modulus", 2, &msg, &msglen))
+=======
+    switch (id) {
+        /* Should never happen */
+    case SSL_kDHd:
+    case SSL_kDHr:
+    case SSL_kECDHr:
+    case SSL_kECDHe:
+        BIO_indent(bio, indent + 2, 80);
+        BIO_printf(bio, "Unexpected Message\n");
+        break;
+
+    case SSL_kRSA:
+
+        if (!ssl_print_hexbuf(bio, indent + 2, "rsa_modulus", 2,
+                              &msg, &msglen))
+>>>>>>> origin/master
             return 0;
         if (!ssl_print_hexbuf(bio, indent + 2, "rsa_exponent", 2,
                               &msg, &msglen))
             return 0;
         break;
 
+<<<<<<< HEAD
     case SSL_kDHE:
     case SSL_kDHEPSK:
+=======
+    case SSL_kEDH:
+>>>>>>> origin/master
         if (!ssl_print_hexbuf(bio, indent + 2, "dh_p", 2, &msg, &msglen))
             return 0;
         if (!ssl_print_hexbuf(bio, indent + 2, "dh_g", 2, &msg, &msglen))
@@ -978,9 +1209,13 @@ static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
             return 0;
         break;
 
+<<<<<<< HEAD
 # ifndef OPENSSL_NO_EC
     case SSL_kECDHE:
     case SSL_kECDHEPSK:
+=======
+    case SSL_kEECDH:
+>>>>>>> origin/master
         if (msglen < 1)
             return 0;
         BIO_indent(bio, indent + 2, 80);
@@ -999,6 +1234,7 @@ static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
             msglen -= 3;
             if (!ssl_print_hexbuf(bio, indent + 2, "point", 1, &msg, &msglen))
                 return 0;
+<<<<<<< HEAD
         } else {
             BIO_printf(bio, "UNKNOWN CURVE PARAMETER TYPE %d\n", msg[0]);
             return 0;
@@ -1013,6 +1249,12 @@ static int ssl_print_server_keyex(BIO *bio, int indent, SSL *ssl,
     if (!(id & SSL_PSK))
         ssl_print_signature(bio, indent, ssl, &msg, &msglen);
     return !msglen;
+=======
+        }
+        break;
+    }
+    return ssl_print_signature(bio, indent, ssl, &msg, &msglen);
+>>>>>>> origin/master
 }
 
 static int ssl_print_certificate(BIO *bio, int indent,
@@ -1250,7 +1492,11 @@ static int ssl_print_handshake(BIO *bio, SSL *ssl,
     default:
         BIO_indent(bio, indent + 2, 80);
         BIO_puts(bio, "Unsupported, hex dump follows:\n");
+<<<<<<< HEAD
         BIO_dump_indent(bio, (const char *)msg, msglen, indent + 4);
+=======
+        BIO_dump_indent(bio, (char *)msg, msglen, indent + 4);
+>>>>>>> origin/master
     }
     return 1;
 }
@@ -1273,6 +1519,11 @@ static int ssl_print_heartbeat(BIO *bio, int indent,
 
 const char *SSL_CIPHER_standard_name(const SSL_CIPHER *c)
 {
+<<<<<<< HEAD
+=======
+    if (c->algorithm_ssl & SSL_SSLV2)
+        return NULL;
+>>>>>>> origin/master
     return ssl_trace_str(c->id & 0xFFFF, ssl_ciphers_tbl);
 }
 
@@ -1285,7 +1536,12 @@ void SSL_trace(int write_p, int version, int content_type,
     if (write_p == 2) {
         BIO_puts(bio, "Session ");
         ssl_print_hex(bio, 0,
+<<<<<<< HEAD
                       ssl_trace_str(content_type, ssl_crypto_tbl), msg, msglen);
+=======
+                      ssl_trace_str(content_type, ssl_crypto_tbl),
+                      msg, msglen);
+>>>>>>> origin/master
         return;
     }
     switch (content_type) {
@@ -1301,6 +1557,17 @@ void SSL_trace(int write_p, int version, int content_type,
                            (msg[3] << 8 | msg[4]),
                            (msg[5] << 8 | msg[6]),
                            (msg[7] << 8 | msg[8]), (msg[9] << 8 | msg[10]));
+<<<<<<< HEAD
+=======
+# if 0
+                /*
+                 * Just print handshake type so we can see what is going on
+                 * during fragmentation.
+                 */
+                BIO_printf(bio, "(%s)\n",
+                           ssl_trace_str(msg[msglen], ssl_handshake_tbl));
+# endif
+>>>>>>> origin/master
             }
 
             BIO_printf(bio, "  Content Type = %s (%d)\n  Length = %d",
@@ -1328,7 +1595,11 @@ void SSL_trace(int write_p, int version, int content_type,
                        SSL_alert_type_string_long(msg[0] << 8),
                        msg[0], SSL_alert_desc_string_long(msg[1]), msg[1]);
         }
+<<<<<<< HEAD
     case DTLS1_RT_HEARTBEAT:
+=======
+    case TLS1_RT_HEARTBEAT:
+>>>>>>> origin/master
         ssl_print_heartbeat(bio, 4, msg, msglen);
         break;
 

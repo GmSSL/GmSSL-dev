@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,6 +7,10 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
+=======
+/* NOCW */
+/* demos/bio/server-arg.c */
+>>>>>>> origin/master
 
 /*
  * A minimal program to serve an SSL connection. It uses blocking. It use the
@@ -35,7 +40,11 @@ int main(int argc, char *argv[])
     /* Add ciphers and message digests */
     OpenSSL_add_ssl_algorithms();
 
+<<<<<<< HEAD
     ctx = SSL_CTX_new(TLS_server_method());
+=======
+    ctx = SSL_CTX_new(SSLv23_server_method());
+>>>>>>> origin/master
 
     cctx = SSL_CONF_CTX_new();
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_SERVER);
@@ -58,7 +67,11 @@ int main(int argc, char *argv[])
         if (rv > 0)
             continue;
         /* Otherwise application specific argument processing */
+<<<<<<< HEAD
         if (strcmp(*args, "-port") == 0) {
+=======
+        if (!strcmp(*args, "-port")) {
+>>>>>>> origin/master
             port = args[1];
             if (port == NULL) {
                 fprintf(stderr, "Missing -port argument\n");
@@ -78,7 +91,11 @@ int main(int argc, char *argv[])
         ERR_print_errors_fp(stderr);
         goto err;
     }
+<<<<<<< HEAD
 #ifdef ITERATE_CERTS
+=======
+#if 0
+>>>>>>> origin/master
     /*
      * Demo of how to iterate over all certificates in an SSL_CTX structure.
      */
@@ -143,7 +160,12 @@ int main(int argc, char *argv[])
     if (ret) {
         ERR_print_errors_fp(stderr);
     }
+<<<<<<< HEAD
     BIO_free(in);
+=======
+    if (in != NULL)
+        BIO_free(in);
+>>>>>>> origin/master
     exit(ret);
     return (!ret);
 }

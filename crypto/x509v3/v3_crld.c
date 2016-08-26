@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,14 +10,80 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
+=======
+/* v3_crld.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 1999.
+ */
+/* ====================================================================
+ * Copyright (c) 1999-2008 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include <stdio.h>
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/conf.h>
 #include <openssl/asn1.h>
 #include <openssl/asn1t.h>
 #include <openssl/x509v3.h>
 
+<<<<<<< HEAD
 #include "internal/x509_int.h"
 #include "ext_dat.h"
 
+=======
+>>>>>>> origin/master
 static void *v2i_crld(const X509V3_EXT_METHOD *method,
                       X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval);
 static int i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
@@ -68,17 +135,29 @@ static int set_dist_point_name(DIST_POINT_NAME **pdp, X509V3_CTX *ctx,
 {
     STACK_OF(GENERAL_NAME) *fnm = NULL;
     STACK_OF(X509_NAME_ENTRY) *rnm = NULL;
+<<<<<<< HEAD
 
     if (strncmp(cnf->name, "fullname", 9) == 0) {
         fnm = gnames_from_sectname(ctx, cnf->value);
         if (!fnm)
             goto err;
     } else if (strcmp(cnf->name, "relativename") == 0) {
+=======
+    if (!strncmp(cnf->name, "fullname", 9)) {
+        fnm = gnames_from_sectname(ctx, cnf->value);
+        if (!fnm)
+            goto err;
+    } else if (!strcmp(cnf->name, "relativename")) {
+>>>>>>> origin/master
         int ret;
         STACK_OF(CONF_VALUE) *dnsect;
         X509_NAME *nm;
         nm = X509_NAME_new();
+<<<<<<< HEAD
         if (nm == NULL)
+=======
+        if (!nm)
+>>>>>>> origin/master
             return -1;
         dnsect = X509V3_get_section(ctx, cnf->value);
         if (!dnsect) {
@@ -112,7 +191,11 @@ static int set_dist_point_name(DIST_POINT_NAME **pdp, X509V3_CTX *ctx,
     }
 
     *pdp = DIST_POINT_NAME_new();
+<<<<<<< HEAD
     if (*pdp == NULL)
+=======
+    if (!*pdp)
+>>>>>>> origin/master
         goto err;
     if (fnm) {
         (*pdp)->type = 0;
@@ -125,8 +208,15 @@ static int set_dist_point_name(DIST_POINT_NAME **pdp, X509V3_CTX *ctx,
     return 1;
 
  err:
+<<<<<<< HEAD
     sk_GENERAL_NAME_pop_free(fnm, GENERAL_NAME_free);
     sk_X509_NAME_ENTRY_pop_free(rnm, X509_NAME_ENTRY_free);
+=======
+    if (fnm)
+        sk_GENERAL_NAME_pop_free(fnm, GENERAL_NAME_free);
+    if (rnm)
+        sk_X509_NAME_ENTRY_pop_free(rnm, X509_NAME_ENTRY_free);
+>>>>>>> origin/master
     return -1;
 }
 
@@ -150,6 +240,7 @@ static int set_reasons(ASN1_BIT_STRING **preas, char *value)
     const char *bnam;
     int i, ret = 0;
     rsk = X509V3_parse_list(value);
+<<<<<<< HEAD
     if (rsk == NULL)
         return 0;
     if (*preas != NULL)
@@ -163,6 +254,21 @@ static int set_reasons(ASN1_BIT_STRING **preas, char *value)
         }
         for (pbn = reason_flags; pbn->lname; pbn++) {
             if (strcmp(pbn->sname, bnam) == 0) {
+=======
+    if (!rsk)
+        return 0;
+    if (*preas)
+        return 0;
+    for (i = 0; i < sk_CONF_VALUE_num(rsk); i++) {
+        bnam = sk_CONF_VALUE_value(rsk, i)->name;
+        if (!*preas) {
+            *preas = ASN1_BIT_STRING_new();
+            if (!*preas)
+                goto err;
+        }
+        for (pbn = reason_flags; pbn->lname; pbn++) {
+            if (!strcmp(pbn->sname, bnam)) {
+>>>>>>> origin/master
                 if (!ASN1_BIT_STRING_set_bit(*preas, pbn->bitnum, 1))
                     goto err;
                 break;
@@ -207,7 +313,11 @@ static DIST_POINT *crldp_from_section(X509V3_CTX *ctx,
     CONF_VALUE *cnf;
     DIST_POINT *point = NULL;
     point = DIST_POINT_new();
+<<<<<<< HEAD
     if (point == NULL)
+=======
+    if (!point)
+>>>>>>> origin/master
         goto err;
     for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
         int ret;
@@ -217,10 +327,17 @@ static DIST_POINT *crldp_from_section(X509V3_CTX *ctx,
             continue;
         if (ret < 0)
             goto err;
+<<<<<<< HEAD
         if (strcmp(cnf->name, "reasons") == 0) {
             if (!set_reasons(&point->reasons, cnf->value))
                 goto err;
         } else if (strcmp(cnf->name, "CRLissuer") == 0) {
+=======
+        if (!strcmp(cnf->name, "reasons")) {
+            if (!set_reasons(&point->reasons, cnf->value))
+                goto err;
+        } else if (!strcmp(cnf->name, "CRLissuer")) {
+>>>>>>> origin/master
             point->CRLissuer = gnames_from_sectname(ctx, cnf->value);
             if (!point->CRLissuer)
                 goto err;
@@ -230,7 +347,12 @@ static DIST_POINT *crldp_from_section(X509V3_CTX *ctx,
     return point;
 
  err:
+<<<<<<< HEAD
     DIST_POINT_free(point);
+=======
+    if (point)
+        DIST_POINT_free(point);
+>>>>>>> origin/master
     return NULL;
 }
 
@@ -242,8 +364,12 @@ static void *v2i_crld(const X509V3_EXT_METHOD *method,
     GENERAL_NAME *gen = NULL;
     CONF_VALUE *cnf;
     int i;
+<<<<<<< HEAD
 
     if ((crld = sk_DIST_POINT_new_null()) == NULL)
+=======
+    if (!(crld = sk_DIST_POINT_new_null()))
+>>>>>>> origin/master
         goto merr;
     for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
         DIST_POINT *point;
@@ -262,20 +388,34 @@ static void *v2i_crld(const X509V3_EXT_METHOD *method,
                 goto merr;
             }
         } else {
+<<<<<<< HEAD
             if ((gen = v2i_GENERAL_NAME(method, ctx, cnf)) == NULL)
                 goto err;
             if ((gens = GENERAL_NAMES_new()) == NULL)
+=======
+            if (!(gen = v2i_GENERAL_NAME(method, ctx, cnf)))
+                goto err;
+            if (!(gens = GENERAL_NAMES_new()))
+>>>>>>> origin/master
                 goto merr;
             if (!sk_GENERAL_NAME_push(gens, gen))
                 goto merr;
             gen = NULL;
+<<<<<<< HEAD
             if ((point = DIST_POINT_new()) == NULL)
+=======
+            if (!(point = DIST_POINT_new()))
+>>>>>>> origin/master
                 goto merr;
             if (!sk_DIST_POINT_push(crld, point)) {
                 DIST_POINT_free(point);
                 goto merr;
             }
+<<<<<<< HEAD
             if ((point->distpoint = DIST_POINT_NAME_new()) == NULL)
+=======
+            if (!(point->distpoint = DIST_POINT_NAME_new()))
+>>>>>>> origin/master
                 goto merr;
             point->distpoint->name.fullname = gens;
             point->distpoint->type = 0;
@@ -293,6 +433,13 @@ static void *v2i_crld(const X509V3_EXT_METHOD *method,
     return NULL;
 }
 
+<<<<<<< HEAD
+=======
+IMPLEMENT_STACK_OF(DIST_POINT)
+
+IMPLEMENT_ASN1_SET_OF(DIST_POINT)
+
+>>>>>>> origin/master
 static int dpn_cb(int operation, ASN1_VALUE **pval, const ASN1_ITEM *it,
                   void *exarg)
 {
@@ -304,7 +451,12 @@ static int dpn_cb(int operation, ASN1_VALUE **pval, const ASN1_ITEM *it,
         break;
 
     case ASN1_OP_FREE_POST:
+<<<<<<< HEAD
         X509_NAME_free(dpn->dpname);
+=======
+        if (dpn->dpname)
+            X509_NAME_free(dpn->dpname);
+>>>>>>> origin/master
         break;
     }
     return 1;
@@ -368,7 +520,11 @@ static void *v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
     char *name, *val;
     int i, ret;
     idp = ISSUING_DIST_POINT_new();
+<<<<<<< HEAD
     if (idp == NULL)
+=======
+    if (!idp)
+>>>>>>> origin/master
         goto merr;
     for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
         cnf = sk_CONF_VALUE_value(nval, i);
@@ -379,6 +535,7 @@ static void *v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
             continue;
         if (ret < 0)
             goto err;
+<<<<<<< HEAD
         if (strcmp(name, "onlyuser") == 0) {
             if (!X509V3_get_value_bool(cnf, &idp->onlyuser))
                 goto err;
@@ -392,6 +549,21 @@ static void *v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
             if (!X509V3_get_value_bool(cnf, &idp->indirectCRL))
                 goto err;
         } else if (strcmp(name, "onlysomereasons") == 0) {
+=======
+        if (!strcmp(name, "onlyuser")) {
+            if (!X509V3_get_value_bool(cnf, &idp->onlyuser))
+                goto err;
+        } else if (!strcmp(name, "onlyCA")) {
+            if (!X509V3_get_value_bool(cnf, &idp->onlyCA))
+                goto err;
+        } else if (!strcmp(name, "onlyAA")) {
+            if (!X509V3_get_value_bool(cnf, &idp->onlyattr))
+                goto err;
+        } else if (!strcmp(name, "indirectCRL")) {
+            if (!X509V3_get_value_bool(cnf, &idp->indirectCRL))
+                goto err;
+        } else if (!strcmp(name, "onlysomereasons")) {
+>>>>>>> origin/master
             if (!set_reasons(&idp->onlysomereasons, val))
                 goto err;
         } else {

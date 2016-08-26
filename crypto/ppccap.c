@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,6 +19,7 @@
 #if defined(__linux) || defined(_AIX)
 # include <sys/utsname.h>
 #endif
+<<<<<<< HEAD
 #if defined(_AIX53)     /* defined even on post-5.3 */
 # include <sys/systemcfg.h>
 # if !defined(__power_set)
@@ -23,6 +27,9 @@
 # endif
 #endif
 #include <openssl/crypto.h>
+=======
+#include <crypto.h>
+>>>>>>> origin/master
 #include <openssl/bn.h>
 
 #include "ppc_arch.h"
@@ -88,6 +95,7 @@ void sha512_block_data_order(void *ctx, const void *inp, size_t len)
         sha512_block_ppc(ctx, inp, len);
 }
 
+<<<<<<< HEAD
 #ifndef OPENSSL_NO_CHACHA
 void ChaCha20_ctr32_int(unsigned char *out, const unsigned char *inp,
                         size_t len, const unsigned int key[8],
@@ -131,12 +139,15 @@ int poly1305_init(void *ctx, const unsigned char key[16], void *func[2])
 }
 #endif
 
+=======
+>>>>>>> origin/master
 static sigjmp_buf ill_jmp;
 static void ill_handler(int sig)
 {
     siglongjmp(ill_jmp, sig);
 }
 
+<<<<<<< HEAD
 void OPENSSL_fpu_probe(void);
 void OPENSSL_ppc64_probe(void);
 void OPENSSL_altivec_probe(void);
@@ -170,6 +181,12 @@ static unsigned long (*getauxval) (unsigned long) = NULL;
 # if defined(__GNUC__) && __GNUC__>=2
 __attribute__ ((constructor))
 # endif
+=======
+void OPENSSL_ppc64_probe(void);
+void OPENSSL_altivec_probe(void);
+void OPENSSL_crypto207_probe(void);
+
+>>>>>>> origin/master
 void OPENSSL_cpuid_setup(void)
 {
     char *e;
@@ -181,6 +198,19 @@ void OPENSSL_cpuid_setup(void)
         return;
     trigger = 1;
 
+<<<<<<< HEAD
+=======
+    sigfillset(&all_masked);
+    sigdelset(&all_masked, SIGILL);
+    sigdelset(&all_masked, SIGTRAP);
+#ifdef SIGEMT
+    sigdelset(&all_masked, SIGEMT);
+#endif
+    sigdelset(&all_masked, SIGFPE);
+    sigdelset(&all_masked, SIGBUS);
+    sigdelset(&all_masked, SIGSEGV);
+
+>>>>>>> origin/master
     if ((e = getenv("OPENSSL_ppccap"))) {
         OPENSSL_ppccap_P = strtoul(e, NULL, 0);
         return;
@@ -189,8 +219,11 @@ void OPENSSL_cpuid_setup(void)
     OPENSSL_ppccap_P = 0;
 
 #if defined(_AIX)
+<<<<<<< HEAD
     OPENSSL_ppccap_P |= PPC_FPU;
 
+=======
+>>>>>>> origin/master
     if (sizeof(size_t) == 4) {
         struct utsname uts;
 # if defined(_SC_AIX_KERNEL_BITMODE)
@@ -200,6 +233,7 @@ void OPENSSL_cpuid_setup(void)
         if (uname(&uts) != 0 || atoi(uts.version) < 6)
             return;
     }
+<<<<<<< HEAD
 
 # if defined(__power_set)
     /*
@@ -270,6 +304,9 @@ void OPENSSL_cpuid_setup(void)
     sigdelset(&all_masked, SIGFPE);
     sigdelset(&all_masked, SIGBUS);
     sigdelset(&all_masked, SIGSEGV);
+=======
+#endif
+>>>>>>> origin/master
 
     memset(&ill_act, 0, sizeof(ill_act));
     ill_act.sa_handler = ill_handler;
@@ -278,6 +315,7 @@ void OPENSSL_cpuid_setup(void)
     sigprocmask(SIG_SETMASK, &ill_act.sa_mask, &oset);
     sigaction(SIGILL, &ill_act, &ill_oact);
 
+<<<<<<< HEAD
     if (sigsetjmp(ill_jmp,1) == 0) {
         OPENSSL_fpu_probe();
         OPENSSL_ppccap_P |= PPC_FPU;
@@ -296,6 +334,21 @@ void OPENSSL_cpuid_setup(void)
              * Wanted code detecting POWER6 CPU and setting PPC_FPU64
              */
         }
+=======
+    if (sizeof(size_t) == 4) {
+#ifdef __linux
+        struct utsname uts;
+        if (uname(&uts) == 0 && strcmp(uts.machine, "ppc64") == 0)
+#endif
+            if (sigsetjmp(ill_jmp, 1) == 0) {
+                OPENSSL_ppc64_probe();
+                OPENSSL_ppccap_P |= PPC_FPU64;
+            }
+    } else {
+        /*
+         * Wanted code detecting POWER6 CPU and setting PPC_FPU64
+         */
+>>>>>>> origin/master
     }
 
     if (sigsetjmp(ill_jmp, 1) == 0) {
@@ -307,11 +360,14 @@ void OPENSSL_cpuid_setup(void)
         }
     }
 
+<<<<<<< HEAD
     if (sigsetjmp(ill_jmp, 1) == 0) {
         OPENSSL_madd300_probe();
         OPENSSL_ppccap_P |= PPC_MADD300;
     }
 
+=======
+>>>>>>> origin/master
     sigaction(SIGILL, &ill_oact, NULL);
     sigprocmask(SIG_SETMASK, &oset, NULL);
 }

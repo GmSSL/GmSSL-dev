@@ -40,6 +40,7 @@ both of these flags must be set.
 
 recognise certificate and private key options.
 
+<<<<<<< HEAD
 =item SSL_CONF_FLAG_REQUIRE_PRIVATE
 
 If this option is set then if a private key is not specified for a certificate
@@ -47,6 +48,8 @@ it will attempt to load a private key from the certificate file when
 SSL_CONF_CTX_finish() is called. If a key cannot be loaded from the certificate
 file an error occurs.
 
+=======
+>>>>>>> origin/master
 =item SSL_CONF_FLAG_SHOW_ERRORS
 
 indicate errors relating to unrecognised options or missing arguments in
@@ -62,16 +65,25 @@ value after setting or clearing flags.
 
 =head1 SEE ALSO
 
+<<<<<<< HEAD
 L<SSL_CONF_CTX_new(3)>,
 L<SSL_CONF_CTX_set_ssl_ctx(3)>,
 L<SSL_CONF_CTX_set1_prefix(3)>,
 L<SSL_CONF_cmd(3)>,
 L<SSL_CONF_cmd_argv(3)>
+=======
+L<SSL_CONF_CTX_new(3)|SSL_CONF_CTX_new(3)>,
+L<SSL_CONF_CTX_set_ssl_ctx(3)|SSL_CONF_CTX_set_ssl_ctx(3)>,
+L<SSL_CONF_CTX_set1_prefix(3)|SSL_CONF_CTX_set1_prefix(3)>,
+L<SSL_CONF_cmd(3)|SSL_CONF_cmd(3)>,
+L<SSL_CONF_cmd_argv(3)|SSL_CONF_cmd_argv(3)>
+>>>>>>> origin/master
 
 =head1 HISTORY
 
 These functions were first added to OpenSSL 1.0.2
 
+<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -81,4 +93,6 @@ this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
+=======
+>>>>>>> origin/master
 =cut

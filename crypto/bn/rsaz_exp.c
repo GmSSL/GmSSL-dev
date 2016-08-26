@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 /*****************************************************************************
 *                                                                            *
 *  Copyright (c) 2012, Intel Corporation                                     *
@@ -49,12 +52,18 @@
 * (2) University of Haifa, Israel                                            *
 *****************************************************************************/
 
+<<<<<<< HEAD
 #include <openssl/opensslconf.h>
 #include "rsaz_exp.h"
 
 #ifndef RSAZ_ENABLED
 NON_EMPTY_TRANSLATION_UNIT
 #else
+=======
+#include "rsaz_exp.h"
+
+#ifdef RSAZ_ENABLED
+>>>>>>> origin/master
 
 /*
  * See crypto/bn/asm/rsaz-avx2.pl for further details.
@@ -253,7 +262,11 @@ void RSAZ_1024_mod_exp_avx2(BN_ULONG result_norm[16],
 
         rsaz_1024_sqr_avx2(result, result, m, k0, 5);
 
+<<<<<<< HEAD
         wvalue = (p_str[(index / 8) + 1] << 8) | p_str[index / 8];
+=======
+        wvalue = *((unsigned short *)&p_str[index / 8]);
+>>>>>>> origin/master
         wvalue = (wvalue >> (index % 8)) & 31;
         index -= 5;
 
@@ -349,4 +362,13 @@ void RSAZ_512_mod_exp(BN_ULONG result[8],
     OPENSSL_cleanse(storage, sizeof(storage));
 }
 
+<<<<<<< HEAD
+=======
+#else
+
+# if defined(PEDANTIC) || defined(__DECC) || defined(__clang__)
+static void *dummy = &dummy;
+# endif
+
+>>>>>>> origin/master
 #endif

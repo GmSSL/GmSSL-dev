@@ -4,14 +4,21 @@
 
 BIO_f_base64 - base64 BIO filter
 
+<<<<<<< HEAD
 =for comment multiple includes
 
+=======
+>>>>>>> origin/master
 =head1 SYNOPSIS
 
  #include <openssl/bio.h>
  #include <openssl/evp.h>
 
+<<<<<<< HEAD
  const BIO_METHOD *BIO_f_base64(void);
+=======
+ BIO_METHOD *	BIO_f_base64(void);
+>>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -19,7 +26,11 @@ BIO_f_base64() returns the base64 BIO method. This is a filter
 BIO that base64 encodes any data written through it and decodes
 any data read through it.
 
+<<<<<<< HEAD
 Base64 BIOs do not support BIO_gets() or BIO_puts().
+=======
+Base64 BIOs do not support BIO_gets() or BIO_puts(). 
+>>>>>>> origin/master
 
 BIO_flush() on a base64 BIO that is being written through is
 used to signal that no more data is to be encoded: this is used
@@ -65,8 +76,13 @@ data to standard output:
  bio = BIO_new_fp(stdin, BIO_NOCLOSE);
  bio_out = BIO_new_fp(stdout, BIO_NOCLOSE);
  BIO_push(b64, bio);
+<<<<<<< HEAD
  while((inlen = BIO_read(b64, inbuf, 512)) > 0)
         BIO_write(bio_out, inbuf, inlen);
+=======
+ while((inlen = BIO_read(b64, inbuf, 512)) > 0) 
+	BIO_write(bio_out, inbuf, inlen);
+>>>>>>> origin/master
 
  BIO_flush(bio_out);
  BIO_free_all(b64);
@@ -79,6 +95,7 @@ data following the base64 encoded block to be misinterpreted.
 There should be some way of specifying a test that the BIO can perform
 to reliably determine EOF (for example a MIME boundary).
 
+<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -89,3 +106,8 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
+=======
+=head1 SEE ALSO
+
+TBA
+>>>>>>> origin/master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -40,7 +44,11 @@ if ($flavour =~ /3[12]/) {
 	$g="g";
 }
 
+<<<<<<< HEAD
 while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {}
+=======
+while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
+>>>>>>> origin/master
 open STDOUT,">$output";
 
 $rp="%r14";
@@ -178,10 +186,17 @@ $ikey="%r7";
 $iinp="%r8";
 
 $code.=<<___;
+<<<<<<< HEAD
 .globl	RC4_set_key
 .type	RC4_set_key,\@function
 .align	64
 RC4_set_key:
+=======
+.globl	private_RC4_set_key
+.type	private_RC4_set_key,\@function
+.align	64
+private_RC4_set_key:
+>>>>>>> origin/master
 	stm${g}	%r6,%r8,6*$SIZE_T($sp)
 	lhi	$cnt,256
 	la	$idx,0(%r0)
@@ -217,7 +232,11 @@ RC4_set_key:
 .Ldone:
 	lm${g}	%r6,%r8,6*$SIZE_T($sp)
 	br	$rp
+<<<<<<< HEAD
 .size	RC4_set_key,.-RC4_set_key
+=======
+.size	private_RC4_set_key,.-private_RC4_set_key
+>>>>>>> origin/master
 
 ___
 }

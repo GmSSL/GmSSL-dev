@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,11 +10,77 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
+=======
+/* v3_info.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 1999.
+ */
+/* ====================================================================
+ * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include <stdio.h>
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/conf.h>
 #include <openssl/asn1.h>
 #include <openssl/asn1t.h>
 #include <openssl/x509v3.h>
+<<<<<<< HEAD
 #include "ext_dat.h"
+=======
+>>>>>>> origin/master
 
 static STACK_OF(CONF_VALUE) *i2v_AUTHORITY_INFO_ACCESS(X509V3_EXT_METHOD
                                                        *method, AUTHORITY_INFO_ACCESS
@@ -76,14 +143,24 @@ static STACK_OF(CONF_VALUE) *i2v_AUTHORITY_INFO_ACCESS(X509V3_EXT_METHOD
         i2t_ASN1_OBJECT(objtmp, sizeof objtmp, desc->method);
         nlen = strlen(objtmp) + strlen(vtmp->name) + 5;
         ntmp = OPENSSL_malloc(nlen);
+<<<<<<< HEAD
         if (ntmp == NULL) {
+=======
+        if (!ntmp) {
+>>>>>>> origin/master
             X509V3err(X509V3_F_I2V_AUTHORITY_INFO_ACCESS,
                       ERR_R_MALLOC_FAILURE);
             return NULL;
         }
+<<<<<<< HEAD
         OPENSSL_strlcpy(ntmp, objtmp, nlen);
         OPENSSL_strlcat(ntmp, " - ", nlen);
         OPENSSL_strlcat(ntmp, vtmp->name, nlen);
+=======
+        BUF_strlcpy(ntmp, objtmp, nlen);
+        BUF_strlcat(ntmp, " - ", nlen);
+        BUF_strlcat(ntmp, vtmp->name, nlen);
+>>>>>>> origin/master
         OPENSSL_free(vtmp->name);
         vtmp->name = ntmp;
 
@@ -104,14 +181,22 @@ static AUTHORITY_INFO_ACCESS *v2i_AUTHORITY_INFO_ACCESS(X509V3_EXT_METHOD
     ACCESS_DESCRIPTION *acc;
     int i, objlen;
     char *objtmp, *ptmp;
+<<<<<<< HEAD
 
     if ((ainfo = sk_ACCESS_DESCRIPTION_new_null()) == NULL) {
+=======
+    if (!(ainfo = sk_ACCESS_DESCRIPTION_new_null())) {
+>>>>>>> origin/master
         X509V3err(X509V3_F_V2I_AUTHORITY_INFO_ACCESS, ERR_R_MALLOC_FAILURE);
         return NULL;
     }
     for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
         cnf = sk_CONF_VALUE_value(nval, i);
+<<<<<<< HEAD
         if ((acc = ACCESS_DESCRIPTION_new()) == NULL
+=======
+        if (!(acc = ACCESS_DESCRIPTION_new())
+>>>>>>> origin/master
             || !sk_ACCESS_DESCRIPTION_push(ainfo, acc)) {
             X509V3err(X509V3_F_V2I_AUTHORITY_INFO_ACCESS,
                       ERR_R_MALLOC_FAILURE);
@@ -128,11 +213,20 @@ static AUTHORITY_INFO_ACCESS *v2i_AUTHORITY_INFO_ACCESS(X509V3_EXT_METHOD
         ctmp.value = cnf->value;
         if (!v2i_GENERAL_NAME_ex(acc->location, method, ctx, &ctmp, 0))
             goto err;
+<<<<<<< HEAD
         if ((objtmp = OPENSSL_strndup(cnf->name, objlen)) == NULL) {
+=======
+        if (!(objtmp = OPENSSL_malloc(objlen + 1))) {
+>>>>>>> origin/master
             X509V3err(X509V3_F_V2I_AUTHORITY_INFO_ACCESS,
                       ERR_R_MALLOC_FAILURE);
             goto err;
         }
+<<<<<<< HEAD
+=======
+        strncpy(objtmp, cnf->name, objlen);
+        objtmp[objlen] = 0;
+>>>>>>> origin/master
         acc->method = OBJ_txt2obj(objtmp, 0);
         if (!acc->method) {
             X509V3err(X509V3_F_V2I_AUTHORITY_INFO_ACCESS,
@@ -150,8 +244,17 @@ static AUTHORITY_INFO_ACCESS *v2i_AUTHORITY_INFO_ACCESS(X509V3_EXT_METHOD
     return NULL;
 }
 
+<<<<<<< HEAD
 int i2a_ACCESS_DESCRIPTION(BIO *bp, const ACCESS_DESCRIPTION *a)
 {
     i2a_ASN1_OBJECT(bp, a->method);
+=======
+int i2a_ACCESS_DESCRIPTION(BIO *bp, ACCESS_DESCRIPTION *a)
+{
+    i2a_ASN1_OBJECT(bp, a->method);
+#ifdef UNDEF
+    i2a_GENERAL_NAME(bp, a->location);
+#endif
+>>>>>>> origin/master
     return 2;
 }

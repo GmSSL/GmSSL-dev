@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -26,7 +30,10 @@
 # Sandy Bridge	(8.16	+5.15=13.3)/n	4.99	5.98		+80%
 # Ivy Bridge	(8.08	+5.14=13.2)/n	4.60	5.54		+68%
 # Haswell(iii)	(8.96	+5.00=14.0)/n	3.57	4.55		+160%
+<<<<<<< HEAD
 # Skylake	(8.70	+5.00=13.7)/n	3.64	4.20		+145%
+=======
+>>>>>>> origin/master
 # Bulldozer	(9.76	+5.76=15.5)/n	5.95	6.37		+64%
 #
 # (i)	multi-block CBC encrypt with 128-bit key;
@@ -66,11 +73,19 @@ if (!$avx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	$avx = ($1>=10) + ($1>=11);
 }
 
+<<<<<<< HEAD
 if (!$avx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9]\.[0-9]+)/) {
 	$avx = ($2>=3.0) + ($2>3.0);
 }
 
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
+=======
+if (!$avx && `$ENV{CC} -v 2>&1` =~ /(^clang version|based on LLVM) ([3-9]\.[0-9]+)/) {
+	$avx = ($2>=3.0) + ($2>3.0);
+}
+
+open OUT,"| \"$^X\" $xlate $flavour $output";
+>>>>>>> origin/master
 *STDOUT=*OUT;
 
 # void sha1_multi_block (
@@ -486,7 +501,11 @@ $code.=<<___;
 	jnz	.Loop_grande
 
 .Ldone:
+<<<<<<< HEAD
 	mov	`$REG_SZ*17`(%rsp),%rax		# original %rsp
+=======
+	mov	`$REG_SZ*17`(%rsp),%rax		# orignal %rsp
+>>>>>>> origin/master
 ___
 $code.=<<___ if ($win64);
 	movaps	-0xb8(%rax),%xmm6
@@ -546,7 +565,11 @@ $code.=<<___;
 	movdqa	K_XX_XX+0x80(%rip),$BSWAP	# byte-n-word swap
 
 .Loop_grande_shaext:
+<<<<<<< HEAD
 	mov	$num,`$REG_SZ*17+8`(%rsp)	# original $num
+=======
+	mov	$num,`$REG_SZ*17+8`(%rsp)	# orignal $num
+>>>>>>> origin/master
 	xor	$num,$num
 ___
 for($i=0;$i<2;$i++) {
@@ -1124,7 +1147,11 @@ $code.=<<___;
 	jnz	.Loop_grande_avx
 
 .Ldone_avx:
+<<<<<<< HEAD
 	mov	`$REG_SZ*17`(%rsp),%rax		# original %rsp
+=======
+	mov	`$REG_SZ*17`(%rsp),%rax		# orignal %rsp
+>>>>>>> origin/master
 	vzeroupper
 ___
 $code.=<<___ if ($win64);
@@ -1279,7 +1306,11 @@ $code.=<<___;
 	#jnz	.Loop_grande_avx2
 
 .Ldone_avx2:
+<<<<<<< HEAD
 	mov	`$REG_SZ*17`(%rsp),%rax		# original %rsp
+=======
+	mov	`$REG_SZ*17`(%rsp),%rax		# orignal %rsp
+>>>>>>> origin/master
 	vzeroupper
 ___
 $code.=<<___ if ($win64);

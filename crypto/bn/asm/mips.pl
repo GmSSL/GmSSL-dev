@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -22,7 +26,11 @@
 # This is drop-in MIPS III/IV ISA replacement for crypto/bn/bn_asm.c.
 #
 # The module is designed to work with either of the "new" MIPS ABI(5),
+<<<<<<< HEAD
 # namely N32 or N64, offered by IRIX 6.x. It's not meant to work under
+=======
+# namely N32 or N64, offered by IRIX 6.x. It's not ment to work under
+>>>>>>> origin/master
 # IRIX 5.x not only because it doesn't support new ABIs but also
 # because 5.x kernels put R4x00 CPU into 32-bit mode and all those
 # 64-bit instructions (daddu, dmultu, etc.) found below gonna only
@@ -56,7 +64,11 @@
 # key length, more for longer keys.
 
 $flavour = shift || "o32";
+<<<<<<< HEAD
 while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {}
+=======
+while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
+>>>>>>> origin/master
 open STDOUT,">$output";
 
 if ($flavour =~ /64|n32/i) {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -14,6 +15,73 @@
 
 #ifndef OPENSSL_NO_SRP
 # include <openssl/srp.h>
+=======
+/* ssl/tls_srp.c */
+/*
+ * Written by Christophe Renou (christophe.renou@edelweb.fr) with the
+ * precious help of Peter Sylvester (peter.sylvester@edelweb.fr) for the
+ * EdelKey project and contributed to the OpenSSL project 2004.
+ */
+/* ====================================================================
+ * Copyright (c) 2004-2011 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+#include "ssl_locl.h"
+#ifndef OPENSSL_NO_SRP
+
+# include <openssl/rand.h>
+# include <openssl/srp.h>
+# include <openssl/err.h>
+>>>>>>> origin/master
 
 int SSL_CTX_SRP_CTX_free(struct ssl_ctx_st *ctx)
 {
@@ -128,7 +196,11 @@ int SSL_SRP_CTX_init(struct ssl_st *s)
         goto err;
     }
     if ((ctx->srp_ctx.login != NULL) &&
+<<<<<<< HEAD
         ((s->srp_ctx.login = OPENSSL_strdup(ctx->srp_ctx.login)) == NULL)) {
+=======
+        ((s->srp_ctx.login = BUF_strdup(ctx->srp_ctx.login)) == NULL)) {
+>>>>>>> origin/master
         SSLerr(SSL_F_SSL_SRP_CTX_INIT, ERR_R_INTERNAL_ERROR);
         goto err;
     }
@@ -222,10 +294,21 @@ int SSL_set_srp_server_param_pw(SSL *s, const char *user, const char *pass,
         return -1;
     s->srp_ctx.N = BN_dup(GN->N);
     s->srp_ctx.g = BN_dup(GN->g);
+<<<<<<< HEAD
     BN_clear_free(s->srp_ctx.v);
     s->srp_ctx.v = NULL;
     BN_clear_free(s->srp_ctx.s);
     s->srp_ctx.s = NULL;
+=======
+    if (s->srp_ctx.v != NULL) {
+        BN_clear_free(s->srp_ctx.v);
+        s->srp_ctx.v = NULL;
+    }
+    if (s->srp_ctx.s != NULL) {
+        BN_clear_free(s->srp_ctx.s);
+        s->srp_ctx.s = NULL;
+    }
+>>>>>>> origin/master
     if (!SRP_create_verifier_BN
         (user, pass, &s->srp_ctx.s, &s->srp_ctx.v, GN->N, GN->g))
         return -1;
@@ -281,36 +364,70 @@ int SSL_set_srp_server_param(SSL *s, const BIGNUM *N, const BIGNUM *g,
     return 1;
 }
 
+<<<<<<< HEAD
 int srp_generate_server_master_secret(SSL *s)
 {
     BIGNUM *K = NULL, *u = NULL;
     int ret = -1, tmp_len = 0;
+=======
+int SRP_generate_server_master_secret(SSL *s, unsigned char *master_key)
+{
+    BIGNUM *K = NULL, *u = NULL;
+    int ret = -1, tmp_len;
+>>>>>>> origin/master
     unsigned char *tmp = NULL;
 
     if (!SRP_Verify_A_mod_N(s->srp_ctx.A, s->srp_ctx.N))
         goto err;
+<<<<<<< HEAD
     if ((u = SRP_Calc_u(s->srp_ctx.A, s->srp_ctx.B, s->srp_ctx.N)) == NULL)
         goto err;
     if ((K = SRP_Calc_server_key(s->srp_ctx.A, s->srp_ctx.v, u, s->srp_ctx.b,
                                  s->srp_ctx.N)) == NULL)
+=======
+    if (!(u = SRP_Calc_u(s->srp_ctx.A, s->srp_ctx.B, s->srp_ctx.N)))
+        goto err;
+    if (!
+        (K =
+         SRP_Calc_server_key(s->srp_ctx.A, s->srp_ctx.v, u, s->srp_ctx.b,
+                             s->srp_ctx.N)))
+>>>>>>> origin/master
         goto err;
 
     tmp_len = BN_num_bytes(K);
     if ((tmp = OPENSSL_malloc(tmp_len)) == NULL)
         goto err;
     BN_bn2bin(K, tmp);
+<<<<<<< HEAD
     ret = ssl_generate_master_secret(s, tmp, tmp_len, 1);
  err:
+=======
+    ret =
+        s->method->ssl3_enc->generate_master_secret(s, master_key, tmp,
+                                                    tmp_len);
+ err:
+    if (tmp) {
+        OPENSSL_cleanse(tmp, tmp_len);
+        OPENSSL_free(tmp);
+    }
+>>>>>>> origin/master
     BN_clear_free(K);
     BN_clear_free(u);
     return ret;
 }
 
 /* client side */
+<<<<<<< HEAD
 int srp_generate_client_master_secret(SSL *s)
 {
     BIGNUM *x = NULL, *u = NULL, *K = NULL;
     int ret = -1, tmp_len = 0;
+=======
+int SRP_generate_client_master_secret(SSL *s, unsigned char *master_key)
+{
+    BIGNUM *x = NULL, *u = NULL, *K = NULL;
+    int ret = -1, tmp_len;
+>>>>>>> origin/master
     char *passwd = NULL;
     unsigned char *tmp = NULL;
 
@@ -319,30 +436,63 @@ int srp_generate_client_master_secret(SSL *s)
      */
     if (SRP_Verify_B_mod_N(s->srp_ctx.B, s->srp_ctx.N) == 0)
         goto err;
+<<<<<<< HEAD
     if ((u = SRP_Calc_u(s->srp_ctx.A, s->srp_ctx.B, s->srp_ctx.N)) == NULL)
+=======
+    if (!(u = SRP_Calc_u(s->srp_ctx.A, s->srp_ctx.B, s->srp_ctx.N)))
+>>>>>>> origin/master
         goto err;
     if (s->srp_ctx.SRP_give_srp_client_pwd_callback == NULL)
         goto err;
     if (!
         (passwd =
+<<<<<<< HEAD
          s->srp_ctx.SRP_give_srp_client_pwd_callback(s, s->srp_ctx.SRP_cb_arg)))
         goto err;
     if ((x = SRP_Calc_x(s->srp_ctx.s, s->srp_ctx.login, passwd)) == NULL)
         goto err;
     if ((K = SRP_Calc_client_key(s->srp_ctx.N, s->srp_ctx.B, s->srp_ctx.g, x,
                                  s->srp_ctx.a, u)) == NULL)
+=======
+         s->srp_ctx.SRP_give_srp_client_pwd_callback(s,
+                                                     s->srp_ctx.SRP_cb_arg)))
+        goto err;
+    if (!(x = SRP_Calc_x(s->srp_ctx.s, s->srp_ctx.login, passwd)))
+        goto err;
+    if (!
+        (K =
+         SRP_Calc_client_key(s->srp_ctx.N, s->srp_ctx.B, s->srp_ctx.g, x,
+                             s->srp_ctx.a, u)))
+>>>>>>> origin/master
         goto err;
 
     tmp_len = BN_num_bytes(K);
     if ((tmp = OPENSSL_malloc(tmp_len)) == NULL)
         goto err;
     BN_bn2bin(K, tmp);
+<<<<<<< HEAD
     ret = ssl_generate_master_secret(s, tmp, tmp_len, 1);
  err:
     BN_clear_free(K);
     BN_clear_free(x);
     if (passwd != NULL)
         OPENSSL_clear_free(passwd, strlen(passwd));
+=======
+    ret =
+        s->method->ssl3_enc->generate_master_secret(s, master_key, tmp,
+                                                    tmp_len);
+ err:
+    if (tmp) {
+        OPENSSL_cleanse(tmp, tmp_len);
+        OPENSSL_free(tmp);
+    }
+    BN_clear_free(K);
+    BN_clear_free(x);
+    if (passwd) {
+        OPENSSL_cleanse(passwd, strlen(passwd));
+        OPENSSL_free(passwd);
+    }
+>>>>>>> origin/master
     BN_clear_free(u);
     return ret;
 }
@@ -383,12 +533,22 @@ int SRP_Calc_A_param(SSL *s)
     unsigned char rnd[SSL_MAX_MASTER_KEY_LENGTH];
 
     if (RAND_bytes(rnd, sizeof(rnd)) <= 0)
+<<<<<<< HEAD
         return 0;
     s->srp_ctx.a = BN_bin2bn(rnd, sizeof(rnd), s->srp_ctx.a);
     OPENSSL_cleanse(rnd, sizeof(rnd));
 
     if (!(s->srp_ctx.A = SRP_Calc_A(s->srp_ctx.a, s->srp_ctx.N, s->srp_ctx.g)))
         return 0;
+=======
+        return -1;
+    s->srp_ctx.a = BN_bin2bn(rnd, sizeof(rnd), s->srp_ctx.a);
+    OPENSSL_cleanse(rnd, sizeof(rnd));
+
+    if (!
+        (s->srp_ctx.A = SRP_Calc_A(s->srp_ctx.a, s->srp_ctx.N, s->srp_ctx.g)))
+        return -1;
+>>>>>>> origin/master
 
     return 1;
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -44,7 +48,11 @@ if ($flavour =~ /64/) {
 	$PUSH	="stw";
 } else { die "nonsense $flavour"; }
 
+<<<<<<< HEAD
 # Define endianness based on flavour
+=======
+# Define endianess based on flavour
+>>>>>>> origin/master
 # i.e.: linux64le
 $LITTLE_ENDIAN = ($flavour=~/le$/) ? $SIZE_T : 0;
 
@@ -234,7 +242,11 @@ Lunaligned:
 	srwi.	$t1,$t1,6	; t1/=64
 	beq	Lcross_page
 	$UCMP	$num,$t1
+<<<<<<< HEAD
 	ble	Laligned	; didn't cross the page boundary
+=======
+	ble-	Laligned	; didn't cross the page boundary
+>>>>>>> origin/master
 	mtctr	$t1
 	subfc	$num,$t1,$num
 	bl	Lsha1_block_private
@@ -262,7 +274,11 @@ Lmemcpy:
 	bl	Lsha1_block_private
 	$POP	$inp,`$FRAME-$SIZE_T*18`($sp)
 	addic.	$num,$num,-1
+<<<<<<< HEAD
 	bne	Lunaligned
+=======
+	bne-	Lunaligned
+>>>>>>> origin/master
 
 Ldone:
 	$POP	r0,`$FRAME+$LRSAVE`($sp)
@@ -336,7 +352,11 @@ $code.=<<___;
 	stw	r20,16($ctx)
 	mr	$E,r20
 	addi	$inp,$inp,`16*4`
+<<<<<<< HEAD
 	bdnz	Lsha1_block_private
+=======
+	bdnz-	Lsha1_block_private
+>>>>>>> origin/master
 	blr
 	.long	0
 	.byte	0,12,0x14,0,0,0,0,0

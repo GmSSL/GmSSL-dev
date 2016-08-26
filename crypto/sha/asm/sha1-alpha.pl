@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -324,6 +328,10 @@ $code.=<<___;
 .ascii	"SHA1 block transform for Alpha, CRYPTOGAMS by <appro\@openssl.org>"
 .align	2
 ___
+<<<<<<< HEAD
 $output=pop and open STDOUT,">$output";
+=======
+$output=shift and open STDOUT,">$output";
+>>>>>>> origin/master
 print $code;
 close STDOUT;

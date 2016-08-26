@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,6 +9,8 @@
  */
 
 #include <string.h>
+=======
+>>>>>>> origin/master
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 
@@ -27,7 +30,11 @@ int main(int argc, char **argv)
     ERR_load_SSL_strings();
     SSL_library_init();
 
+<<<<<<< HEAD
     ctx = SSL_CTX_new(TLS_client_method());
+=======
+    ctx = SSL_CTX_new(SSLv23_client_method());
+>>>>>>> origin/master
     cctx = SSL_CONF_CTX_new();
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_CLIENT);
     SSL_CONF_CTX_set_ssl_ctx(cctx, ctx);
@@ -48,7 +55,11 @@ int main(int argc, char **argv)
         if (rv > 0)
             continue;
         /* Otherwise application specific argument processing */
+<<<<<<< HEAD
         if (strcmp(*args, "-connect") == 0) {
+=======
+        if (!strcmp(*args, "-connect")) {
+>>>>>>> origin/master
             connect_str = args[1];
             if (connect_str == NULL) {
                 fprintf(stderr, "Missing -connect argument\n");
@@ -66,7 +77,11 @@ int main(int argc, char **argv)
     if (!SSL_CONF_CTX_finish(cctx)) {
         fprintf(stderr, "Finish error\n");
         ERR_print_errors_fp(stderr);
+<<<<<<< HEAD
         goto end;
+=======
+        goto err;
+>>>>>>> origin/master
     }
 
     /*

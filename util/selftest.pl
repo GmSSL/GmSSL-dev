@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,6 +8,12 @@
 # https://www.openssl.org/source/license.html
 
 # Run the test suite and generate a report
+=======
+#!/usr/local/bin/perl -w
+#
+# Run the test suite and generate a report
+#
+>>>>>>> origin/master
 
 if (! -f "Configure") {
     print "Please run perl util/selftest.pl in the OpenSSL directory.\n";
@@ -59,7 +66,11 @@ $cversion=`$cc -V |head -1` if $cversion =~ "Error";
 $cversion=`$cc --version` if $cversion eq "";
 $cversion =~ s/Reading specs.*\n//;
 $cversion =~ s/usage.*\n//;
+<<<<<<< HEAD
 $cversion =~ s|\R$||;
+=======
+chomp $cversion;
+>>>>>>> origin/master
 
 if (open(IN,"<CHANGES")) {
     while(<IN>) {
@@ -204,4 +215,7 @@ while (<IN>) {
 }
 print "\nTest report in file $report\n";
 
+<<<<<<< HEAD
 die if $ok != 2;
+=======
+>>>>>>> origin/master

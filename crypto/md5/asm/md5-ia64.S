@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  *
  * Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -8,6 +9,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 /* Copyright (c) 2005 Hewlett-Packard Development Company, L.P.
 
 Permission is hereby granted, free of charge, to any person obtaining

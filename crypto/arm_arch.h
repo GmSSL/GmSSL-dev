@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #ifndef __ARM_ARCH_H__
 # define __ARM_ARCH_H__
 
@@ -57,6 +60,13 @@
 #  endif
 # endif
 
+<<<<<<< HEAD
+=======
+# ifdef OPENSSL_FIPSCANISTER
+#  include <openssl/fipssyms.h>
+# endif
+
+>>>>>>> origin/master
 # if !defined(__ARM_MAX_ARCH__)
 #  define __ARM_MAX_ARCH__ __ARM_ARCH__
 # endif

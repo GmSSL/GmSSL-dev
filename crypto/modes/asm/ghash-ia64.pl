@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -39,7 +43,11 @@
 # Itanium performance should remain the same as the "256B" version,
 # i.e. ~8.5 cycles.
 
+<<<<<<< HEAD
 $output=pop and (open STDOUT,">$output" or die "can't open $output: $!");
+=======
+$output=shift and (open STDOUT,">$output" or die "can't open $output: $!");
+>>>>>>> origin/master
 
 if ($^O eq "hpux") {
     $ADDP="addp4";

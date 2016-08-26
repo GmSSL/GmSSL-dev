@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,6 +7,10 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
+=======
+/* NOCW */
+/* demos/bio/saccept.c */
+>>>>>>> origin/master
 
 /*-
  * A minimal program to serve an SSL connection.
@@ -24,6 +29,7 @@
 
 #define CERT_FILE       "server.pem"
 
+<<<<<<< HEAD
 static int done = 0;
 
 void interrupt()
@@ -50,6 +56,24 @@ int main(int argc, char *argv[])
     BIO *in = NULL;
     BIO *ssl_bio, *tmp;
     SSL_CTX *ctx;
+=======
+BIO *in = NULL;
+
+void close_up()
+{
+    if (in != NULL)
+        BIO_free(in);
+}
+
+int main(argc, argv)
+int argc;
+char *argv[];
+{
+    char *port = NULL;
+    BIO *ssl_bio, *tmp;
+    SSL_CTX *ctx;
+    SSL *ssl;
+>>>>>>> origin/master
     char buf[512];
     int ret = 1, i;
 
@@ -58,6 +82,7 @@ int main(int argc, char *argv[])
     else
         port = argv[1];
 
+<<<<<<< HEAD
     SSL_load_error_strings();
 
     /* Add ciphers and message digests */
@@ -65,6 +90,22 @@ int main(int argc, char *argv[])
 
     ctx = SSL_CTX_new(TLS_server_method());
     if (!SSL_CTX_use_certificate_chain_file(ctx, CERT_FILE))
+=======
+    signal(SIGINT, close_up);
+
+    SSL_load_error_strings();
+
+#ifdef WATT32
+    dbug_init();
+    sock_init();
+#endif
+
+    /* Add ciphers and message digests */
+    OpenSSL_add_ssl_algorithms();
+
+    ctx = SSL_CTX_new(SSLv23_server_method());
+    if (!SSL_CTX_use_certificate_file(ctx, CERT_FILE, SSL_FILETYPE_PEM))
+>>>>>>> origin/master
         goto err;
     if (!SSL_CTX_use_PrivateKey_file(ctx, CERT_FILE, SSL_FILETYPE_PEM))
         goto err;
@@ -72,6 +113,10 @@ int main(int argc, char *argv[])
         goto err;
 
     /* Setup server side SSL bio */
+<<<<<<< HEAD
+=======
+    ssl = SSL_new(ctx);
+>>>>>>> origin/master
     ssl_bio = BIO_new_ssl(ctx, 0);
 
     if ((in = BIO_new_accept(port)) == NULL)
@@ -84,9 +129,12 @@ int main(int argc, char *argv[])
      */
     BIO_set_accept_bios(in, ssl_bio);
 
+<<<<<<< HEAD
     /* Arrange to leave server loop on interrupt */
     sigsetup();
 
+=======
+>>>>>>> origin/master
  again:
     /*
      * The first call will setup the accept socket, and the second will get a
@@ -97,7 +145,11 @@ int main(int argc, char *argv[])
     if (BIO_do_accept(in) <= 0)
         goto err;
 
+<<<<<<< HEAD
     while (!done) {
+=======
+    for (;;) {
+>>>>>>> origin/master
         i = BIO_read(in, buf, 512);
         if (i == 0) {
             /*
@@ -121,7 +173,12 @@ int main(int argc, char *argv[])
     if (ret) {
         ERR_print_errors_fp(stderr);
     }
+<<<<<<< HEAD
     BIO_free(in);
+=======
+    if (in != NULL)
+        BIO_free(in);
+>>>>>>> origin/master
     exit(ret);
     return (!ret);
 }

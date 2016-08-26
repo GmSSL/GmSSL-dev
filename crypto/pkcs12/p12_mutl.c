@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,10 +10,75 @@
 
 # include <stdio.h>
 # include "internal/cryptlib.h"
+=======
+/* p12_mutl.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 1999.
+ */
+/* ====================================================================
+ * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#ifndef OPENSSL_NO_HMAC
+# include <stdio.h>
+# include "cryptlib.h"
+>>>>>>> origin/master
 # include <openssl/crypto.h>
 # include <openssl/hmac.h>
 # include <openssl/rand.h>
 # include <openssl/pkcs12.h>
+<<<<<<< HEAD
 # include "p12_lcl.h"
 
 int PKCS12_mac_present(const PKCS12 *p12)
@@ -86,6 +152,18 @@ static int pkcs12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
 
     if (pkcs12_key_gen == NULL)
         pkcs12_key_gen = PKCS12_key_gen_utf8;
+=======
+
+/* Generate a MAC */
+int PKCS12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
+                   unsigned char *mac, unsigned int *maclen)
+{
+    const EVP_MD *md_type;
+    HMAC_CTX hmac;
+    unsigned char key[EVP_MAX_MD_SIZE], *salt;
+    int saltlen, iter;
+    int md_size;
+>>>>>>> origin/master
 
     if (!PKCS7_type_is_data(p12->authsafes)) {
         PKCS12err(PKCS12_F_PKCS12_GEN_MAC, PKCS12_R_CONTENT_TYPE_NOT_DATA);
@@ -98,13 +176,18 @@ static int pkcs12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
         iter = 1;
     else
         iter = ASN1_INTEGER_get(p12->mac->iter);
+<<<<<<< HEAD
     X509_SIG_get0(p12->mac->dinfo, &macalg, NULL);
     X509_ALGOR_get0(&macoid, NULL, NULL, macalg);
     if ((md_type = EVP_get_digestbyobj(macoid)) == NULL) {
+=======
+    if (!(md_type = EVP_get_digestbyobj(p12->mac->dinfo->algor->algorithm))) {
+>>>>>>> origin/master
         PKCS12err(PKCS12_F_PKCS12_GEN_MAC, PKCS12_R_UNKNOWN_DIGEST_ALGORITHM);
         return 0;
     }
     md_size = EVP_MD_size(md_type);
+<<<<<<< HEAD
     md_type_nid = EVP_MD_type(md_type);
     if (md_size < 0)
         return 0;
@@ -142,17 +225,42 @@ int PKCS12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
     return pkcs12_gen_mac(p12, pass, passlen, mac, maclen, NULL);
 }
 
+=======
+    if (md_size < 0)
+        return 0;
+    if (!PKCS12_key_gen(pass, passlen, salt, saltlen, PKCS12_MAC_ID, iter,
+                        md_size, key, md_type)) {
+        PKCS12err(PKCS12_F_PKCS12_GEN_MAC, PKCS12_R_KEY_GEN_ERROR);
+        return 0;
+    }
+    HMAC_CTX_init(&hmac);
+    if (!HMAC_Init_ex(&hmac, key, md_size, md_type, NULL)
+        || !HMAC_Update(&hmac, p12->authsafes->d.data->data,
+                        p12->authsafes->d.data->length)
+        || !HMAC_Final(&hmac, mac, maclen)) {
+        HMAC_CTX_cleanup(&hmac);
+        return 0;
+    }
+    HMAC_CTX_cleanup(&hmac);
+    return 1;
+}
+
+>>>>>>> origin/master
 /* Verify the mac */
 int PKCS12_verify_mac(PKCS12 *p12, const char *pass, int passlen)
 {
     unsigned char mac[EVP_MAX_MD_SIZE];
     unsigned int maclen;
+<<<<<<< HEAD
     const ASN1_OCTET_STRING *macoct;
 
+=======
+>>>>>>> origin/master
     if (p12->mac == NULL) {
         PKCS12err(PKCS12_F_PKCS12_VERIFY_MAC, PKCS12_R_MAC_ABSENT);
         return 0;
     }
+<<<<<<< HEAD
     if (!pkcs12_gen_mac(p12, pass, passlen, mac, &maclen,
                         PKCS12_key_gen_utf8)) {
         PKCS12err(PKCS12_F_PKCS12_VERIFY_MAC, PKCS12_R_MAC_GENERATION_ERROR);
@@ -163,6 +271,15 @@ int PKCS12_verify_mac(PKCS12 *p12, const char *pass, int passlen)
         || CRYPTO_memcmp(mac, ASN1_STRING_get0_data(macoct), maclen) != 0)
         return 0;
 
+=======
+    if (!PKCS12_gen_mac(p12, pass, passlen, mac, &maclen)) {
+        PKCS12err(PKCS12_F_PKCS12_VERIFY_MAC, PKCS12_R_MAC_GENERATION_ERROR);
+        return 0;
+    }
+    if ((maclen != (unsigned int)p12->mac->dinfo->digest->length)
+        || CRYPTO_memcmp(mac, p12->mac->dinfo->digest->data, maclen))
+        return 0;
+>>>>>>> origin/master
     return 1;
 }
 
@@ -174,7 +291,10 @@ int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
 {
     unsigned char mac[EVP_MAX_MD_SIZE];
     unsigned int maclen;
+<<<<<<< HEAD
     ASN1_OCTET_STRING *macoct;
+=======
+>>>>>>> origin/master
 
     if (!md_type)
         md_type = EVP_sha1();
@@ -182,6 +302,7 @@ int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
         PKCS12err(PKCS12_F_PKCS12_SET_MAC, PKCS12_R_MAC_SETUP_ERROR);
         return 0;
     }
+<<<<<<< HEAD
     /*
      * Note that output mac is forced to UTF-8...
      */
@@ -192,6 +313,13 @@ int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
     }
     X509_SIG_getm(p12->mac->dinfo, NULL, &macoct);
     if (!ASN1_OCTET_STRING_set(macoct, mac, maclen)) {
+=======
+    if (!PKCS12_gen_mac(p12, pass, passlen, mac, &maclen)) {
+        PKCS12err(PKCS12_F_PKCS12_SET_MAC, PKCS12_R_MAC_GENERATION_ERROR);
+        return 0;
+    }
+    if (!(M_ASN1_OCTET_STRING_set(p12->mac->dinfo->digest, mac, maclen))) {
+>>>>>>> origin/master
         PKCS12err(PKCS12_F_PKCS12_SET_MAC, PKCS12_R_MAC_STRING_SET_ERROR);
         return 0;
     }
@@ -202,12 +330,19 @@ int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
 int PKCS12_setup_mac(PKCS12 *p12, int iter, unsigned char *salt, int saltlen,
                      const EVP_MD *md_type)
 {
+<<<<<<< HEAD
     X509_ALGOR *macalg;
 
     if ((p12->mac = PKCS12_MAC_DATA_new()) == NULL)
         return PKCS12_ERROR;
     if (iter > 1) {
         if ((p12->mac->iter = ASN1_INTEGER_new()) == NULL) {
+=======
+    if (!(p12->mac = PKCS12_MAC_DATA_new()))
+        return PKCS12_ERROR;
+    if (iter > 1) {
+        if (!(p12->mac->iter = M_ASN1_INTEGER_new())) {
+>>>>>>> origin/master
             PKCS12err(PKCS12_F_PKCS12_SETUP_MAC, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -218,6 +353,7 @@ int PKCS12_setup_mac(PKCS12 *p12, int iter, unsigned char *salt, int saltlen,
     }
     if (!saltlen)
         saltlen = PKCS12_SALT_LEN;
+<<<<<<< HEAD
     if ((p12->mac->salt->data = OPENSSL_malloc(saltlen)) == NULL) {
         PKCS12err(PKCS12_F_PKCS12_SETUP_MAC, ERR_R_MALLOC_FAILURE);
         return 0;
@@ -237,3 +373,25 @@ int PKCS12_setup_mac(PKCS12 *p12, int iter, unsigned char *salt, int saltlen,
 
     return 1;
 }
+=======
+    p12->mac->salt->length = saltlen;
+    if (!(p12->mac->salt->data = OPENSSL_malloc(saltlen))) {
+        PKCS12err(PKCS12_F_PKCS12_SETUP_MAC, ERR_R_MALLOC_FAILURE);
+        return 0;
+    }
+    if (!salt) {
+        if (RAND_pseudo_bytes(p12->mac->salt->data, saltlen) < 0)
+            return 0;
+    } else
+        memcpy(p12->mac->salt->data, salt, saltlen);
+    p12->mac->dinfo->algor->algorithm = OBJ_nid2obj(EVP_MD_type(md_type));
+    if (!(p12->mac->dinfo->algor->parameter = ASN1_TYPE_new())) {
+        PKCS12err(PKCS12_F_PKCS12_SETUP_MAC, ERR_R_MALLOC_FAILURE);
+        return 0;
+    }
+    p12->mac->dinfo->algor->parameter->type = V_ASN1_NULL;
+
+    return 1;
+}
+#endif
+>>>>>>> origin/master

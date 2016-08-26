@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,6 +6,12 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* crypto/rsa/rsa_oaep.c */
+/*
+ * Written by Ulf Moeller. This software is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied.
+>>>>>>> origin/master
  */
 
 /* EME-OAEP as defined in RFC 2437 (PKCS #1 v2.0) */
@@ -20,6 +27,7 @@
  * one-wayness.  For the RSA function, this is an equivalent notion.
  */
 
+<<<<<<< HEAD
 #include "internal/constant_time_locl.h"
 
 #include <stdio.h>
@@ -29,6 +37,18 @@
 #include <openssl/rand.h>
 #include <openssl/sha.h>
 #include "rsa_locl.h"
+=======
+#include "constant_time_locl.h"
+
+#if !defined(OPENSSL_NO_SHA) && !defined(OPENSSL_NO_SHA1)
+# include <stdio.h>
+# include "cryptlib.h"
+# include <openssl/bn.h>
+# include <openssl/rsa.h>
+# include <openssl/evp.h>
+# include <openssl/rand.h>
+# include <openssl/sha.h>
+>>>>>>> origin/master
 
 int RSA_padding_add_PKCS1_OAEP(unsigned char *to, int tlen,
                                const unsigned char *from, int flen,
@@ -78,11 +98,19 @@ int RSA_padding_add_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
     memcpy(db + emlen - flen - mdlen, from, (unsigned int)flen);
     if (RAND_bytes(seed, mdlen) <= 0)
         return 0;
+<<<<<<< HEAD
 #ifdef PKCS_TESTVECT
     memcpy(seed,
            "\xaa\xfd\x12\xf6\x59\xca\xe6\x34\x89\xb4\x79\xe5\x07\x6d\xde\xc2\xf0\x6c\xb5\x8f",
            20);
 #endif
+=======
+# ifdef PKCS_TESTVECT
+    memcpy(seed,
+           "\xaa\xfd\x12\xf6\x59\xca\xe6\x34\x89\xb4\x79\xe5\x07\x6d\xde\xc2\xf0\x6c\xb5\x8f",
+           20);
+# endif
+>>>>>>> origin/master
 
     dbmask = OPENSSL_malloc(emlen - mdlen);
     if (dbmask == NULL) {
@@ -235,8 +263,15 @@ int RSA_padding_check_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
     RSAerr(RSA_F_RSA_PADDING_CHECK_PKCS1_OAEP_MGF1,
            RSA_R_OAEP_DECODING_ERROR);
  cleanup:
+<<<<<<< HEAD
     OPENSSL_free(db);
     OPENSSL_free(em);
+=======
+    if (db != NULL)
+        OPENSSL_free(db);
+    if (em != NULL)
+        OPENSSL_free(em);
+>>>>>>> origin/master
     return mlen;
 }
 
@@ -245,13 +280,21 @@ int PKCS1_MGF1(unsigned char *mask, long len,
 {
     long i, outlen = 0;
     unsigned char cnt[4];
+<<<<<<< HEAD
     EVP_MD_CTX *c = EVP_MD_CTX_new();
+=======
+    EVP_MD_CTX c;
+>>>>>>> origin/master
     unsigned char md[EVP_MAX_MD_SIZE];
     int mdlen;
     int rv = -1;
 
+<<<<<<< HEAD
     if (c == NULL)
         goto err;
+=======
+    EVP_MD_CTX_init(&c);
+>>>>>>> origin/master
     mdlen = EVP_MD_size(dgst);
     if (mdlen < 0)
         goto err;
@@ -260,6 +303,7 @@ int PKCS1_MGF1(unsigned char *mask, long len,
         cnt[1] = (unsigned char)((i >> 16) & 255);
         cnt[2] = (unsigned char)((i >> 8)) & 255;
         cnt[3] = (unsigned char)(i & 255);
+<<<<<<< HEAD
         if (!EVP_DigestInit_ex(c, dgst, NULL)
             || !EVP_DigestUpdate(c, seed, seedlen)
             || !EVP_DigestUpdate(c, cnt, 4))
@@ -270,6 +314,18 @@ int PKCS1_MGF1(unsigned char *mask, long len,
             outlen += mdlen;
         } else {
             if (!EVP_DigestFinal_ex(c, md, NULL))
+=======
+        if (!EVP_DigestInit_ex(&c, dgst, NULL)
+            || !EVP_DigestUpdate(&c, seed, seedlen)
+            || !EVP_DigestUpdate(&c, cnt, 4))
+            goto err;
+        if (outlen + mdlen <= len) {
+            if (!EVP_DigestFinal_ex(&c, mask + outlen, NULL))
+                goto err;
+            outlen += mdlen;
+        } else {
+            if (!EVP_DigestFinal_ex(&c, md, NULL))
+>>>>>>> origin/master
                 goto err;
             memcpy(mask + outlen, md, len - outlen);
             outlen = len;
@@ -277,6 +333,14 @@ int PKCS1_MGF1(unsigned char *mask, long len,
     }
     rv = 0;
  err:
+<<<<<<< HEAD
     EVP_MD_CTX_free(c);
     return rv;
 }
+=======
+    EVP_MD_CTX_cleanup(&c);
+    return rv;
+}
+
+#endif
+>>>>>>> origin/master

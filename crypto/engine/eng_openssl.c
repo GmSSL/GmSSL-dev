@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2001-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,66 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+/* crypto/engine/eng_openssl.c */
+/*
+ * Written by Geoff Thorpe (geoff@geoffthorpe.net) for the OpenSSL project
+ * 2000.
+ */
+/* ====================================================================
+ * Copyright (c) 1999-2001 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+>>>>>>> origin/master
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
  * ECDH support in OpenSSL originally developed by
@@ -15,6 +76,7 @@
 
 #include <stdio.h>
 #include <openssl/crypto.h>
+<<<<<<< HEAD
 #include "internal/cryptlib.h"
 #include <internal/engine.h>
 #include <openssl/pem.h>
@@ -26,6 +88,23 @@
 
 #include <openssl/hmac.h>
 #include <openssl/x509v3.h>
+=======
+#include "cryptlib.h"
+#include <openssl/engine.h>
+#include <openssl/dso.h>
+#include <openssl/pem.h>
+#include <openssl/evp.h>
+#include <openssl/rand.h>
+#ifndef OPENSSL_NO_RSA
+# include <openssl/rsa.h>
+#endif
+#ifndef OPENSSL_NO_DSA
+# include <openssl/dsa.h>
+#endif
+#ifndef OPENSSL_NO_DH
+# include <openssl/dh.h>
+#endif
+>>>>>>> origin/master
 
 /*
  * This testing gunk is implemented (and explained) lower down. It also
@@ -33,11 +112,15 @@
  * this is no longer automatic in ENGINE_load_builtin_engines().
  */
 #define TEST_ENG_OPENSSL_RC4
+<<<<<<< HEAD
 #ifndef OPENSSL_NO_STDIO
 #define TEST_ENG_OPENSSL_PKEY
 #endif
 /* #define TEST_ENG_OPENSSL_HMAC */
 /* #define TEST_ENG_OPENSSL_HMAC_INIT */
+=======
+#define TEST_ENG_OPENSSL_PKEY
+>>>>>>> origin/master
 /* #define TEST_ENG_OPENSSL_RC4_OTHERS */
 #define TEST_ENG_OPENSSL_RC4_P_INIT
 /* #define TEST_ENG_OPENSSL_RC4_P_CIPHER */
@@ -54,8 +137,18 @@
 # undef TEST_ENG_OPENSSL_RC4_P_INIT
 # undef TEST_ENG_OPENSSL_RC4_P_CIPHER
 #endif
+<<<<<<< HEAD
 
 static int openssl_destroy(ENGINE *e);
+=======
+#if defined(OPENSSL_NO_SHA) || defined(OPENSSL_NO_SHA0) || defined(OPENSSL_NO_SHA1)
+# undef TEST_ENG_OPENSSL_SHA
+# undef TEST_ENG_OPENSSL_SHA_OTHERS
+# undef TEST_ENG_OPENSSL_SHA_P_INIT
+# undef TEST_ENG_OPENSSL_SHA_P_UPDATE
+# undef TEST_ENG_OPENSSL_SHA_P_FINAL
+#endif
+>>>>>>> origin/master
 
 #ifdef TEST_ENG_OPENSSL_RC4
 static int openssl_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
@@ -72,12 +165,15 @@ static EVP_PKEY *openssl_load_privkey(ENGINE *eng, const char *key_id,
                                       void *callback_data);
 #endif
 
+<<<<<<< HEAD
 #ifdef TEST_ENG_OPENSSL_HMAC
 static int ossl_register_hmac_meth(void);
 static int ossl_pkey_meths(ENGINE *e, EVP_PKEY_METHOD **pmeth,
                            const int **nids, int nid);
 #endif
 
+=======
+>>>>>>> origin/master
 /* The constants used when creating the ENGINE */
 static const char *engine_openssl_id = "openssl";
 static const char *engine_openssl_name = "Software engine support";
@@ -90,7 +186,10 @@ static int bind_helper(ENGINE *e)
 {
     if (!ENGINE_set_id(e, engine_openssl_id)
         || !ENGINE_set_name(e, engine_openssl_name)
+<<<<<<< HEAD
         || !ENGINE_set_destroy_function(e, openssl_destroy)
+=======
+>>>>>>> origin/master
 #ifndef TEST_ENG_OPENSSL_NO_ALGORITHMS
 # ifndef OPENSSL_NO_RSA
         || !ENGINE_set_RSA(e, RSA_get_default_method())
@@ -98,13 +197,25 @@ static int bind_helper(ENGINE *e)
 # ifndef OPENSSL_NO_DSA
         || !ENGINE_set_DSA(e, DSA_get_default_method())
 # endif
+<<<<<<< HEAD
 # ifndef OPENSSL_NO_EC
         || !ENGINE_set_EC(e, EC_KEY_OpenSSL())
+=======
+# ifndef OPENSSL_NO_ECDH
+        || !ENGINE_set_ECDH(e, ECDH_OpenSSL())
+# endif
+# ifndef OPENSSL_NO_ECDSA
+        || !ENGINE_set_ECDSA(e, ECDSA_OpenSSL())
+>>>>>>> origin/master
 # endif
 # ifndef OPENSSL_NO_DH
         || !ENGINE_set_DH(e, DH_get_default_method())
 # endif
+<<<<<<< HEAD
         || !ENGINE_set_RAND(e, RAND_OpenSSL())
+=======
+        || !ENGINE_set_RAND(e, RAND_SSLeay())
+>>>>>>> origin/master
 # ifdef TEST_ENG_OPENSSL_RC4
         || !ENGINE_set_ciphers(e, openssl_ciphers)
 # endif
@@ -115,10 +226,13 @@ static int bind_helper(ENGINE *e)
 #ifdef TEST_ENG_OPENSSL_PKEY
         || !ENGINE_set_load_privkey_function(e, openssl_load_privkey)
 #endif
+<<<<<<< HEAD
 #ifdef TEST_ENG_OPENSSL_HMAC
         || !ossl_register_hmac_meth()
         || !ENGINE_set_pkey_meths(e, ossl_pkey_meths)
 #endif
+=======
+>>>>>>> origin/master
         )
         return 0;
     /*
@@ -132,7 +246,11 @@ static int bind_helper(ENGINE *e)
 static ENGINE *engine_openssl(void)
 {
     ENGINE *ret = ENGINE_new();
+<<<<<<< HEAD
     if (ret == NULL)
+=======
+    if (!ret)
+>>>>>>> origin/master
         return NULL;
     if (!bind_helper(ret)) {
         ENGINE_free(ret);
@@ -141,7 +259,11 @@ static ENGINE *engine_openssl(void)
     return ret;
 }
 
+<<<<<<< HEAD
 void engine_load_openssl_int(void)
+=======
+void ENGINE_load_openssl(void)
+>>>>>>> origin/master
 {
     ENGINE *toadd = engine_openssl();
     if (!toadd)
@@ -186,11 +308,21 @@ IMPLEMENT_DYNAMIC_CHECK_FN()
  */
 # include <openssl/rc4.h>
 # define TEST_RC4_KEY_SIZE               16
+<<<<<<< HEAD
+=======
+static int test_cipher_nids[] = { NID_rc4, NID_rc4_40 };
+
+static int test_cipher_nids_number = 2;
+>>>>>>> origin/master
 typedef struct {
     unsigned char key[TEST_RC4_KEY_SIZE];
     RC4_KEY ks;
 } TEST_RC4_KEY;
+<<<<<<< HEAD
 # define test(ctx) ((TEST_RC4_KEY *)EVP_CIPHER_CTX_get_cipher_data(ctx))
+=======
+# define test(ctx) ((TEST_RC4_KEY *)(ctx)->cipher_data)
+>>>>>>> origin/master
 static int test_rc4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                              const unsigned char *iv, int enc)
 {
@@ -213,6 +345,7 @@ static int test_rc4_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
+<<<<<<< HEAD
 static EVP_CIPHER *r4_cipher = NULL;
 static const EVP_CIPHER *test_r4_cipher(void)
 {
@@ -280,12 +413,42 @@ static int test_cipher_nids(const int **nids)
     *nids = cipher_nids;
     return pos;
 }
+=======
+static const EVP_CIPHER test_r4_cipher = {
+    NID_rc4,
+    1, TEST_RC4_KEY_SIZE, 0,
+    EVP_CIPH_VARIABLE_LENGTH,
+    test_rc4_init_key,
+    test_rc4_cipher,
+    NULL,
+    sizeof(TEST_RC4_KEY),
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
+
+static const EVP_CIPHER test_r4_40_cipher = {
+    NID_rc4_40,
+    1, 5 /* 40 bit */ , 0,
+    EVP_CIPH_VARIABLE_LENGTH,
+    test_rc4_init_key,
+    test_rc4_cipher,
+    NULL,
+    sizeof(TEST_RC4_KEY),
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
+>>>>>>> origin/master
 
 static int openssl_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
                            const int **nids, int nid)
 {
     if (!cipher) {
         /* We are returning a list of supported nids */
+<<<<<<< HEAD
         return test_cipher_nids(nids);
     }
     /* We are being asked for a specific cipher */
@@ -293,6 +456,16 @@ static int openssl_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
         *cipher = test_r4_cipher();
     else if (nid == NID_rc4_40)
         *cipher = test_r4_40_cipher();
+=======
+        *nids = test_cipher_nids;
+        return test_cipher_nids_number;
+    }
+    /* We are being asked for a specific cipher */
+    if (nid == NID_rc4)
+        *cipher = &test_r4_cipher;
+    else if (nid == NID_rc4_40)
+        *cipher = &test_r4_40_cipher;
+>>>>>>> origin/master
     else {
 # ifdef TEST_ENG_OPENSSL_RC4_OTHERS
         fprintf(stderr, "(TEST_ENG_OPENSSL_RC4) returning NULL for "
@@ -308,13 +481,23 @@ static int openssl_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
 #ifdef TEST_ENG_OPENSSL_SHA
 /* Much the same sort of comment as for TEST_ENG_OPENSSL_RC4 */
 # include <openssl/sha.h>
+<<<<<<< HEAD
 
+=======
+static int test_digest_nids[] = { NID_sha1 };
+
+static int test_digest_nids_number = 1;
+>>>>>>> origin/master
 static int test_sha1_init(EVP_MD_CTX *ctx)
 {
 # ifdef TEST_ENG_OPENSSL_SHA_P_INIT
     fprintf(stderr, "(TEST_ENG_OPENSSL_SHA) test_sha1_init() called\n");
 # endif
+<<<<<<< HEAD
     return SHA1_Init(EVP_MD_CTX_md_data(ctx));
+=======
+    return SHA1_Init(ctx->md_data);
+>>>>>>> origin/master
 }
 
 static int test_sha1_update(EVP_MD_CTX *ctx, const void *data, size_t count)
@@ -322,7 +505,11 @@ static int test_sha1_update(EVP_MD_CTX *ctx, const void *data, size_t count)
 # ifdef TEST_ENG_OPENSSL_SHA_P_UPDATE
     fprintf(stderr, "(TEST_ENG_OPENSSL_SHA) test_sha1_update() called\n");
 # endif
+<<<<<<< HEAD
     return SHA1_Update(EVP_MD_CTX_md_data(ctx), data, count);
+=======
+    return SHA1_Update(ctx->md_data, data, count);
+>>>>>>> origin/master
 }
 
 static int test_sha1_final(EVP_MD_CTX *ctx, unsigned char *md)
@@ -330,6 +517,7 @@ static int test_sha1_final(EVP_MD_CTX *ctx, unsigned char *md)
 # ifdef TEST_ENG_OPENSSL_SHA_P_FINAL
     fprintf(stderr, "(TEST_ENG_OPENSSL_SHA) test_sha1_final() called\n");
 # endif
+<<<<<<< HEAD
     return SHA1_Final(md, EVP_MD_CTX_md_data(ctx));
 }
 
@@ -376,17 +564,45 @@ static int test_digest_nids(const int **nids)
     *nids = digest_nids;
     return pos;
 }
+=======
+    return SHA1_Final(md, ctx->md_data);
+}
+
+static const EVP_MD test_sha_md = {
+    NID_sha1,
+    NID_sha1WithRSAEncryption,
+    SHA_DIGEST_LENGTH,
+    0,
+    test_sha1_init,
+    test_sha1_update,
+    test_sha1_final,
+    NULL,
+    NULL,
+    EVP_PKEY_RSA_method,
+    SHA_CBLOCK,
+    sizeof(EVP_MD *) + sizeof(SHA_CTX),
+};
+>>>>>>> origin/master
 
 static int openssl_digests(ENGINE *e, const EVP_MD **digest,
                            const int **nids, int nid)
 {
     if (!digest) {
         /* We are returning a list of supported nids */
+<<<<<<< HEAD
         return test_digest_nids(nids);
     }
     /* We are being asked for a specific digest */
     if (nid == NID_sha1)
         *digest = test_sha_md();
+=======
+        *nids = test_digest_nids;
+        return test_digest_nids_number;
+    }
+    /* We are being asked for a specific digest */
+    if (nid == NID_sha1)
+        *digest = &test_sha_md;
+>>>>>>> origin/master
     else {
 # ifdef TEST_ENG_OPENSSL_SHA_OTHERS
         fprintf(stderr, "(TEST_ENG_OPENSSL_SHA) returning NULL for "
@@ -416,6 +632,7 @@ static EVP_PKEY *openssl_load_privkey(ENGINE *eng, const char *key_id,
     return key;
 }
 #endif
+<<<<<<< HEAD
 
 #ifdef TEST_ENG_OPENSSL_HMAC
 
@@ -650,3 +867,5 @@ int openssl_destroy(ENGINE *e)
     return 1;
 }
 
+=======
+>>>>>>> origin/master

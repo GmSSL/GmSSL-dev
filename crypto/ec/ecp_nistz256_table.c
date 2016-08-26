@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
  * Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -8,6 +9,8 @@
  */
 
 /*
+=======
+>>>>>>> origin/master
  * This is the precomputed constant time access table for the code in
  * ecp_montp256.c, for the default generator. The table consists of 37
  * subtables, each subtable contains 64 affine points. The affine points are

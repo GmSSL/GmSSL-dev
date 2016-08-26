@@ -2,20 +2,32 @@
 
 =head1 NAME
 
+<<<<<<< HEAD
 BIO_s_accept, BIO_set_accept_name, BIO_set_accept_port, BIO_get_accept_name,
 BIO_get_accept_port, BIO_new_accept, BIO_set_nbio_accept, BIO_set_accept_bios,
 BIO_set_bind_mode, BIO_get_bind_mode, BIO_do_accept - accept BIO
+=======
+BIO_s_accept, BIO_set_accept_port, BIO_get_accept_port, BIO_new_accept,
+BIO_set_nbio_accept, BIO_set_accept_bios, BIO_set_bind_mode,
+BIO_get_bind_mode, BIO_do_accept - accept BIO
+>>>>>>> origin/master
 
 =head1 SYNOPSIS
 
  #include <openssl/bio.h>
 
+<<<<<<< HEAD
  const BIO_METHOD *BIO_s_accept(void);
 
  long BIO_set_accept_name(BIO *b, char *name);
  char *BIO_get_accept_name(BIO *b);
 
  long BIO_set_accept_port(BIO *b, char *port);
+=======
+ BIO_METHOD *BIO_s_accept(void);
+
+ long BIO_set_accept_port(BIO *b, char *name);
+>>>>>>> origin/master
  char *BIO_get_accept_port(BIO *b);
 
  BIO *BIO_new_accept(char *host_port);
@@ -24,7 +36,15 @@ BIO_set_bind_mode, BIO_get_bind_mode, BIO_do_accept - accept BIO
  long BIO_set_accept_bios(BIO *b, char *bio);
 
  long BIO_set_bind_mode(BIO *b, long mode);
+<<<<<<< HEAD
  long BIO_get_bind_mode(BIO *b);
+=======
+ long BIO_get_bind_mode(BIO *b, long dummy);
+
+ #define BIO_BIND_NORMAL		0
+ #define BIO_BIND_REUSEADDR_IF_UNUSED	1
+ #define BIO_BIND_REUSEADDR		2
+>>>>>>> origin/master
 
  int BIO_do_accept(BIO *b);
 
@@ -48,11 +68,16 @@ If the close flag is set on an accept BIO then any active
 connection on that chain is shutdown and the socket closed when
 the BIO is freed.
 
+<<<<<<< HEAD
 Calling BIO_reset() on an accept BIO will close any active
+=======
+Calling BIO_reset() on a accept BIO will close any active
+>>>>>>> origin/master
 connection and reset the BIO into a state where it awaits another
 incoming connection.
 
 BIO_get_fd() and BIO_set_fd() can be called to retrieve or set
+<<<<<<< HEAD
 the accept socket. See L<BIO_s_fd(3)>
 
 BIO_set_accept_name() uses the string B<name> to set the accept
@@ -72,6 +97,20 @@ port string or a string to lookup using getservbyname() and a string
 table.
 
 BIO_new_accept() combines BIO_new() and BIO_set_accept_name() into
+=======
+the accept socket. See L<BIO_s_fd(3)|BIO_s_fd(3)>
+
+BIO_set_accept_port() uses the string B<name> to set the accept
+port. The port is represented as a string of the form "host:port",
+where "host" is the interface to use and "port" is the port.
+The host can be can be "*" which is interpreted as meaning
+any interface; "port" has the same syntax
+as the port specified in BIO_set_conn_port() for connect BIOs,
+that is it can be a numerical port string or a string to lookup
+using getservbyname() and a string table.
+
+BIO_new_accept() combines BIO_new() and BIO_set_accept_port() into
+>>>>>>> origin/master
 a single call: that is it creates a new accept BIO with port
 B<host_port>.
 
@@ -80,12 +119,17 @@ BIO_set_nbio_accept() sets the accept socket to blocking mode
 
 BIO_set_accept_bios() can be used to set a chain of BIOs which
 will be duplicated and prepended to the chain when an incoming
+<<<<<<< HEAD
 connection is received. This is useful if, for example, a
+=======
+connection is received. This is useful if, for example, a 
+>>>>>>> origin/master
 buffering or SSL BIO is required for each connection. The
 chain of BIOs must not be freed after this call, they will
 be automatically freed when the accept BIO is freed.
 
 BIO_set_bind_mode() and BIO_get_bind_mode() set and retrieve
+<<<<<<< HEAD
 the current bind mode. If B<BIO_BIND_NORMAL> (the default) is set
 then another socket cannot be bound to the same port. If
 B<BIO_BIND_REUSEADDR> is set then other sockets can bind to the
@@ -93,6 +137,15 @@ same port. If B<BIO_BIND_REUSEADDR_IF_UNUSED> is set then and
 attempt is first made to use BIO_BIN_NORMAL, if this fails
 and the port is not in use then a second attempt is made
 using B<BIO_BIND_REUSEADDR>.
+=======
+the current bind mode. If BIO_BIND_NORMAL (the default) is set
+then another socket cannot be bound to the same port. If
+BIO_BIND_REUSEADDR is set then other sockets can bind to the
+same port. If BIO_BIND_REUSEADDR_IF_UNUSED is set then and
+attempt is first made to use BIO_BIN_NORMAL, if this fails
+and the port is not in use then a second attempt is made
+using BIO_BIND_REUSEADDR.
+>>>>>>> origin/master
 
 BIO_do_accept() serves two functions. When it is first
 called, after the accept BIO has been setup, it will attempt
@@ -143,6 +196,7 @@ then it is an indication that an accept attempt would block: the application
 should take appropriate action to wait until the underlying socket has
 accepted a connection and retry the call.
 
+<<<<<<< HEAD
 BIO_set_accept_name(), BIO_get_accept_name(), BIO_set_accept_port(),
 BIO_get_accept_port(), BIO_set_nbio_accept(), BIO_set_accept_bios(),
 BIO_set_bind_mode(), BIO_get_bind_mode() and BIO_do_accept() are macros.
@@ -161,6 +215,15 @@ BIO_get_accept_port() returns the port as a string or NULL on error.
 BIO_get_bind_mode() returns the set of B<BIO_BIND> flags, or -1 on failure.
 
 BIO_new_accept() returns a BIO or NULL on error.
+=======
+BIO_set_accept_port(), BIO_get_accept_port(), BIO_set_nbio_accept(),
+BIO_set_accept_bios(), BIO_set_bind_mode(), BIO_get_bind_mode() and
+BIO_do_accept() are macros.
+
+=head1 RETURN VALUES
+
+TBA
+>>>>>>> origin/master
 
 =head1 EXAMPLE
 
@@ -168,6 +231,7 @@ This example accepts two connections on port 4444, sends messages
 down each and finally closes both down.
 
  BIO *abio, *cbio, *cbio2;
+<<<<<<< HEAD
 
  /* First call to BIO_accept() sets up accept BIO */
  abio = BIO_new_accept("4444");
@@ -185,10 +249,30 @@ down each and finally closes both down.
  }
  fprintf(stderr, "Connection 1 established\n");
 
+=======
+ ERR_load_crypto_strings();
+ abio = BIO_new_accept("4444");
+
+ /* First call to BIO_accept() sets up accept BIO */
+ if(BIO_do_accept(abio) <= 0) {
+	fprintf(stderr, "Error setting up accept\n");
+	ERR_print_errors_fp(stderr);
+	exit(0);		
+ }
+
+ /* Wait for incoming connection */
+ if(BIO_do_accept(abio) <= 0) {
+	fprintf(stderr, "Error accepting connection\n");
+	ERR_print_errors_fp(stderr);
+	exit(0);		
+ }
+ fprintf(stderr, "Connection 1 established\n");
+>>>>>>> origin/master
  /* Retrieve BIO for connection */
  cbio = BIO_pop(abio);
  BIO_puts(cbio, "Connection 1: Sending out Data on initial connection\n");
  fprintf(stderr, "Sent out data on connection 1\n");
+<<<<<<< HEAD
 
  /* Wait for another connection */
  if (BIO_do_accept(abio) <= 0) {
@@ -198,6 +282,15 @@ down each and finally closes both down.
  }
  fprintf(stderr, "Connection 2 established\n");
 
+=======
+ /* Wait for another connection */
+ if(BIO_do_accept(abio) <= 0) {
+	fprintf(stderr, "Error accepting connection\n");
+	ERR_print_errors_fp(stderr);
+	exit(0);		
+ }
+ fprintf(stderr, "Connection 2 established\n");
+>>>>>>> origin/master
  /* Close accept BIO to refuse further connections */
  cbio2 = BIO_pop(abio);
  BIO_free(abio);
@@ -205,11 +298,15 @@ down each and finally closes both down.
  fprintf(stderr, "Sent out data on connection 2\n");
 
  BIO_puts(cbio, "Connection 1: Second connection established\n");
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
  /* Close the two established connections */
  BIO_free(cbio);
  BIO_free(cbio2);
 
+<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -220,3 +317,8 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
+=======
+=head1 SEE ALSO
+
+TBA
+>>>>>>> origin/master

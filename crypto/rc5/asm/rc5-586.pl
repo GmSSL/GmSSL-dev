@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,15 +7,21 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/local/bin/perl
+>>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 require "cbc.pl";
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],"rc5-586.pl");
 
 $RC5_MAX_ROUNDS=16;
@@ -32,8 +39,11 @@ $tmp4="edx";
 &cbc("RC5_32_cbc_encrypt","RC5_32_encrypt","RC5_32_decrypt",0,4,5,3,-1,-1);
 &asm_finish();
 
+<<<<<<< HEAD
 close STDOUT;
 
+=======
+>>>>>>> origin/master
 sub RC5_32_encrypt
 	{
 	local($name,$enc)=@_;

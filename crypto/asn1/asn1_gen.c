@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,6 +9,68 @@
  */
 
 #include "internal/cryptlib.h"
+=======
+/* asn1_gen.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 2002.
+ */
+/* ====================================================================
+ * Copyright (c) 2002 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/asn1.h>
 #include <openssl/x509v3.h>
 
@@ -62,7 +125,11 @@ typedef struct {
     int exp_count;
 } tag_exp_arg;
 
+<<<<<<< HEAD
 static ASN1_TYPE *generate_v3(const char *str, X509V3_CTX *cnf, int depth,
+=======
+static ASN1_TYPE *generate_v3(char *str, X509V3_CTX *cnf, int depth,
+>>>>>>> origin/master
                               int *perr);
 static int bitstr_cb(const char *elem, int len, void *bitstr);
 static int asn1_cb(const char *elem, int len, void *bitstr);
@@ -75,7 +142,11 @@ static ASN1_TYPE *asn1_multi(int utype, const char *section, X509V3_CTX *cnf,
 static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype);
 static int asn1_str2tag(const char *tagstr, int len);
 
+<<<<<<< HEAD
 ASN1_TYPE *ASN1_generate_nconf(const char *str, CONF *nconf)
+=======
+ASN1_TYPE *ASN1_generate_nconf(char *str, CONF *nconf)
+>>>>>>> origin/master
 {
     X509V3_CTX cnf;
 
@@ -86,7 +157,11 @@ ASN1_TYPE *ASN1_generate_nconf(const char *str, CONF *nconf)
     return ASN1_generate_v3(str, &cnf);
 }
 
+<<<<<<< HEAD
 ASN1_TYPE *ASN1_generate_v3(const char *str, X509V3_CTX *cnf)
+=======
+ASN1_TYPE *ASN1_generate_v3(char *str, X509V3_CTX *cnf)
+>>>>>>> origin/master
 {
     int err = 0;
     ASN1_TYPE *ret = generate_v3(str, cnf, 0, &err);
@@ -95,7 +170,11 @@ ASN1_TYPE *ASN1_generate_v3(const char *str, X509V3_CTX *cnf)
     return ret;
 }
 
+<<<<<<< HEAD
 static ASN1_TYPE *generate_v3(const char *str, X509V3_CTX *cnf, int depth,
+=======
+static ASN1_TYPE *generate_v3(char *str, X509V3_CTX *cnf, int depth,
+>>>>>>> origin/master
                               int *perr)
 {
     ASN1_TYPE *ret;
@@ -109,7 +188,11 @@ static ASN1_TYPE *generate_v3(const char *str, X509V3_CTX *cnf, int depth,
     unsigned char *p;
     const unsigned char *cp;
     int cpy_len;
+<<<<<<< HEAD
     long hdr_len = 0;
+=======
+    long hdr_len;
+>>>>>>> origin/master
     int hdr_constructed = 0, hdr_tag, hdr_class;
     int r;
 
@@ -193,7 +276,11 @@ static ASN1_TYPE *generate_v3(const char *str, X509V3_CTX *cnf, int depth,
     /* Allocate buffer for new encoding */
 
     new_der = OPENSSL_malloc(len);
+<<<<<<< HEAD
     if (new_der == NULL)
+=======
+    if (!new_der)
+>>>>>>> origin/master
         goto err;
 
     /* Generate tagged encoding */
@@ -230,8 +317,15 @@ static ASN1_TYPE *generate_v3(const char *str, X509V3_CTX *cnf, int depth,
     ret = d2i_ASN1_TYPE(NULL, &cp, len);
 
  err:
+<<<<<<< HEAD
     OPENSSL_free(orig_der);
     OPENSSL_free(new_der);
+=======
+    if (orig_der)
+        OPENSSL_free(orig_der);
+    if (new_der)
+        OPENSSL_free(new_der);
+>>>>>>> origin/master
 
     return ret;
 
@@ -325,6 +419,7 @@ static int asn1_cb(const char *elem, int len, void *bitstr)
             ASN1err(ASN1_F_ASN1_CB, ASN1_R_UNKNOWN_FORMAT);
             return -1;
         }
+<<<<<<< HEAD
         if (strncmp(vstart, "ASCII", 5) == 0)
             arg->format = ASN1_GEN_FORMAT_ASCII;
         else if (strncmp(vstart, "UTF8", 4) == 0)
@@ -335,6 +430,18 @@ static int asn1_cb(const char *elem, int len, void *bitstr)
             arg->format = ASN1_GEN_FORMAT_BITLIST;
         else {
             ASN1err(ASN1_F_ASN1_CB, ASN1_R_UNKNOWN_FORMAT);
+=======
+        if (!strncmp(vstart, "ASCII", 5))
+            arg->format = ASN1_GEN_FORMAT_ASCII;
+        else if (!strncmp(vstart, "UTF8", 4))
+            arg->format = ASN1_GEN_FORMAT_UTF8;
+        else if (!strncmp(vstart, "HEX", 3))
+            arg->format = ASN1_GEN_FORMAT_HEX;
+        else if (!strncmp(vstart, "BITLIST", 7))
+            arg->format = ASN1_GEN_FORMAT_BITLIST;
+        else {
+            ASN1err(ASN1_F_ASN1_CB, ASN1_R_UNKOWN_FORMAT);
+>>>>>>> origin/master
             return -1;
         }
         break;
@@ -391,6 +498,10 @@ static int parse_tagging(const char *vstart, int vlen, int *ptag, int *pclass)
             ASN1err(ASN1_F_PARSE_TAGGING, ASN1_R_INVALID_MODIFIER);
             ERR_add_error_data(2, "Char=", erch);
             return 0;
+<<<<<<< HEAD
+=======
+            break;
+>>>>>>> origin/master
 
         }
     } else
@@ -442,12 +553,24 @@ static ASN1_TYPE *asn1_multi(int utype, const char *section, X509V3_CTX *cnf,
 
     if (derlen < 0)
         goto bad;
+<<<<<<< HEAD
     if ((ret = ASN1_TYPE_new()) == NULL)
         goto bad;
     if ((ret->value.asn1_string = ASN1_STRING_type_new(utype)) == NULL)
         goto bad;
 
     ret->type = utype;
+=======
+
+    if (!(ret = ASN1_TYPE_new()))
+        goto bad;
+
+    if (!(ret->value.asn1_string = ASN1_STRING_type_new(utype)))
+        goto bad;
+
+    ret->type = utype;
+
+>>>>>>> origin/master
     ret->value.asn1_string->data = der;
     ret->value.asn1_string->length = derlen;
 
@@ -455,10 +578,20 @@ static ASN1_TYPE *asn1_multi(int utype, const char *section, X509V3_CTX *cnf,
 
  bad:
 
+<<<<<<< HEAD
     OPENSSL_free(der);
 
     sk_ASN1_TYPE_pop_free(sk, ASN1_TYPE_free);
     X509V3_section_free(cnf, sect);
+=======
+    if (der)
+        OPENSSL_free(der);
+
+    if (sk)
+        sk_ASN1_TYPE_pop_free(sk, ASN1_TYPE_free);
+    if (sect)
+        X509V3_section_free(cnf, sect);
+>>>>>>> origin/master
 
     return ret;
 }
@@ -567,8 +700,13 @@ static int asn1_str2tag(const char *tagstr, int len)
         len = strlen(tagstr);
 
     tntmp = tnst;
+<<<<<<< HEAD
     for (i = 0; i < OSSL_NELEM(tnst); i++, tntmp++) {
         if ((len == tntmp->len) && (strncmp(tntmp->strnam, tagstr, len) == 0))
+=======
+    for (i = 0; i < sizeof(tnst) / sizeof(struct tag_name_st); i++, tntmp++) {
+        if ((len == tntmp->len) && !strncmp(tntmp->strnam, tagstr, len))
+>>>>>>> origin/master
             return tntmp->tag;
     }
 
@@ -578,12 +716,24 @@ static int asn1_str2tag(const char *tagstr, int len)
 static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
 {
     ASN1_TYPE *atmp = NULL;
+<<<<<<< HEAD
     CONF_VALUE vtmp;
     unsigned char *rdata;
     long rdlen;
     int no_unused = 1;
 
     if ((atmp = ASN1_TYPE_new()) == NULL) {
+=======
+
+    CONF_VALUE vtmp;
+
+    unsigned char *rdata;
+    long rdlen;
+
+    int no_unused = 1;
+
+    if (!(atmp = ASN1_TYPE_new())) {
+>>>>>>> origin/master
         ASN1err(ASN1_F_ASN1_STR2TYPE, ERR_R_MALLOC_FAILURE);
         return NULL;
     }
@@ -620,8 +770,12 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
             ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_INTEGER_NOT_ASCII_FORMAT);
             goto bad_form;
         }
+<<<<<<< HEAD
         if ((atmp->value.integer
                     = s2i_ASN1_INTEGER(NULL, str)) == NULL) {
+=======
+        if (!(atmp->value.integer = s2i_ASN1_INTEGER(NULL, (char *)str))) {
+>>>>>>> origin/master
             ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_ILLEGAL_INTEGER);
             goto bad_str;
         }
@@ -632,7 +786,11 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
             ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_OBJECT_NOT_ASCII_FORMAT);
             goto bad_form;
         }
+<<<<<<< HEAD
         if ((atmp->value.object = OBJ_txt2obj(str, 0)) == NULL) {
+=======
+        if (!(atmp->value.object = OBJ_txt2obj(str, 0))) {
+>>>>>>> origin/master
             ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_ILLEGAL_OBJECT);
             goto bad_str;
         }
@@ -644,7 +802,11 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
             ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_TIME_NOT_ASCII_FORMAT);
             goto bad_form;
         }
+<<<<<<< HEAD
         if ((atmp->value.asn1_string = ASN1_STRING_new()) == NULL) {
+=======
+        if (!(atmp->value.asn1_string = ASN1_STRING_new())) {
+>>>>>>> origin/master
             ASN1err(ASN1_F_ASN1_STR2TYPE, ERR_R_MALLOC_FAILURE);
             goto bad_str;
         }
@@ -669,6 +831,10 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
     case V_ASN1_UNIVERSALSTRING:
     case V_ASN1_GENERALSTRING:
     case V_ASN1_NUMERICSTRING:
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         if (format == ASN1_GEN_FORMAT_ASCII)
             format = MBSTRING_ASC;
         else if (format == ASN1_GEN_FORMAT_UTF8)
@@ -687,13 +853,21 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
         break;
 
     case V_ASN1_BIT_STRING:
+<<<<<<< HEAD
     case V_ASN1_OCTET_STRING:
         if ((atmp->value.asn1_string = ASN1_STRING_new()) == NULL) {
+=======
+
+    case V_ASN1_OCTET_STRING:
+
+        if (!(atmp->value.asn1_string = ASN1_STRING_new())) {
+>>>>>>> origin/master
             ASN1err(ASN1_F_ASN1_STR2TYPE, ERR_R_MALLOC_FAILURE);
             goto bad_form;
         }
 
         if (format == ASN1_GEN_FORMAT_HEX) {
+<<<<<<< HEAD
             if ((rdata = OPENSSL_hexstr2buf(str, &rdlen)) == NULL) {
                 ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_ILLEGAL_HEX);
                 goto bad_str;
@@ -701,6 +875,18 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
             atmp->value.asn1_string->data = rdata;
             atmp->value.asn1_string->length = rdlen;
             atmp->value.asn1_string->type = utype;
+=======
+
+            if (!(rdata = string_to_hex((char *)str, &rdlen))) {
+                ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_ILLEGAL_HEX);
+                goto bad_str;
+            }
+
+            atmp->value.asn1_string->data = rdata;
+            atmp->value.asn1_string->length = rdlen;
+            atmp->value.asn1_string->type = utype;
+
+>>>>>>> origin/master
         } else if (format == ASN1_GEN_FORMAT_ASCII)
             ASN1_STRING_set(atmp->value.asn1_string, str, -1);
         else if ((format == ASN1_GEN_FORMAT_BITLIST)
@@ -728,6 +914,10 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
     default:
         ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_UNSUPPORTED_TYPE);
         goto bad_str;
+<<<<<<< HEAD
+=======
+        break;
+>>>>>>> origin/master
     }
 
     atmp->type = utype;
@@ -761,6 +951,7 @@ static int bitstr_cb(const char *elem, int len, void *bitstr)
     }
     return 1;
 }
+<<<<<<< HEAD
 
 static int mask_cb(const char *elem, int len, void *arg)
 {
@@ -787,3 +978,5 @@ int ASN1_str2mask(const char *str, unsigned long *pmask)
     *pmask = 0;
     return CONF_parse_list(str, '|', 1, mask_cb, pmask);
 }
+=======
+>>>>>>> origin/master

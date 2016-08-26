@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,11 +6,74 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* a_strnid.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 1999.
+ */
+/* ====================================================================
+ * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <ctype.h>
+<<<<<<< HEAD
 #include "internal/cryptlib.h"
+=======
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/asn1.h>
 #include <openssl/objects.h>
 
@@ -50,12 +114,17 @@ int ASN1_STRING_set_default_mask_asc(const char *p)
 {
     unsigned long mask;
     char *end;
+<<<<<<< HEAD
     if (strncmp(p, "MASK:", 5) == 0) {
+=======
+    if (!strncmp(p, "MASK:", 5)) {
+>>>>>>> origin/master
         if (!p[5])
             return 0;
         mask = strtoul(p + 5, &end, 0);
         if (*end)
             return 0;
+<<<<<<< HEAD
     } else if (strcmp(p, "nombstr") == 0)
         mask = ~((unsigned long)(B_ASN1_BMPSTRING | B_ASN1_UTF8STRING));
     else if (strcmp(p, "pkix") == 0)
@@ -63,6 +132,15 @@ int ASN1_STRING_set_default_mask_asc(const char *p)
     else if (strcmp(p, "utf8only") == 0)
         mask = B_ASN1_UTF8STRING;
     else if (strcmp(p, "default") == 0)
+=======
+    } else if (!strcmp(p, "nombstr"))
+        mask = ~((unsigned long)(B_ASN1_BMPSTRING | B_ASN1_UTF8STRING));
+    else if (!strcmp(p, "pkix"))
+        mask = ~((unsigned long)B_ASN1_T61STRING);
+    else if (!strcmp(p, "utf8only"))
+        mask = B_ASN1_UTF8STRING;
+    else if (!strcmp(p, "default"))
+>>>>>>> origin/master
         mask = 0xFFFFFFFFL;
     else
         return 0;
@@ -118,10 +196,13 @@ ASN1_STRING *ASN1_STRING_set_by_NID(ASN1_STRING **out,
 #define ub_email_address                128
 #define ub_serial_number                64
 
+<<<<<<< HEAD
 /* From RFC4524 */
 
 #define ub_rfc822_mailbox               256
 
+=======
+>>>>>>> origin/master
 /* This table must be kept in NID order */
 
 static const ASN1_STRING_TABLE tbl_standard[] = {
@@ -146,12 +227,16 @@ static const ASN1_STRING_TABLE tbl_standard[] = {
     {NID_name, 1, ub_name, DIRSTRING_TYPE, 0},
     {NID_dnQualifier, -1, -1, B_ASN1_PRINTABLESTRING, STABLE_NO_MASK},
     {NID_domainComponent, 1, -1, B_ASN1_IA5STRING, STABLE_NO_MASK},
+<<<<<<< HEAD
     {NID_ms_csp_name, -1, -1, B_ASN1_BMPSTRING, STABLE_NO_MASK},
     {NID_rfc822Mailbox, 1, ub_rfc822_mailbox, B_ASN1_IA5STRING,
      STABLE_NO_MASK},
     {NID_INN, 1, 12, B_ASN1_NUMERICSTRING, STABLE_NO_MASK},
     {NID_OGRN, 1, 13, B_ASN1_NUMERICSTRING, STABLE_NO_MASK},
     {NID_SNILS, 1, 11, B_ASN1_NUMERICSTRING, STABLE_NO_MASK}
+=======
+    {NID_ms_csp_name, -1, -1, B_ASN1_BMPSTRING, STABLE_NO_MASK}
+>>>>>>> origin/master
 };
 
 static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
@@ -172,6 +257,7 @@ IMPLEMENT_OBJ_BSEARCH_CMP_FN(ASN1_STRING_TABLE, ASN1_STRING_TABLE, table);
 ASN1_STRING_TABLE *ASN1_STRING_TABLE_get(int nid)
 {
     int idx;
+<<<<<<< HEAD
     ASN1_STRING_TABLE fnd;
     fnd.nid = nid;
     if (stable) {
@@ -218,6 +304,22 @@ static ASN1_STRING_TABLE *stable_get(int nid)
         rv->flags = STABLE_FLAGS_MALLOC;
     }
     return rv;
+=======
+    ASN1_STRING_TABLE *ttmp;
+    ASN1_STRING_TABLE fnd;
+    fnd.nid = nid;
+    ttmp = OBJ_bsearch_table(&fnd, tbl_standard,
+                             sizeof(tbl_standard) /
+                             sizeof(ASN1_STRING_TABLE));
+    if (ttmp)
+        return ttmp;
+    if (!stable)
+        return NULL;
+    idx = sk_ASN1_STRING_TABLE_find(stable, &fnd);
+    if (idx < 0)
+        return NULL;
+    return sk_ASN1_STRING_TABLE_value(stable, idx);
+>>>>>>> origin/master
 }
 
 int ASN1_STRING_TABLE_add(int nid,
@@ -225,6 +327,7 @@ int ASN1_STRING_TABLE_add(int nid,
                           unsigned long flags)
 {
     ASN1_STRING_TABLE *tmp;
+<<<<<<< HEAD
     tmp = stable_get(nid);
     if (!tmp) {
         ASN1err(ASN1_F_ASN1_STRING_TABLE_ADD, ERR_R_MALLOC_FAILURE);
@@ -238,6 +341,34 @@ int ASN1_STRING_TABLE_add(int nid,
         tmp->mask = mask;
     if (flags)
         tmp->flags = STABLE_FLAGS_MALLOC | flags;
+=======
+    char new_nid = 0;
+    flags &= ~STABLE_FLAGS_MALLOC;
+    if (!stable)
+        stable = sk_ASN1_STRING_TABLE_new(sk_table_cmp);
+    if (!stable) {
+        ASN1err(ASN1_F_ASN1_STRING_TABLE_ADD, ERR_R_MALLOC_FAILURE);
+        return 0;
+    }
+    if (!(tmp = ASN1_STRING_TABLE_get(nid))) {
+        tmp = OPENSSL_malloc(sizeof(ASN1_STRING_TABLE));
+        if (!tmp) {
+            ASN1err(ASN1_F_ASN1_STRING_TABLE_ADD, ERR_R_MALLOC_FAILURE);
+            return 0;
+        }
+        tmp->flags = flags | STABLE_FLAGS_MALLOC;
+        tmp->nid = nid;
+        new_nid = 1;
+    } else
+        tmp->flags = (tmp->flags & STABLE_FLAGS_MALLOC) | flags;
+    if (minsize != -1)
+        tmp->minsize = minsize;
+    if (maxsize != -1)
+        tmp->maxsize = maxsize;
+    tmp->mask = mask;
+    if (new_nid)
+        sk_ASN1_STRING_TABLE_push(stable, tmp);
+>>>>>>> origin/master
     return 1;
 }
 
@@ -258,6 +389,11 @@ static void st_free(ASN1_STRING_TABLE *tbl)
 }
 
 
+<<<<<<< HEAD
+=======
+IMPLEMENT_STACK_OF(ASN1_STRING_TABLE)
+
+>>>>>>> origin/master
 #ifdef STRING_TABLE_TEST
 
 main()
@@ -265,7 +401,12 @@ main()
     ASN1_STRING_TABLE *tmp;
     int i, last_nid = -1;
 
+<<<<<<< HEAD
     for (tmp = tbl_standard, i = 0; i < OSSL_NELEM(tbl_standard); i++, tmp++) {
+=======
+    for (tmp = tbl_standard, i = 0;
+         i < sizeof(tbl_standard) / sizeof(ASN1_STRING_TABLE); i++, tmp++) {
+>>>>>>> origin/master
         if (tmp->nid < last_nid) {
             last_nid = 0;
             break;
@@ -278,7 +419,12 @@ main()
         exit(0);
     }
 
+<<<<<<< HEAD
     for (tmp = tbl_standard, i = 0; i < OSSL_NELEM(tbl_standard); i++, tmp++)
+=======
+    for (tmp = tbl_standard, i = 0;
+         i < sizeof(tbl_standard) / sizeof(ASN1_STRING_TABLE); i++, tmp++)
+>>>>>>> origin/master
         printf("Index %d, NID %d, Name=%s\n", i, tmp->nid,
                OBJ_nid2ln(tmp->nid));
 

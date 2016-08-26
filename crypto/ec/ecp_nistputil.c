@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,12 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+/* crypto/ec/ecp_nistputil.c */
+/*
+ * Written by Bodo Moeller for the OpenSSL project.
+ */
+>>>>>>> origin/master
 /* Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,9 +31,13 @@
  */
 
 #include <openssl/opensslconf.h>
+<<<<<<< HEAD
 #ifdef OPENSSL_NO_EC_NISTP_64_GCC_128
 NON_EMPTY_TRANSLATION_UNIT
 #else
+=======
+#ifndef OPENSSL_NO_EC_NISTP_64_GCC_128
+>>>>>>> origin/master
 
 /*
  * Common utility functions for ecp_nistp224.c, ecp_nistp256.c, ecp_nistp521.c.
@@ -220,4 +231,9 @@ void ec_GFp_nistp_recode_scalar_bits(unsigned char *sign,
     *sign = s & 1;
     *digit = d;
 }
+<<<<<<< HEAD
+=======
+#else
+static void *dummy = &dummy;
+>>>>>>> origin/master
 #endif

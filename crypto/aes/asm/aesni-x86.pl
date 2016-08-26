@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -50,20 +54,32 @@
 # Add aesni_xts_[en|de]crypt. Westmere spends 1.50 cycles processing
 # one byte out of 8KB with 128-bit key, Sandy Bridge - 1.09.
 
+<<<<<<< HEAD
 # November 2015
 #
 # Add aesni_ocb_[en|de]crypt.
 
+=======
+>>>>>>> origin/master
 ######################################################################
 # Current large-block performance in cycles per byte processed with
 # 128-bit key (less is better).
 #
+<<<<<<< HEAD
 #		CBC en-/decrypt	CTR	XTS	ECB	OCB
 # Westmere	3.77/1.37	1.37	1.52	1.27
 # * Bridge	5.07/0.98	0.99	1.09	0.91	1.10
 # Haswell	4.44/0.80	0.97	1.03	0.72	0.76
 # Silvermont	5.77/3.56	3.67	4.03	3.46	4.03
 # Bulldozer	5.80/0.98	1.05	1.24	0.93	1.23
+=======
+#		CBC en-/decrypt	CTR	XTS	ECB
+# Westmere	3.77/1.37	1.37	1.52	1.27
+# * Bridge	5.07/0.98	0.99	1.09	0.91
+# Haswell	4.44/0.80	0.97	1.03	0.72
+# Silvermont	5.77/3.56	3.67	4.03	3.46
+# Bulldozer	5.80/0.98	1.05	1.24	0.93
+>>>>>>> origin/master
 
 $PREFIX="aesni";	# if $PREFIX is set to "AES", the script
 			# generates drop-in replacement for
@@ -74,10 +90,13 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
+<<<<<<< HEAD
 $output = pop;
 open OUT,">$output";
 *STDOUT=*OUT;
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 &external_label("OPENSSL_ia32cap_P");
@@ -103,7 +122,11 @@ $inout3="xmm5";	$in1="xmm5";
 $inout4="xmm6";	$in0="xmm6";
 $inout5="xmm7";	$ivec="xmm7";
 
+<<<<<<< HEAD
 # AESNI extension
+=======
+# AESNI extenstion
+>>>>>>> origin/master
 sub aeskeygenassist
 { my($dst,$src,$imm)=@_;
     if ("$dst:$src" =~ /xmm([0-7]):xmm([0-7])/)
@@ -1846,6 +1869,7 @@ if ($PREFIX eq "aesni") {
 	&mov	("esp",&DWP(16*7+4,"esp"));	# restore %esp
 &function_end("aesni_xts_decrypt");
 }
+<<<<<<< HEAD
 
 ######################################################################
 # void aesni_ocb_[en|de]crypt(const char *inp, char *out, size_t blocks,
@@ -2717,6 +2741,8 @@ my ($l_,$block,$i1,$i3,$i5) = ($rounds_,$key_,$rounds,$len,$out);
 	&pxor	($rndkey1,$rndkey1);
 &function_end("aesni_ocb_decrypt");
 }
+=======
+>>>>>>> origin/master
 }
 
 ######################################################################
@@ -3305,7 +3331,11 @@ my ($l_,$block,$i1,$i3,$i5) = ($rounds_,$key_,$rounds,$len,$out);
 	&pxor		("xmm3","xmm3");
 	&aesenclast	("xmm2","xmm3");
 
+<<<<<<< HEAD
 	&movdqa		("xmm3","xmm1");
+=======
+	&movdqa		("xmm3","xmm1")
+>>>>>>> origin/master
 	&pslldq		("xmm1",4);
 	&pxor		("xmm3","xmm1");
 	&pslldq		("xmm1",4);
@@ -3409,5 +3439,8 @@ my ($l_,$block,$i1,$i3,$i5) = ($rounds_,$key_,$rounds,$len,$out);
 &asciz("AES for Intel AES-NI, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
+<<<<<<< HEAD
 
 close STDOUT;
+=======
+>>>>>>> origin/master

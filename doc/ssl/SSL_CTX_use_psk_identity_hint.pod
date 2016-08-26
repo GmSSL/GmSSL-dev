@@ -1,11 +1,47 @@
 =pod
 
+<<<<<<< HEAD
+=======
+=begin comment
+
+Copyright 2005 Nokia. All rights reserved.
+
+The portions of the attached software ("Contribution") is developed by
+Nokia Corporation and is licensed pursuant to the OpenSSL open source
+license.
+
+The Contribution, originally written by Mika Kousa and Pasi Eronen of
+Nokia Corporation, consists of the "PSK" (Pre-Shared Key) ciphersuites
+support (see RFC 4279) to OpenSSL.
+
+No patent licenses or other rights except those expressly stated in
+the OpenSSL open source license shall be deemed granted or received
+expressly, by implication, estoppel, or otherwise.
+
+No assurances are provided by Nokia that the Contribution does not
+infringe the patent or other intellectual property rights of any third
+party or that the license provides you with all the necessary rights
+to make use of the Contribution.
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. IN
+ADDITION TO THE DISCLAIMERS INCLUDED IN THE LICENSE, NOKIA
+SPECIFICALLY DISCLAIMS ANY LIABILITY FOR CLAIMS BROUGHT BY YOU OR ANY
+OTHER ENTITY BASED ON INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS OR
+OTHERWISE.
+
+=end comment
+
+>>>>>>> origin/master
 =head1 NAME
 
 SSL_CTX_use_psk_identity_hint, SSL_use_psk_identity_hint,
 SSL_CTX_set_psk_server_callback, SSL_set_psk_server_callback - set PSK
 identity hint to use
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 =head1 SYNOPSIS
 
  #include <openssl/ssl.h>
@@ -14,11 +50,19 @@ identity hint to use
  int SSL_use_psk_identity_hint(SSL *ssl, const char *hint);
 
  void SSL_CTX_set_psk_server_callback(SSL_CTX *ctx,
+<<<<<<< HEAD
         unsigned int (*callback)(SSL *ssl, const char *identity,
         unsigned char *psk, int max_psk_len));
  void SSL_set_psk_server_callback(SSL *ssl,
         unsigned int (*callback)(SSL *ssl, const char *identity,
         unsigned char *psk, int max_psk_len));
+=======
+	unsigned int (*callback)(SSL *ssl, const char *identity,
+	unsigned char *psk, int max_psk_len));
+ void SSL_set_psk_server_callback(SSL *ssl,
+	unsigned int (*callback)(SSL *ssl, const char *identity,
+	unsigned char *psk, int max_psk_len));
+>>>>>>> origin/master
 
 
 =head1 DESCRIPTION
@@ -73,6 +117,7 @@ completely.
 
 =back
 
+<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -84,4 +129,6 @@ L<https://www.openssl.org/source/license.html>.
 
 Copyright 2005 Nokia.
 
+=======
+>>>>>>> origin/master
 =cut

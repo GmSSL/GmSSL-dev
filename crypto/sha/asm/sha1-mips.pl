@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -77,7 +81,11 @@ if ($flavour =~ /64|n32/i) {
 
 $big_endian=(`echo MIPSEL | $ENV{CC} -E -`=~/MIPSEL/)?1:0 if ($ENV{CC});
 
+<<<<<<< HEAD
 for (@ARGV) {	$output=$_ if (/\w[\w\-]*\.\w+$/);   }
+=======
+for (@ARGV) {	$output=$_ if (/^\w[\w\-]*\.\w+$/);   }
+>>>>>>> origin/master
 open STDOUT,">$output";
 
 if (!defined($big_endian))
@@ -332,8 +340,13 @@ $code.=<<___ if ($i<79);
 ___
 }
 
+<<<<<<< HEAD
 $FRAMESIZE=16;	# large enough to accommodate NUBI saved registers
 $SAVED_REGS_MASK = ($flavour =~ /nubi/i) ? "0xc0fff008" : "0xc0ff0000";
+=======
+$FRAMESIZE=16;	# large enough to accomodate NUBI saved registers
+$SAVED_REGS_MASK = ($flavour =~ /nubi/i) ? 0xc0fff008 : 0xc0ff0000;
+>>>>>>> origin/master
 
 $code=<<___;
 #ifdef OPENSSL_FIPSCANISTER

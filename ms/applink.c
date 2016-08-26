@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #define APPLINK_STDIN   1
 #define APPLINK_STDOUT  2
 #define APPLINK_STDERR  3
@@ -90,9 +93,15 @@ void **
  * decoration right with Borland C. Otherwise it works
  * purely incidentally, as we pass no parameters.
  */
+<<<<<<< HEAD
 __stdcall
 # else
 __cdecl
+=======
+ __stdcall
+# else
+ __cdecl
+>>>>>>> origin/master
 # endif
 OPENSSL_Applink(void)
 {

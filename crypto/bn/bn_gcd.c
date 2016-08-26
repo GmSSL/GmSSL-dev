@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,6 +9,120 @@
  */
 
 #include "internal/cryptlib.h"
+=======
+/* crypto/bn/bn_gcd.c */
+/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+ * All rights reserved.
+ *
+ * This package is an SSL implementation written
+ * by Eric Young (eay@cryptsoft.com).
+ * The implementation was written so as to conform with Netscapes SSL.
+ *
+ * This library is free for commercial and non-commercial use as long as
+ * the following conditions are aheared to.  The following conditions
+ * apply to all code found in this distribution, be it the RC4, RSA,
+ * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+ * included with this distribution is covered by the same copyright terms
+ * except that the holder is Tim Hudson (tjh@cryptsoft.com).
+ *
+ * Copyright remains Eric Young's, and as such any Copyright notices in
+ * the code are not to be removed.
+ * If this package is used in a product, Eric Young should be given attribution
+ * as the author of the parts of the library used.
+ * This can be in the form of a textual message at program startup or
+ * in documentation (online or textual) provided with the package.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *    "This product includes cryptographic software written by
+ *     Eric Young (eay@cryptsoft.com)"
+ *    The word 'cryptographic' can be left out if the rouines from the library
+ *    being used are not cryptographic related :-).
+ * 4. If you include any Windows specific code (or a derivative thereof) from
+ *    the apps directory (application code) you must include an acknowledgement:
+ *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * The licence and distribution terms for any publically available version or
+ * derivative of this code cannot be changed.  i.e. this code cannot simply be
+ * copied and put under another distribution licence
+ * [including the GNU Public Licence.]
+ */
+/* ====================================================================
+ * Copyright (c) 1998-2001 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    openssl-core@openssl.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include "bn_lcl.h"
 
 static BIGNUM *euclid(BIGNUM *a, BIGNUM *b);
@@ -124,6 +239,7 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
 BIGNUM *BN_mod_inverse(BIGNUM *in,
                        const BIGNUM *a, const BIGNUM *n, BN_CTX *ctx)
 {
+<<<<<<< HEAD
     BIGNUM *rv;
     int noinv;
     rv = int_bn_mod_inverse(in, a, n, ctx, &noinv);
@@ -136,13 +252,18 @@ BIGNUM *int_bn_mod_inverse(BIGNUM *in,
                            const BIGNUM *a, const BIGNUM *n, BN_CTX *ctx,
                            int *pnoinv)
 {
+=======
+>>>>>>> origin/master
     BIGNUM *A, *B, *X, *Y, *M, *D, *T, *R = NULL;
     BIGNUM *ret = NULL;
     int sign;
 
+<<<<<<< HEAD
     if (pnoinv)
         *pnoinv = 0;
 
+=======
+>>>>>>> origin/master
     if ((BN_get_flags(a, BN_FLG_CONSTTIME) != 0)
         || (BN_get_flags(n, BN_FLG_CONSTTIME) != 0)) {
         return BN_mod_inverse_no_branch(in, a, n, ctx);
@@ -189,11 +310,19 @@ BIGNUM *int_bn_mod_inverse(BIGNUM *in,
      *      sign*Y*a  ==  A   (mod |n|).
      */
 
+<<<<<<< HEAD
     if (BN_is_odd(n) && (BN_num_bits(n) <= 2048)) {
         /*
          * Binary inversion algorithm; requires odd modulus. This is faster
          * than the general algorithm if the modulus is sufficiently small
          * (about 400 .. 500 bits on 32-bit systems, but much more on 64-bit
+=======
+    if (BN_is_odd(n) && (BN_num_bits(n) <= (BN_BITS <= 32 ? 450 : 2048))) {
+        /*
+         * Binary inversion algorithm; requires odd modulus. This is faster
+         * than the general algorithm if the modulus is sufficiently small
+         * (about 400 .. 500 bits on 32-bit sytems, but much more on 64-bit
+>>>>>>> origin/master
          * systems)
          */
         int shift;
@@ -370,7 +499,11 @@ BIGNUM *int_bn_mod_inverse(BIGNUM *in,
              * i.e.
              *        sign*(Y + D*X)*a  ==  B  (mod |n|).
              *
+<<<<<<< HEAD
              * So if we set  (X, Y, sign) := (Y + D*X, X, -sign), we arrive back at
+=======
+             * So if we set  (X, Y, sign) := (Y + D*X, X, -sign),  we arrive back at
+>>>>>>> origin/master
              *      -sign*X*a  ==  B   (mod |n|),
              *       sign*Y*a  ==  A   (mod |n|).
              * Note that  X  and  Y  stay non-negative all the time.
@@ -435,8 +568,12 @@ BIGNUM *int_bn_mod_inverse(BIGNUM *in,
                 goto err;
         }
     } else {
+<<<<<<< HEAD
         if (pnoinv)
             *pnoinv = 1;
+=======
+        BNerr(BN_F_BN_MOD_INVERSE, BN_R_NO_INVERSE);
+>>>>>>> origin/master
         goto err;
     }
     ret = R;
@@ -457,6 +594,11 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
                                         BN_CTX *ctx)
 {
     BIGNUM *A, *B, *X, *Y, *M, *D, *T, *R = NULL;
+<<<<<<< HEAD
+=======
+    BIGNUM local_A, local_B;
+    BIGNUM *pA, *pB;
+>>>>>>> origin/master
     BIGNUM *ret = NULL;
     int sign;
 
@@ -494,6 +636,7 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
          * Turn BN_FLG_CONSTTIME flag on, so that when BN_div is invoked,
          * BN_div_no_branch will be called eventually.
          */
+<<<<<<< HEAD
          {
             BIGNUM local_B;
             bn_init(&local_B);
@@ -502,6 +645,12 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
                 goto err;
             /* Ensure local_B goes out of scope before any further use of B */
         }
+=======
+        pB = &local_B;
+        BN_with_flags(pB, B, BN_FLG_CONSTTIME);
+        if (!BN_nnmod(B, pB, A, ctx))
+            goto err;
+>>>>>>> origin/master
     }
     sign = -1;
     /*-
@@ -525,6 +674,7 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
          * Turn BN_FLG_CONSTTIME flag on, so that when BN_div is invoked,
          * BN_div_no_branch will be called eventually.
          */
+<<<<<<< HEAD
         {
             BIGNUM local_A;
             bn_init(&local_A);
@@ -535,6 +685,14 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
                 goto err;
             /* Ensure local_A goes out of scope before any further use of A */
         }
+=======
+        pA = &local_A;
+        BN_with_flags(pA, A, BN_FLG_CONSTTIME);
+
+        /* (D, M) := (A/B, A%B) ... */
+        if (!BN_div(D, M, pA, B, ctx))
+            goto err;
+>>>>>>> origin/master
 
         /*-
          * Now
@@ -565,7 +723,11 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
          * i.e.
          *        sign*(Y + D*X)*a  ==  B  (mod |n|).
          *
+<<<<<<< HEAD
          * So if we set  (X, Y, sign) := (Y + D*X, X, -sign), we arrive back at
+=======
+         * So if we set  (X, Y, sign) := (Y + D*X, X, -sign),  we arrive back at
+>>>>>>> origin/master
          *      -sign*X*a  ==  B   (mod |n|),
          *       sign*Y*a  ==  A   (mod |n|).
          * Note that  X  and  Y  stay non-negative all the time.

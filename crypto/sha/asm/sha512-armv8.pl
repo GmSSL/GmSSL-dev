@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -25,7 +29,10 @@
 # Cortex-A57	2.31		11.6 (+86%)	7.51 (+260%(***))
 # Denver	2.01		10.5 (+26%)	6.70 (+8%)
 # X-Gene			20.0 (+100%)	12.8 (+300%(***))
+<<<<<<< HEAD
 # Mongoose	2.36		13.0 (+50%)	8.36 (+33%)
+=======
+>>>>>>> origin/master
 # 
 # (*)	Software SHA256 results are of lesser relevance, presented
 #	mostly for informational purposes.
@@ -39,6 +46,7 @@
 
 $flavour=shift;
 $output=shift;
+<<<<<<< HEAD
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}arm-xlate.pl" and -f $xlate ) or
@@ -47,6 +55,9 @@ die "can't locate arm-xlate.pl";
 
 open OUT,"| \"$^X\" $xlate $flavour $output";
 *STDOUT=*OUT;
+=======
+open STDOUT,">$output";
+>>>>>>> origin/master
 
 if ($output =~ /512/) {
 	$BITS=512;
@@ -170,18 +181,25 @@ $code.=<<___;
 
 .text
 
+<<<<<<< HEAD
 .extern	OPENSSL_armcap_P
+=======
+>>>>>>> origin/master
 .globl	$func
 .type	$func,%function
 .align	6
 $func:
 ___
 $code.=<<___	if ($SZ==4);
+<<<<<<< HEAD
 #ifdef	__ILP32__
 	ldrsw	x16,.LOPENSSL_armcap_P
 #else
 	ldr	x16,.LOPENSSL_armcap_P
 #endif
+=======
+	ldr	x16,.LOPENSSL_armcap_P
+>>>>>>> origin/master
 	adr	x17,.LOPENSSL_armcap_P
 	add	x16,x16,x17
 	ldr	w16,[x16]
@@ -204,7 +222,11 @@ $code.=<<___;
 	ldp	$E,$F,[$ctx,#4*$SZ]
 	add	$num,$inp,$num,lsl#`log(16*$SZ)/log(2)`	// end of input
 	ldp	$G,$H,[$ctx,#6*$SZ]
+<<<<<<< HEAD
 	adr	$Ktbl,.LK$BITS
+=======
+	adr	$Ktbl,K$BITS
+>>>>>>> origin/master
 	stp	$ctx,$num,[x29,#96]
 
 .Loop:
@@ -254,8 +276,13 @@ $code.=<<___;
 .size	$func,.-$func
 
 .align	6
+<<<<<<< HEAD
 .type	.LK$BITS,%object
 .LK$BITS:
+=======
+.type	K$BITS,%object
+K$BITS:
+>>>>>>> origin/master
 ___
 $code.=<<___ if ($SZ==8);
 	.quad	0x428a2f98d728ae22,0x7137449123ef65cd
@@ -320,6 +347,7 @@ $code.=<<___ if ($SZ==4);
 	.long	0	//terminator
 ___
 $code.=<<___;
+<<<<<<< HEAD
 .size	.LK$BITS,.-.LK$BITS
 .align	3
 .LOPENSSL_armcap_P:
@@ -328,6 +356,12 @@ $code.=<<___;
 #else
 	.quad	OPENSSL_armcap_P-.
 #endif
+=======
+.size	K$BITS,.-K$BITS
+.align	3
+.LOPENSSL_armcap_P:
+	.quad	OPENSSL_armcap_P-.
+>>>>>>> origin/master
 .asciz	"SHA$BITS block transform for ARMv8, CRYPTOGAMS by <appro\@openssl.org>"
 .align	2
 ___
@@ -349,7 +383,11 @@ sha256_block_armv8:
 	add		x29,sp,#0
 
 	ld1.32		{$ABCD,$EFGH},[$ctx]
+<<<<<<< HEAD
 	adr		$Ktbl,.LK256
+=======
+	adr		$Ktbl,K256
+>>>>>>> origin/master
 
 .Loop_hw:
 	ld1		{@MSG[0]-@MSG[3]},[$inp],#64

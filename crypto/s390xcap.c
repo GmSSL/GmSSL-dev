@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

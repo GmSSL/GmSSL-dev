@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -21,8 +25,11 @@
 # Performance under big-endian OS such as HP-UX is 179MBps*1GHz, which
 # is >50% better than HP C and >2x better than gcc.
 
+<<<<<<< HEAD
 $output = pop;
 
+=======
+>>>>>>> origin/master
 $code=<<___;
 .ident  \"sha1-ia64.s, version 1.3\"
 .ident  \"IA-64 ISA artwork by Andy Polyakov <appro\@fy.chalmers.se>\"
@@ -310,5 +317,9 @@ $code.=<<___;
 stringz	"SHA1 block transform for IA64, CRYPTOGAMS by <appro\@openssl.org>"
 ___
 
+<<<<<<< HEAD
 open STDOUT,">$output" if $output;
+=======
+$output=shift and open STDOUT,">$output";
+>>>>>>> origin/master
 print $code;

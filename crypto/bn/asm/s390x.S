@@ -1,11 +1,20 @@
 .ident "s390x.S, version 1.1"
 // ====================================================================
+<<<<<<< HEAD
 // Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 //
 // Licensed under the OpenSSL license (the "License").  You may not use
 // this file except in compliance with the License.  You can obtain a copy
 // in the file LICENSE in the source distribution or at
 // https://www.openssl.org/source/license.html
+=======
+// Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
+// project.
+//
+// Rights for redistribution and usage in source and binary forms are
+// granted according to the OpenSSL license. Warranty of any kind is
+// disclaimed.
+>>>>>>> origin/master
 // ====================================================================
 
 .text
@@ -18,6 +27,7 @@
 .align	4
 bn_mul_add_words:
 	lghi	zero,0		// zero = 0
+<<<<<<< HEAD
 	la	%r1,0(%r2)	// put rp aside [to give way to]
 	lghi	%r2,0		// return value
 	ltgfr	%r4,%r4
@@ -28,10 +38,22 @@ bn_mul_add_words:
 	lghi	%r12,0		// carry = 0
 	slgr	%r1,%r3		// rp-=ap
 	nr	%r2,%r4		// len%4
+=======
+	la	%r1,0(%r2)	// put rp aside
+	lghi	%r2,0		// i=0;
+	ltgfr	%r4,%r4
+	bler	%r14		// if (len<=0) return 0;
+
+	stmg	%r6,%r10,48(%r15)
+	lghi	%r10,3
+	lghi	%r8,0		// carry = 0
+	nr	%r10,%r4	// len%4
+>>>>>>> origin/master
 	sra	%r4,2		// cnt=len/4
 	jz	.Loop1_madd	// carry is incidentally cleared if branch taken
 	algr	zero,zero	// clear carry
 
+<<<<<<< HEAD
 	lg	%r7,0(%r3)	// ap[0]
 	lg	%r9,8(%r3)	// ap[1]
 	mlgr	%r6,%r5		// *=w
@@ -118,6 +140,60 @@ bn_mul_add_words:
 	lgr	%r12,%r6
 	la	%r3,8(%r3)	// i++
 	brct	%r2,.Loop1_madd
+=======
+.Loop4_madd:
+	lg	%r7,0(%r2,%r3)	// ap[i]
+	mlgr	%r6,%r5		// *=w
+	alcgr	%r7,%r8		// +=carry
+	alcgr	%r6,zero
+	alg	%r7,0(%r2,%r1)	// +=rp[i]
+	stg	%r7,0(%r2,%r1)	// rp[i]=
+
+	lg	%r9,8(%r2,%r3)
+	mlgr	%r8,%r5
+	alcgr	%r9,%r6
+	alcgr	%r8,zero
+	alg	%r9,8(%r2,%r1)
+	stg	%r9,8(%r2,%r1)
+
+	lg	%r7,16(%r2,%r3)
+	mlgr	%r6,%r5
+	alcgr	%r7,%r8
+	alcgr	%r6,zero
+	alg	%r7,16(%r2,%r1)
+	stg	%r7,16(%r2,%r1)
+
+	lg	%r9,24(%r2,%r3)
+	mlgr	%r8,%r5
+	alcgr	%r9,%r6
+	alcgr	%r8,zero
+	alg	%r9,24(%r2,%r1)
+	stg	%r9,24(%r2,%r1)
+
+	la	%r2,32(%r2)	// i+=4
+	brct	%r4,.Loop4_madd
+
+	la	%r10,1(%r10)		// see if len%4 is zero ...
+	brct	%r10,.Loop1_madd	// without touching condition code:-)
+
+.Lend_madd:
+	alcgr	%r8,zero	// collect carry bit
+	lgr	%r2,%r8
+	lmg	%r6,%r10,48(%r15)
+	br	%r14
+
+.Loop1_madd:
+	lg	%r7,0(%r2,%r3)	// ap[i]
+	mlgr	%r6,%r5		// *=w
+	alcgr	%r7,%r8		// +=carry
+	alcgr	%r6,zero
+	alg	%r7,0(%r2,%r1)	// +=rp[i]
+	stg	%r7,0(%r2,%r1)	// rp[i]=
+
+	lgr	%r8,%r6
+	la	%r2,8(%r2)	// i++
+	brct	%r10,.Loop1_madd
+>>>>>>> origin/master
 
 	j	.Lend_madd
 .size	bn_mul_add_words,.-bn_mul_add_words

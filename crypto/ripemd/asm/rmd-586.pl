@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/local/bin/perl
+>>>>>>> origin/master
 
 # Normal is the
 # ripemd160_block_asm_data_order(RIPEMD160_CTX *c, ULONG *X,int blocks);
@@ -16,9 +20,12 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
+<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 $A="ecx";
@@ -70,8 +77,11 @@ $KR3=0x7A6D76E9;
 &ripemd160_block("ripemd160_block_asm_data_order");
 &asm_finish();
 
+<<<<<<< HEAD
 close STDOUT;
 
+=======
+>>>>>>> origin/master
 sub Xv
 	{
 	local($n)=@_;

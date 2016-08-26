@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -54,6 +58,7 @@
 #
 #					<ard.biesheuvel@linaro.org>
 
+<<<<<<< HEAD
 $flavour = shift;
 if ($flavour=~/\w[\w\-]*\.\w+$/) { $output=$flavour; undef $flavour; }
 else { while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {} }
@@ -68,6 +73,10 @@ if ($flavour && $flavour ne "void") {
 } else {
     open STDOUT,">$output";
 }
+=======
+while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
+open STDOUT,">$output";
+>>>>>>> origin/master
 
 my ($inp,$out,$len,$key)=("r0","r1","r2","r3");
 my @XMM=map("q$_",(0..15));
@@ -721,7 +730,11 @@ $code.=<<___;
 # define BSAES_ASM_EXTENDED_KEY
 # define XTS_CHAIN_TWEAK
 # define __ARM_ARCH__ __LINUX_ARM_ARCH__
+<<<<<<< HEAD
 # define __ARM_MAX_ARCH__ 7
+=======
+# define __ARM_MAX_ARCH__ __LINUX_ARM_ARCH__
+>>>>>>> origin/master
 #endif
 
 #ifdef __thumb__
@@ -734,11 +747,18 @@ $code.=<<___;
 
 .text
 .syntax	unified 	@ ARMv7-capable assembler is expected to handle this
+<<<<<<< HEAD
 #if defined(__thumb2__) && !defined(__APPLE__)
 .thumb
 #else
 .code   32
 # undef __thumb2__
+=======
+#ifdef __thumb2__
+.thumb
+#else
+.code   32
+>>>>>>> origin/master
 #endif
 
 .type	_bsaes_decrypt8,%function
@@ -746,11 +766,15 @@ $code.=<<___;
 _bsaes_decrypt8:
 	adr	$const,_bsaes_decrypt8
 	vldmia	$key!, {@XMM[9]}		@ round 0 key
+<<<<<<< HEAD
 #ifdef	__APPLE__
 	adr	$const,.LM0ISR
 #else
 	add	$const,$const,#.LM0ISR-_bsaes_decrypt8
 #endif
+=======
+	add	$const,$const,#.LM0ISR-_bsaes_decrypt8
+>>>>>>> origin/master
 
 	vldmia	$const!, {@XMM[8]}		@ .LM0ISR
 	veor	@XMM[10], @XMM[0], @XMM[9]	@ xor with round0 key
@@ -845,11 +869,15 @@ _bsaes_const:
 _bsaes_encrypt8:
 	adr	$const,_bsaes_encrypt8
 	vldmia	$key!, {@XMM[9]}		@ round 0 key
+<<<<<<< HEAD
 #ifdef	__APPLE__
 	adr	$const,.LM0SR
 #else
 	sub	$const,$const,#_bsaes_encrypt8-.LM0SR
 #endif
+=======
+	sub	$const,$const,#_bsaes_encrypt8-.LM0SR
+>>>>>>> origin/master
 
 	vldmia	$const!, {@XMM[8]}		@ .LM0SR
 _bsaes_encrypt8_alt:
@@ -953,11 +981,15 @@ $code.=<<___;
 _bsaes_key_convert:
 	adr	$const,_bsaes_key_convert
 	vld1.8	{@XMM[7]},  [$inp]!		@ load round 0 key
+<<<<<<< HEAD
 #ifdef	__APPLE__
 	adr	$const,.LM0
 #else
 	sub	$const,$const,#_bsaes_key_convert-.LM0
 #endif
+=======
+	sub	$const,$const,#_bsaes_key_convert-.LM0
+>>>>>>> origin/master
 	vld1.8	{@XMM[15]}, [$inp]!		@ load round 1 key
 
 	vmov.i8	@XMM[8],  #0x01			@ bit masks
@@ -1424,12 +1456,16 @@ bsaes_ctr32_encrypt_blocks:
 	vstmia	r12, {@XMM[7]}			@ save last round key
 
 	vld1.8	{@XMM[0]}, [$ctr]		@ load counter
+<<<<<<< HEAD
 #ifdef	__APPLE__
 	mov	$ctr, #:lower16:(.LREVM0SR-.LM0)
 	add	$ctr, $const, $ctr
 #else
 	add	$ctr, $const, #.LREVM0SR-.LM0	@ borrow $ctr
 #endif
+=======
+	add	$ctr, $const, #.LREVM0SR-.LM0	@ borrow $ctr
+>>>>>>> origin/master
 	vldmia	$keysched, {@XMM[4]}		@ load round0 key
 #else
 	ldr	r12, [$key, #244]
@@ -1486,12 +1522,16 @@ bsaes_ctr32_encrypt_blocks:
 	vldmia		$ctr, {@XMM[8]}			@ .LREVM0SR
 	mov		r5, $rounds			@ pass rounds
 	vstmia		$fp, {@XMM[10]}			@ save next counter
+<<<<<<< HEAD
 #ifdef	__APPLE__
 	mov		$const, #:lower16:(.LREVM0SR-.LSR)
 	sub		$const, $ctr, $const
 #else
 	sub		$const, $ctr, #.LREVM0SR-.LSR	@ pass constants
 #endif
+=======
+	sub		$const, $ctr, #.LREVM0SR-.LSR	@ pass constants
+>>>>>>> origin/master
 
 	bl		_bsaes_encrypt8_alt
 
@@ -1592,7 +1632,11 @@ bsaes_ctr32_encrypt_blocks:
 	rev	r8, r8
 #endif
 	sub	sp, sp, #0x10
+<<<<<<< HEAD
 	vst1.8	{@XMM[1]}, [sp]		@ copy counter value
+=======
+	vst1.8	{@XMM[1]}, [sp,:64]	@ copy counter value
+>>>>>>> origin/master
 	sub	sp, sp, #0x10
 
 .Lctr_enc_short_loop:
@@ -1603,7 +1647,11 @@ bsaes_ctr32_encrypt_blocks:
 	bl	AES_encrypt
 
 	vld1.8	{@XMM[0]}, [r4]!	@ load input
+<<<<<<< HEAD
 	vld1.8	{@XMM[1]}, [sp]		@ load encrypted counter
+=======
+	vld1.8	{@XMM[1]}, [sp,:64]	@ load encrypted counter
+>>>>>>> origin/master
 	add	r8, r8, #1
 #ifdef __ARMEL__
 	rev	r0, r8
@@ -1839,6 +1887,11 @@ $code.=<<___;
 	b		.Lxts_enc_done
 .align	4
 .Lxts_enc_6:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[14]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[4], @XMM[4], @XMM[12]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -1874,6 +1927,11 @@ $code.=<<___;
 
 .align	5
 .Lxts_enc_5:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[13]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[3], @XMM[3], @XMM[11]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -1902,6 +1960,11 @@ $code.=<<___;
 	b		.Lxts_enc_done
 .align	4
 .Lxts_enc_4:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[12]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[2], @XMM[2], @XMM[10]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -1927,6 +1990,11 @@ $code.=<<___;
 	b		.Lxts_enc_done
 .align	4
 .Lxts_enc_3:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[11]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[1], @XMM[1], @XMM[9]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -1951,6 +2019,11 @@ $code.=<<___;
 	b		.Lxts_enc_done
 .align	4
 .Lxts_enc_2:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[10]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[0], @XMM[0], @XMM[8]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -1973,7 +2046,11 @@ $code.=<<___;
 .align	4
 .Lxts_enc_1:
 	mov		r0, sp
+<<<<<<< HEAD
 	veor		@XMM[0], @XMM[0], @XMM[8]
+=======
+	veor		@XMM[0], @XMM[8]
+>>>>>>> origin/master
 	mov		r1, sp
 	vst1.8		{@XMM[0]}, [sp,:128]
 	mov		r2, $key
@@ -2110,11 +2187,17 @@ bsaes_xts_decrypt:
 	vld1.8	{@XMM[8]}, [r0]			@ initial tweak
 	adr	$magic, .Lxts_magic
 
+<<<<<<< HEAD
 #ifndef	XTS_CHAIN_TWEAK
 	tst	$len, #0xf			@ if not multiple of 16
 	it	ne				@ Thumb2 thing, sanity check in ARM
 	subne	$len, #0x10			@ subtract another 16 bytes
 #endif
+=======
+	tst	$len, #0xf			@ if not multiple of 16
+	it	ne				@ Thumb2 thing, sanity check in ARM
+	subne	$len, #0x10			@ subtract another 16 bytes
+>>>>>>> origin/master
 	subs	$len, #0x80
 
 	blo	.Lxts_dec_short
@@ -2285,6 +2368,11 @@ $code.=<<___;
 	b		.Lxts_dec_done
 .align	4
 .Lxts_dec_5:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[13]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[3], @XMM[3], @XMM[11]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -2313,6 +2401,11 @@ $code.=<<___;
 	b		.Lxts_dec_done
 .align	4
 .Lxts_dec_4:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[12]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[2], @XMM[2], @XMM[10]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -2338,6 +2431,11 @@ $code.=<<___;
 	b		.Lxts_dec_done
 .align	4
 .Lxts_dec_3:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[11]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[1], @XMM[1], @XMM[9]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -2362,6 +2460,11 @@ $code.=<<___;
 	b		.Lxts_dec_done
 .align	4
 .Lxts_dec_2:
+<<<<<<< HEAD
+=======
+	vst1.64		{@XMM[10]}, [r0,:128]		@ next round tweak
+
+>>>>>>> origin/master
 	veor		@XMM[0], @XMM[0], @XMM[8]
 #ifndef	BSAES_ASM_EXTENDED_KEY
 	add		r4, sp, #0x90			@ pass key schedule
@@ -2384,12 +2487,21 @@ $code.=<<___;
 .align	4
 .Lxts_dec_1:
 	mov		r0, sp
+<<<<<<< HEAD
 	veor		@XMM[0], @XMM[0], @XMM[8]
 	mov		r1, sp
 	vst1.8		{@XMM[0]}, [sp,:128]
 	mov		r5, $magic			@ preserve magic
 	mov		r2, $key
 	mov		r4, $fp				@ preserve fp
+=======
+	veor		@XMM[0], @XMM[8]
+	mov		r1, sp
+	vst1.8		{@XMM[0]}, [sp,:128]
+	mov		r2, $key
+	mov		r4, $fp				@ preserve fp
+	mov		r5, $magic			@ preserve magic
+>>>>>>> origin/master
 
 	bl		AES_decrypt
 

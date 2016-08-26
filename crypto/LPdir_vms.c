@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -8,6 +9,8 @@
  */
 
 /*
+=======
+>>>>>>> origin/master
  * Copyright (c) 2004, Richard Levitte <richard@levitte.org>
  * All rights reserved.
  *
@@ -113,12 +116,20 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
             return 0;
         }
 
+<<<<<<< HEAD
         *ctx = malloc(sizeof(**ctx));
+=======
+        *ctx = (LP_DIR_CTX *)malloc(sizeof(LP_DIR_CTX));
+>>>>>>> origin/master
         if (*ctx == NULL) {
             errno = ENOMEM;
             return 0;
         }
+<<<<<<< HEAD
         memset(*ctx, 0, sizeof(**ctx));
+=======
+        memset(*ctx, '\0', sizeof(LP_DIR_CTX));
+>>>>>>> origin/master
 
         strcpy((*ctx)->filespec, directory);
         strcat((*ctx)->filespec, "*.*;");

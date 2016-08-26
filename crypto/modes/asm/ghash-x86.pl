@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -95,7 +99,11 @@
 # where Tproc is time required for Karatsuba pre- and post-processing,
 # is more realistic estimate. In this case it gives ... 1.91 cycles.
 # Or in other words, depending on how well we can interleave reduction
+<<<<<<< HEAD
 # and one of the two multiplications the performance should be between
+=======
+# and one of the two multiplications the performance should be betwen
+>>>>>>> origin/master
 # 1.91 and 2.16. As already mentioned, this implementation processes
 # one byte out of 8KB buffer in 2.10 cycles, while x86_64 counterpart
 # - in 2.02. x86_64 performance is better, because larger register
@@ -136,9 +144,12 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
+<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
+=======
+>>>>>>> origin/master
 &asm_init($ARGV[0],"ghash-x86.pl",$x86only = $ARGV[$#ARGV] eq "386");
 
 $sse2=0;
@@ -368,7 +379,11 @@ $S=12;		# shift factor for rem_4bit
 # effective address calculation and finally merge of value to Z.hi.
 # Reference to rem_4bit is scheduled so late that I had to >>4
 # rem_4bit elements. This resulted in 20-45% procent improvement
+<<<<<<< HEAD
 # on contemporary Âµ-archs.
+=======
+# on contemporary µ-archs.
+>>>>>>> origin/master
 {
     my $cnt;
     my $rem_4bit = "eax";
@@ -722,7 +737,11 @@ sub mmx_loop() {
     &pxor	($red[1],$red[1]);
     &pxor	($red[2],$red[2]);
 
+<<<<<<< HEAD
     # Just like in "May" version modulo-schedule for critical path in
+=======
+    # Just like in "May" verson modulo-schedule for critical path in
+>>>>>>> origin/master
     # 'Z.hi ^= rem_8bit[Z.lo&0xff^((u8)H[nhi]<<4)]<<48'. Final 'pxor'
     # is scheduled so late that rem_8bit[] has to be shifted *right*
     # by 16, which is why last argument to pinsrw is 2, which
@@ -1148,7 +1167,11 @@ my ($Xhi,$Xi) = @_;
 	&movdqu		(&QWP(0,$Xip),$Xi);
 &function_end("gcm_ghash_clmul");
 
+<<<<<<< HEAD
 } else {		# Algorithm 5. Kept for reference purposes.
+=======
+} else {		# Algorith 5. Kept for reference purposes.
+>>>>>>> origin/master
 
 sub reduction_alg5 {	# 19/16 times faster than Intel version
 my ($Xhi,$Xi)=@_;
@@ -1379,8 +1402,11 @@ my ($Xhi,$Xi)=@_;
 &asciz("GHASH for x86, CRYPTOGAMS by <appro\@openssl.org>");
 &asm_finish();
 
+<<<<<<< HEAD
 close STDOUT;
 
+=======
+>>>>>>> origin/master
 # A question was risen about choice of vanilla MMX. Or rather why wasn't
 # SSE2 chosen instead? In addition to the fact that MMX runs on legacy
 # CPUs such as PIII, "4-bit" MMX version was observed to provide better

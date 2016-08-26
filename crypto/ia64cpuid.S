@@ -1,19 +1,25 @@
+<<<<<<< HEAD
 // Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
 //
 // Licensed under the OpenSSL license (the "License").  You may not use
 // this file except in compliance with the License.  You can obtain a copy
 // in the file LICENSE in the source distribution or at
 // https://www.openssl.org/source/license.html
+=======
+>>>>>>> origin/master
 // Works on all IA-64 platforms: Linux, HP-UX, Win64i...
 // On Win64i compile with ias.exe.
 .text
 
+<<<<<<< HEAD
 #if defined(_HPUX_SOURCE) && !defined(_LP64)
 #define	ADDP	addp4
 #else
 #define	ADDP	add
 #endif
 
+=======
+>>>>>>> origin/master
 .global	OPENSSL_cpuid_setup#
 .proc	OPENSSL_cpuid_setup#
 OPENSSL_cpuid_setup:
@@ -143,7 +149,13 @@ OPENSSL_wipe_cpu:
 .proc	OPENSSL_cleanse#
 OPENSSL_cleanse:
 { .mib;	cmp.eq		p6,p0=0,r33	    // len==0
+<<<<<<< HEAD
 	ADDP		r32=0,r32
+=======
+#if defined(_HPUX_SOURCE) && !defined(_LP64)
+	addp4		r32=0,r32
+#endif
+>>>>>>> origin/master
 (p6)	br.ret.spnt	b0		};;
 { .mib;	and		r2=7,r32
 	cmp.leu		p6,p0=15,r33	    // len>=15
@@ -175,6 +187,7 @@ OPENSSL_cleanse:
 (p7)	br.cond.dpnt	.Little
 (p6)	br.ret.sptk.many	b0	};;
 .endp	OPENSSL_cleanse#
+<<<<<<< HEAD
 
 .global	CRYPTO_memcmp#
 .proc	CRYPTO_memcmp#
@@ -295,3 +308,5 @@ OPENSSL_instrument_bus2:
 { .mib;	sub		r8=r2,r33
 	br.ret.sptk.many	b0	};;
 .endp	OPENSSL_instrument_bus2#
+=======
+>>>>>>> origin/master

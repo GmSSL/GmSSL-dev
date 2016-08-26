@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -25,6 +29,7 @@
 # for reference purposes, because T4 has dedicated Montgomery
 # multiplication and squaring *instructions* that deliver even more.
 
+<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
@@ -39,6 +44,18 @@ $code.=<<___;
 .register	%g3,#scratch
 #endif
 
+=======
+$bits=32;
+for (@ARGV)     { $bits=64 if (/\-m64/ || /\-xarch\=v9/); }
+if ($bits==64)  { $bias=2047; $frame=192; }
+else            { $bias=0;    $frame=112; }
+
+$code.=<<___ if ($bits==64);
+.register	%g2,#scratch
+.register	%g3,#scratch
+___
+$code.=<<___;
+>>>>>>> origin/master
 .section	".text",#alloc,#execinstr
 ___
 
@@ -344,7 +361,11 @@ ___
 
 # Purpose of these subroutines is to explicitly encode VIS instructions,
 # so that one can compile the module without having to specify VIS
+<<<<<<< HEAD
 # extensions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
+=======
+# extentions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
+>>>>>>> origin/master
 # Idea is to reserve for option to produce "universal" binary and let
 # programmer detect if current CPU is VIS capable at run-time.
 sub unvis3 {

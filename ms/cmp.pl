@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -5,6 +6,9 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
+=======
+#!/usr/local/bin/perl
+>>>>>>> origin/master
 
 ($#ARGV == 1) || die "usage: cmp.pl <file1> <file2>\n";
 
@@ -16,6 +20,7 @@ binmode IN1;
 $tot=0;
 $ret=1;
 for (;;)
+<<<<<<< HEAD
 {
     $n1=sysread(IN0,$b1,4096);
     $n2=sysread(IN1,$b2,4096);
@@ -30,10 +35,27 @@ for (;;)
     }
     $tot+=$n1;
 }
+=======
+	{
+	$n1=sysread(IN0,$b1,4096);
+	$n2=sysread(IN1,$b2,4096);
+
+	last if ($n1 != $n2);
+	last if ($b1 ne $b2);
+	last if ($n1 < 0);
+	if ($n1 == 0)
+		{
+		$ret=0;
+		last;
+		}
+	$tot+=$n1;
+	}
+>>>>>>> origin/master
 
 close(IN0);
 close(IN1);
 if ($ret)
+<<<<<<< HEAD
 {
     printf STDERR "$ARGV[0] and $ARGV[1] are different\n";
     @a1=unpack("C*",$b1);
@@ -50,4 +72,22 @@ if ($ret)
     $tot+=$i+1;
     printf STDERR "diff at char $tot of $nm\n";
 }
+=======
+	{
+	printf STDERR "$ARGV[0] and $ARGV[1] are different\n";
+	@a1=unpack("C*",$b1);
+	@a2=unpack("C*",$b2);
+	for ($i=0; $i<=$#a1; $i++)
+		{
+		if ($a1[$i] ne $a2[$i])
+			{
+			printf "%02X %02X <<\n",$a1[$i],$a2[$i];
+			last;
+			}
+		}
+	$nm=$tot+$n1;
+	$tot+=$i+1;
+	printf STDERR "diff at char $tot of $nm\n";
+	}
+>>>>>>> origin/master
 exit($ret);

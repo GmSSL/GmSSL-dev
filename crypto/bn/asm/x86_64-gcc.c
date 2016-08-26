@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,6 +8,8 @@
  * https://www.openssl.org/source/license.html
  */
 
+=======
+>>>>>>> origin/master
 #include "../bn_lcl.h"
 #if !(defined(__GNUC__) && __GNUC__>=2)
 # include "../bn_asm.c"         /* kind of dirty hack for Sun Studio */
@@ -74,7 +77,11 @@
 # undef mul_add
 
 /*-
+<<<<<<< HEAD
  * "m"(a), "+m"(r)      is the way to favor DirectPath Âµ-code;
+=======
+ * "m"(a), "+m"(r)      is the way to favor DirectPath µ-code;
+>>>>>>> origin/master
  * "g"(0)               let the compiler to decide where does it
  *                      want to keep the value of zero;
  */

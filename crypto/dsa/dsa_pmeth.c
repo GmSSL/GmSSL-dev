@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
  * Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -9,11 +10,76 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
+=======
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 2006.
+ */
+/* ====================================================================
+ * Copyright (c) 2006 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+ */
+
+#include <stdio.h>
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/asn1t.h>
 #include <openssl/x509.h>
 #include <openssl/evp.h>
 #include <openssl/bn.h>
+<<<<<<< HEAD
 #include "internal/evp_int.h"
+=======
+#include "evp_locl.h"
+>>>>>>> origin/master
 #include "dsa_locl.h"
 
 /* DSA pkey context structure */
@@ -32,8 +98,13 @@ typedef struct {
 static int pkey_dsa_init(EVP_PKEY_CTX *ctx)
 {
     DSA_PKEY_CTX *dctx;
+<<<<<<< HEAD
     dctx = OPENSSL_malloc(sizeof(*dctx));
     if (dctx == NULL)
+=======
+    dctx = OPENSSL_malloc(sizeof(DSA_PKEY_CTX));
+    if (!dctx)
+>>>>>>> origin/master
         return 0;
     dctx->nbits = 1024;
     dctx->qbits = 160;
@@ -64,18 +135,28 @@ static int pkey_dsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 static void pkey_dsa_cleanup(EVP_PKEY_CTX *ctx)
 {
     DSA_PKEY_CTX *dctx = ctx->data;
+<<<<<<< HEAD
     OPENSSL_free(dctx);
+=======
+    if (dctx)
+        OPENSSL_free(dctx);
+>>>>>>> origin/master
 }
 
 static int pkey_dsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
                          size_t *siglen, const unsigned char *tbs,
                          size_t tbslen)
 {
+<<<<<<< HEAD
     int ret;
+=======
+    int ret, type;
+>>>>>>> origin/master
     unsigned int sltmp;
     DSA_PKEY_CTX *dctx = ctx->data;
     DSA *dsa = ctx->pkey->pkey.dsa;
 
+<<<<<<< HEAD
     if (dctx->md) {
         if (tbslen != (size_t)EVP_MD_size(dctx->md))
             return 0;
@@ -85,6 +166,14 @@ static int pkey_dsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
     }
 
     ret = DSA_sign(0, tbs, tbslen, sig, &sltmp, dsa);
+=======
+    if (dctx->md)
+        type = EVP_MD_type(dctx->md);
+    else
+        type = NID_sha1;
+
+    ret = DSA_sign(type, tbs, tbslen, sig, &sltmp, dsa);
+>>>>>>> origin/master
 
     if (ret <= 0)
         return ret;
@@ -96,6 +185,7 @@ static int pkey_dsa_verify(EVP_PKEY_CTX *ctx,
                            const unsigned char *sig, size_t siglen,
                            const unsigned char *tbs, size_t tbslen)
 {
+<<<<<<< HEAD
     int ret;
     DSA_PKEY_CTX *dctx = ctx->data;
     DSA *dsa = ctx->pkey->pkey.dsa;
@@ -109,6 +199,18 @@ static int pkey_dsa_verify(EVP_PKEY_CTX *ctx,
     }
 
     ret = DSA_verify(0, tbs, tbslen, sig, siglen, dsa);
+=======
+    int ret, type;
+    DSA_PKEY_CTX *dctx = ctx->data;
+    DSA *dsa = ctx->pkey->pkey.dsa;
+
+    if (dctx->md)
+        type = EVP_MD_type(dctx->md);
+    else
+        type = NID_sha1;
+
+    ret = DSA_verify(type, tbs, tbslen, sig, siglen, dsa);
+>>>>>>> origin/master
 
     return ret;
 }
@@ -175,18 +277,30 @@ static int pkey_dsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 static int pkey_dsa_ctrl_str(EVP_PKEY_CTX *ctx,
                              const char *type, const char *value)
 {
+<<<<<<< HEAD
     if (strcmp(type, "dsa_paramgen_bits") == 0) {
+=======
+    if (!strcmp(type, "dsa_paramgen_bits")) {
+>>>>>>> origin/master
         int nbits;
         nbits = atoi(value);
         return EVP_PKEY_CTX_set_dsa_paramgen_bits(ctx, nbits);
     }
+<<<<<<< HEAD
     if (strcmp(type, "dsa_paramgen_q_bits") == 0) {
+=======
+    if (!strcmp(type, "dsa_paramgen_q_bits")) {
+>>>>>>> origin/master
         int qbits = atoi(value);
         return EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DSA, EVP_PKEY_OP_PARAMGEN,
                                  EVP_PKEY_CTRL_DSA_PARAMGEN_Q_BITS, qbits,
                                  NULL);
     }
+<<<<<<< HEAD
     if (strcmp(type, "dsa_paramgen_md") == 0) {
+=======
+    if (!strcmp(type, "dsa_paramgen_md")) {
+>>>>>>> origin/master
         return EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DSA, EVP_PKEY_OP_PARAMGEN,
                                  EVP_PKEY_CTRL_DSA_PARAMGEN_MD, 0,
                                  (void *)EVP_get_digestbyname(value));
@@ -198,16 +312,24 @@ static int pkey_dsa_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     DSA *dsa = NULL;
     DSA_PKEY_CTX *dctx = ctx->data;
+<<<<<<< HEAD
     BN_GENCB *pcb;
     int ret;
     if (ctx->pkey_gencb) {
         pcb = BN_GENCB_new();
         if (pcb == NULL)
             return 0;
+=======
+    BN_GENCB *pcb, cb;
+    int ret;
+    if (ctx->pkey_gencb) {
+        pcb = &cb;
+>>>>>>> origin/master
         evp_pkey_set_cb_translate(pcb, ctx);
     } else
         pcb = NULL;
     dsa = DSA_new();
+<<<<<<< HEAD
     if (dsa == NULL) {
         BN_GENCB_free(pcb);
         return 0;
@@ -215,6 +337,12 @@ static int pkey_dsa_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     ret = dsa_builtin_paramgen(dsa, dctx->nbits, dctx->qbits, dctx->pmd,
                                NULL, 0, NULL, NULL, NULL, pcb);
     BN_GENCB_free(pcb);
+=======
+    if (!dsa)
+        return 0;
+    ret = dsa_builtin_paramgen(dsa, dctx->nbits, dctx->qbits, dctx->pmd,
+                               NULL, 0, NULL, NULL, NULL, pcb);
+>>>>>>> origin/master
     if (ret)
         EVP_PKEY_assign_DSA(pkey, dsa);
     else
@@ -230,7 +358,11 @@ static int pkey_dsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
         return 0;
     }
     dsa = DSA_new();
+<<<<<<< HEAD
     if (dsa == NULL)
+=======
+    if (!dsa)
+>>>>>>> origin/master
         return 0;
     EVP_PKEY_assign_DSA(pkey, dsa);
     /* Note: if error return, pkey is freed by parent routine */

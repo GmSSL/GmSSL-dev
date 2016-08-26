@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -90,6 +91,8 @@ struct rsa_meth_st {
     int (*rsa_keygen) (RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
 };
 
+=======
+>>>>>>> origin/master
 extern int int_rsa_verify(int dtype, const unsigned char *m,
                           unsigned int m_len, unsigned char *rm,
                           size_t *prm_len, const unsigned char *sigbuf,

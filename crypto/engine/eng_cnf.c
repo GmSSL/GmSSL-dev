@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,6 +6,65 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* eng_cnf.c */
+/*
+ * Written by Stephen Henson (steve@openssl.org) for the OpenSSL project
+ * 2001.
+ */
+/* ====================================================================
+ * Copyright (c) 2001 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include "eng_int.h"
@@ -14,11 +74,19 @@
 
 /* ENGINE config module */
 
+<<<<<<< HEAD
 static const char *skip_dot(const char *name)
 {
     const char *p = strchr(name, '.');
 
     if (p != NULL)
+=======
+static char *skip_dot(char *name)
+{
+    char *p;
+    p = strchr(name, '.');
+    if (p)
+>>>>>>> origin/master
         return p + 1;
     return name;
 }
@@ -38,14 +106,22 @@ static int int_engine_init(ENGINE *e)
     return 1;
 }
 
+<<<<<<< HEAD
 static int int_engine_configure(const char *name, const char *value, const CONF *cnf)
+=======
+static int int_engine_configure(char *name, char *value, const CONF *cnf)
+>>>>>>> origin/master
 {
     int i;
     int ret = 0;
     long do_init = -1;
     STACK_OF(CONF_VALUE) *ecmds;
     CONF_VALUE *ecmd = NULL;
+<<<<<<< HEAD
     const char *ctrlname, *ctrlvalue;
+=======
+    char *ctrlname, *ctrlvalue;
+>>>>>>> origin/master
     ENGINE *e = NULL;
     int soft = 0;
 
@@ -74,12 +150,21 @@ static int int_engine_configure(const char *name, const char *value, const CONF 
         /* First handle some special pseudo ctrls */
 
         /* Override engine name to use */
+<<<<<<< HEAD
         if (strcmp(ctrlname, "engine_id") == 0)
             name = ctrlvalue;
         else if (strcmp(ctrlname, "soft_load") == 0)
             soft = 1;
         /* Load a dynamic ENGINE */
         else if (strcmp(ctrlname, "dynamic_path") == 0) {
+=======
+        if (!strcmp(ctrlname, "engine_id"))
+            name = ctrlvalue;
+        else if (!strcmp(ctrlname, "soft_load"))
+            soft = 1;
+        /* Load a dynamic ENGINE */
+        else if (!strcmp(ctrlname, "dynamic_path")) {
+>>>>>>> origin/master
             e = ENGINE_by_id("dynamic");
             if (!e)
                 goto err;
@@ -109,9 +194,15 @@ static int int_engine_configure(const char *name, const char *value, const CONF 
              * Allow "EMPTY" to mean no value: this allows a valid "value" to
              * be passed to ctrls of type NO_INPUT
              */
+<<<<<<< HEAD
             if (strcmp(ctrlvalue, "EMPTY") == 0)
                 ctrlvalue = NULL;
             if (strcmp(ctrlname, "init") == 0) {
+=======
+            if (!strcmp(ctrlvalue, "EMPTY"))
+                ctrlvalue = NULL;
+            if (!strcmp(ctrlname, "init")) {
+>>>>>>> origin/master
                 if (!NCONF_get_number_e(cnf, value, "init", &do_init))
                     goto err;
                 if (do_init == 1) {
@@ -122,7 +213,11 @@ static int int_engine_configure(const char *name, const char *value, const CONF 
                               ENGINE_R_INVALID_INIT_VALUE);
                     goto err;
                 }
+<<<<<<< HEAD
             } else if (strcmp(ctrlname, "default_algorithms") == 0) {
+=======
+            } else if (!strcmp(ctrlname, "default_algorithms")) {
+>>>>>>> origin/master
                 if (!ENGINE_set_default_string(e, ctrlvalue))
                     goto err;
             } else if (!ENGINE_ctrl_cmd_string(e, ctrlname, ctrlvalue, 0))
@@ -144,7 +239,12 @@ static int int_engine_configure(const char *name, const char *value, const CONF 
                                ", name=", ecmd->name,
                                ", value=", ecmd->value);
     }
+<<<<<<< HEAD
     ENGINE_free(e);
+=======
+    if (e)
+        ENGINE_free(e);
+>>>>>>> origin/master
     return ret;
 }
 
@@ -178,7 +278,10 @@ static int int_engine_module_init(CONF_IMODULE *md, const CONF *cnf)
 static void int_engine_module_finish(CONF_IMODULE *md)
 {
     ENGINE *e;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     while ((e = sk_ENGINE_pop(initialized_engines)))
         ENGINE_finish(e);
     sk_ENGINE_free(initialized_engines);

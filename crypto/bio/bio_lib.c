@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,11 +6,70 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* crypto/bio/bio_lib.c */
+/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+ * All rights reserved.
+ *
+ * This package is an SSL implementation written
+ * by Eric Young (eay@cryptsoft.com).
+ * The implementation was written so as to conform with Netscapes SSL.
+ *
+ * This library is free for commercial and non-commercial use as long as
+ * the following conditions are aheared to.  The following conditions
+ * apply to all code found in this distribution, be it the RC4, RSA,
+ * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+ * included with this distribution is covered by the same copyright terms
+ * except that the holder is Tim Hudson (tjh@cryptsoft.com).
+ *
+ * Copyright remains Eric Young's, and as such any Copyright notices in
+ * the code are not to be removed.
+ * If this package is used in a product, Eric Young should be given attribution
+ * as the author of the parts of the library used.
+ * This can be in the form of a textual message at program startup or
+ * in documentation (online or textual) provided with the package.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *    "This product includes cryptographic software written by
+ *     Eric Young (eay@cryptsoft.com)"
+ *    The word 'cryptographic' can be left out if the rouines from the library
+ *    being used are not cryptographic related :-).
+ * 4. If you include any Windows specific code (or a derivative thereof) from
+ *    the apps directory (application code) you must include an acknowledgement:
+ *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * The licence and distribution terms for any publically available version or
+ * derivative of this code cannot be changed.  i.e. this code cannot simply be
+ * copied and put under another distribution licence
+ * [including the GNU Public Licence.]
+>>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <errno.h>
 #include <openssl/crypto.h>
+<<<<<<< HEAD
 #include "bio_lcl.h"
 #include "internal/cryptlib.h"
 
@@ -48,6 +108,51 @@ BIO *BIO_new(const BIO_METHOD *method)
 err:
     OPENSSL_free(bio);
     return NULL;
+=======
+#include "cryptlib.h"
+#include <openssl/bio.h>
+#include <openssl/stack.h>
+
+BIO *BIO_new(BIO_METHOD *method)
+{
+    BIO *ret = NULL;
+
+    ret = (BIO *)OPENSSL_malloc(sizeof(BIO));
+    if (ret == NULL) {
+        BIOerr(BIO_F_BIO_NEW, ERR_R_MALLOC_FAILURE);
+        return (NULL);
+    }
+    if (!BIO_set(ret, method)) {
+        OPENSSL_free(ret);
+        ret = NULL;
+    }
+    return (ret);
+}
+
+int BIO_set(BIO *bio, BIO_METHOD *method)
+{
+    bio->method = method;
+    bio->callback = NULL;
+    bio->cb_arg = NULL;
+    bio->init = 0;
+    bio->shutdown = 1;
+    bio->flags = 0;
+    bio->retry_reason = 0;
+    bio->num = 0;
+    bio->ptr = NULL;
+    bio->prev_bio = NULL;
+    bio->next_bio = NULL;
+    bio->references = 1;
+    bio->num_read = 0L;
+    bio->num_write = 0L;
+    CRYPTO_new_ex_data(CRYPTO_EX_INDEX_BIO, bio, &bio->ex_data);
+    if (method->create != NULL)
+        if (!method->create(bio)) {
+            CRYPTO_free_ex_data(CRYPTO_EX_INDEX_BIO, bio, &bio->ex_data);
+            return (0);
+        }
+    return (1);
+>>>>>>> origin/master
 }
 
 int BIO_free(BIO *a)
@@ -55,6 +160,7 @@ int BIO_free(BIO *a)
     int i;
 
     if (a == NULL)
+<<<<<<< HEAD
         return 0;
 
     if (CRYPTO_atomic_add(&a->references, -1, &i, a->lock) <= 0)
@@ -108,6 +214,32 @@ void BIO_set_shutdown(BIO *a, int shut)
 int BIO_get_shutdown(BIO *a)
 {
     return a->shutdown;
+=======
+        return (0);
+
+    i = CRYPTO_add(&a->references, -1, CRYPTO_LOCK_BIO);
+#ifdef REF_PRINT
+    REF_PRINT("BIO", a);
+#endif
+    if (i > 0)
+        return (1);
+#ifdef REF_CHECK
+    if (i < 0) {
+        fprintf(stderr, "BIO_free, bad reference count\n");
+        abort();
+    }
+#endif
+    if ((a->callback != NULL) &&
+        ((i = (int)a->callback(a, BIO_CB_FREE, NULL, 0, 0L, 1L)) <= 0))
+        return (i);
+
+    CRYPTO_free_ex_data(CRYPTO_EX_INDEX_BIO, a, &a->ex_data);
+
+    if ((a->method != NULL) && (a->method->destroy != NULL))
+        a->method->destroy(a);
+    OPENSSL_free(a);
+    return (1);
+>>>>>>> origin/master
 }
 
 void BIO_vfree(BIO *a)
@@ -115,6 +247,7 @@ void BIO_vfree(BIO *a)
     BIO_free(a);
 }
 
+<<<<<<< HEAD
 int BIO_up_ref(BIO *a)
 {
     int i;
@@ -127,6 +260,8 @@ int BIO_up_ref(BIO *a)
     return ((i > 1) ? 1 : 0);
 }
 
+=======
+>>>>>>> origin/master
 void BIO_clear_flags(BIO *b, int flags)
 {
     b->flags &= ~flags;
@@ -197,7 +332,11 @@ int BIO_read(BIO *b, void *out, int outl)
     i = b->method->bread(b, out, outl);
 
     if (i > 0)
+<<<<<<< HEAD
         b->num_read += (uint64_t)i;
+=======
+        b->num_read += (unsigned long)i;
+>>>>>>> origin/master
 
     if (cb != NULL)
         i = (int)cb(b, BIO_CB_READ | BIO_CB_RETURN, out, outl, 0L, (long)i);
@@ -230,7 +369,11 @@ int BIO_write(BIO *b, const void *in, int inl)
     i = b->method->bwrite(b, in, inl);
 
     if (i > 0)
+<<<<<<< HEAD
         b->num_write += (uint64_t)i;
+=======
+        b->num_write += (unsigned long)i;
+>>>>>>> origin/master
 
     if (cb != NULL)
         i = (int)cb(b, BIO_CB_WRITE | BIO_CB_RETURN, in, inl, 0L, (long)i);
@@ -260,7 +403,11 @@ int BIO_puts(BIO *b, const char *in)
     i = b->method->bputs(b, in);
 
     if (i > 0)
+<<<<<<< HEAD
         b->num_write += (uint64_t)i;
+=======
+        b->num_write += (unsigned long)i;
+>>>>>>> origin/master
 
     if (cb != NULL)
         i = (int)cb(b, BIO_CB_PUTS | BIO_CB_RETURN, in, 0, 0L, (long)i);
@@ -314,9 +461,15 @@ long BIO_int_ctrl(BIO *b, int cmd, long larg, int iarg)
     return (BIO_ctrl(b, cmd, larg, (char *)&i));
 }
 
+<<<<<<< HEAD
 void *BIO_ptr_ctrl(BIO *b, int cmd, long larg)
 {
     void *p = NULL;
+=======
+char *BIO_ptr_ctrl(BIO *b, int cmd, long larg)
+{
+    char *p = NULL;
+>>>>>>> origin/master
 
     if (BIO_ctrl(b, cmd, larg, (char *)&p) <= 0)
         return (NULL);
@@ -455,16 +608,23 @@ int BIO_get_retry_reason(BIO *bio)
     return (bio->retry_reason);
 }
 
+<<<<<<< HEAD
 void BIO_set_retry_reason(BIO *bio, int reason)
 {
     bio->retry_reason = reason;
 }
 
+=======
+>>>>>>> origin/master
 BIO *BIO_find_type(BIO *bio, int type)
 {
     int mt, mask;
 
+<<<<<<< HEAD
     if (bio == NULL)
+=======
+    if (!bio)
+>>>>>>> origin/master
         return NULL;
     mask = type & 0xff;
     do {
@@ -484,16 +644,23 @@ BIO *BIO_find_type(BIO *bio, int type)
 
 BIO *BIO_next(BIO *b)
 {
+<<<<<<< HEAD
     if (b == NULL)
+=======
+    if (!b)
+>>>>>>> origin/master
         return NULL;
     return b->next_bio;
 }
 
+<<<<<<< HEAD
 void BIO_set_next(BIO *b, BIO *next)
 {
     b->next_bio = next;
 }
 
+=======
+>>>>>>> origin/master
 void BIO_free_all(BIO *bio)
 {
     BIO *b;
@@ -559,6 +726,16 @@ void BIO_copy_next_retry(BIO *b)
     b->retry_reason = b->next_bio->retry_reason;
 }
 
+<<<<<<< HEAD
+=======
+int BIO_get_ex_new_index(long argl, void *argp, CRYPTO_EX_new *new_func,
+                         CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func)
+{
+    return CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_BIO, argl, argp,
+                                   new_func, dup_func, free_func);
+}
+
+>>>>>>> origin/master
 int BIO_set_ex_data(BIO *bio, int idx, void *data)
 {
     return (CRYPTO_set_ex_data(&(bio->ex_data), idx, data));
@@ -569,20 +746,29 @@ void *BIO_get_ex_data(BIO *bio, int idx)
     return (CRYPTO_get_ex_data(&(bio->ex_data), idx));
 }
 
+<<<<<<< HEAD
 uint64_t BIO_number_read(BIO *bio)
+=======
+unsigned long BIO_number_read(BIO *bio)
+>>>>>>> origin/master
 {
     if (bio)
         return bio->num_read;
     return 0;
 }
 
+<<<<<<< HEAD
 uint64_t BIO_number_written(BIO *bio)
+=======
+unsigned long BIO_number_written(BIO *bio)
+>>>>>>> origin/master
 {
     if (bio)
         return bio->num_write;
     return 0;
 }
 
+<<<<<<< HEAD
 void bio_free_ex_data(BIO *bio)
 {
     CRYPTO_free_ex_data(CRYPTO_EX_INDEX_BIO, bio, &bio->ex_data);
@@ -598,3 +784,6 @@ void bio_cleanup(void)
     CRYPTO_THREAD_lock_free(bio_type_lock);
     bio_type_lock = NULL;
 }
+=======
+IMPLEMENT_STACK_OF(BIO)
+>>>>>>> origin/master

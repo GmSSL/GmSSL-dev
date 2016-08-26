@@ -14,7 +14,11 @@
 -i4
 -il1
 -ip0
+<<<<<<< HEAD
 -l80
+=======
+-l78
+>>>>>>> origin/master
 -lp
 -nbad
 -nbc
@@ -107,7 +111,10 @@
 -T BIGNUM
 -T BIO
 -T BIO_ACCEPT
+<<<<<<< HEAD
 -T BIO_ADDR
+=======
+>>>>>>> origin/master
 -T BIO_ASN1_BUF_CTX
 -T BIO_ASN1_EX_FUNCS
 -T BIO_B64_CTX
@@ -188,8 +195,16 @@
 -T CRYPTO_EX_DATA_FUNCS
 -T CRYPTO_EX_DATA_IMPL
 -T CRYPTO_EX_dup
+<<<<<<< HEAD
 -T CRYPTO_EX_free
 -T CRYPTO_EX_new
+=======
+-T CRYPTO_EX_dup
+-T CRYPTO_EX_free
+-T CRYPTO_EX_free
+-T CRYPTO_EX_new
+-T CRYPTO_EX_new
+>>>>>>> origin/master
 -T CRYPTO_MEM_LEAK_CB
 -T CRYPTO_THREADID
 -T CRYPTO_dynlock_value
@@ -249,6 +264,10 @@
 -T ENGINE_SSL_CLIENT_CERT_PTR
 -T ENGINE_TABLE
 -T ENUMERATED_NAMES
+<<<<<<< HEAD
+=======
+-T ERR_FNS
+>>>>>>> origin/master
 -T ERR_STATE
 -T ERR_STRING_DATA
 -T ESS_CERT_ID
@@ -295,7 +314,28 @@
 -T IPAddressOrRange
 -T IPAddressOrRanges
 -T ISSUING_DIST_POINT
+<<<<<<< HEAD
 -T KEY_TABLE_TYPE
+=======
+-T JPAKE_CTX
+-T JPAKE_STEP1
+-T JPAKE_STEP2
+-T JPAKE_STEP3A
+-T JPAKE_STEP3B
+-T JPAKE_STEP_PART
+-T JPAKE_ZKP
+-T KEY_TABLE_TYPE
+-T KRB5_APREQBODY
+-T KRB5_AUTHDATA
+-T KRB5_AUTHENTBODY
+-T KRB5_CHECKSUM
+-T KRB5_ENCDATA
+-T KRB5_ENCKEY
+-T KRB5_PRINCNAME
+-T KRB5_TKTBODY
+-T KSSL_CTX
+-T KSSL_ERR
+>>>>>>> origin/master
 -T LHASH
 -T LHASH_COMP_FN_TYPE
 -T LHASH_DOALL_ARG_FN_TYPE
@@ -363,7 +403,10 @@
 -T OPENSSL_PSTRING
 -T OPENSSL_STRING
 -T OPENSSL_STRING
+<<<<<<< HEAD
 -T OSSL_ASYNC_FD
+=======
+>>>>>>> origin/master
 -T OTHERNAME
 -T P256_POINT
 -T P256_POINT_AFFINE
@@ -444,7 +487,10 @@
 -T SSL_COMP
 -T SSL_CONF_CTX
 -T SSL_CTX
+<<<<<<< HEAD
 -T SSL_DANE
+=======
+>>>>>>> origin/master
 -T SSL_EXCERT
 -T SSL_METHOD
 -T SSL_SESSION
@@ -574,7 +620,10 @@
 -T asn1_ps_func
 -T bio_dgram_data
 -T bio_info_cb
+<<<<<<< HEAD
 -T BIO_callack_fn
+=======
+>>>>>>> origin/master
 -T char_io
 -T conf_finish_func
 -T conf_init_func
@@ -636,6 +685,12 @@
 -T STACK_OF_GENERAL_SUBTREE_
 -T STACK_OF_IPAddressFamily_
 -T STACK_OF_IPAddressOrRange_
+<<<<<<< HEAD
+=======
+-T STACK_OF_KRB5_APREQBODY_
+-T STACK_OF_KRB5_AUTHENTBODY_
+-T STACK_OF_KRB5_TKTBODY_
+>>>>>>> origin/master
 -T STACK_OF_MEM_OBJECT_DATA_
 -T STACK_OF_MIME_HEADER_
 -T STACK_OF_MIME_PARAM_
@@ -702,6 +757,29 @@
 -T clock_t
 -T custom_ext_methods
 -T hm_fragment
+<<<<<<< HEAD
+=======
+-T krb5_auth_context
+-T krb5_authdata
+-T KRB5_CALLCONV
+-T krb5_ccache
+-T krb5_context
+-T krb5_creds
+-T krb5_data
+-T krb5_deltat
+-T krb5_flags
+-T krb5_int32
+-T krb5_keyblock
+-T krb5_keytab
+-T krb5_keytab_entry
+-T krb5_octet
+-T krb5_principal
+-T krb5_principal_data
+-T krb5_rcache
+-T krb5_ticket
+-T krb5_ticket_times
+-T krb5_timestamp
+>>>>>>> origin/master
 -T record_pqueue
 -T ssl_ctx_st
 -T ssl_flag_tbl
@@ -709,6 +787,7 @@
 -T ssl_trace_tbl
 -T _stdcall
 -T tls12_lookup
+<<<<<<< HEAD
 -T OPTIONS
 -T OPT_PAIR
 -T uint64_t
@@ -732,3 +811,5 @@
 -T uintmax_t
 -T pqueue
 -T danetls_record
+=======
+>>>>>>> origin/master

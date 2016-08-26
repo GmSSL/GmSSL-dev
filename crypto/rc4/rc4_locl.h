@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -13,4 +14,10 @@
 # include <openssl/opensslconf.h>
 # include "internal/cryptlib.h"
 
+=======
+#ifndef HEADER_RC4_LOCL_H
+# define HEADER_RC4_LOCL_H
+# include <openssl/opensslconf.h>
+# include <cryptlib.h>
+>>>>>>> origin/master
 #endif

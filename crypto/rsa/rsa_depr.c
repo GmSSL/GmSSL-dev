@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,6 +6,61 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* crypto/rsa/rsa_depr.c */
+/* ====================================================================
+ * Copyright (c) 1998-2002 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    openssl-core@openssl.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 /*
@@ -12,6 +68,7 @@
  * "new" versions).
  */
 
+<<<<<<< HEAD
 #include <openssl/opensslconf.h>
 #if OPENSSL_API_COMPAT >= 0x00908000L
 NON_EMPTY_TRANSLATION_UNIT
@@ -23,16 +80,38 @@ NON_EMPTY_TRANSLATION_UNIT
 # include "internal/cryptlib.h"
 # include <openssl/bn.h>
 # include <openssl/rsa.h>
+=======
+#include <stdio.h>
+#include <time.h>
+#include "cryptlib.h"
+#include <openssl/bn.h>
+#include <openssl/rsa.h>
+
+#ifdef OPENSSL_NO_DEPRECATED
+
+static void *dummy = &dummy;
+
+#else
+>>>>>>> origin/master
 
 RSA *RSA_generate_key(int bits, unsigned long e_value,
                       void (*callback) (int, int, void *), void *cb_arg)
 {
+<<<<<<< HEAD
     int i;
     BN_GENCB *cb = BN_GENCB_new();
     RSA *rsa = RSA_new();
     BIGNUM *e = BN_new();
 
     if (cb == NULL || rsa == NULL || e == NULL)
+=======
+    BN_GENCB cb;
+    int i;
+    RSA *rsa = RSA_new();
+    BIGNUM *e = BN_new();
+
+    if (!rsa || !e)
+>>>>>>> origin/master
         goto err;
 
     /*
@@ -45,6 +124,7 @@ RSA *RSA_generate_key(int bits, unsigned long e_value,
                 goto err;
     }
 
+<<<<<<< HEAD
     BN_GENCB_set_old(cb, callback, cb_arg);
 
     if (RSA_generate_key_ex(rsa, bits, e, cb)) {
@@ -56,6 +136,19 @@ RSA *RSA_generate_key(int bits, unsigned long e_value,
     BN_free(e);
     RSA_free(rsa);
     BN_GENCB_free(cb);
+=======
+    BN_GENCB_set_old(&cb, callback, cb_arg);
+
+    if (RSA_generate_key_ex(rsa, bits, e, &cb)) {
+        BN_free(e);
+        return rsa;
+    }
+ err:
+    if (e)
+        BN_free(e);
+    if (rsa)
+        RSA_free(rsa);
+>>>>>>> origin/master
     return 0;
 }
 #endif

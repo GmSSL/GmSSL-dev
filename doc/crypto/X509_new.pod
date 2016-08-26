@@ -2,8 +2,12 @@
 
 =head1 NAME
 
+<<<<<<< HEAD
 X509_chain_up_ref,
 X509_new, X509_free, X509_up_ref - X509 certificate ASN1 allocation functions
+=======
+X509_new, X509_free - X509 certificate ASN1 allocation functions
+>>>>>>> origin/master
 
 =head1 SYNOPSIS
 
@@ -11,14 +15,18 @@ X509_new, X509_free, X509_up_ref - X509 certificate ASN1 allocation functions
 
  X509 *X509_new(void);
  void X509_free(X509 *a);
+<<<<<<< HEAD
  int X509_up_ref(X509 *a);
  STACK_OF(X509) *X509_chain_up_ref(STACK_OF(X509) *x);
+=======
+>>>>>>> origin/master
 
 =head1 DESCRIPTION
 
 The X509 ASN1 allocation routines, allocate and free an
 X509 structure, which represents an X509 certificate.
 
+<<<<<<< HEAD
 X509_new() allocates and initializes a X509 structure with reference count
 B<1>.
 
@@ -40,10 +48,16 @@ The function X509_chain_up_ref() doesn't just up the reference count of
 each certificate it also returns a copy of the stack, using sk_X509_dup(),
 but it serves a similar purpose: the returned chain persists after the
 original has been freed.
+=======
+X509_new() allocates and initializes a X509 structure.
+
+X509_free() frees up the B<X509> structure B<a>.
+>>>>>>> origin/master
 
 =head1 RETURN VALUES
 
 If the allocation fails, X509_new() returns B<NULL> and sets an error
+<<<<<<< HEAD
 code that can be obtained by L<ERR_get_error(3)>.
 Otherwise it returns a pointer to the newly allocated structure.
 
@@ -79,5 +93,19 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
+=======
+code that can be obtained by L<ERR_get_error(3)|ERR_get_error(3)>.
+Otherwise it returns a pointer to the newly allocated structure.
+
+X509_free() returns no value.
+
+=head1 SEE ALSO
+
+L<ERR_get_error(3)|ERR_get_error(3)>, L<d2i_X509(3)|d2i_X509(3)>
+
+=head1 HISTORY
+
+X509_new() and X509_free() are available in all versions of SSLeay and OpenSSL.
+>>>>>>> origin/master
 
 =cut

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,6 +7,9 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
+=======
+#!/usr/bin/env perl
+>>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -27,6 +31,7 @@
 # instructions are interleaved. It's reckoned that eventual
 # misalignment penalties at page boundaries are in average lower
 # than additional overhead in pure AltiVec approach.
+<<<<<<< HEAD
 #
 # May 2016
 #
@@ -40,6 +45,8 @@
 #		CBC en-/decrypt	CTR	XTS
 # POWER8[le]	3.96/0.72	0.74	1.1
 # POWER8[be]	3.75/0.65	0.66	1.0
+=======
+>>>>>>> origin/master
 
 $flavour = shift;
 
@@ -1907,6 +1914,7 @@ Lctr32_enc8x_done:
 ___
 }}	}}}
 
+<<<<<<< HEAD
 #########################################################################
 {{{	# XTS procedures						#
 # int aes_p8_xts_[en|de]crypt(const char *inp, char *out, size_t len,	#
@@ -3750,6 +3758,8 @@ _aesp8_xts_dec5x:
 ___
 }}	}}}
 
+=======
+>>>>>>> origin/master
 my $consts=1;
 foreach(split("\n",$code)) {
         s/\`([^\`]*)\`/eval($1)/geo;

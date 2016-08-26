@@ -10,8 +10,13 @@ EVP_PKEY_decrypt_init, EVP_PKEY_decrypt - decrypt using a public key algorithm
 
  int EVP_PKEY_decrypt_init(EVP_PKEY_CTX *ctx);
  int EVP_PKEY_decrypt(EVP_PKEY_CTX *ctx,
+<<<<<<< HEAD
                         unsigned char *out, size_t *outlen,
                         const unsigned char *in, size_t inlen);
+=======
+			unsigned char *out, size_t *outlen,
+			const unsigned char *in, size_t inlen);
+>>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -50,13 +55,18 @@ Decrypt data using OAEP (for RSA keys):
 
  EVP_PKEY_CTX *ctx;
  unsigned char *out, *in;
+<<<<<<< HEAD
  size_t outlen, inlen;
+=======
+ size_t outlen, inlen; 
+>>>>>>> origin/master
  EVP_PKEY *key;
  /* NB: assumes key in, inlen are already set up
   * and that key is an RSA private key
   */
  ctx = EVP_PKEY_CTX_new(key);
  if (!ctx)
+<<<<<<< HEAD
         /* Error occurred */
  if (EVP_PKEY_decrypt_init(ctx) <= 0)
         /* Error */
@@ -66,30 +76,58 @@ Decrypt data using OAEP (for RSA keys):
  /* Determine buffer length */
  if (EVP_PKEY_decrypt(ctx, NULL, &outlen, in, inlen) <= 0)
         /* Error */
+=======
+	/* Error occurred */
+ if (EVP_PKEY_decrypt_init(ctx) <= 0)
+	/* Error */
+ if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_OAEP_PADDING) <= 0)
+	/* Error */
+
+ /* Determine buffer length */
+ if (EVP_PKEY_decrypt(ctx, NULL, &outlen, in, inlen) <= 0)
+	/* Error */
+>>>>>>> origin/master
 
  out = OPENSSL_malloc(outlen);
 
  if (!out)
+<<<<<<< HEAD
         /* malloc failure */
 
  if (EVP_PKEY_decrypt(ctx, out, &outlen, in, inlen) <= 0)
         /* Error */
+=======
+	/* malloc failure */
+ 
+ if (EVP_PKEY_decrypt(ctx, out, &outlen, in, inlen) <= 0)
+	/* Error */
+>>>>>>> origin/master
 
  /* Decrypted data is outlen bytes written to buffer out */
 
 =head1 SEE ALSO
 
+<<<<<<< HEAD
 L<EVP_PKEY_CTX_new(3)>,
 L<EVP_PKEY_encrypt(3)>,
 L<EVP_PKEY_sign(3)>,
 L<EVP_PKEY_verify(3)>,
 L<EVP_PKEY_verify_recover(3)>,
 L<EVP_PKEY_derive(3)>
+=======
+L<EVP_PKEY_CTX_new(3)|EVP_PKEY_CTX_new(3)>,
+L<EVP_PKEY_encrypt(3)|EVP_PKEY_encrypt(3)>,
+L<EVP_PKEY_sign(3)|EVP_PKEY_sign(3)>,
+L<EVP_PKEY_verify(3)|EVP_PKEY_verify(3)>,
+L<EVP_PKEY_verify_recover(3)|EVP_PKEY_verify_recover(3)>,
+L<EVP_PKEY_derive(3)|EVP_PKEY_derive(3)> 
+>>>>>>> origin/master
 
 =head1 HISTORY
 
 These functions were first added to OpenSSL 1.0.0.
 
+<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -99,4 +137,6 @@ this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
+=======
+>>>>>>> origin/master
 =cut

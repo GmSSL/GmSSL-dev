@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -5,11 +6,74 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+=======
+/* a_mbstr.c */
+/*
+ * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
+ * 1999.
+ */
+/* ====================================================================
+ * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. All advertising materials mentioning features or use of this
+ *    software must display the following acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
+ *
+ * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+ *    endorse or promote products derived from this software without
+ *    prior written permission. For written permission, please contact
+ *    licensing@OpenSSL.org.
+ *
+ * 5. Products derived from this software may not be called "OpenSSL"
+ *    nor may "OpenSSL" appear in their names without prior written
+ *    permission of the OpenSSL Project.
+ *
+ * 6. Redistributions of any form whatsoever must retain the following
+ *    acknowledgment:
+ *    "This product includes software developed by the OpenSSL Project
+ *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+ * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This product includes cryptographic software written by Eric Young
+ * (eay@cryptsoft.com).  This product includes software written by Tim
+ * Hudson (tjh@cryptsoft.com).
+ *
+>>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <ctype.h>
+<<<<<<< HEAD
 #include "internal/cryptlib.h"
+=======
+#include "cryptlib.h"
+>>>>>>> origin/master
 #include <openssl/asn1.h>
 
 static int traverse_string(const unsigned char *p, int len, int inform,
@@ -22,14 +86,22 @@ static int cpy_asc(unsigned long value, void *arg);
 static int cpy_bmp(unsigned long value, void *arg);
 static int cpy_univ(unsigned long value, void *arg);
 static int cpy_utf8(unsigned long value, void *arg);
+<<<<<<< HEAD
 static int is_numeric(unsigned long value);
+=======
+>>>>>>> origin/master
 static int is_printable(unsigned long value);
 
 /*
  * These functions take a string in UTF8, ASCII or multibyte form and a mask
  * of permissible ASN1 string types. It then works out the minimal type
+<<<<<<< HEAD
  * (using the order Numeric < Printable < IA5 < T61 < BMP < Universal < UTF8)
  * and creates a string of the correct type with the supplied data. Yes this is
+=======
+ * (using the order Printable < IA5 < T61 < BMP < Universal < UTF8) and
+ * creates a string of the correct type with the supplied data. Yes this is
+>>>>>>> origin/master
  * horrible: it has to be :-( The 'ncopy' form checks minimum and maximum
  * size limits too.
  */
@@ -120,9 +192,13 @@ int ASN1_mbstring_ncopy(ASN1_STRING **out, const unsigned char *in, int len,
 
     /* Now work out output format and string type */
     outform = MBSTRING_ASC;
+<<<<<<< HEAD
     if (mask & B_ASN1_NUMERICSTRING)
         str_type = V_ASN1_NUMERICSTRING;
     else if (mask & B_ASN1_PRINTABLESTRING)
+=======
+    if (mask & B_ASN1_PRINTABLESTRING)
+>>>>>>> origin/master
         str_type = V_ASN1_PRINTABLESTRING;
     else if (mask & B_ASN1_IA5STRING)
         str_type = V_ASN1_IA5STRING;
@@ -143,14 +219,26 @@ int ASN1_mbstring_ncopy(ASN1_STRING **out, const unsigned char *in, int len,
     if (*out) {
         free_out = 0;
         dest = *out;
+<<<<<<< HEAD
         OPENSSL_free(dest->data);
         dest->data = NULL;
         dest->length = 0;
+=======
+        if (dest->data) {
+            dest->length = 0;
+            OPENSSL_free(dest->data);
+            dest->data = NULL;
+        }
+>>>>>>> origin/master
         dest->type = str_type;
     } else {
         free_out = 1;
         dest = ASN1_STRING_type_new(str_type);
+<<<<<<< HEAD
         if (dest == NULL) {
+=======
+        if (!dest) {
+>>>>>>> origin/master
             ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ERR_R_MALLOC_FAILURE);
             return -1;
         }
@@ -188,7 +276,11 @@ int ASN1_mbstring_ncopy(ASN1_STRING **out, const unsigned char *in, int len,
         cpyfunc = cpy_utf8;
         break;
     }
+<<<<<<< HEAD
     if ((p = OPENSSL_malloc(outlen + 1)) == NULL) {
+=======
+    if (!(p = OPENSSL_malloc(outlen + 1))) {
+>>>>>>> origin/master
         if (free_out)
             ASN1_STRING_free(dest);
         ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ERR_R_MALLOC_FAILURE);
@@ -273,8 +365,11 @@ static int type_str(unsigned long value, void *arg)
 {
     unsigned long types;
     types = *((unsigned long *)arg);
+<<<<<<< HEAD
     if ((types & B_ASN1_NUMERICSTRING) && !is_numeric(value))
         types &= ~B_ASN1_NUMERICSTRING;
+=======
+>>>>>>> origin/master
     if ((types & B_ASN1_PRINTABLESTRING) && !is_printable(value))
         types &= ~B_ASN1_PRINTABLESTRING;
     if ((types & B_ASN1_IA5STRING) && (value > 127))
@@ -374,6 +469,7 @@ static int is_printable(unsigned long value)
 #endif                          /* CHARSET_EBCDIC */
     return 0;
 }
+<<<<<<< HEAD
 
 /* Return 1 if the character is a digit or space */
 static int is_numeric(unsigned long value)
@@ -393,3 +489,5 @@ static int is_numeric(unsigned long value)
 #endif
     return 1;
 }
+=======
+>>>>>>> origin/master
