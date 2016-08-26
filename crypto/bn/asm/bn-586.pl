@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,20 +6,14 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 $sse2=0;
@@ -38,11 +31,8 @@ for (@ARGV) { $sse2=1 if (/-DOPENSSL_IA32_SSE2/); }
 
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
 
-=======
->>>>>>> origin/master
 sub bn_mul_add_words
 	{
 	local($name)=@_;
@@ -793,7 +783,3 @@ sub bn_sub_part_words
 
 	&function_end($name);
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master

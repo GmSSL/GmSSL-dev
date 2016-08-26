@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -24,11 +20,7 @@
 # in bn_gf2m.c. It's kind of low-hanging mechanical port from C for
 # the time being... Except that it has two code paths: code suitable
 # for any x86_64 CPU and PCLMULQDQ one suitable for Westmere and
-<<<<<<< HEAD
 # later. Improvement varies from one benchmark and Âµ-arch to another.
-=======
-# later. Improvement varies from one benchmark and µ-arch to another.
->>>>>>> origin/master
 # Vanilla code path is at most 20% faster than compiler-generated code
 # [not very impressive], while PCLMULQDQ - whole 85%-160% better on
 # 163- and 571-bit ECDH benchmarks on Intel CPUs. Keep in mind that
@@ -46,11 +38,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 ($lo,$hi)=("%rax","%rdx");	$a=$lo;
@@ -203,7 +191,6 @@ ___
 $code.=<<___;
 	movdqa		%xmm0,%xmm4
 	movdqa		%xmm1,%xmm5
-<<<<<<< HEAD
 	pclmulqdq	\$0,%xmm1,%xmm0	# a1Â·b1
 	pxor		%xmm2,%xmm4
 	pxor		%xmm3,%xmm5
@@ -211,15 +198,6 @@ $code.=<<___;
 	pclmulqdq	\$0,%xmm5,%xmm4	# (a0+a1)Â·(b0+b1)
 	xorps		%xmm0,%xmm4
 	xorps		%xmm2,%xmm4	# (a0+a1)Â·(b0+b1)-a0Â·b0-a1Â·b1
-=======
-	pclmulqdq	\$0,%xmm1,%xmm0	# a1·b1
-	pxor		%xmm2,%xmm4
-	pxor		%xmm3,%xmm5
-	pclmulqdq	\$0,%xmm3,%xmm2	# a0·b0
-	pclmulqdq	\$0,%xmm5,%xmm4	# (a0+a1)·(b0+b1)
-	xorps		%xmm0,%xmm4
-	xorps		%xmm2,%xmm4	# (a0+a1)·(b0+b1)-a0·b0-a1·b1
->>>>>>> origin/master
 	movdqa		%xmm4,%xmm5
 	pslldq		\$8,%xmm4
 	psrldq		\$8,%xmm5
@@ -254,21 +232,13 @@ $code.=<<___;
 	mov	\$0xf,$mask
 	mov	$a1,$a
 	mov	$b1,$b
-<<<<<<< HEAD
 	call	_mul_1x1		# a1Â·b1
-=======
-	call	_mul_1x1		# a1·b1
->>>>>>> origin/master
 	mov	$lo,16(%rsp)
 	mov	$hi,24(%rsp)
 
 	mov	48(%rsp),$a
 	mov	64(%rsp),$b
-<<<<<<< HEAD
 	call	_mul_1x1		# a0Â·b0
-=======
-	call	_mul_1x1		# a0·b0
->>>>>>> origin/master
 	mov	$lo,0(%rsp)
 	mov	$hi,8(%rsp)
 
@@ -276,11 +246,7 @@ $code.=<<___;
 	mov	56(%rsp),$b
 	xor	48(%rsp),$a
 	xor	64(%rsp),$b
-<<<<<<< HEAD
 	call	_mul_1x1		# (a0+a1)Â·(b0+b1)
-=======
-	call	_mul_1x1		# (a0+a1)·(b0+b1)
->>>>>>> origin/master
 ___
 	@r=("%rbx","%rcx","%rdi","%rsi");
 $code.=<<___;

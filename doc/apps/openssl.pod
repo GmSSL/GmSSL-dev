@@ -1,33 +1,17 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 =pod
 
 =head1 NAME
 
-<<<<<<< HEAD
 openssl - OpenSSL command line tool
 
 =head1 SYNOPSIS
 
 B<openssl>
-=======
-gmssl - GmSSL command line tool
-
-=head1 SYNOPSIS
-
-B<gmssl>
->>>>>>> origin/master
 I<command>
 [ I<command_opts> ]
 [ I<command_args> ]
 
-<<<<<<< HEAD
 B<openssl> B<list> [ B<standard-commands> | B<digest-commands> | B<cipher-commands> | B<cipher-algorithms> | B<digest-algorithms> | B<public-key-algorithms>]
-=======
-B<gmssl> [ B<list-standard-commands> | B<list-message-digest-commands> | B<list-cipher-commands> | B<list-cipher-algorithms> | B<list-message-digest-algorithms> | B<list-public-key-algorithms>]
->>>>>>> origin/master
 
 B<openssl> B<no->I<XXX> [ I<arbitrary options> ]
 
@@ -35,7 +19,6 @@ B<openssl> B<no->I<XXX> [ I<arbitrary options> ]
 
 OpenSSL is a cryptography toolkit implementing the Secure Sockets Layer (SSL
 v2/v3) and Transport Layer Security (TLS v1) network protocols and related
-<<<<<<< HEAD
 cryptography standards required by them.
 
 The B<openssl> program is a command line tool for using the various
@@ -45,18 +28,6 @@ It can be used for
  o  Creation and management of private keys, public keys and parameters
  o  Public key cryptographic operations
  o  Creation of X.509 certificates, CSRs and CRLs
-=======
-cryptography standards required by them. GmSSL is a fork of OpenSSL with
-Chinese cryptography algorithms and standards.
-
-The B<gmssl> program is a command line tool for using the various
-cryptography functions of GmSSL's B<crypto> library from the shell. 
-It can be used for 
-
- o  Creation and management of private keys, public keys and parameters
- o  Public key cryptographic operations
- o  Creation of X.509 certificates, CSRs and CRLs 
->>>>>>> origin/master
  o  Calculation of Message Digests
  o  Encryption and Decryption with Ciphers
  o  SSL/TLS Client and Server Tests
@@ -65,7 +36,6 @@ It can be used for
 
 =head1 COMMAND SUMMARY
 
-<<<<<<< HEAD
 The B<openssl> program provides a rich variety of commands (I<command> in the
 SYNOPSIS above), each of which often has a wealth of options and arguments
 (I<command_opts> and I<command_args> in the SYNOPSIS).
@@ -84,45 +54,17 @@ The list parameter B<public-key-algorithms> lists all supported public
 key algorithms.
 
 The command B<no->I<XXX> tests whether a command of the
-=======
-The B<gmssl> program provides a rich variety of commands (I<command> in the
-SYNOPSIS above), each of which often has a wealth of options and arguments
-(I<command_opts> and I<command_args> in the SYNOPSIS).
-
-The pseudo-commands B<list-standard-commands>, B<list-message-digest-commands>,
-and B<list-cipher-commands> output a list (one entry per line) of the names
-of all standard commands, message digest commands, or cipher commands,
-respectively, that are available in the present B<gmssl> utility.
-
-The pseudo-commands B<list-cipher-algorithms> and
-B<list-message-digest-algorithms> list all cipher and message digest names, one entry per line. Aliases are listed as:
-
- from => to
-
-The pseudo-command B<list-public-key-algorithms> lists all supported public
-key algorithms.
-
-The pseudo-command B<no->I<XXX> tests whether a command of the
->>>>>>> origin/master
 specified name is available.  If no command named I<XXX> exists, it
 returns 0 (success) and prints B<no->I<XXX>; otherwise it returns 1
 and prints I<XXX>.  In both cases, the output goes to B<stdout> and
 nothing is printed to B<stderr>.  Additional command line arguments
 are always ignored.  Since for each cipher there is a command of the
 same name, this provides an easy way for shell scripts to test for the
-<<<<<<< HEAD
 availability of ciphers in the B<openssl> program.  (B<no->I<XXX> is
 not able to detect pseudo-commands such as B<quit>,
 B<list>, or B<no->I<XXX> itself.)
 
 =head2 Standard Commands
-=======
-availability of ciphers in the B<gmssl> program.  (B<no->I<XXX> is
-not able to detect pseudo-commands such as B<quit>,
-B<list->I<...>B<-commands>, or B<no->I<XXX> itself.)
-
-=head2 STANDARD COMMANDS
->>>>>>> origin/master
 
 =over 10
 
@@ -132,11 +74,7 @@ Parse an ASN.1 sequence.
 
 =item L<B<ca>|ca(1)>
 
-<<<<<<< HEAD
 Certificate Authority (CA) Management.
-=======
-Certificate Authority (CA) Management.  
->>>>>>> origin/master
 
 =item L<B<ciphers>|ciphers(1)>
 
@@ -165,11 +103,7 @@ Obsoleted by L<B<dhparam>|dhparam(1)>.
 
 =item L<B<dhparam>|dhparam(1)>
 
-<<<<<<< HEAD
 Generation and Management of Diffie-Hellman Parameters. Superseded by
-=======
-Generation and Management of Diffie-Hellman Parameters. Superseded by 
->>>>>>> origin/master
 L<B<genpkey>|genpkey(1)> and L<B<pkeyparam>|pkeyparam(1)>
 
 
@@ -179,11 +113,7 @@ DSA Data Management.
 
 =item L<B<dsaparam>|dsaparam(1)>
 
-<<<<<<< HEAD
 DSA Parameter Generation and Management. Superseded by
-=======
-DSA Parameter Generation and Management. Superseded by 
->>>>>>> origin/master
 L<B<genpkey>|genpkey(1)> and L<B<pkeyparam>|pkeyparam(1)>
 
 =item L<B<ec>|ec(1)>
@@ -200,11 +130,7 @@ Encoding with Ciphers.
 
 =item L<B<engine>|engine(1)>
 
-<<<<<<< HEAD
 Engine (loadable module) information and manipulation.
-=======
-Engine (loadble module) information and manipulation.
->>>>>>> origin/master
 
 =item L<B<errstr>|errstr(1)>
 
@@ -217,11 +143,7 @@ Obsoleted by L<B<dhparam>|dhparam(1)>.
 
 =item L<B<gendsa>|gendsa(1)>
 
-<<<<<<< HEAD
 Generation of DSA Private Key from Parameters. Superseded by
-=======
-Generation of DSA Private Key from Parameters. Superseded by 
->>>>>>> origin/master
 L<B<genpkey>|genpkey(1)> and L<B<pkey>|pkey(1)>
 
 =item L<B<genpkey>|genpkey(1)>
@@ -230,19 +152,11 @@ Generation of Private Key or Parameters.
 
 =item L<B<genrsa>|genrsa(1)>
 
-<<<<<<< HEAD
 Generation of RSA Private Key. Superseded by L<B<genpkey>|genpkey(1)>.
 
 =item L<B<nseq>|nseq(1)>
 
 Create or examine a Netscape certificate sequence
-=======
-Generation of RSA Private Key. Superceded by L<B<genpkey>|genpkey(1)>.
-
-=item L<B<nseq>|nseq(1)>
-
-Create or examine a netscape certificate sequence
->>>>>>> origin/master
 
 =item L<B<ocsp>|ocsp(1)>
 
@@ -344,11 +258,7 @@ X.509 Certificate Data Management.
 
 =back
 
-<<<<<<< HEAD
 =head2 Message Digest Commands
-=======
-=head2 MESSAGE DIGEST COMMANDS
->>>>>>> origin/master
 
 =over 10
 
@@ -368,19 +278,11 @@ MDC2 Digest
 
 RMD-160 Digest
 
-<<<<<<< HEAD
 =item B<sha>
 
 SHA Digest
 
 =item B<sha1>
-=======
-=item B<sha>            
-
-SHA Digest
-
-=item B<sha1>           
->>>>>>> origin/master
 
 SHA-1 Digest
 
@@ -402,11 +304,7 @@ SHA-512 Digest
 
 =back
 
-<<<<<<< HEAD
 =head2 Encoding and Cipher Commands
-=======
-=head2 ENCODING AND CIPHER COMMANDS
->>>>>>> origin/master
 
 =over 10
 
@@ -452,7 +350,6 @@ RC5 Cipher
 
 =back
 
-<<<<<<< HEAD
 =head1 COMMAND OPTIONS
 
 Details of which options are available depend on the specific command.
@@ -469,9 +366,6 @@ Provides a terse summary of all options.
 =back
 
 =head2 Pass Phrase Options
-=======
-=head1 PASS PHRASE ARGUMENTS
->>>>>>> origin/master
 
 Several commands accept password arguments, typically using B<-passin>
 and B<-passout> for input and output passwords respectively. These allow
@@ -516,7 +410,6 @@ read the password from standard input.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<asn1parse(1)>, L<ca(1)>, L<config(5)>,
 L<crl(1)>, L<crl2pkcs7(1)>, L<dgst(1)>,
 L<dhparam(1)>, L<dsa(1)>, L<dsaparam(1)>,
@@ -546,29 +439,4 @@ this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
-=======
-L<asn1parse(1)|asn1parse(1)>, L<ca(1)|ca(1)>, L<config(5)|config(5)>,
-L<crl(1)|crl(1)>, L<crl2pkcs7(1)|crl2pkcs7(1)>, L<dgst(1)|dgst(1)>,
-L<dhparam(1)|dhparam(1)>, L<dsa(1)|dsa(1)>, L<dsaparam(1)|dsaparam(1)>,
-L<enc(1)|enc(1)>, L<gendsa(1)|gendsa(1)>, L<genpkey(1)|genpkey(1)>,
-L<genrsa(1)|genrsa(1)>, L<nseq(1)|nseq(1)>, L<openssl(1)|openssl(1)>,
-L<passwd(1)|passwd(1)>,
-L<pkcs12(1)|pkcs12(1)>, L<pkcs7(1)|pkcs7(1)>, L<pkcs8(1)|pkcs8(1)>,
-L<rand(1)|rand(1)>, L<req(1)|req(1)>, L<rsa(1)|rsa(1)>,
-L<rsautl(1)|rsautl(1)>, L<s_client(1)|s_client(1)>,
-L<s_server(1)|s_server(1)>, L<s_time(1)|s_time(1)>,
-L<smime(1)|smime(1)>, L<spkac(1)|spkac(1)>,
-L<verify(1)|verify(1)>, L<version(1)|version(1)>, L<x509(1)|x509(1)>,
-L<crypto(3)|crypto(3)>, L<ssl(3)|ssl(3)>, L<x509v3_config(5)|x509v3_config(5)> 
-
-=head1 HISTORY
-
-The openssl(1) document appeared in OpenSSL 0.9.2.
-The B<list->I<XXX>B<-commands> pseudo-commands were added in OpenSSL 0.9.3;
-The B<list->I<XXX>B<-algorithms> pseudo-commands were added in OpenSSL 1.0.0;
-the B<no->I<XXX> pseudo-commands were added in OpenSSL 0.9.5a.
-For notes on the availability of other commands, see their individual
-manual pages.
-
->>>>>>> origin/master
 =cut

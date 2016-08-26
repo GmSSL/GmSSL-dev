@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -19,86 +18,11 @@
 #include "rsa_locl.h"
 
 #ifndef OPENSSL_NO_CMS
-=======
-/* crypto/rsa/rsa_ameth.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 2006.
- */
-/* ====================================================================
- * Copyright (c) 2006 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
-#include <openssl/asn1t.h>
-#include <openssl/x509.h>
-#include <openssl/rsa.h>
-#include <openssl/bn.h>
-#ifndef OPENSSL_NO_CMS
-# include <openssl/cms.h>
-#endif
-#include "asn1_locl.h"
-
->>>>>>> origin/master
 static int rsa_cms_sign(CMS_SignerInfo *si);
 static int rsa_cms_verify(CMS_SignerInfo *si);
 static int rsa_cms_decrypt(CMS_RecipientInfo *ri);
 static int rsa_cms_encrypt(CMS_RecipientInfo *ri);
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> origin/master
 
 static int rsa_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
 {
@@ -120,16 +44,10 @@ static int rsa_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
     const unsigned char *p;
     int pklen;
     RSA *rsa = NULL;
-<<<<<<< HEAD
 
     if (!X509_PUBKEY_get0_param(NULL, &p, &pklen, NULL, pubkey))
         return 0;
     if ((rsa = d2i_RSAPublicKey(NULL, &p, pklen)) == NULL) {
-=======
-    if (!X509_PUBKEY_get0_param(NULL, &p, &pklen, NULL, pubkey))
-        return 0;
-    if (!(rsa = d2i_RSAPublicKey(NULL, &p, pklen))) {
->>>>>>> origin/master
         RSAerr(RSA_F_RSA_PUB_DECODE, ERR_R_RSA_LIB);
         return 0;
     }
@@ -149,12 +67,8 @@ static int old_rsa_priv_decode(EVP_PKEY *pkey,
                                const unsigned char **pder, int derlen)
 {
     RSA *rsa;
-<<<<<<< HEAD
 
     if ((rsa = d2i_RSAPrivateKey(NULL, pder, derlen)) == NULL) {
-=======
-    if (!(rsa = d2i_RSAPrivateKey(NULL, pder, derlen))) {
->>>>>>> origin/master
         RSAerr(RSA_F_OLD_RSA_PRIV_DECODE, ERR_R_RSA_LIB);
         return 0;
     }
@@ -187,11 +101,7 @@ static int rsa_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
     return 1;
 }
 
-<<<<<<< HEAD
 static int rsa_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
-=======
-static int rsa_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
->>>>>>> origin/master
 {
     const unsigned char *p;
     int pklen;
@@ -210,7 +120,6 @@ static int rsa_bits(const EVP_PKEY *pkey)
     return BN_num_bits(pkey->pkey.rsa->n);
 }
 
-<<<<<<< HEAD
 static int rsa_security_bits(const EVP_PKEY *pkey)
 {
     return RSA_security_bits(pkey->pkey.rsa);
@@ -219,51 +128,13 @@ static int rsa_security_bits(const EVP_PKEY *pkey)
 static void int_rsa_free(EVP_PKEY *pkey)
 {
     RSA_free(pkey->pkey.rsa);
-=======
-static void int_rsa_free(EVP_PKEY *pkey)
-{
-    RSA_free(pkey->pkey.rsa);
-}
-
-static void update_buflen(const BIGNUM *b, size_t *pbuflen)
-{
-    size_t i;
-    if (!b)
-        return;
-    if (*pbuflen < (i = (size_t)BN_num_bytes(b)))
-        *pbuflen = i;
->>>>>>> origin/master
 }
 
 static int do_rsa_print(BIO *bp, const RSA *x, int off, int priv)
 {
     char *str;
     const char *s;
-<<<<<<< HEAD
     int ret = 0, mod_len = 0;
-=======
-    unsigned char *m = NULL;
-    int ret = 0, mod_len = 0;
-    size_t buf_len = 0;
-
-    update_buflen(x->n, &buf_len);
-    update_buflen(x->e, &buf_len);
-
-    if (priv) {
-        update_buflen(x->d, &buf_len);
-        update_buflen(x->p, &buf_len);
-        update_buflen(x->q, &buf_len);
-        update_buflen(x->dmp1, &buf_len);
-        update_buflen(x->dmq1, &buf_len);
-        update_buflen(x->iqmp, &buf_len);
-    }
-
-    m = (unsigned char *)OPENSSL_malloc(buf_len + 10);
-    if (m == NULL) {
-        RSAerr(RSA_F_DO_RSA_PRINT, ERR_R_MALLOC_FAILURE);
-        goto err;
-    }
->>>>>>> origin/master
 
     if (x->n != NULL)
         mod_len = BN_num_bits(x->n);
@@ -272,27 +143,16 @@ static int do_rsa_print(BIO *bp, const RSA *x, int off, int priv)
         goto err;
 
     if (priv && x->d) {
-<<<<<<< HEAD
         if (BIO_printf(bp, "Private-Key: (%d bit)\n", mod_len) <= 0)
-=======
-        if (BIO_printf(bp, "Private-Key: (%d bit)\n", mod_len)
-            <= 0)
->>>>>>> origin/master
             goto err;
         str = "modulus:";
         s = "publicExponent:";
     } else {
-<<<<<<< HEAD
         if (BIO_printf(bp, "Public-Key: (%d bit)\n", mod_len) <= 0)
-=======
-        if (BIO_printf(bp, "Public-Key: (%d bit)\n", mod_len)
-            <= 0)
->>>>>>> origin/master
             goto err;
         str = "Modulus:";
         s = "Exponent:";
     }
-<<<<<<< HEAD
     if (!ASN1_bn_print(bp, str, x->n, NULL, off))
         goto err;
     if (!ASN1_bn_print(bp, s, x->e, NULL, off))
@@ -309,33 +169,10 @@ static int do_rsa_print(BIO *bp, const RSA *x, int off, int priv)
         if (!ASN1_bn_print(bp, "exponent2:", x->dmq1, NULL, off))
             goto err;
         if (!ASN1_bn_print(bp, "coefficient:", x->iqmp, NULL, off))
-=======
-    if (!ASN1_bn_print(bp, str, x->n, m, off))
-        goto err;
-    if (!ASN1_bn_print(bp, s, x->e, m, off))
-        goto err;
-    if (priv) {
-        if (!ASN1_bn_print(bp, "privateExponent:", x->d, m, off))
-            goto err;
-        if (!ASN1_bn_print(bp, "prime1:", x->p, m, off))
-            goto err;
-        if (!ASN1_bn_print(bp, "prime2:", x->q, m, off))
-            goto err;
-        if (!ASN1_bn_print(bp, "exponent1:", x->dmp1, m, off))
-            goto err;
-        if (!ASN1_bn_print(bp, "exponent2:", x->dmq1, m, off))
-            goto err;
-        if (!ASN1_bn_print(bp, "coefficient:", x->iqmp, m, off))
->>>>>>> origin/master
             goto err;
     }
     ret = 1;
  err:
-<<<<<<< HEAD
-=======
-    if (m != NULL)
-        OPENSSL_free(m);
->>>>>>> origin/master
     return (ret);
 }
 
@@ -354,50 +191,23 @@ static int rsa_priv_print(BIO *bp, const EVP_PKEY *pkey, int indent,
 /* Given an MGF1 Algorithm ID decode to an Algorithm Identifier */
 static X509_ALGOR *rsa_mgf1_decode(X509_ALGOR *alg)
 {
-<<<<<<< HEAD
-=======
-    const unsigned char *p;
-    int plen;
->>>>>>> origin/master
     if (alg == NULL)
         return NULL;
     if (OBJ_obj2nid(alg->algorithm) != NID_mgf1)
         return NULL;
-<<<<<<< HEAD
     return ASN1_TYPE_unpack_sequence(ASN1_ITEM_rptr(X509_ALGOR),
                                      alg->parameter);
-=======
-    if (alg->parameter->type != V_ASN1_SEQUENCE)
-        return NULL;
-
-    p = alg->parameter->value.sequence->data;
-    plen = alg->parameter->value.sequence->length;
-    return d2i_X509_ALGOR(NULL, &p, plen);
->>>>>>> origin/master
 }
 
 static RSA_PSS_PARAMS *rsa_pss_decode(const X509_ALGOR *alg,
                                       X509_ALGOR **pmaskHash)
 {
-<<<<<<< HEAD
-=======
-    const unsigned char *p;
-    int plen;
->>>>>>> origin/master
     RSA_PSS_PARAMS *pss;
 
     *pmaskHash = NULL;
 
-<<<<<<< HEAD
     pss = ASN1_TYPE_unpack_sequence(ASN1_ITEM_rptr(RSA_PSS_PARAMS),
                                     alg->parameter);
-=======
-    if (!alg->parameter || alg->parameter->type != V_ASN1_SEQUENCE)
-        return NULL;
-    p = alg->parameter->value.sequence->data;
-    plen = alg->parameter->value.sequence->length;
-    pss = d2i_RSA_PSS_PARAMS(NULL, &p, plen);
->>>>>>> origin/master
 
     if (!pss)
         return NULL;
@@ -489,15 +299,8 @@ static int rsa_sig_print(BIO *bp, const X509_ALGOR *sigalg,
         X509_ALGOR *maskHash;
         pss = rsa_pss_decode(sigalg, &maskHash);
         rv = rsa_pss_param_print(bp, pss, maskHash, indent);
-<<<<<<< HEAD
         RSA_PSS_PARAMS_free(pss);
         X509_ALGOR_free(maskHash);
-=======
-        if (pss)
-            RSA_PSS_PARAMS_free(pss);
-        if (maskHash)
-            X509_ALGOR_free(maskHash);
->>>>>>> origin/master
         if (!rv)
             return 0;
     } else if (!sig && BIO_puts(bp, "\n") <= 0)
@@ -563,11 +366,7 @@ static int rsa_md_to_algor(X509_ALGOR **palg, const EVP_MD *md)
     if (EVP_MD_type(md) == NID_sha1)
         return 1;
     *palg = X509_ALGOR_new();
-<<<<<<< HEAD
     if (*palg == NULL)
-=======
-    if (!*palg)
->>>>>>> origin/master
         return 0;
     X509_ALGOR_set_md(*palg, md);
     return 1;
@@ -587,24 +386,13 @@ static int rsa_md_to_mgf1(X509_ALGOR **palg, const EVP_MD *mgf1md)
     if (!ASN1_item_pack(algtmp, ASN1_ITEM_rptr(X509_ALGOR), &stmp))
          goto err;
     *palg = X509_ALGOR_new();
-<<<<<<< HEAD
     if (*palg == NULL)
-=======
-    if (!*palg)
->>>>>>> origin/master
         goto err;
     X509_ALGOR_set0(*palg, OBJ_nid2obj(NID_mgf1), V_ASN1_SEQUENCE, stmp);
     stmp = NULL;
  err:
-<<<<<<< HEAD
     ASN1_STRING_free(stmp);
     X509_ALGOR_free(algtmp);
-=======
-    if (stmp)
-        ASN1_STRING_free(stmp);
-    if (algtmp)
-        X509_ALGOR_free(algtmp);
->>>>>>> origin/master
     if (*palg)
         return 1;
     return 0;
@@ -671,19 +459,11 @@ static ASN1_STRING *rsa_ctx_to_pss(EVP_PKEY_CTX *pkctx)
             saltlen--;
     }
     pss = RSA_PSS_PARAMS_new();
-<<<<<<< HEAD
     if (pss == NULL)
         goto err;
     if (saltlen != 20) {
         pss->saltLength = ASN1_INTEGER_new();
         if (pss->saltLength == NULL)
-=======
-    if (!pss)
-        goto err;
-    if (saltlen != 20) {
-        pss->saltLength = ASN1_INTEGER_new();
-        if (!pss->saltLength)
->>>>>>> origin/master
             goto err;
         if (!ASN1_INTEGER_set(pss->saltLength, saltlen))
             goto err;
@@ -697,29 +477,16 @@ static ASN1_STRING *rsa_ctx_to_pss(EVP_PKEY_CTX *pkctx)
          goto err;
     rv = 1;
  err:
-<<<<<<< HEAD
     RSA_PSS_PARAMS_free(pss);
     if (rv)
         return os;
     ASN1_STRING_free(os);
-=======
-    if (pss)
-        RSA_PSS_PARAMS_free(pss);
-    if (rv)
-        return os;
-    if (os)
-        ASN1_STRING_free(os);
->>>>>>> origin/master
     return NULL;
 }
 
 /*
  * From PSS AlgorithmIdentifier set public key parameters. If pkey isn't NULL
-<<<<<<< HEAD
  * then the EVP_MD_CTX is setup and initialised. If it is NULL parameters are
-=======
- * then the EVP_MD_CTX is setup and initalised. If it is NULL parameters are
->>>>>>> origin/master
  * passed to pkctx instead.
  */
 
@@ -801,19 +568,11 @@ static int rsa_pss_to_ctx(EVP_MD_CTX *ctx, EVP_PKEY_CTX *pkctx,
 
  err:
     RSA_PSS_PARAMS_free(pss);
-<<<<<<< HEAD
     X509_ALGOR_free(maskHash);
     return rv;
 }
 
 #ifndef OPENSSL_NO_CMS
-=======
-    if (maskHash)
-        X509_ALGOR_free(maskHash);
-    return rv;
-}
-
->>>>>>> origin/master
 static int rsa_cms_verify(CMS_SignerInfo *si)
 {
     int nid, nid2;
@@ -832,10 +591,7 @@ static int rsa_cms_verify(CMS_SignerInfo *si)
     }
     return 0;
 }
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> origin/master
 
 /*
  * Customised RSA item verification routine. This is called when a signature
@@ -858,10 +614,7 @@ static int rsa_item_verify(EVP_MD_CTX *ctx, const ASN1_ITEM *it, void *asn,
     return -1;
 }
 
-<<<<<<< HEAD
 #ifndef OPENSSL_NO_CMS
-=======
->>>>>>> origin/master
 static int rsa_cms_sign(CMS_SignerInfo *si)
 {
     int pad_mode = RSA_PKCS1_PADDING;
@@ -886,21 +639,14 @@ static int rsa_cms_sign(CMS_SignerInfo *si)
     X509_ALGOR_set0(alg, OBJ_nid2obj(NID_rsassaPss), V_ASN1_SEQUENCE, os);
     return 1;
 }
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> origin/master
 
 static int rsa_item_sign(EVP_MD_CTX *ctx, const ASN1_ITEM *it, void *asn,
                          X509_ALGOR *alg1, X509_ALGOR *alg2,
                          ASN1_BIT_STRING *sig)
 {
     int pad_mode;
-<<<<<<< HEAD
     EVP_PKEY_CTX *pkctx = EVP_MD_CTX_pkey_ctx(ctx);
-=======
-    EVP_PKEY_CTX *pkctx = ctx->pctx;
->>>>>>> origin/master
     if (EVP_PKEY_CTX_get_rsa_padding(pkctx, &pad_mode) <= 0)
         return 0;
     if (pad_mode == RSA_PKCS1_PADDING)
@@ -927,32 +673,16 @@ static int rsa_item_sign(EVP_MD_CTX *ctx, const ASN1_ITEM *it, void *asn,
     return 2;
 }
 
-<<<<<<< HEAD
 #ifndef OPENSSL_NO_CMS
 static RSA_OAEP_PARAMS *rsa_oaep_decode(const X509_ALGOR *alg,
                                         X509_ALGOR **pmaskHash)
 {
-=======
-static RSA_OAEP_PARAMS *rsa_oaep_decode(const X509_ALGOR *alg,
-                                        X509_ALGOR **pmaskHash)
-{
-    const unsigned char *p;
-    int plen;
->>>>>>> origin/master
     RSA_OAEP_PARAMS *pss;
 
     *pmaskHash = NULL;
 
-<<<<<<< HEAD
     pss = ASN1_TYPE_unpack_sequence(ASN1_ITEM_rptr(RSA_OAEP_PARAMS),
                                     alg->parameter);
-=======
-    if (!alg->parameter || alg->parameter->type != V_ASN1_SEQUENCE)
-        return NULL;
-    p = alg->parameter->value.sequence->data;
-    plen = alg->parameter->value.sequence->length;
-    pss = d2i_RSA_OAEP_PARAMS(NULL, &p, plen);
->>>>>>> origin/master
 
     if (!pss)
         return NULL;
@@ -1030,12 +760,7 @@ static int rsa_cms_decrypt(CMS_RecipientInfo *ri)
 
  err:
     RSA_OAEP_PARAMS_free(oaep);
-<<<<<<< HEAD
     X509_ALGOR_free(maskHash);
-=======
-    if (maskHash)
-        X509_ALGOR_free(maskHash);
->>>>>>> origin/master
     return rv;
 }
 
@@ -1068,31 +793,19 @@ static int rsa_cms_encrypt(CMS_RecipientInfo *ri)
     if (labellen < 0)
         goto err;
     oaep = RSA_OAEP_PARAMS_new();
-<<<<<<< HEAD
     if (oaep == NULL)
-=======
-    if (!oaep)
->>>>>>> origin/master
         goto err;
     if (!rsa_md_to_algor(&oaep->hashFunc, md))
         goto err;
     if (!rsa_md_to_mgf1(&oaep->maskGenFunc, mgf1md))
         goto err;
     if (labellen > 0) {
-<<<<<<< HEAD
         ASN1_OCTET_STRING *los;
         oaep->pSourceFunc = X509_ALGOR_new();
         if (oaep->pSourceFunc == NULL)
             goto err;
         los = ASN1_OCTET_STRING_new();
         if (los == NULL)
-=======
-        ASN1_OCTET_STRING *los = ASN1_OCTET_STRING_new();
-        oaep->pSourceFunc = X509_ALGOR_new();
-        if (!oaep->pSourceFunc)
-            goto err;
-        if (!los)
->>>>>>> origin/master
             goto err;
         if (!ASN1_OCTET_STRING_set(los, label, labellen)) {
             ASN1_OCTET_STRING_free(los);
@@ -1108,7 +821,6 @@ static int rsa_cms_encrypt(CMS_RecipientInfo *ri)
     os = NULL;
     rv = 1;
  err:
-<<<<<<< HEAD
     RSA_OAEP_PARAMS_free(oaep);
     ASN1_STRING_free(os);
     return rv;
@@ -1116,16 +828,6 @@ static int rsa_cms_encrypt(CMS_RecipientInfo *ri)
 #endif
 
 const EVP_PKEY_ASN1_METHOD rsa_asn1_meths[2] = {
-=======
-    if (oaep)
-        RSA_OAEP_PARAMS_free(oaep);
-    if (os)
-        ASN1_STRING_free(os);
-    return rv;
-}
-
-const EVP_PKEY_ASN1_METHOD rsa_asn1_meths[] = {
->>>>>>> origin/master
     {
      EVP_PKEY_RSA,
      EVP_PKEY_RSA,
@@ -1145,10 +847,7 @@ const EVP_PKEY_ASN1_METHOD rsa_asn1_meths[] = {
 
      int_rsa_size,
      rsa_bits,
-<<<<<<< HEAD
      rsa_security_bits,
-=======
->>>>>>> origin/master
 
      0, 0, 0, 0, 0, 0,
 

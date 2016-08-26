@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -57,21 +53,11 @@
 # saturates at ~15.5x single-process result on 8-core processor,
 # or ~20.5GBps per 2.85GHz socket.
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
 $frame="STACK_FRAME";
 $bias="STACK_BIAS";
-=======
-$bits=32;
-for (@ARGV)     { $bits=64 if (/\-m64/ || /\-xarch\=v9/); }
-if ($bits==64)  { $bias=2047; $frame=192; }
-else            { $bias=0;    $frame=112; }
-
-$output=shift;
-open STDOUT,">$output";
->>>>>>> origin/master
 
 $Zhi="%o0";	# 64-bit values
 $Zlo="%o1";
@@ -94,7 +80,6 @@ $Htbl="%i1";
 $inp="%i2";
 $len="%i3";
 
-<<<<<<< HEAD
 $code.=<<___;
 #include "sparc_arch.h"
 
@@ -103,13 +88,6 @@ $code.=<<___;
 .register	%g3,#scratch
 #endif
 
-=======
-$code.=<<___ if ($bits==64);
-.register	%g2,#scratch
-.register	%g3,#scratch
-___
-$code.=<<___;
->>>>>>> origin/master
 .section	".text",#alloc,#execinstr
 
 .align	64
@@ -213,11 +191,7 @@ gcm_ghash_4bit:
 
 	add	$inp,16,$inp
 	cmp	$inp,$len
-<<<<<<< HEAD
 	be,pn	SIZE_T_CC,.Ldone
-=======
-	be,pn	`$bits==64?"%xcc":"%icc"`,.Ldone
->>>>>>> origin/master
 	and	$Zlo,0xf,$remi
 
 	ldx	[$Htblo+$nhi],$Tlo
@@ -413,11 +387,7 @@ gcm_init_vis3:
 	or	$V,%lo(0xA0406080),$V
 	or	%l0,%lo(0x20C0E000),%l0
 	sllx	$V,32,$V
-<<<<<<< HEAD
 	or	%l0,$V,$V		! (0xE0Â·i)&0xff=0xA040608020C0E000
-=======
-	or	%l0,$V,$V		! (0xE0·i)&0xff=0xA040608020C0E000
->>>>>>> origin/master
 	stx	$V,[%i0+16]
 
 	ret
@@ -437,11 +407,7 @@ gcm_gmult_vis3:
 
 	mov	0xE1,%l7
 	sllx	%l7,57,$xE1		! 57 is not a typo
-<<<<<<< HEAD
 	ldx	[$Htable+16],$V		! (0xE0Â·i)&0xff=0xA040608020C0E000
-=======
-	ldx	[$Htable+16],$V		! (0xE0·i)&0xff=0xA040608020C0E000
->>>>>>> origin/master
 
 	xor	$Hhi,$Hlo,$Hhl		! Karatsuba pre-processing
 	xmulx	$Xlo,$Hlo,$C0
@@ -453,15 +419,9 @@ gcm_gmult_vis3:
 	xmulx	$Xhi,$Hhi,$Xhi
 
 	sll	$C0,3,$sqr
-<<<<<<< HEAD
 	srlx	$V,$sqr,$sqr		! Â·0xE0 [implicit &(7<<3)]
 	xor	$C0,$sqr,$sqr
 	sllx	$sqr,57,$sqr		! ($C0Â·0xE1)<<1<<56 [implicit &0x7f]
-=======
-	srlx	$V,$sqr,$sqr		! ·0xE0 [implicit &(7<<3)]
-	xor	$C0,$sqr,$sqr
-	sllx	$sqr,57,$sqr		! ($C0·0xE1)<<1<<56 [implicit &0x7f]
->>>>>>> origin/master
 
 	xor	$C0,$C1,$C1		! Karatsuba post-processing
 	xor	$Xlo,$C2,$C2
@@ -471,11 +431,7 @@ gcm_gmult_vis3:
 	xor	$Xhi,$C2,$C2
 	xor	$Xhi,$C1,$C1
 
-<<<<<<< HEAD
 	xmulxhi	$C0,$xE1,$Xlo		! Â·0xE1<<1<<56
-=======
-	xmulxhi	$C0,$xE1,$Xlo		! ·0xE1<<1<<56
->>>>>>> origin/master
 	 xor	$C0,$C2,$C2
 	xmulx	$C1,$xE1,$C0
 	 xor	$C1,$C3,$C3
@@ -497,11 +453,8 @@ gcm_gmult_vis3:
 .align	32
 gcm_ghash_vis3:
 	save	%sp,-$frame,%sp
-<<<<<<< HEAD
 	nop
 	srln	$len,0,$len		! needed on v8+, "nop" on v9
-=======
->>>>>>> origin/master
 
 	ldx	[$Xip+8],$C2		! load Xi
 	ldx	[$Xip+0],$C3
@@ -510,11 +463,7 @@ gcm_ghash_vis3:
 
 	mov	0xE1,%l7
 	sllx	%l7,57,$xE1		! 57 is not a typo
-<<<<<<< HEAD
 	ldx	[$Htable+16],$V		! (0xE0Â·i)&0xff=0xA040608020C0E000
-=======
-	ldx	[$Htable+16],$V		! (0xE0·i)&0xff=0xA040608020C0E000
->>>>>>> origin/master
 
 	and	$inp,7,$shl
 	andn	$inp,7,$inp
@@ -551,15 +500,9 @@ gcm_ghash_vis3:
 	xmulx	$Xhi,$Hhi,$Xhi
 
 	sll	$C0,3,$sqr
-<<<<<<< HEAD
 	srlx	$V,$sqr,$sqr		! Â·0xE0 [implicit &(7<<3)]
 	xor	$C0,$sqr,$sqr
 	sllx	$sqr,57,$sqr		! ($C0Â·0xE1)<<1<<56 [implicit &0x7f]
-=======
-	srlx	$V,$sqr,$sqr		! ·0xE0 [implicit &(7<<3)]
-	xor	$C0,$sqr,$sqr
-	sllx	$sqr,57,$sqr		! ($C0·0xE1)<<1<<56 [implicit &0x7f]
->>>>>>> origin/master
 
 	xor	$C0,$C1,$C1		! Karatsuba post-processing
 	xor	$Xlo,$C2,$C2
@@ -569,11 +512,7 @@ gcm_ghash_vis3:
 	xor	$Xhi,$C2,$C2
 	xor	$Xhi,$C1,$C1
 
-<<<<<<< HEAD
 	xmulxhi	$C0,$xE1,$Xlo		! Â·0xE1<<1<<56
-=======
-	xmulxhi	$C0,$xE1,$Xlo		! ·0xE1<<1<<56
->>>>>>> origin/master
 	 xor	$C0,$C2,$C2
 	xmulx	$C1,$xE1,$C0
 	 xor	$C1,$C3,$C3
@@ -601,11 +540,7 @@ ___
 
 # Purpose of these subroutines is to explicitly encode VIS instructions,
 # so that one can compile the module without having to specify VIS
-<<<<<<< HEAD
 # extensions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
-=======
-# extentions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
->>>>>>> origin/master
 # Idea is to reserve for option to produce "universal" binary and let
 # programmer detect if current CPU is VIS capable at run-time.
 sub unvis3 {

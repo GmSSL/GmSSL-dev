@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,90 +9,20 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
-=======
-/* v3_cpols.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 1999.
- */
-/* ====================================================================
- * Copyright (c) 1999-2004 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/conf.h>
 #include <openssl/asn1.h>
 #include <openssl/asn1t.h>
 #include <openssl/x509v3.h>
 
 #include "pcy_int.h"
-<<<<<<< HEAD
 #include "ext_dat.h"
-=======
->>>>>>> origin/master
 
 /* Certificate policies extension support: this one is a bit complex... */
 
 static int i2r_certpol(X509V3_EXT_METHOD *method, STACK_OF(POLICYINFO) *pol,
                        BIO *out, int indent);
 static STACK_OF(POLICYINFO) *r2i_certpol(X509V3_EXT_METHOD *method,
-<<<<<<< HEAD
                                          X509V3_CTX *ctx, const char *value);
-=======
-                                         X509V3_CTX *ctx, char *value);
->>>>>>> origin/master
 static void print_qualifiers(BIO *out, STACK_OF(POLICYQUALINFO) *quals,
                              int indent);
 static void print_notice(BIO *out, USERNOTICE *notice, int indent);
@@ -155,11 +84,7 @@ ASN1_SEQUENCE(NOTICEREF) = {
 IMPLEMENT_ASN1_FUNCTIONS(NOTICEREF)
 
 static STACK_OF(POLICYINFO) *r2i_certpol(X509V3_EXT_METHOD *method,
-<<<<<<< HEAD
                                          X509V3_CTX *ctx, const char *value)
-=======
-                                         X509V3_CTX *ctx, char *value)
->>>>>>> origin/master
 {
     STACK_OF(POLICYINFO) *pols = NULL;
     char *pstr;
@@ -188,11 +113,7 @@ static STACK_OF(POLICYINFO) *r2i_certpol(X509V3_EXT_METHOD *method,
             goto err;
         }
         pstr = cnf->name;
-<<<<<<< HEAD
         if (strcmp(pstr, "ia5org") == 0) {
-=======
-        if (!strcmp(pstr, "ia5org")) {
->>>>>>> origin/master
             ia5org = 1;
             continue;
         } else if (*pstr == '@') {
@@ -206,31 +127,21 @@ static STACK_OF(POLICYINFO) *r2i_certpol(X509V3_EXT_METHOD *method,
             }
             pol = policy_section(ctx, polsect, ia5org);
             X509V3_section_free(ctx, polsect);
-<<<<<<< HEAD
             if (pol == NULL)
                 goto err;
         } else {
             if ((pobj = OBJ_txt2obj(cnf->name, 0)) == NULL) {
-=======
-            if (!pol)
-                goto err;
-        } else {
-            if (!(pobj = OBJ_txt2obj(cnf->name, 0))) {
->>>>>>> origin/master
                 X509V3err(X509V3_F_R2I_CERTPOL,
                           X509V3_R_INVALID_OBJECT_IDENTIFIER);
                 X509V3_conf_err(cnf);
                 goto err;
             }
             pol = POLICYINFO_new();
-<<<<<<< HEAD
             if (pol == NULL) {
                 X509V3err(X509V3_F_R2I_CERTPOL, ERR_R_MALLOC_FAILURE);
                 ASN1_OBJECT_free(pobj);
                 goto err;
             }
-=======
->>>>>>> origin/master
             pol->policyid = pobj;
         }
         if (!sk_POLICYINFO_push(pols, pol)) {
@@ -254,7 +165,6 @@ static POLICYINFO *policy_section(X509V3_CTX *ctx,
     CONF_VALUE *cnf;
     POLICYINFO *pol;
     POLICYQUALINFO *qual;
-<<<<<<< HEAD
 
     if ((pol = POLICYINFO_new()) == NULL)
         goto merr;
@@ -263,15 +173,6 @@ static POLICYINFO *policy_section(X509V3_CTX *ctx,
         if (strcmp(cnf->name, "policyIdentifier") == 0) {
             ASN1_OBJECT *pobj;
             if ((pobj = OBJ_txt2obj(cnf->value, 0)) == NULL) {
-=======
-    if (!(pol = POLICYINFO_new()))
-        goto merr;
-    for (i = 0; i < sk_CONF_VALUE_num(polstrs); i++) {
-        cnf = sk_CONF_VALUE_value(polstrs, i);
-        if (!strcmp(cnf->name, "policyIdentifier")) {
-            ASN1_OBJECT *pobj;
-            if (!(pobj = OBJ_txt2obj(cnf->value, 0))) {
->>>>>>> origin/master
                 X509V3err(X509V3_F_POLICY_SECTION,
                           X509V3_R_INVALID_OBJECT_IDENTIFIER);
                 X509V3_conf_err(cnf);
@@ -280,7 +181,6 @@ static POLICYINFO *policy_section(X509V3_CTX *ctx,
             pol->policyid = pobj;
 
         } else if (!name_cmp(cnf->name, "CPS")) {
-<<<<<<< HEAD
             if (pol->qualifiers == NULL)
                 pol->qualifiers = sk_POLICYQUALINFO_new_null();
             if ((qual = POLICYQUALINFO_new()) == NULL)
@@ -292,19 +192,6 @@ static POLICYINFO *policy_section(X509V3_CTX *ctx,
                 goto err;
             }
             if ((qual->d.cpsuri = ASN1_IA5STRING_new()) == NULL)
-=======
-            if (!pol->qualifiers)
-                pol->qualifiers = sk_POLICYQUALINFO_new_null();
-            if (!(qual = POLICYQUALINFO_new()))
-                goto merr;
-            if (!sk_POLICYQUALINFO_push(pol->qualifiers, qual))
-                goto merr;
-            if (!(qual->pqualid = OBJ_nid2obj(NID_id_qt_cps))) {
-                X509V3err(X509V3_F_POLICY_SECTION, ERR_R_INTERNAL_ERROR);
-                goto err;
-            }
-            if (!(qual->d.cpsuri = M_ASN1_IA5STRING_new()))
->>>>>>> origin/master
                 goto merr;
             if (!ASN1_STRING_set(qual->d.cpsuri, cnf->value,
                                  strlen(cnf->value)))
@@ -362,7 +249,6 @@ static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
     CONF_VALUE *cnf;
     USERNOTICE *not;
     POLICYQUALINFO *qual;
-<<<<<<< HEAD
 
     if ((qual = POLICYQUALINFO_new()) == NULL)
         goto merr;
@@ -371,41 +257,20 @@ static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
         goto err;
     }
     if ((not = USERNOTICE_new()) == NULL)
-=======
-    if (!(qual = POLICYQUALINFO_new()))
-        goto merr;
-    if (!(qual->pqualid = OBJ_nid2obj(NID_id_qt_unotice))) {
-        X509V3err(X509V3_F_NOTICE_SECTION, ERR_R_INTERNAL_ERROR);
-        goto err;
-    }
-    if (!(not = USERNOTICE_new()))
->>>>>>> origin/master
         goto merr;
     qual->d.usernotice = not;
     for (i = 0; i < sk_CONF_VALUE_num(unot); i++) {
         cnf = sk_CONF_VALUE_value(unot, i);
-<<<<<<< HEAD
         if (strcmp(cnf->name, "explicitText") == 0) {
             if ((not->exptext = ASN1_VISIBLESTRING_new()) == NULL)
-=======
-        if (!strcmp(cnf->name, "explicitText")) {
-            if (!(not->exptext = M_ASN1_VISIBLESTRING_new()))
->>>>>>> origin/master
                 goto merr;
             if (!ASN1_STRING_set(not->exptext, cnf->value,
                                  strlen(cnf->value)))
                 goto merr;
-<<<<<<< HEAD
         } else if (strcmp(cnf->name, "organization") == 0) {
             NOTICEREF *nref;
             if (!not->noticeref) {
                 if ((nref = NOTICEREF_new()) == NULL)
-=======
-        } else if (!strcmp(cnf->name, "organization")) {
-            NOTICEREF *nref;
-            if (!not->noticeref) {
-                if (!(nref = NOTICEREF_new()))
->>>>>>> origin/master
                     goto merr;
                 not->noticeref = nref;
             } else
@@ -417,19 +282,11 @@ static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
             if (!ASN1_STRING_set(nref->organization, cnf->value,
                                  strlen(cnf->value)))
                 goto merr;
-<<<<<<< HEAD
         } else if (strcmp(cnf->name, "noticeNumbers") == 0) {
             NOTICEREF *nref;
             STACK_OF(CONF_VALUE) *nos;
             if (!not->noticeref) {
                 if ((nref = NOTICEREF_new()) == NULL)
-=======
-        } else if (!strcmp(cnf->name, "noticeNumbers")) {
-            NOTICEREF *nref;
-            STACK_OF(CONF_VALUE) *nos;
-            if (!not->noticeref) {
-                if (!(nref = NOTICEREF_new()))
->>>>>>> origin/master
                     goto merr;
                 not->noticeref = nref;
             } else
@@ -438,10 +295,7 @@ static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
             if (!nos || !sk_CONF_VALUE_num(nos)) {
                 X509V3err(X509V3_F_NOTICE_SECTION, X509V3_R_INVALID_NUMBERS);
                 X509V3_conf_err(cnf);
-<<<<<<< HEAD
                 sk_CONF_VALUE_pop_free(nos, X509V3_conf_free);
-=======
->>>>>>> origin/master
                 goto err;
             }
             ret = nref_nos(nref->noticenos, nos);
@@ -481,11 +335,7 @@ static int nref_nos(STACK_OF(ASN1_INTEGER) *nnums, STACK_OF(CONF_VALUE) *nos)
 
     for (i = 0; i < sk_CONF_VALUE_num(nos); i++) {
         cnf = sk_CONF_VALUE_value(nos, i);
-<<<<<<< HEAD
         if ((aint = s2i_ASN1_INTEGER(NULL, cnf->name)) == NULL) {
-=======
-        if (!(aint = s2i_ASN1_INTEGER(NULL, cnf->name))) {
->>>>>>> origin/master
             X509V3err(X509V3_F_NREF_NOS, X509V3_R_INVALID_NUMBER);
             goto err;
         }
@@ -589,11 +439,3 @@ void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent)
     else
         BIO_printf(out, "%*sNo Qualifiers\n", indent + 2, "");
 }
-<<<<<<< HEAD
-=======
-
-
-IMPLEMENT_STACK_OF(X509_POLICY_NODE)
-
-IMPLEMENT_STACK_OF(X509_POLICY_DATA)
->>>>>>> origin/master

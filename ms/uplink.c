@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 #if (defined(_WIN64) || defined(_WIN32_WCE)) && !defined(UNICODE)
 # define UNICODE
 #endif
@@ -102,11 +99,7 @@ void OPENSSL_Uplink(volatile void **table, int index)
     table[index] = func;
 }
 
-<<<<<<< HEAD
 #if defined(_MSC_VER) && defined(_M_IX86)
-=======
-#if defined(_MSC_VER) && defined(_M_IX86) && !defined(OPENSSL_NO_INLINE_ASM)
->>>>>>> origin/master
 # define LAZY(i)         \
 __declspec(naked) static void lazy##i (void) {  \
         _asm    push i                          \

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -9,13 +8,6 @@
 
 # The inner loop instruction sequence and the IP/FP modifications are from
 # Svend Olaf Mikkelsen <svolaf@inet.uni-c.dk>
-=======
-#!/usr/local/bin/perl
-#
-# The inner loop instruction sequence and the IP/FP modifications are from
-# Svend Olaf Mikkelsen <svolaf@inet.uni-c.dk>
-#
->>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
@@ -28,12 +20,9 @@ require "desboth.pl";
 # format.
 #
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"des-586.pl");
 
 $L="edi";
@@ -58,11 +47,8 @@ $small_footprint=1 if (grep(/\-DOPENSSL_SMALL_FOOTPRINT/,@ARGV));
 
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
 
-=======
->>>>>>> origin/master
 sub DES_encrypt_internal()
 	{
 	&function_begin_B("_x86_DES_encrypt");

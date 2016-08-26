@@ -2,24 +2,15 @@
 
 =head1 NAME
 
-<<<<<<< HEAD
 BIO_push, BIO_pop, BIO_set_next - add and remove BIOs from a chain
-=======
-BIO_push, BIO_pop - add and remove BIOs from a chain.
->>>>>>> origin/master
 
 =head1 SYNOPSIS
 
  #include <openssl/bio.h>
 
-<<<<<<< HEAD
  BIO *BIO_push(BIO *b, BIO *append);
  BIO *BIO_pop(BIO *b);
  void BIO_set_next(BIO *b, BIO *next);
-=======
- BIO *	BIO_push(BIO *b,BIO *append);
- BIO *	BIO_pop(BIO *b);
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -31,13 +22,10 @@ in the chain, or NULL if there is no next BIO. The removed BIO then
 becomes a single BIO with no association with the original chain,
 it can thus be freed or attached to a different chain.
 
-<<<<<<< HEAD
 BIO_set_next() replaces the existing next BIO in a chain with the BIO pointed to
 by B<next>. The new chain may include some of the same BIOs from the old chain
 or it may be completely different.
 
-=======
->>>>>>> origin/master
 =head1 NOTES
 
 The names of these functions are perhaps a little misleading. BIO_push()
@@ -83,7 +71,6 @@ BIO.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<bio>
 
 =head1 HISTORY
@@ -100,6 +87,3 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
-=======
-TBA
->>>>>>> origin/master

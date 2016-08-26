@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,14 +8,6 @@
  */
 
 /* Copyright (c) 2004 Kungliga Tekniska HÃ¶gskolan
-=======
-/* v3_pci.c -*- mode:C; c-file-style: "eay" -*- */
-/*
- * Contributed to the OpenSSL Project 2004 by Richard Levitte
- * (richard@levitte.org)
- */
-/* Copyright (c) 2004 Kungliga Tekniska Högskolan
->>>>>>> origin/master
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
  *
@@ -49,16 +40,10 @@
  */
 
 #include <stdio.h>
-<<<<<<< HEAD
 #include "internal/cryptlib.h"
 #include <openssl/conf.h>
 #include <openssl/x509v3.h>
 #include "ext_dat.h"
-=======
-#include "cryptlib.h"
-#include <openssl/conf.h>
-#include <openssl/x509v3.h>
->>>>>>> origin/master
 
 static int i2r_pci(X509V3_EXT_METHOD *method, PROXY_CERT_INFO_EXTENSION *ext,
                    BIO *out, int indent);
@@ -106,11 +91,7 @@ static int process_pci_value(CONF_VALUE *val,
             X509V3_conf_err(val);
             return 0;
         }
-<<<<<<< HEAD
         if ((*language = OBJ_txt2obj(val->value, 0)) == NULL) {
-=======
-        if (!(*language = OBJ_txt2obj(val->value, 0))) {
->>>>>>> origin/master
             X509V3err(X509V3_F_PROCESS_PCI_VALUE,
                       X509V3_R_INVALID_OBJECT_IDENTIFIER);
             X509V3_conf_err(val);
@@ -134,11 +115,7 @@ static int process_pci_value(CONF_VALUE *val,
         long val_len;
         if (!*policy) {
             *policy = ASN1_OCTET_STRING_new();
-<<<<<<< HEAD
             if (*policy == NULL) {
-=======
-            if (!*policy) {
->>>>>>> origin/master
                 X509V3err(X509V3_F_PROCESS_PCI_VALUE, ERR_R_MALLOC_FAILURE);
                 X509V3_conf_err(val);
                 return 0;
@@ -147,17 +124,9 @@ static int process_pci_value(CONF_VALUE *val,
         }
         if (strncmp(val->value, "hex:", 4) == 0) {
             unsigned char *tmp_data2 =
-<<<<<<< HEAD
                 OPENSSL_hexstr2buf(val->value + 4, &val_len);
 
             if (!tmp_data2) {
-=======
-                string_to_hex(val->value + 4, &val_len);
-
-            if (!tmp_data2) {
-                X509V3err(X509V3_F_PROCESS_PCI_VALUE,
-                          X509V3_R_ILLEGAL_HEX_DIGIT);
->>>>>>> origin/master
                 X509V3_conf_err(val);
                 goto err;
             }
@@ -176,10 +145,7 @@ static int process_pci_value(CONF_VALUE *val,
                  * realloc failure implies the original data space is b0rked
                  * too!
                  */
-<<<<<<< HEAD
                 OPENSSL_free((*policy)->data);
-=======
->>>>>>> origin/master
                 (*policy)->data = NULL;
                 (*policy)->length = 0;
                 X509V3err(X509V3_F_PROCESS_PCI_VALUE, ERR_R_MALLOC_FAILURE);
@@ -204,7 +170,6 @@ static int process_pci_value(CONF_VALUE *val,
                 tmp_data = OPENSSL_realloc((*policy)->data,
                                            (*policy)->length + n + 1);
 
-<<<<<<< HEAD
                 if (!tmp_data) {
                     OPENSSL_free((*policy)->data);
                     (*policy)->data = NULL;
@@ -215,10 +180,6 @@ static int process_pci_value(CONF_VALUE *val,
                     BIO_free_all(b);
                     goto err;
                 }
-=======
-                if (!tmp_data)
-                    break;
->>>>>>> origin/master
 
                 (*policy)->data = tmp_data;
                 memcpy(&(*policy)->data[(*policy)->length], buf, n);
@@ -247,10 +208,7 @@ static int process_pci_value(CONF_VALUE *val,
                  * realloc failure implies the original data space is b0rked
                  * too!
                  */
-<<<<<<< HEAD
                 OPENSSL_free((*policy)->data);
-=======
->>>>>>> origin/master
                 (*policy)->data = NULL;
                 (*policy)->length = 0;
                 X509V3err(X509V3_F_PROCESS_PCI_VALUE, ERR_R_MALLOC_FAILURE);
@@ -337,11 +295,7 @@ static PROXY_CERT_INFO_EXTENSION *r2i_pci(X509V3_EXT_METHOD *method,
     }
 
     pci = PROXY_CERT_INFO_EXTENSION_new();
-<<<<<<< HEAD
     if (pci == NULL) {
-=======
-    if (!pci) {
->>>>>>> origin/master
         X509V3err(X509V3_F_R2I_PCI, ERR_R_MALLOC_FAILURE);
         goto err;
     }
@@ -354,7 +308,6 @@ static PROXY_CERT_INFO_EXTENSION *r2i_pci(X509V3_EXT_METHOD *method,
     pathlen = NULL;
     goto end;
  err:
-<<<<<<< HEAD
     ASN1_OBJECT_free(language);
     ASN1_INTEGER_free(pathlen);
     pathlen = NULL;
@@ -362,24 +315,6 @@ static PROXY_CERT_INFO_EXTENSION *r2i_pci(X509V3_EXT_METHOD *method,
     policy = NULL;
     PROXY_CERT_INFO_EXTENSION_free(pci);
     pci = NULL;
-=======
-    if (language) {
-        ASN1_OBJECT_free(language);
-        language = NULL;
-    }
-    if (pathlen) {
-        ASN1_INTEGER_free(pathlen);
-        pathlen = NULL;
-    }
-    if (policy) {
-        ASN1_OCTET_STRING_free(policy);
-        policy = NULL;
-    }
-    if (pci) {
-        PROXY_CERT_INFO_EXTENSION_free(pci);
-        pci = NULL;
-    }
->>>>>>> origin/master
  end:
     sk_CONF_VALUE_pop_free(vals, X509V3_conf_free);
     return pci;

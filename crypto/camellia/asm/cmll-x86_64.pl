@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Copyright (c) 2008 Andy Polyakov <appro@openssl.org>
@@ -51,11 +47,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 sub hi() { my $r=shift; $r =~ s/%[er]([a-d])x/%\1h/;    $r; }

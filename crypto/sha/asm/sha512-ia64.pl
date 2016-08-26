@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -79,11 +75,7 @@
 # To generate code, pass the file name with either 256 or 512 in its
 # name and compiler flags.
 
-<<<<<<< HEAD
 $output=pop;
-=======
-$output=shift;
->>>>>>> origin/master
 
 if ($output =~ /512.*\.[s|asm]/) {
 	$SZ=8;

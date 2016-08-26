@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,74 +8,6 @@
  */
 
 #include "internal/cryptlib.h"
-=======
-/* crypto/bn/bn_ctx.c */
-/* Written by Ulf Moeller for the OpenSSL project. */
-/* ====================================================================
- * Copyright (c) 1998-2004 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@openssl.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#if !defined(BN_CTX_DEBUG) && !defined(BN_DEBUG)
-# ifndef NDEBUG
-#  define NDEBUG
-# endif
-#endif
-
-#include <stdio.h>
-#include <assert.h>
-
-#include "cryptlib.h"
->>>>>>> origin/master
 #include "bn_lcl.h"
 
 /*-
@@ -117,14 +48,7 @@ typedef struct bignum_pool {
 } BN_POOL;
 static void BN_POOL_init(BN_POOL *);
 static void BN_POOL_finish(BN_POOL *);
-<<<<<<< HEAD
 static BIGNUM *BN_POOL_get(BN_POOL *, int);
-=======
-#ifndef OPENSSL_NO_DEPRECATED
-static void BN_POOL_reset(BN_POOL *);
-#endif
-static BIGNUM *BN_POOL_get(BN_POOL *);
->>>>>>> origin/master
 static void BN_POOL_release(BN_POOL *, unsigned int);
 
 /************/
@@ -140,12 +64,6 @@ typedef struct bignum_ctx_stack {
 } BN_STACK;
 static void BN_STACK_init(BN_STACK *);
 static void BN_STACK_finish(BN_STACK *);
-<<<<<<< HEAD
-=======
-#ifndef OPENSSL_NO_DEPRECATED
-static void BN_STACK_reset(BN_STACK *);
-#endif
->>>>>>> origin/master
 static int BN_STACK_push(BN_STACK *, unsigned int);
 static unsigned int BN_STACK_pop(BN_STACK *);
 
@@ -165,11 +83,8 @@ struct bignum_ctx {
     int err_stack;
     /* Block "gets" until an "end" (compatibility behaviour) */
     int too_many;
-<<<<<<< HEAD
     /* Flags. */
     int flags;
-=======
->>>>>>> origin/master
 };
 
 /* Enable this to find BN_CTX bugs */
@@ -215,47 +130,18 @@ static void ctxdbg(BN_CTX *ctx)
 # define CTXDBG_RET(ctx,ret)
 #endif
 
-<<<<<<< HEAD
 
 BN_CTX *BN_CTX_new(void)
 {
     BN_CTX *ret;
 
     if ((ret = OPENSSL_zalloc(sizeof(*ret))) == NULL) {
-=======
-/*
- * This function is an evil legacy and should not be used. This
- * implementation is WYSIWYG, though I've done my best.
- */
-#ifndef OPENSSL_NO_DEPRECATED
-void BN_CTX_init(BN_CTX *ctx)
-{
-    /*
-     * Assume the caller obtained the context via BN_CTX_new() and so is
-     * trying to reset it for use. Nothing else makes sense, least of all
-     * binary compatibility from a time when they could declare a static
-     * variable.
-     */
-    BN_POOL_reset(&ctx->pool);
-    BN_STACK_reset(&ctx->stack);
-    ctx->used = 0;
-    ctx->err_stack = 0;
-    ctx->too_many = 0;
-}
-#endif
-
-BN_CTX *BN_CTX_new(void)
-{
-    BN_CTX *ret = OPENSSL_malloc(sizeof(BN_CTX));
-    if (!ret) {
->>>>>>> origin/master
         BNerr(BN_F_BN_CTX_NEW, ERR_R_MALLOC_FAILURE);
         return NULL;
     }
     /* Initialise the structure */
     BN_POOL_init(&ret->pool);
     BN_STACK_init(&ret->stack);
-<<<<<<< HEAD
     return ret;
 }
 
@@ -265,11 +151,6 @@ BN_CTX *BN_CTX_secure_new(void)
 
     if (ret != NULL)
         ret->flags = BN_FLG_SECURE;
-=======
-    ret->used = 0;
-    ret->err_stack = 0;
-    ret->too_many = 0;
->>>>>>> origin/master
     return ret;
 }
 
@@ -331,18 +212,11 @@ void BN_CTX_end(BN_CTX *ctx)
 BIGNUM *BN_CTX_get(BN_CTX *ctx)
 {
     BIGNUM *ret;
-<<<<<<< HEAD
 
     CTXDBG_ENTRY("BN_CTX_get", ctx);
     if (ctx->err_stack || ctx->too_many)
         return NULL;
     if ((ret = BN_POOL_get(&ctx->pool, ctx->flags)) == NULL) {
-=======
-    CTXDBG_ENTRY("BN_CTX_get", ctx);
-    if (ctx->err_stack || ctx->too_many)
-        return NULL;
-    if ((ret = BN_POOL_get(&ctx->pool)) == NULL) {
->>>>>>> origin/master
         /*
          * Setting too_many prevents repeated "get" attempts from cluttering
          * the error stack.
@@ -370,7 +244,6 @@ static void BN_STACK_init(BN_STACK *st)
 
 static void BN_STACK_finish(BN_STACK *st)
 {
-<<<<<<< HEAD
     OPENSSL_free(st->indexes);
     st->indexes = NULL;
 }
@@ -388,34 +261,6 @@ static int BN_STACK_push(BN_STACK *st, unsigned int idx)
         if (st->depth)
             memcpy(newitems, st->indexes, sizeof(*newitems) * st->depth);
         OPENSSL_free(st->indexes);
-=======
-    if (st->size)
-        OPENSSL_free(st->indexes);
-}
-
-#ifndef OPENSSL_NO_DEPRECATED
-static void BN_STACK_reset(BN_STACK *st)
-{
-    st->depth = 0;
-}
-#endif
-
-static int BN_STACK_push(BN_STACK *st, unsigned int idx)
-{
-    if (st->depth == st->size)
-        /* Need to expand */
-    {
-        unsigned int newsize = (st->size ?
-                                (st->size * 3 / 2) : BN_CTX_START_FRAMES);
-        unsigned int *newitems = OPENSSL_malloc(newsize *
-                                                sizeof(unsigned int));
-        if (!newitems)
-            return 0;
-        if (st->depth)
-            memcpy(newitems, st->indexes, st->depth * sizeof(unsigned int));
-        if (st->size)
-            OPENSSL_free(st->indexes);
->>>>>>> origin/master
         st->indexes = newitems;
         st->size = newsize;
     }
@@ -440,7 +285,6 @@ static void BN_POOL_init(BN_POOL *p)
 
 static void BN_POOL_finish(BN_POOL *p)
 {
-<<<<<<< HEAD
     unsigned int loop;
     BIGNUM *bn;
 
@@ -448,23 +292,12 @@ static void BN_POOL_finish(BN_POOL *p)
         for (loop = 0, bn = p->head->vals; loop++ < BN_CTX_POOL_SIZE; bn++)
             if (bn->d)
                 BN_clear_free(bn);
-=======
-    while (p->head) {
-        unsigned int loop = 0;
-        BIGNUM *bn = p->head->vals;
-        while (loop++ < BN_CTX_POOL_SIZE) {
-            if (bn->d)
-                BN_clear_free(bn);
-            bn++;
-        }
->>>>>>> origin/master
         p->current = p->head->next;
         OPENSSL_free(p->head);
         p->head = p->current;
     }
 }
 
-<<<<<<< HEAD
 
 static BIGNUM *BN_POOL_get(BN_POOL *p, int flag)
 {
@@ -485,43 +318,6 @@ static BIGNUM *BN_POOL_get(BN_POOL *p, int flag)
         item->next = NULL;
 
         if (p->head == NULL)
-=======
-#ifndef OPENSSL_NO_DEPRECATED
-static void BN_POOL_reset(BN_POOL *p)
-{
-    BN_POOL_ITEM *item = p->head;
-    while (item) {
-        unsigned int loop = 0;
-        BIGNUM *bn = item->vals;
-        while (loop++ < BN_CTX_POOL_SIZE) {
-            if (bn->d)
-                BN_clear(bn);
-            bn++;
-        }
-        item = item->next;
-    }
-    p->current = p->head;
-    p->used = 0;
-}
-#endif
-
-static BIGNUM *BN_POOL_get(BN_POOL *p)
-{
-    if (p->used == p->size) {
-        BIGNUM *bn;
-        unsigned int loop = 0;
-        BN_POOL_ITEM *item = OPENSSL_malloc(sizeof(BN_POOL_ITEM));
-        if (!item)
-            return NULL;
-        /* Initialise the structure */
-        bn = item->vals;
-        while (loop++ < BN_CTX_POOL_SIZE)
-            BN_init(bn++);
-        item->prev = p->tail;
-        item->next = NULL;
-        /* Link it in */
-        if (!p->head)
->>>>>>> origin/master
             p->head = p->current = p->tail = item;
         else {
             p->tail->next = item;
@@ -533,10 +329,7 @@ static BIGNUM *BN_POOL_get(BN_POOL *p)
         /* Return the first bignum from the new pool */
         return item->vals;
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
     if (!p->used)
         p->current = p->head;
     else if ((p->used % BN_CTX_POOL_SIZE) == 0)
@@ -547,18 +340,11 @@ static BIGNUM *BN_POOL_get(BN_POOL *p)
 static void BN_POOL_release(BN_POOL *p, unsigned int num)
 {
     unsigned int offset = (p->used - 1) % BN_CTX_POOL_SIZE;
-<<<<<<< HEAD
 
     p->used -= num;
     while (num--) {
         bn_check_top(p->current->vals + offset);
         if (offset == 0) {
-=======
-    p->used -= num;
-    while (num--) {
-        bn_check_top(p->current->vals + offset);
-        if (!offset) {
->>>>>>> origin/master
             offset = BN_CTX_POOL_SIZE - 1;
             p->current = p->current->prev;
         } else

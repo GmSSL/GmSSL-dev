@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,75 +5,13 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* crypto/x509/by_dir.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
->>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <time.h>
 #include <errno.h>
 
-<<<<<<< HEAD
 #include "internal/cryptlib.h"
-=======
-#include "cryptlib.h"
->>>>>>> origin/master
 
 #ifndef NO_SYS_TYPES_H
 # include <sys/types.h>
@@ -83,7 +20,6 @@
 # include <sys/stat.h>
 #endif
 
-<<<<<<< HEAD
 
 #include <openssl/lhash.h>
 #include <openssl/x509.h>
@@ -100,50 +36,21 @@ struct lookup_dir_entry_st {
     int dir_type;
     STACK_OF(BY_DIR_HASH) *hashes;
 };
-=======
-#include <openssl/lhash.h>
-#include <openssl/x509.h>
-
-typedef struct lookup_dir_hashes_st {
-    unsigned long hash;
-    int suffix;
-} BY_DIR_HASH;
-
-typedef struct lookup_dir_entry_st {
-    char *dir;
-    int dir_type;
-    STACK_OF(BY_DIR_HASH) *hashes;
-} BY_DIR_ENTRY;
->>>>>>> origin/master
 
 typedef struct lookup_dir_st {
     BUF_MEM *buffer;
     STACK_OF(BY_DIR_ENTRY) *dirs;
-<<<<<<< HEAD
     CRYPTO_RWLOCK *lock;
 } BY_DIR;
 
-=======
-} BY_DIR;
-
-DECLARE_STACK_OF(BY_DIR_HASH)
-DECLARE_STACK_OF(BY_DIR_ENTRY)
-
->>>>>>> origin/master
 static int dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
                     char **ret);
 static int new_dir(X509_LOOKUP *lu);
 static void free_dir(X509_LOOKUP *lu);
 static int add_cert_dir(BY_DIR *ctx, const char *dir, int type);
-<<<<<<< HEAD
 static int get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
                                X509_NAME *name, X509_OBJECT *ret);
 static X509_LOOKUP_METHOD x509_dir_lookup = {
-=======
-static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
-                               X509_OBJECT *ret);
-X509_LOOKUP_METHOD x509_dir_lookup = {
->>>>>>> origin/master
     "Load certs from files in a directory",
     new_dir,                    /* new */
     free_dir,                   /* free */
@@ -193,7 +100,6 @@ static int new_dir(X509_LOOKUP *lu)
 {
     BY_DIR *a;
 
-<<<<<<< HEAD
     if ((a = OPENSSL_malloc(sizeof(*a))) == NULL)
         return 0;
     if ((a->buffer = BUF_MEM_new()) == NULL) {
@@ -209,17 +115,6 @@ static int new_dir(X509_LOOKUP *lu)
     }
     lu->method_data = (char *)a;
     return 1;
-=======
-    if ((a = (BY_DIR *)OPENSSL_malloc(sizeof(BY_DIR))) == NULL)
-        return (0);
-    if ((a->buffer = BUF_MEM_new()) == NULL) {
-        OPENSSL_free(a);
-        return (0);
-    }
-    a->dirs = NULL;
-    lu->method_data = (char *)a;
-    return (1);
->>>>>>> origin/master
 }
 
 static void by_dir_hash_free(BY_DIR_HASH *hash)
@@ -239,15 +134,8 @@ static int by_dir_hash_cmp(const BY_DIR_HASH *const *a,
 
 static void by_dir_entry_free(BY_DIR_ENTRY *ent)
 {
-<<<<<<< HEAD
     OPENSSL_free(ent->dir);
     sk_BY_DIR_HASH_pop_free(ent->hashes, by_dir_hash_free);
-=======
-    if (ent->dir)
-        OPENSSL_free(ent->dir);
-    if (ent->hashes)
-        sk_BY_DIR_HASH_pop_free(ent->hashes, by_dir_hash_free);
->>>>>>> origin/master
     OPENSSL_free(ent);
 }
 
@@ -256,27 +144,15 @@ static void free_dir(X509_LOOKUP *lu)
     BY_DIR *a;
 
     a = (BY_DIR *)lu->method_data;
-<<<<<<< HEAD
     sk_BY_DIR_ENTRY_pop_free(a->dirs, by_dir_entry_free);
     BUF_MEM_free(a->buffer);
     CRYPTO_THREAD_lock_free(a->lock);
-=======
-    if (a->dirs != NULL)
-        sk_BY_DIR_ENTRY_pop_free(a->dirs, by_dir_entry_free);
-    if (a->buffer != NULL)
-        BUF_MEM_free(a->buffer);
->>>>>>> origin/master
     OPENSSL_free(a);
 }
 
 static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
 {
-<<<<<<< HEAD
     const char *s, *p;
-=======
-    int j, len;
-    const char *s, *ss, *p;
->>>>>>> origin/master
 
     if (dir == NULL || !*dir) {
         X509err(X509_F_ADD_CERT_DIR, X509_R_INVALID_DIRECTORY);
@@ -288,28 +164,17 @@ static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
     do {
         if ((*p == LIST_SEPARATOR_CHAR) || (*p == '\0')) {
             BY_DIR_ENTRY *ent;
-<<<<<<< HEAD
             int j;
             size_t len;
             const char *ss = s;
             s = p + 1;
             len = p - ss;
-=======
-            ss = s;
-            s = p + 1;
-            len = (int)(p - ss);
->>>>>>> origin/master
             if (len == 0)
                 continue;
             for (j = 0; j < sk_BY_DIR_ENTRY_num(ctx->dirs); j++) {
                 ent = sk_BY_DIR_ENTRY_value(ctx->dirs, j);
-<<<<<<< HEAD
                 if (strlen(ent->dir) == len &&
                     strncmp(ent->dir, ss, len) == 0)
-=======
-                if (strlen(ent->dir) == (size_t)len &&
-                    strncmp(ent->dir, ss, (unsigned int)len) == 0)
->>>>>>> origin/master
                     break;
             }
             if (j < sk_BY_DIR_ENTRY_num(ctx->dirs))
@@ -321,7 +186,6 @@ static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
                     return 0;
                 }
             }
-<<<<<<< HEAD
             ent = OPENSSL_malloc(sizeof(*ent));
             if (ent == NULL)
                 return 0;
@@ -332,20 +196,6 @@ static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
                 by_dir_entry_free(ent);
                 return 0;
             }
-=======
-            ent = OPENSSL_malloc(sizeof(BY_DIR_ENTRY));
-            if (!ent)
-                return 0;
-            ent->dir_type = type;
-            ent->hashes = sk_BY_DIR_HASH_new(by_dir_hash_cmp);
-            ent->dir = OPENSSL_malloc((unsigned int)len + 1);
-            if (!ent->dir || !ent->hashes) {
-                by_dir_entry_free(ent);
-                return 0;
-            }
-            strncpy(ent->dir, ss, (unsigned int)len);
-            ent->dir[len] = '\0';
->>>>>>> origin/master
             if (!sk_BY_DIR_ENTRY_push(ctx->dirs, ent)) {
                 by_dir_entry_free(ent);
                 return 0;
@@ -355,7 +205,6 @@ static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
     return 1;
 }
 
-<<<<<<< HEAD
 static int get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
                                X509_NAME *name, X509_OBJECT *ret)
 {
@@ -363,21 +212,6 @@ static int get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
     union {
         X509 st_x509;
         X509_CRL crl;
-=======
-static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
-                               X509_OBJECT *ret)
-{
-    BY_DIR *ctx;
-    union {
-        struct {
-            X509 st_x509;
-            X509_CINF st_x509_cinf;
-        } x509;
-        struct {
-            X509_CRL st_crl;
-            X509_CRL_INFO st_crl_info;
-        } crl;
->>>>>>> origin/master
     } data;
     int ok = 0;
     int i, j, k;
@@ -391,23 +225,12 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
 
     stmp.type = type;
     if (type == X509_LU_X509) {
-<<<<<<< HEAD
         data.st_x509.cert_info.subject = name;
         stmp.data.x509 = &data.st_x509;
         postfix = "";
     } else if (type == X509_LU_CRL) {
         data.crl.crl.issuer = name;
         stmp.data.crl = &data.crl;
-=======
-        data.x509.st_x509.cert_info = &data.x509.st_x509_cinf;
-        data.x509.st_x509_cinf.subject = name;
-        stmp.data.x509 = &data.x509.st_x509;
-        postfix = "";
-    } else if (type == X509_LU_CRL) {
-        data.crl.st_crl.crl = &data.crl.st_crl_info;
-        data.crl.st_crl_info.issuer = name;
-        stmp.data.crl = &data.crl.st_crl;
->>>>>>> origin/master
         postfix = "r";
     } else {
         X509err(X509_F_GET_CERT_BY_SUBJECT, X509_R_WRONG_LOOKUP_TYPE);
@@ -434,11 +257,7 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
         }
         if (type == X509_LU_CRL && ent->hashes) {
             htmp.hash = h;
-<<<<<<< HEAD
             CRYPTO_THREAD_read_lock(ctx->lock);
-=======
-            CRYPTO_r_lock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
             idx = sk_BY_DIR_HASH_find(ent->hashes, &htmp);
             if (idx >= 0) {
                 hent = sk_BY_DIR_HASH_value(ent->hashes, idx);
@@ -447,11 +266,7 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
                 hent = NULL;
                 k = 0;
             }
-<<<<<<< HEAD
             CRYPTO_THREAD_unlock(ctx->lock);
-=======
-            CRYPTO_r_unlock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
         } else {
             k = 0;
             hent = NULL;
@@ -508,30 +323,18 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
         /*
          * we have added it to the cache so now pull it out again
          */
-<<<<<<< HEAD
         CRYPTO_THREAD_write_lock(ctx->lock);
-=======
-        CRYPTO_w_lock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
         j = sk_X509_OBJECT_find(xl->store_ctx->objs, &stmp);
         if (j != -1)
             tmp = sk_X509_OBJECT_value(xl->store_ctx->objs, j);
         else
             tmp = NULL;
-<<<<<<< HEAD
         CRYPTO_THREAD_unlock(ctx->lock);
-=======
-        CRYPTO_w_unlock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
 
         /* If a CRL, update the last file suffix added for this */
 
         if (type == X509_LU_CRL) {
-<<<<<<< HEAD
             CRYPTO_THREAD_write_lock(ctx->lock);
-=======
-            CRYPTO_w_lock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
             /*
              * Look for entry again in case another thread added an entry
              * first.
@@ -543,7 +346,6 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
                     hent = sk_BY_DIR_HASH_value(ent->hashes, idx);
             }
             if (!hent) {
-<<<<<<< HEAD
                 hent = OPENSSL_malloc(sizeof(*hent));
                 if (hent == NULL) {
                     CRYPTO_THREAD_unlock(ctx->lock);
@@ -555,29 +357,15 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
                 hent->suffix = k;
                 if (!sk_BY_DIR_HASH_push(ent->hashes, hent)) {
                     CRYPTO_THREAD_unlock(ctx->lock);
-=======
-                hent = OPENSSL_malloc(sizeof(BY_DIR_HASH));
-                hent->hash = h;
-                hent->suffix = k;
-                if (!sk_BY_DIR_HASH_push(ent->hashes, hent)) {
-                    CRYPTO_w_unlock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
                     OPENSSL_free(hent);
                     ok = 0;
                     goto finish;
                 }
-<<<<<<< HEAD
             } else if (hent->suffix < k) {
                 hent->suffix = k;
             }
 
             CRYPTO_THREAD_unlock(ctx->lock);
-=======
-            } else if (hent->suffix < k)
-                hent->suffix = k;
-
-            CRYPTO_w_unlock(CRYPTO_LOCK_X509_STORE);
->>>>>>> origin/master
 
         }
 
@@ -595,11 +383,6 @@ static int get_cert_by_subject(X509_LOOKUP *xl, int type, X509_NAME *name,
         }
     }
  finish:
-<<<<<<< HEAD
     BUF_MEM_free(b);
-=======
-    if (b != NULL)
-        BUF_MEM_free(b);
->>>>>>> origin/master
     return (ok);
 }

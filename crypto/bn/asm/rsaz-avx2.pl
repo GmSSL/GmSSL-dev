@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 ##############################################################################
 #                                                                            #
@@ -114,11 +110,7 @@ if (!$avx && `$ENV{CC} -v 2>&1` =~ /(^clang version|based on LLVM) ([3-9])\.([0-
 	$addx = ($ver>=3.03);
 }
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT = *OUT;
 
 if ($avx>1) {{{
@@ -458,11 +450,7 @@ $TEMP2 = $B2;
 $TEMP3 = $Y1;
 $TEMP4 = $Y2;
 $code.=<<___;
-<<<<<<< HEAD
 	# we need to fix indices 32-39 to avoid overflow
-=======
-	#we need to fix indexes 32-39 to avoid overflow
->>>>>>> origin/master
 	vmovdqu		32*8(%rsp), $ACC8		# 32*8-192($tp0),
 	vmovdqu		32*9(%rsp), $ACC1		# 32*9-192($tp0)
 	vmovdqu		32*10(%rsp), $ACC2		# 32*10-192($tp0)
@@ -1611,7 +1599,6 @@ rsaz_1024_scatter5_avx2:
 .type	rsaz_1024_gather5_avx2,\@abi-omnipotent
 .align	32
 rsaz_1024_gather5_avx2:
-<<<<<<< HEAD
 	vzeroupper
 	mov	%rsp,%r11
 ___
@@ -1734,70 +1721,6 @@ $code.=<<___;
 	vmovdqu		%ymm5,($out)
 	lea		32($out),$out
 	dec	$power
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x88(%rsp),%rax
-	vzeroupper
-.LSEH_begin_rsaz_1024_gather5:
-	# I can't trust assembler to use specific encoding:-(
-	.byte	0x48,0x8d,0x60,0xe0		#lea	-0x20(%rax),%rsp
-	.byte	0xc5,0xf8,0x29,0x70,0xe0	#vmovaps %xmm6,-0x20(%rax)
-	.byte	0xc5,0xf8,0x29,0x78,0xf0	#vmovaps %xmm7,-0x10(%rax)
-	.byte	0xc5,0x78,0x29,0x40,0x00	#vmovaps %xmm8,0(%rax)
-	.byte	0xc5,0x78,0x29,0x48,0x10	#vmovaps %xmm9,0x10(%rax)
-	.byte	0xc5,0x78,0x29,0x50,0x20	#vmovaps %xmm10,0x20(%rax)
-	.byte	0xc5,0x78,0x29,0x58,0x30	#vmovaps %xmm11,0x30(%rax)
-	.byte	0xc5,0x78,0x29,0x60,0x40	#vmovaps %xmm12,0x40(%rax)
-	.byte	0xc5,0x78,0x29,0x68,0x50	#vmovaps %xmm13,0x50(%rax)
-	.byte	0xc5,0x78,0x29,0x70,0x60	#vmovaps %xmm14,0x60(%rax)
-	.byte	0xc5,0x78,0x29,0x78,0x70	#vmovaps %xmm15,0x70(%rax)
-___
-$code.=<<___;
-	lea	.Lgather_table(%rip),%r11
-	mov	$power,%eax
-	and	\$3,$power
-	shr	\$2,%eax			# cache line number
-	shl	\$4,$power			# offset within cache line
-
-	vmovdqu		-32(%r11),%ymm7		# .Lgather_permd
-	vpbroadcastb	8(%r11,%rax), %xmm8
-	vpbroadcastb	7(%r11,%rax), %xmm9
-	vpbroadcastb	6(%r11,%rax), %xmm10
-	vpbroadcastb	5(%r11,%rax), %xmm11
-	vpbroadcastb	4(%r11,%rax), %xmm12
-	vpbroadcastb	3(%r11,%rax), %xmm13
-	vpbroadcastb	2(%r11,%rax), %xmm14
-	vpbroadcastb	1(%r11,%rax), %xmm15
-
-	lea	64($inp,$power),$inp
-	mov	\$64,%r11			# size optimization
-	mov	\$9,%eax
-	jmp	.Loop_gather_1024
-
-.align	32
-.Loop_gather_1024:
-	vpand		-64($inp),		%xmm8,%xmm0
-	vpand		($inp),			%xmm9,%xmm1
-	vpand		64($inp),		%xmm10,%xmm2
-	vpand		($inp,%r11,2),		%xmm11,%xmm3
-	 vpor					%xmm0,%xmm1,%xmm1
-	vpand		64($inp,%r11,2),	%xmm12,%xmm4
-	 vpor					%xmm2,%xmm3,%xmm3
-	vpand		($inp,%r11,4),		%xmm13,%xmm5
-	 vpor					%xmm1,%xmm3,%xmm3
-	vpand		64($inp,%r11,4),	%xmm14,%xmm6
-	 vpor					%xmm4,%xmm5,%xmm5
-	vpand		-128($inp,%r11,8),	%xmm15,%xmm2
-	lea		($inp,%r11,8),$inp
-	 vpor					%xmm3,%xmm5,%xmm5
-	 vpor					%xmm2,%xmm6,%xmm6
-	 vpor					%xmm5,%xmm6,%xmm6
-	vpermd		%ymm6,%ymm7,%ymm6
-	vmovdqu		%ymm6,($out)
-	lea		32($out),$out
-	dec	%eax
->>>>>>> origin/master
 	jnz	.Loop_gather_1024
 
 	vpxor	%ymm0,%ymm0,%ymm0
@@ -1805,7 +1728,6 @@ $code.=<<___;
 	vzeroupper
 ___
 $code.=<<___ if ($win64);
-<<<<<<< HEAD
 	movaps	-0xa8(%r11),%xmm6
 	movaps	-0x98(%r11),%xmm7
 	movaps	-0x88(%r11),%xmm8
@@ -1820,22 +1742,6 @@ $code.=<<___ if ($win64);
 ___
 $code.=<<___;
 	lea	(%r11),%rsp
-=======
-	movaps	(%rsp),%xmm6
-	movaps	0x10(%rsp),%xmm7
-	movaps	0x20(%rsp),%xmm8
-	movaps	0x30(%rsp),%xmm9
-	movaps	0x40(%rsp),%xmm10
-	movaps	0x50(%rsp),%xmm11
-	movaps	0x60(%rsp),%xmm12
-	movaps	0x70(%rsp),%xmm13
-	movaps	0x80(%rsp),%xmm14
-	movaps	0x90(%rsp),%xmm15
-	lea	0xa8(%rsp),%rsp
-.LSEH_end_rsaz_1024_gather5:
-___
-$code.=<<___;
->>>>>>> origin/master
 	ret
 .size	rsaz_1024_gather5_avx2,.-rsaz_1024_gather5_avx2
 ___
@@ -1869,15 +1775,10 @@ $code.=<<___;
 	.long	0,2,4,6,7,7,7,7
 .Lgather_permd:
 	.long	0,7,1,7,2,7,3,7
-<<<<<<< HEAD
 .Linc:
 	.long	0,0,0,0, 1,1,1,1
 	.long	2,2,2,2, 3,3,3,3
 	.long	4,4,4,4, 4,4,4,4
-=======
-.Lgather_table:
-	.byte	0,0,0,0,0,0,0,0, 0xff,0,0,0,0,0,0,0
->>>>>>> origin/master
 .align	64
 ___
 
@@ -2005,7 +1906,6 @@ rsaz_se_handler:
 	.rva	rsaz_se_handler
 	.rva	.Lmul_1024_body,.Lmul_1024_epilogue
 .LSEH_info_rsaz_1024_gather5:
-<<<<<<< HEAD
 	.byte	0x01,0x36,0x17,0x0b
 	.byte	0x36,0xf8,0x09,0x00	# vmovaps 0x90(rsp),xmm15
 	.byte	0x31,0xe8,0x08,0x00	# vmovaps 0x80(rsp),xmm14
@@ -2019,20 +1919,6 @@ rsaz_se_handler:
 	.byte	0x09,0x68,0x00,0x00	# vmovaps 0x00(rsp),xmm6
 	.byte	0x04,0x01,0x15,0x00	# sub	  rsp,0xa8
 	.byte	0x00,0xb3,0x00,0x00	# set_frame r11
-=======
-	.byte	0x01,0x33,0x16,0x00
-	.byte	0x36,0xf8,0x09,0x00	#vmovaps 0x90(rsp),xmm15
-	.byte	0x31,0xe8,0x08,0x00	#vmovaps 0x80(rsp),xmm14
-	.byte	0x2c,0xd8,0x07,0x00	#vmovaps 0x70(rsp),xmm13
-	.byte	0x27,0xc8,0x06,0x00	#vmovaps 0x60(rsp),xmm12
-	.byte	0x22,0xb8,0x05,0x00	#vmovaps 0x50(rsp),xmm11
-	.byte	0x1d,0xa8,0x04,0x00	#vmovaps 0x40(rsp),xmm10
-	.byte	0x18,0x98,0x03,0x00	#vmovaps 0x30(rsp),xmm9
-	.byte	0x13,0x88,0x02,0x00	#vmovaps 0x20(rsp),xmm8
-	.byte	0x0e,0x78,0x01,0x00	#vmovaps 0x10(rsp),xmm7
-	.byte	0x09,0x68,0x00,0x00	#vmovaps 0x00(rsp),xmm6
-	.byte	0x04,0x01,0x15,0x00	#sub	rsp,0xa8
->>>>>>> origin/master
 ___
 }
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -29,15 +25,12 @@
 # faster than "4-bit" integer-only compiler-generated 64-bit code.
 # "Initial version" means that there is room for futher improvement.
 
-<<<<<<< HEAD
 # May 2016
 #
 # 2x aggregated reduction improves performance by 50% (resulting
 # performance on POWER8 is 1 cycle per processed byte), and 4x
 # aggregated reduction - by 170% or 2.7x (resulting in 0.55 cpb).
 
-=======
->>>>>>> origin/master
 $flavour=shift;
 $output =shift;
 
@@ -47,18 +40,14 @@ if ($flavour =~ /64/) {
 	$STU="stdu";
 	$POP="ld";
 	$PUSH="std";
-<<<<<<< HEAD
 	$UCMP="cmpld";
 	$SHRI="srdi";
-=======
->>>>>>> origin/master
 } elsif ($flavour =~ /32/) {
 	$SIZE_T=4;
 	$LRSAVE=$SIZE_T;
 	$STU="stwu";
 	$POP="lwz";
 	$PUSH="stw";
-<<<<<<< HEAD
 	$UCMP="cmplw";
 	$SHRI="srwi";
 } else { die "nonsense $flavour"; }
@@ -66,10 +55,6 @@ if ($flavour =~ /64/) {
 $sp="r1";
 $FRAME=6*$SIZE_T+13*16;	# 13*16 is for v20-v31 offload
 
-=======
-} else { die "nonsense $flavour"; }
-
->>>>>>> origin/master
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}ppc-xlate.pl" and -f $xlate ) or
 ( $xlate="${dir}../../perlasm/ppc-xlate.pl" and -f $xlate) or
@@ -81,10 +66,7 @@ my ($Xip,$Htbl,$inp,$len)=map("r$_",(3..6));	# argument block
 
 my ($Xl,$Xm,$Xh,$IN)=map("v$_",(0..3));
 my ($zero,$t0,$t1,$t2,$xC2,$H,$Hh,$Hl,$lemask)=map("v$_",(4..12));
-<<<<<<< HEAD
 my ($Xl1,$Xm1,$Xh1,$IN1,$H2,$H2h,$H2l)=map("v$_",(13..19));
-=======
->>>>>>> origin/master
 my $vrsave="r12";
 
 $code=<<___;
@@ -95,11 +77,7 @@ $code=<<___;
 .globl	.gcm_init_p8
 .align	5
 .gcm_init_p8:
-<<<<<<< HEAD
 	li		r0,-4096
-=======
-	lis		r0,0xfff0
->>>>>>> origin/master
 	li		r8,0x10
 	mfspr		$vrsave,256
 	li		r9,0x20
@@ -121,22 +99,15 @@ $code=<<___;
 	vsl		$H,$H,$t0		# H<<=1
 	vsrab		$t1,$t1,$t2		# broadcast carry bit
 	vand		$t1,$t1,$xC2
-<<<<<<< HEAD
 	vxor		$IN,$H,$t1		# twisted H
 
 	vsldoi		$H,$IN,$IN,8		# twist even more ...
-=======
-	vxor		$H,$H,$t1		# twisted H
-
-	vsldoi		$H,$H,$H,8		# twist even more ...
->>>>>>> origin/master
 	vsldoi		$xC2,$zero,$xC2,8	# 0xc2.0
 	vsldoi		$Hl,$zero,$H,8		# ... and split
 	vsldoi		$Hh,$H,$zero,8
 
 	stvx_u		$xC2,0,r3		# save pre-computed table
 	stvx_u		$Hl,r8,r3
-<<<<<<< HEAD
 	li		r8,0x40
 	stvx_u		$H, r9,r3
 	li		r9,0x50
@@ -225,10 +196,6 @@ $code.=<<___;
 	 stvx_u		$H2l,r8,r3		# save H^4
 	 stvx_u		$H2,r9,r3
 	 stvx_u		$H2h,r10,r3
-=======
-	stvx_u		$H, r9,r3
-	stvx_u		$Hh,r10,r3
->>>>>>> origin/master
 
 	mtspr		256,$vrsave
 	blr
@@ -236,13 +203,9 @@ $code.=<<___;
 	.byte		0,12,0x14,0,0,0,2,0
 	.long		0
 .size	.gcm_init_p8,.-.gcm_init_p8
-<<<<<<< HEAD
 ___
 }
 $code.=<<___;
-=======
-
->>>>>>> origin/master
 .globl	.gcm_gmult_p8
 .align	5
 .gcm_gmult_p8:
@@ -264,19 +227,11 @@ $code.=<<___;
 	 le?vperm	$IN,$IN,$IN,$lemask
 	vxor		$zero,$zero,$zero
 
-<<<<<<< HEAD
 	vpmsumd		$Xl,$IN,$Hl		# H.lo路Xi.lo
 	vpmsumd		$Xm,$IN,$H		# H.hi路Xi.lo+H.lo路Xi.hi
 	vpmsumd		$Xh,$IN,$Hh		# H.hi路Xi.hi
 
 	vpmsumd		$t2,$Xl,$xC2		# 1st reduction phase
-=======
-	vpmsumd		$Xl,$IN,$Hl		# H.lo稾i.lo
-	vpmsumd		$Xm,$IN,$H		# H.hi稾i.lo+H.lo稾i.hi
-	vpmsumd		$Xh,$IN,$Hh		# H.hi稾i.hi
-
-	vpmsumd		$t2,$Xl,$xC2		# 1st phase
->>>>>>> origin/master
 
 	vsldoi		$t0,$Xm,$zero,8
 	vsldoi		$t1,$zero,$Xm,8
@@ -286,11 +241,7 @@ $code.=<<___;
 	vsldoi		$Xl,$Xl,$Xl,8
 	vxor		$Xl,$Xl,$t2
 
-<<<<<<< HEAD
 	vsldoi		$t1,$Xl,$Xl,8		# 2nd reduction phase
-=======
-	vsldoi		$t1,$Xl,$Xl,8		# 2nd phase
->>>>>>> origin/master
 	vpmsumd		$Xl,$Xl,$xC2
 	vxor		$t1,$t1,$Xh
 	vxor		$Xl,$Xl,$t1
@@ -308,11 +259,7 @@ $code.=<<___;
 .globl	.gcm_ghash_p8
 .align	5
 .gcm_ghash_p8:
-<<<<<<< HEAD
 	li		r0,-4096
-=======
-	lis		r0,0xfff8
->>>>>>> origin/master
 	li		r8,0x10
 	mfspr		$vrsave,256
 	li		r9,0x20
@@ -321,7 +268,6 @@ $code.=<<___;
 	lvx_u		$Xl,0,$Xip		# load Xi
 
 	lvx_u		$Hl,r8,$Htbl		# load pre-computed table
-<<<<<<< HEAD
 	li		r8,0x40
 	 le?lvsl	$lemask,r0,r0
 	lvx_u		$H, r9,$Htbl
@@ -329,18 +275,11 @@ $code.=<<___;
 	 le?vspltisb	$t0,0x07
 	lvx_u		$Hh,r10,$Htbl
 	li		r10,0x60
-=======
-	 le?lvsl	$lemask,r0,r0
-	lvx_u		$H, r9,$Htbl
-	 le?vspltisb	$t0,0x07
-	lvx_u		$Hh,r10,$Htbl
->>>>>>> origin/master
 	 le?vxor	$lemask,$lemask,$t0
 	lvx_u		$xC2,0,$Htbl
 	 le?vperm	$Xl,$Xl,$Xl,$lemask
 	vxor		$zero,$zero,$zero
 
-<<<<<<< HEAD
 	${UCMP}i	$len,64
 	bge		Lgcm_ghash_p8_4x
 
@@ -382,51 +321,20 @@ Loop_2x:
 	vsldoi		$t0,$Xm,$zero,8
 	vsldoi		$t1,$zero,$Xm,8
 	 vxor		$Xh,$Xh,$Xh1
-=======
-	lvx_u		$IN,0,$inp
-	addi		$inp,$inp,16
-	subi		$len,$len,16
-	 le?vperm	$IN,$IN,$IN,$lemask
-	vxor		$IN,$IN,$Xl
-	b		Loop
-
-.align	5
-Loop:
-	 subic		$len,$len,16
-	vpmsumd		$Xl,$IN,$Hl		# H.lo稾i.lo
-	 subfe.		r0,r0,r0		# borrow?-1:0
-	vpmsumd		$Xm,$IN,$H		# H.hi稾i.lo+H.lo稾i.hi
-	 and		r0,r0,$len
-	vpmsumd		$Xh,$IN,$Hh		# H.hi稾i.hi
-	 add		$inp,$inp,r0
-
-	vpmsumd		$t2,$Xl,$xC2		# 1st phase
-
-	vsldoi		$t0,$Xm,$zero,8
-	vsldoi		$t1,$zero,$Xm,8
->>>>>>> origin/master
 	vxor		$Xl,$Xl,$t0
 	vxor		$Xh,$Xh,$t1
 
 	vsldoi		$Xl,$Xl,$Xl,8
 	vxor		$Xl,$Xl,$t2
-<<<<<<< HEAD
 	 lvx_u		$IN,r8,$inp
 	 addi		$inp,$inp,32
 
 	vsldoi		$t1,$Xl,$Xl,8		# 2nd reduction phase
-=======
-	 lvx_u		$IN,0,$inp
-	 addi		$inp,$inp,16
-
-	vsldoi		$t1,$Xl,$Xl,8		# 2nd phase
->>>>>>> origin/master
 	vpmsumd		$Xl,$Xl,$xC2
 	 le?vperm	$IN,$IN,$IN,$lemask
 	vxor		$t1,$t1,$Xh
 	vxor		$IN,$IN,$t1
 	vxor		$IN,$IN,$Xl
-<<<<<<< HEAD
 	$UCMP		r9,$inp
 	bgt		Loop_2x			# done yet?
 
@@ -453,10 +361,6 @@ Lshort:
 	vxor		$t1,$t1,$Xh
 
 Leven:
-=======
-	beq		Loop			# did $len-=16 borrow?
-
->>>>>>> origin/master
 	vxor		$Xl,$Xl,$t1
 	le?vperm	$Xl,$Xl,$Xl,$lemask
 	stvx_u		$Xl,0,$Xip		# write out Xi
@@ -466,7 +370,6 @@ Leven:
 	.long		0
 	.byte		0,12,0x14,0,0,0,4,0
 	.long		0
-<<<<<<< HEAD
 ___
 {
 my ($Xl3,$Xm2,$IN2,$H3l,$H3,$H3h,
@@ -745,8 +648,6 @@ Ldone_4x:
 ___
 }
 $code.=<<___;
-=======
->>>>>>> origin/master
 .size	.gcm_ghash_p8,.-.gcm_ghash_p8
 
 .asciz  "GHASH for PowerISA 2.07, CRYPTOGAMS by <appro\@openssl.org>"
@@ -754,11 +655,8 @@ $code.=<<___;
 ___
 
 foreach (split("\n",$code)) {
-<<<<<<< HEAD
 	s/\`([^\`]*)\`/eval $1/geo;
 
-=======
->>>>>>> origin/master
 	if ($flavour =~ /le$/o) {	# little-endian
 	    s/le\?//o		or
 	    s/be\?/#be#/o;

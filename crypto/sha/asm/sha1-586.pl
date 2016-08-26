@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # [Re]written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -77,15 +73,9 @@
 # switch to AVX alone improves performance by as little as 4% in
 # comparison to SSSE3 code path. But below result doesn't look like
 # 4% improvement... Trouble is that Sandy Bridge decodes 'ro[rl]' as
-<<<<<<< HEAD
 # pair of Âµ-ops, and it's the additional Âµ-ops, two per round, that
 # make it run slower than Core2 and Westmere. But 'sh[rl]d' is decoded
 # as single Âµ-op by Sandy Bridge and it's replacing 'ro[rl]' with
-=======
-# pair of µ-ops, and it's the additional µ-ops, two per round, that
-# make it run slower than Core2 and Westmere. But 'sh[rl]d' is decoded
-# as single µ-op by Sandy Bridge and it's replacing 'ro[rl]' with
->>>>>>> origin/master
 # equivalent 'sh[rl]d' that is responsible for the impressive 5.1
 # cycles per processed byte. But 'sh[rl]d' is not something that used
 # to be fast, nor does it appear to be fast in upcoming Bulldozer
@@ -130,12 +120,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"sha1-586.pl",$ARGV[$#ARGV] eq "386");
 
 $xmm=$ymm=0;
@@ -1497,8 +1484,5 @@ sub Xtail_avx()
 &asciz("SHA1 block transform for x86, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
-<<<<<<< HEAD
 
 close STDOUT;
-=======
->>>>>>> origin/master

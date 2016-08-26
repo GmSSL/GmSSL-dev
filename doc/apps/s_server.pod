@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 =pod
 
 =head1 NAME
@@ -11,13 +7,9 @@ s_server - SSL/TLS server program
 =head1 SYNOPSIS
 
 B<openssl> B<s_server>
-<<<<<<< HEAD
 [B<-help>]
 [B<-accept port>]
 [B<-naccept count>]
-=======
-[B<-accept port>]
->>>>>>> origin/master
 [B<-context id>]
 [B<-verify depth>]
 [B<-Verify depth>]
@@ -42,7 +34,6 @@ B<openssl> B<s_server>
 [B<-state>]
 [B<-CApath directory>]
 [B<-CAfile filename>]
-<<<<<<< HEAD
 [B<-no-CAfile>]
 [B<-no-CApath>]
 [B<-attime timestamp>]
@@ -72,14 +63,10 @@ B<openssl> B<s_server>
 [B<-verify_ip ip>]
 [B<-verify_name name>]
 [B<-x509_strict>]
-=======
-[B<-no_alt_chains>]
->>>>>>> origin/master
 [B<-nocert>]
 [B<-cipher cipherlist>]
 [B<-serverpref>]
 [B<-quiet>]
-<<<<<<< HEAD
 [B<-ssl3>]
 [B<-tls1>]
 [B<-dtls>]
@@ -99,18 +86,6 @@ B<openssl> B<s_server>
 [B<-comp>]
 [B<-no_comp>]
 [B<-brief>]
-=======
-[B<-no_tmp_rsa>]
-[B<-ssl2>]
-[B<-ssl3>]
-[B<-tls1>]
-[B<-no_ssl2>]
-[B<-no_ssl3>]
-[B<-no_tls1>]
-[B<-no_dhe>]
-[B<-bugs>]
-[B<-hack>]
->>>>>>> origin/master
 [B<-www>]
 [B<-WWW>]
 [B<-HTTP>]
@@ -134,7 +109,6 @@ for connections on a given port using SSL/TLS.
 
 =head1 OPTIONS
 
-<<<<<<< HEAD
 In addition to the options below the B<s_server> utility also supports the
 common and server only options documented in the
 L<SSL_CONF_cmd(3)|SSL_CONF_cmd(3)/SUPPORTED COMMAND LINE COMMANDS> manual
@@ -157,17 +131,6 @@ The server will exit after receiving B<number> connections, default unlimited.
 =item B<-context id>
 
 Sets the SSL context id. It can be given any string value. If this option
-=======
-=over 4
-
-=item B<-accept port>
-
-the TCP port to listen on for connections. If not specified 4433 is used.
-
-=item B<-context id>
-
-sets the SSL context id. It can be given any string value. If this option
->>>>>>> origin/master
 is not present a default value will be used.
 
 =item B<-cert certname>
@@ -192,21 +155,12 @@ The private format to use: DER or PEM. PEM is the default.
 
 =item B<-pass arg>
 
-<<<<<<< HEAD
 The private key password source. For more information about the format of B<arg>
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
 
 =item B<-dcert filename>, B<-dkey keyname>
 
 Specify an additional certificate and private key, these behave in the
-=======
-the private key password source. For more information about the format of B<arg>
-see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
-
-=item B<-dcert filename>, B<-dkey keyname>
-
-specify an additional certificate and private key, these behave in the
->>>>>>> origin/master
 same manner as the B<-cert> and B<-key> options except there is no default
 if they are not specified (no additional certificate and key is used). As
 noted above some cipher suites require a certificate containing a key of
@@ -217,25 +171,16 @@ by using an appropriate certificate.
 
 =item B<-dcertform format>, B<-dkeyform format>, B<-dpass arg>
 
-<<<<<<< HEAD
 Additional certificate and private key format and passphrase respectively.
 
 =item B<-nocert>
 
 If this option is set then no certificate is used. This restricts the
-=======
-additional certificate and private key format and passphrase respectively.
-
-=item B<-nocert>
-
-if this option is set then no certificate is used. This restricts the
->>>>>>> origin/master
 cipher suites available to the anonymous ones (currently just anonymous
 DH).
 
 =item B<-dhparam filename>
 
-<<<<<<< HEAD
 The DH parameter file to use. The ephemeral DH cipher suites generate keys
 using a set of DH parameters. If not specified then an attempt is made to
 load the parameters from the server certificate file.
@@ -247,34 +192,6 @@ program will be used.
 If this option is set then no DH parameters will be loaded effectively
 disabling the ephemeral DH cipher suites.
 
-=======
-the DH parameter file to use. The ephemeral DH cipher suites generate keys
-using a set of DH parameters. If not specified then an attempt is made to
-load the parameters from the server certificate file. If this fails then
-a static set of parameters hard coded into the s_server program will be used.
-
-=item B<-no_dhe>
-
-if this option is set then no DH parameters will be loaded effectively
-disabling the ephemeral DH cipher suites.
-
-=item B<-no_tmp_rsa>
-
-certain export cipher suites sometimes use a temporary RSA key, this option
-disables temporary RSA key generation.
-
-=item B<-verify depth>, B<-Verify depth>
-
-The verify depth to use. This specifies the maximum length of the
-client certificate chain and makes the server request a certificate from
-the client. With the B<-verify> option a certificate is requested but the
-client does not have to send one, with the B<-Verify> option the client
-must supply a certificate or an error occurs.
-
-If the ciphersuite cannot request a client certificate (for example an
-anonymous ciphersuite or PSK) this option has no effect.
-
->>>>>>> origin/master
 =item B<-crl_check>, B<-crl_check_all>
 
 Check the peer certificate has not been revoked by its CA.
@@ -294,7 +211,6 @@ and to use when attempting to build the server certificate chain. The list
 is also used in the list of acceptable client CAs passed to the client when
 a certificate is requested.
 
-<<<<<<< HEAD
 =item B<-no-CAfile>
 
 Do not load the trusted CA certificates from the default file location
@@ -367,39 +283,6 @@ This option translated a line feed from the terminal into CR+LF.
 =item B<-quiet>
 
 Inhibit printing of session and certificate information.
-=======
-=item B<-no_alt_chains>
-
-See the L<B<verify>|verify(1)> manual page for details.
-
-=item B<-state>
-
-prints out the SSL session states.
-
-=item B<-debug>
-
-print extensive debugging information including a hex dump of all traffic.
-
-=item B<-msg>
-
-show all protocol messages with hex dump.
-
-=item B<-nbio_test>
-
-tests non blocking I/O
-
-=item B<-nbio>
-
-turns on non blocking I/O
-
-=item B<-crlf>
-
-this option translated a line feed from the terminal into CR+LF.
-
-=item B<-quiet>
-
-inhibit printing of session and certificate information.
->>>>>>> origin/master
 
 =item B<-psk_hint hint>
 
@@ -411,7 +294,6 @@ Use the PSK key B<key> when using a PSK cipher suite. The key is
 given as a hexadecimal number without leading 0x, for example -psk
 1a2b3c4d.
 
-<<<<<<< HEAD
 =item B<-ssl2>, B<-ssl3>, B<-tls1>, B<-tls1_1>, B<-tls1_2>, B<-no_ssl2>, B<-no_ssl3>, B<-no_tls1>, B<-no_tls1_1>, B<-no_tls1_2>
 
 These options require or disable the use of the specified SSL or TLS protocols.
@@ -493,27 +375,6 @@ output.
 =item B<-cipher cipherlist>
 
 This allows the cipher list used by the server to be modified.  When
-=======
-=item B<-ssl2>, B<-ssl3>, B<-tls1>, B<-no_ssl2>, B<-no_ssl3>, B<-no_tls1>
-
-these options disable the use of certain SSL or TLS protocols. By default
-the initial handshake uses a method which should be compatible with all
-servers and permit them to use SSL v3, SSL v2 or TLS as appropriate.
-
-=item B<-bugs>
-
-there are several known bug in SSL and TLS implementations. Adding this
-option enables various workarounds.
-
-=item B<-hack>
-
-this option enables a further workaround for some some early Netscape
-SSL code (?).
-
-=item B<-cipher cipherlist>
-
-this allows the cipher list used by the server to be modified.  When
->>>>>>> origin/master
 the client sends a list of supported ciphers the first client cipher
 also included in the server list is used. Because the client specifies
 the preference order, the order of the server cipherlist irrelevant. See
@@ -521,7 +382,6 @@ the B<ciphers> command for more information.
 
 =item B<-serverpref>
 
-<<<<<<< HEAD
 Use the server's cipher preferences, rather than the client's preferences.
 
 =item B<-tlsextdebug>
@@ -536,48 +396,23 @@ Disable RFC4507bis session ticket support.
 
 Sends a status message back to the client when it connects. This includes
 information about the ciphers used and various session parameters.
-=======
-use the server's cipher preferences, rather than the client's preferences.
-
-=item B<-tlsextdebug>
-
-print out a hex dump of any TLS extensions received from the server.
-
-=item B<-no_ticket>
-
-disable RFC4507bis session ticket support. 
-
-=item B<-www>
-
-sends a status message back to the client when it connects. This includes
-lots of information about the ciphers used and various session parameters.
->>>>>>> origin/master
 The output is in HTML format so this option will normally be used with a
 web browser.
 
 =item B<-WWW>
 
-<<<<<<< HEAD
 Emulates a simple web server. Pages will be resolved relative to the
-=======
-emulates a simple web server. Pages will be resolved relative to the
->>>>>>> origin/master
 current directory, for example if the URL https://myhost/page.html is
 requested the file ./page.html will be loaded.
 
 =item B<-HTTP>
 
-<<<<<<< HEAD
 Emulates a simple web server. Pages will be resolved relative to the
-=======
-emulates a simple web server. Pages will be resolved relative to the
->>>>>>> origin/master
 current directory, for example if the URL https://myhost/page.html is
 requested the file ./page.html will be loaded. The files loaded are
 assumed to contain a complete and correct HTTP response (lines that
 are part of the HTTP response line and headers must end with CRLF).
 
-<<<<<<< HEAD
 =item B<-rev>
 
 Simple test server which just reverses the text received from the client
@@ -586,47 +421,28 @@ and sends it back to the server. Also sets B<-brief>.
 =item B<-engine id>
 
 Specifying an engine (by its unique B<id> string) will cause B<s_server>
-=======
-=item B<-engine id>
-
-specifying an engine (by its unique B<id> string) will cause B<s_server>
->>>>>>> origin/master
 to attempt to obtain a functional reference to the specified engine,
 thus initialising it if needed. The engine will then be set as the default
 for all available algorithms.
 
 =item B<-id_prefix arg>
 
-<<<<<<< HEAD
 Generate SSL/TLS session IDs prefixed by B<arg>. This is mostly useful
-=======
-generate SSL/TLS session IDs prefixed by B<arg>. This is mostly useful
->>>>>>> origin/master
 for testing any SSL/TLS code (eg. proxies) that wish to deal with multiple
 servers, when each of which might be generating a unique range of session
 IDs (eg. with a certain prefix).
 
 =item B<-rand file(s)>
 
-<<<<<<< HEAD
 A file or files containing random data used to seed the random number
 generator, or an EGD socket (see L<RAND_egd(3)>).
 Multiple files can be specified separated by an OS-dependent character.
-=======
-a file or files containing random data used to seed the random number
-generator, or an EGD socket (see L<RAND_egd(3)|RAND_egd(3)>).
-Multiple files can be specified separated by a OS-dependent character.
->>>>>>> origin/master
 The separator is B<;> for MS-Windows, B<,> for OpenVMS, and B<:> for
 all others.
 
 =item B<-serverinfo file>
 
-<<<<<<< HEAD
 A file containing one or more blocks of PEM data.  Each PEM block
-=======
-a file containing one or more blocks of PEM data.  Each PEM block
->>>>>>> origin/master
 must encode a TLS ServerHello extension (2 bytes type, 2 bytes length,
 followed by "length" bytes of extension data).  If the client sends
 an empty TLS ClientHello extension matching the type, the corresponding
@@ -634,7 +450,6 @@ ServerHello extension will be returned.
 
 =item B<-no_resumption_on_reneg>
 
-<<<<<<< HEAD
 Set the B<SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION> option.
 
 =item B<-status>
@@ -644,44 +459,21 @@ Enables certificate status request support (aka OCSP stapling).
 =item B<-status_verbose>
 
 Enables certificate status request support (aka OCSP stapling) and gives
-=======
-set SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION flag.
-
-=item B<-status>
-
-enables certificate status request support (aka OCSP stapling).
-
-=item B<-status_verbose>
-
-enables certificate status request support (aka OCSP stapling) and gives
->>>>>>> origin/master
 a verbose printout of the OCSP response.
 
 =item B<-status_timeout nsec>
 
-<<<<<<< HEAD
 Sets the timeout for OCSP response to B<nsec> seconds.
 
 =item B<-status_url url>
 
 Sets a fallback responder URL to use if no responder URL is present in the
-=======
-sets the timeout for OCSP response to B<nsec> seconds.
-
-=item B<-status_url url>
-
-sets a fallback responder URL to use if no responder URL is present in the
->>>>>>> origin/master
 server certificate. Without this option an error is returned if the server
 certificate does not contain a responder address.
 
 =item B<-nextprotoneg protocols>
 
-<<<<<<< HEAD
 Enable Next Protocol Negotiation TLS extension and provide a
-=======
-enable Next Protocol Negotiation TLS extension and provide a
->>>>>>> origin/master
 comma-separated list of supported protocol names.
 The list should contain most wanted protocols first.
 Protocol names are printable ASCII strings, for example "http/1.1" or
@@ -693,11 +485,7 @@ Protocol names are printable ASCII strings, for example "http/1.1" or
 
 If a connection request is established with an SSL client and neither the
 B<-www> nor the B<-WWW> option has been used then normally any data received
-<<<<<<< HEAD
 from the client is displayed and any key presses will be sent to the client.
-=======
-from the client is displayed and any key presses will be sent to the client. 
->>>>>>> origin/master
 
 Certain single letter commands are also recognized which perform special
 operations: these are listed below.
@@ -752,17 +540,10 @@ The session parameters can printed out using the B<sess_id> program.
 
 =head1 BUGS
 
-<<<<<<< HEAD
 Because this program has a lot of options and also because some of the
 techniques used are rather old, the C source of B<s_server> is rather hard to
 read and not a model of how things should be done.
 A typical SSL server program would be much simpler.
-=======
-Because this program has a lot of options and also because some of
-the techniques used are rather old, the C source of s_server is rather
-hard to read and not a model of how things should be done. A typical
-SSL server program would be much simpler.
->>>>>>> origin/master
 
 The output of common ciphers is wrong: it just gives the list of ciphers that
 OpenSSL recognizes and the client supports.
@@ -772,7 +553,6 @@ unknown cipher suites a client says it supports.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<sess_id(1)>, L<s_client(1)>, L<ciphers(1)>
 
 =head1 HISTORY
@@ -787,12 +567,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<sess_id(1)|sess_id(1)>, L<s_client(1)|s_client(1)>, L<ciphers(1)|ciphers(1)>
-
-=head1 HISTORY
-
-The -no_alt_chains options was first added to OpenSSL 1.0.2b.
->>>>>>> origin/master
 
 =cut

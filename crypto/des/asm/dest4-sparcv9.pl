@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by David S. Miller <davem@devemloft.net> and Andy Polyakov
@@ -38,7 +34,6 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "sparcv9_modes.pl";
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
@@ -50,16 +45,6 @@ $code.=<<___;
 .register       %g3,#scratch
 #endif
 
-=======
-&asm_init(@ARGV);
-
-$code.=<<___ if ($::abibits==64);
-.register       %g2,#scratch
-.register       %g3,#scratch
-___
-
-$code.=<<___;
->>>>>>> origin/master
 .text
 ___
 
@@ -121,11 +106,7 @@ $code.=<<___;
 des_t4_cbc_encrypt:
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .Lcbc_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
-	nop
->>>>>>> origin/master
 	ld		[$ivec + 0], %f0	! load ivec
 	ld		[$ivec + 4], %f1
 
@@ -226,11 +207,7 @@ des_t4_cbc_encrypt:
 des_t4_cbc_decrypt:
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .Lcbc_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
-	nop
->>>>>>> origin/master
 	ld		[$ivec + 0], %f2	! load ivec
 	ld		[$ivec + 4], %f3
 
@@ -338,11 +315,7 @@ $code.=<<___;
 des_t4_ede3_cbc_encrypt:
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .Lcbc_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
-	nop
->>>>>>> origin/master
 	ld		[$ivec + 0], %f0	! load ivec
 	ld		[$ivec + 4], %f1
 
@@ -494,11 +467,7 @@ des_t4_ede3_cbc_encrypt:
 des_t4_ede3_cbc_decrypt:
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .Lcbc_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
-	nop
->>>>>>> origin/master
 	ld		[$ivec + 0], %f2	! load ivec
 	ld		[$ivec + 4], %f3
 

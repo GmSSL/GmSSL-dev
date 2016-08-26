@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,9 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
-/* crypto/aes/aes_core.c -*- mode:C; c-file-style: "eay" -*- */
->>>>>>> origin/master
 /**
  * rijndael-alg-fst.c
  *
@@ -40,21 +36,10 @@
 /* Note: rewritten a little bit to provide error control and an OpenSSL-
    compatible API */
 
-<<<<<<< HEAD
 #include <assert.h>
 
 #include <stdlib.h>
 #include <openssl/crypto.h>
-=======
-#ifndef AES_DEBUG
-# ifndef NDEBUG
-#  define NDEBUG
-# endif
-#endif
-#include <assert.h>
-
-#include <stdlib.h>
->>>>>>> origin/master
 #include <openssl/aes.h>
 #include "aes_locl.h"
 
@@ -644,13 +629,8 @@ static const u32 rcon[] = {
 /**
  * Expand the cipher key into the encryption key schedule.
  */
-<<<<<<< HEAD
 int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
                         AES_KEY *key)
-=======
-int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
-                                AES_KEY *key)
->>>>>>> origin/master
 {
 
     u32 *rk;
@@ -664,15 +644,9 @@ int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
 
     rk = key->rd_key;
 
-<<<<<<< HEAD
     if (bits == 128)
         key->rounds = 10;
     else if (bits == 192)
-=======
-    if (bits==128)
-        key->rounds = 10;
-    else if (bits==192)
->>>>>>> origin/master
         key->rounds = 12;
     else
         key->rounds = 14;
@@ -757,13 +731,8 @@ int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
 /**
  * Expand the cipher key into the decryption key schedule.
  */
-<<<<<<< HEAD
 int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
                         AES_KEY *key)
-=======
-int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
-                                AES_KEY *key)
->>>>>>> origin/master
 {
 
     u32 *rk;
@@ -771,11 +740,7 @@ int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
     u32 temp;
 
     /* first, start with an encryption schedule */
-<<<<<<< HEAD
     status = AES_set_encrypt_key(userKey, bits, key);
-=======
-    status = private_AES_set_encrypt_key(userKey, bits, key);
->>>>>>> origin/master
     if (status < 0)
         return status;
 
@@ -1243,19 +1208,11 @@ static const u32 rcon[] = {
 /**
  * Expand the cipher key into the encryption key schedule.
  */
-<<<<<<< HEAD
 int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
                         AES_KEY *key)
 {
     u32 *rk;
     int i = 0;
-=======
-int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
-                                AES_KEY *key)
-{
-    u32 *rk;
-   	int i = 0;
->>>>>>> origin/master
     u32 temp;
 
     if (!userKey || !key)
@@ -1265,15 +1222,9 @@ int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
 
     rk = key->rd_key;
 
-<<<<<<< HEAD
     if (bits == 128)
         key->rounds = 10;
     else if (bits == 192)
-=======
-    if (bits==128)
-        key->rounds = 10;
-    else if (bits==192)
->>>>>>> origin/master
         key->rounds = 12;
     else
         key->rounds = 14;
@@ -1358,13 +1309,8 @@ int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
 /**
  * Expand the cipher key into the decryption key schedule.
  */
-<<<<<<< HEAD
 int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
                         AES_KEY *key)
-=======
-int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
-                                AES_KEY *key)
->>>>>>> origin/master
 {
 
     u32 *rk;
@@ -1372,11 +1318,7 @@ int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
     u32 temp;
 
     /* first, start with an encryption schedule */
-<<<<<<< HEAD
     status = AES_set_encrypt_key(userKey, bits, key);
-=======
-    status = private_AES_set_encrypt_key(userKey, bits, key);
->>>>>>> origin/master
     if (status < 0)
         return status;
 
@@ -1413,11 +1355,7 @@ int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
             rk[j] = tpe ^ ROTATE(tpd,16) ^
                 ROTATE(tp9,24) ^ ROTATE(tpb,8);
 #else
-<<<<<<< HEAD
             rk[j] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^
-=======
-            rk[j] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^ 
->>>>>>> origin/master
                 (tp9 >> 8) ^ (tp9 << 24) ^
                 (tpb >> 24) ^ (tpb << 8);
 #endif

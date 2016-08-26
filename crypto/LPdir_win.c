@@ -1,5 +1,4 @@
 /*
-<<<<<<< HEAD
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -9,8 +8,6 @@
  */
 
 /*
-=======
->>>>>>> origin/master
  * Copyright (c) 2004, Richard Levitte <richard@levitte.org>
  * All rights reserved.
  *
@@ -35,15 +32,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-<<<<<<< HEAD
 
 #include <windows.h>
 #include <tchar.h>
 #include "internal/numbers.h"
-=======
-#include <windows.h>
-#include <tchar.h>
->>>>>>> origin/master
 #ifndef LPDIR_H
 # include "LPdir.h"
 #endif
@@ -64,15 +56,12 @@
 # define NAME_MAX 255
 #endif
 
-<<<<<<< HEAD
 #ifdef CP_UTF8
 # define CP_DEFAULT CP_UTF8
 #else
 # define CP_DEFAULT CP_ACP
 #endif
 
-=======
->>>>>>> origin/master
 struct LP_dir_context_st {
     WIN32_FIND_DATA ctx;
     HANDLE handle;
@@ -88,54 +77,23 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
 
     errno = 0;
     if (*ctx == NULL) {
-<<<<<<< HEAD
         size_t dirlen = strlen(directory);
 
         if (dirlen == 0 || dirlen > INT_MAX - 3) {
-=======
-        const char *extdir = directory;
-        char *extdirbuf = NULL;
-        size_t dirlen = strlen(directory);
-
-        if (dirlen == 0) {
->>>>>>> origin/master
             errno = ENOENT;
             return 0;
         }
 
-<<<<<<< HEAD
         *ctx = malloc(sizeof(**ctx));
-=======
-        *ctx = (LP_DIR_CTX *)malloc(sizeof(LP_DIR_CTX));
->>>>>>> origin/master
         if (*ctx == NULL) {
             errno = ENOMEM;
             return 0;
         }
-<<<<<<< HEAD
         memset(*ctx, 0, sizeof(**ctx));
-=======
-        memset(*ctx, '\0', sizeof(LP_DIR_CTX));
-
-        if (directory[dirlen - 1] != '*') {
-            extdirbuf = (char *)malloc(dirlen + 3);
-            if (extdirbuf == NULL) {
-                free(*ctx);
-                *ctx = NULL;
-                errno = ENOMEM;
-                return 0;
-            }
-            if (directory[dirlen - 1] != '/' && directory[dirlen - 1] != '\\')
-                extdir = strcat(strcpy(extdirbuf, directory), "/*");
-            else
-                extdir = strcat(strcpy(extdirbuf, directory), "*");
-        }
->>>>>>> origin/master
 
         if (sizeof(TCHAR) != sizeof(char)) {
             TCHAR *wdir = NULL;
             /* len_0 denotes string length *with* trailing 0 */
-<<<<<<< HEAD
             size_t index = 0, len_0 = dirlen + 1;
 #ifdef LP_MULTIBYTE_AVAILABLE
             int sz = 0;
@@ -203,35 +161,6 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
             }
 
             (*ctx)->handle = FindFirstFile((TCHAR *)directory, &(*ctx)->ctx);
-=======
-            size_t index = 0, len_0 = strlen(extdir) + 1;
-
-            wdir = (TCHAR *)calloc(len_0, sizeof(TCHAR));
-            if (wdir == NULL) {
-                if (extdirbuf != NULL) {
-                    free(extdirbuf);
-                }
-                free(*ctx);
-                *ctx = NULL;
-                errno = ENOMEM;
-                return 0;
-            }
-#ifdef LP_MULTIBYTE_AVAILABLE
-            if (!MultiByteToWideChar
-                (CP_ACP, 0, extdir, len_0, (WCHAR *)wdir, len_0))
-#endif
-                for (index = 0; index < len_0; index++)
-                    wdir[index] = (TCHAR)extdir[index];
-
-            (*ctx)->handle = FindFirstFile(wdir, &(*ctx)->ctx);
-
-            free(wdir);
-        } else {
-            (*ctx)->handle = FindFirstFile((TCHAR *)extdir, &(*ctx)->ctx);
-        }
-        if (extdirbuf != NULL) {
-            free(extdirbuf);
->>>>>>> origin/master
         }
 
         if ((*ctx)->handle == INVALID_HANDLE_VALUE) {
@@ -254,15 +183,9 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
         len_0++;
 
 #ifdef LP_MULTIBYTE_AVAILABLE
-<<<<<<< HEAD
         if (!WideCharToMultiByte(CP_DEFAULT, 0, (WCHAR *)wdir, len_0,
                                  (*ctx)->entry_name,
                                  sizeof((*ctx)->entry_name), NULL, 0))
-=======
-        if (!WideCharToMultiByte
-            (CP_ACP, 0, (WCHAR *)wdir, len_0, (*ctx)->entry_name,
-             sizeof((*ctx)->entry_name), NULL, 0))
->>>>>>> origin/master
 #endif
             for (index = 0; index < len_0; index++)
                 (*ctx)->entry_name[index] = (char)wdir[index];

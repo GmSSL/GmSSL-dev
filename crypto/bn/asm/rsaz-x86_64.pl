@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 ##############################################################################
 #                                                                            #
@@ -106,11 +102,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 if (`$ENV{CC} -Wa,-v -c -o /dev/null -x assembler /dev/null 2>&1`
@@ -128,11 +120,7 @@ if (!$addx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	$addx = ($1>=12);
 }
 
-<<<<<<< HEAD
 if (!$addx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9])\.([0-9]+)/) {
-=======
-if (!$addx && `$ENV{CC} -v 2>&1` =~ /(^clang version|based on LLVM) ([3-9])\.([0-9]+)/) {
->>>>>>> origin/master
 	my $ver = $2 + $3/100.0;	# 3.1->3.01, 3.10->3.10
 	$addx = ($ver>=3.03);
 }
@@ -934,7 +922,6 @@ rsaz_512_mul_gather4:
 	push	%r14
 	push	%r15
 
-<<<<<<< HEAD
 	subq	\$`128+24+($win64?0xb0:0)`, %rsp
 ___
 $code.=<<___	if ($win64);
@@ -1005,11 +992,6 @@ $code.=<<___;
 	por	%xmm9,%xmm8
 	pshufd	\$0x4e,%xmm8,%xmm9
 	por	%xmm9,%xmm8
-=======
-	mov	$pwr, $pwr
-	subq	\$128+24, %rsp
-.Lmul_gather4_body:
->>>>>>> origin/master
 ___
 $code.=<<___ if ($addx);
 	movl	\$0x80100,%r11d
@@ -1018,7 +1000,6 @@ $code.=<<___ if ($addx);
 	je	.Lmulx_gather
 ___
 $code.=<<___;
-<<<<<<< HEAD
 	movq	%xmm8,%rbx
 
 	movq	$n0, 128(%rsp)		# off-load arguments
@@ -1027,59 +1008,30 @@ $code.=<<___;
 
 	movq	($ap), %rax
 	 movq	8($ap), %rcx
-=======
-	movl	64($bp,$pwr,4), %eax
-	movq	$out, %xmm0		# off-load arguments
-	movl	($bp,$pwr,4), %ebx
-	movq	$mod, %xmm1
-	movq	$n0, 128(%rsp)
-
-	shlq	\$32, %rax
-	or	%rax, %rbx
-	movq	($ap), %rax
-	 movq	8($ap), %rcx
-	 leaq	128($bp,$pwr,4), %rbp
->>>>>>> origin/master
 	mulq	%rbx			# 0 iteration
 	movq	%rax, (%rsp)
 	movq	%rcx, %rax
 	movq	%rdx, %r8
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movd	(%rbp), %xmm4
->>>>>>> origin/master
 	addq	%rax, %r8
 	movq	16($ap), %rax
 	movq	%rdx, %r9
 	adcq	\$0, %r9
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movd	64(%rbp), %xmm5
->>>>>>> origin/master
 	addq	%rax, %r9
 	movq	24($ap), %rax
 	movq	%rdx, %r10
 	adcq	\$0, %r10
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 pslldq	\$4, %xmm5
->>>>>>> origin/master
 	addq	%rax, %r10
 	movq	32($ap), %rax
 	movq	%rdx, %r11
 	adcq	\$0, %r11
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 por	%xmm5, %xmm4
->>>>>>> origin/master
 	addq	%rax, %r11
 	movq	40($ap), %rax
 	movq	%rdx, %r12
@@ -1092,20 +1044,12 @@ $code.=<<___;
 	adcq	\$0, %r13
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 leaq	128(%rbp), %rbp
->>>>>>> origin/master
 	addq	%rax, %r13
 	movq	56($ap), %rax
 	movq	%rdx, %r14
 	adcq	\$0, %r14
 	
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movq	%xmm4, %rbx
->>>>>>> origin/master
 	addq	%rax, %r14
 	 movq	($ap), %rax
 	movq	%rdx, %r15
@@ -1117,7 +1061,6 @@ $code.=<<___;
 
 .align	32
 .Loop_mul_gather:
-<<<<<<< HEAD
 	movdqa	16*0(%rbp),%xmm8
 	movdqa	16*1(%rbp),%xmm9
 	movdqa	16*2(%rbp),%xmm10
@@ -1147,8 +1090,6 @@ $code.=<<___;
 	por	%xmm9,%xmm8
 	movq	%xmm8,%rbx
 
-=======
->>>>>>> origin/master
 	mulq	%rbx
 	addq	%rax, %r8
 	movq	8($ap), %rax
@@ -1157,10 +1098,6 @@ $code.=<<___;
 	adcq	\$0, %r8
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movd	(%rbp), %xmm4
->>>>>>> origin/master
 	addq	%rax, %r9
 	movq	16($ap), %rax
 	adcq	\$0, %rdx
@@ -1169,10 +1106,6 @@ $code.=<<___;
 	adcq	\$0, %r9
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movd	64(%rbp), %xmm5
->>>>>>> origin/master
 	addq	%rax, %r10
 	movq	24($ap), %rax
 	adcq	\$0, %rdx
@@ -1181,10 +1114,6 @@ $code.=<<___;
 	adcq	\$0, %r10
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 pslldq	\$4, %xmm5
->>>>>>> origin/master
 	addq	%rax, %r11
 	movq	32($ap), %rax
 	adcq	\$0, %rdx
@@ -1193,10 +1122,6 @@ $code.=<<___;
 	adcq	\$0, %r11
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 por	%xmm5, %xmm4
->>>>>>> origin/master
 	addq	%rax, %r12
 	movq	40($ap), %rax
 	adcq	\$0, %rdx
@@ -1221,10 +1146,6 @@ $code.=<<___;
 	adcq	\$0, %r14
 
 	mulq	%rbx
-<<<<<<< HEAD
-=======
-	 movq	%xmm4, %rbx
->>>>>>> origin/master
 	addq	%rax, %r15
 	 movq	($ap), %rax
 	adcq	\$0, %rdx
@@ -1232,10 +1153,6 @@ $code.=<<___;
 	movq	%rdx, %r15	
 	adcq	\$0, %r15
 
-<<<<<<< HEAD
-=======
-	leaq	128(%rbp), %rbp
->>>>>>> origin/master
 	leaq	8(%rdi), %rdi
 
 	decl	%ecx
@@ -1250,13 +1167,8 @@ $code.=<<___;
 	movq	%r14, 48(%rdi)
 	movq	%r15, 56(%rdi)
 
-<<<<<<< HEAD
 	movq	128+8(%rsp), $out
 	movq	128+16(%rsp), %rbp
-=======
-	movq	%xmm0, $out
-	movq	%xmm1, %rbp
->>>>>>> origin/master
 
 	movq	(%rsp), %r8
 	movq	8(%rsp), %r9
@@ -1274,30 +1186,17 @@ $code.=<<___ if ($addx);
 
 .align	32
 .Lmulx_gather:
-<<<<<<< HEAD
 	movq	%xmm8,%rdx
 
 	mov	$n0, 128(%rsp)		# off-load arguments
 	mov	$out, 128+8(%rsp)
 	mov	$mod, 128+16(%rsp)
 
-=======
-	mov	64($bp,$pwr,4), %eax
-	movq	$out, %xmm0		# off-load arguments
-	lea	128($bp,$pwr,4), %rbp
-	mov	($bp,$pwr,4), %edx
-	movq	$mod, %xmm1
-	mov	$n0, 128(%rsp)
-
-	shl	\$32, %rax
-	or	%rax, %rdx
->>>>>>> origin/master
 	mulx	($ap), %rbx, %r8	# 0 iteration
 	mov	%rbx, (%rsp)
 	xor	%edi, %edi		# cf=0, of=0
 
 	mulx	8($ap), %rax, %r9
-<<<<<<< HEAD
 
 	mulx	16($ap), %rbx, %r10
 	adcx	%rax, %r8
@@ -1306,42 +1205,18 @@ $code.=<<___ if ($addx);
 	adcx	%rbx, %r9
 
 	mulx	32($ap), %rbx, %r12
-=======
-	 movd	(%rbp), %xmm4
-
-	mulx	16($ap), %rbx, %r10
-	 movd	64(%rbp), %xmm5
-	adcx	%rax, %r8
-
-	mulx	24($ap), %rax, %r11
-	 pslldq	\$4, %xmm5
-	adcx	%rbx, %r9
-
-	mulx	32($ap), %rbx, %r12
-	 por	%xmm5, %xmm4
->>>>>>> origin/master
 	adcx	%rax, %r10
 
 	mulx	40($ap), %rax, %r13
 	adcx	%rbx, %r11
 
 	mulx	48($ap), %rbx, %r14
-<<<<<<< HEAD
 	adcx	%rax, %r12
 	
 	mulx	56($ap), %rax, %r15
 	adcx	%rbx, %r13
 	adcx	%rax, %r14
 	.byte	0x67
-=======
-	 lea	128(%rbp), %rbp
-	adcx	%rax, %r12
-	
-	mulx	56($ap), %rax, %r15
-	 movq	%xmm4, %rdx
-	adcx	%rbx, %r13
-	adcx	%rax, %r14
->>>>>>> origin/master
 	mov	%r8, %rbx
 	adcx	%rdi, %r15		# %rdi is 0
 
@@ -1350,7 +1225,6 @@ $code.=<<___ if ($addx);
 
 .align	32
 .Loop_mulx_gather:
-<<<<<<< HEAD
 	movdqa	16*0(%rbp),%xmm8
 	movdqa	16*1(%rbp),%xmm9
 	movdqa	16*2(%rbp),%xmm10
@@ -1381,35 +1255,18 @@ $code.=<<___ if ($addx);
 	movq	%xmm8,%rdx
 
 	.byte	0xc4,0x62,0xfb,0xf6,0x86,0x00,0x00,0x00,0x00	# mulx	($ap), %rax, %r8
-=======
-	mulx	($ap), %rax, %r8
->>>>>>> origin/master
 	adcx	%rax, %rbx
 	adox	%r9, %r8
 
 	mulx	8($ap), %rax, %r9
-<<<<<<< HEAD
-=======
-	.byte	0x66,0x0f,0x6e,0xa5,0x00,0x00,0x00,0x00		# movd	(%rbp), %xmm4
->>>>>>> origin/master
 	adcx	%rax, %r8
 	adox	%r10, %r9
 
 	mulx	16($ap), %rax, %r10
-<<<<<<< HEAD
-=======
-	 movd	64(%rbp), %xmm5
-	 lea	128(%rbp), %rbp
->>>>>>> origin/master
 	adcx	%rax, %r9
 	adox	%r11, %r10
 
 	.byte	0xc4,0x62,0xfb,0xf6,0x9e,0x18,0x00,0x00,0x00	# mulx	24($ap), %rax, %r11
-<<<<<<< HEAD
-=======
-	 pslldq	\$4, %xmm5
-	 por	%xmm5, %xmm4
->>>>>>> origin/master
 	adcx	%rax, %r10
 	adox	%r12, %r11
 
@@ -1423,17 +1280,10 @@ $code.=<<___ if ($addx);
 
 	.byte	0xc4,0x62,0xfb,0xf6,0xb6,0x30,0x00,0x00,0x00	# mulx	48($ap), %rax, %r14
 	adcx	%rax, %r13
-<<<<<<< HEAD
 	.byte	0x67
 	adox	%r15, %r14
 
 	mulx	56($ap), %rax, %r15
-=======
-	adox	%r15, %r14
-
-	mulx	56($ap), %rax, %r15
-	 movq	%xmm4, %rdx
->>>>>>> origin/master
 	 mov	%rbx, 64(%rsp,%rcx,8)
 	adcx	%rax, %r14
 	adox	%rdi, %r15
@@ -1452,17 +1302,10 @@ $code.=<<___ if ($addx);
 	mov	%r14, 64+48(%rsp)
 	mov	%r15, 64+56(%rsp)
 
-<<<<<<< HEAD
 	mov	128(%rsp), %rdx		# pull arguments
 	mov	128+8(%rsp), $out
 	mov	128+16(%rsp), %rbp
 
-=======
-	movq	%xmm0, $out
-	movq	%xmm1, %rbp
-
-	mov	128(%rsp), %rdx		# pull $n0
->>>>>>> origin/master
 	mov	(%rsp), %r8
 	mov	8(%rsp), %r9
 	mov	16(%rsp), %r10
@@ -1490,7 +1333,6 @@ $code.=<<___;
 	call	__rsaz_512_subtract
 
 	leaq	128+24+48(%rsp), %rax
-<<<<<<< HEAD
 ___
 $code.=<<___	if ($win64);
 	movaps	0xa0-0xc8(%rax),%xmm6
@@ -1506,8 +1348,6 @@ $code.=<<___	if ($win64);
 	lea	0xb0(%rax),%rax
 ___
 $code.=<<___;
-=======
->>>>>>> origin/master
 	movq	-48(%rax), %r15
 	movq	-40(%rax), %r14
 	movq	-32(%rax), %r13
@@ -1537,11 +1377,7 @@ rsaz_512_mul_scatter4:
 	mov	$pwr, $pwr
 	subq	\$128+24, %rsp
 .Lmul_scatter4_body:
-<<<<<<< HEAD
 	leaq	($tbl,$pwr,8), $tbl
-=======
-	leaq	($tbl,$pwr,4), $tbl
->>>>>>> origin/master
 	movq	$out, %xmm0		# off-load arguments
 	movq	$mod, %xmm1
 	movq	$tbl, %xmm2
@@ -1612,7 +1448,6 @@ $code.=<<___;
 
 	call	__rsaz_512_subtract
 
-<<<<<<< HEAD
 	movq	%r8, 128*0($inp)	# scatter
 	movq	%r9, 128*1($inp)
 	movq	%r10, 128*2($inp)
@@ -1621,32 +1456,6 @@ $code.=<<___;
 	movq	%r13, 128*5($inp)
 	movq	%r14, 128*6($inp)
 	movq	%r15, 128*7($inp)
-=======
-	movl	%r8d, 64*0($inp)	# scatter
-	shrq	\$32, %r8
-	movl	%r9d, 64*2($inp)
-	shrq	\$32, %r9
-	movl	%r10d, 64*4($inp)
-	shrq	\$32, %r10
-	movl	%r11d, 64*6($inp)
-	shrq	\$32, %r11
-	movl	%r12d, 64*8($inp)
-	shrq	\$32, %r12
-	movl	%r13d, 64*10($inp)
-	shrq	\$32, %r13
-	movl	%r14d, 64*12($inp)
-	shrq	\$32, %r14
-	movl	%r15d, 64*14($inp)
-	shrq	\$32, %r15
-	movl	%r8d, 64*1($inp)
-	movl	%r9d, 64*3($inp)
-	movl	%r10d, 64*5($inp)
-	movl	%r11d, 64*7($inp)
-	movl	%r12d, 64*9($inp)
-	movl	%r13d, 64*11($inp)
-	movl	%r14d, 64*13($inp)
-	movl	%r15d, 64*15($inp)
->>>>>>> origin/master
 
 	leaq	128+24+48(%rsp), %rax
 	movq	-48(%rax), %r15
@@ -1965,11 +1774,7 @@ ___
 {	# __rsaz_512_mul
 	#
 	# input: %rsi - ap, %rbp - bp
-<<<<<<< HEAD
 	# output:
-=======
-	# ouput:
->>>>>>> origin/master
 	# clobbers: everything
 my ($ap,$bp) = ("%rsi","%rbp");
 $code.=<<___;
@@ -2121,11 +1926,7 @@ if ($addx) {
 	# __rsaz_512_mulx
 	#
 	# input: %rsi - ap, %rbp - bp
-<<<<<<< HEAD
 	# output:
-=======
-	# ouput:
->>>>>>> origin/master
 	# clobbers: everything
 my ($ap,$bp,$zero) = ("%rsi","%rbp","%rdi");
 $code.=<<___;
@@ -2258,24 +2059,14 @@ $code.=<<___;
 .type	rsaz_512_scatter4,\@abi-omnipotent
 .align	16
 rsaz_512_scatter4:
-<<<<<<< HEAD
 	leaq	($out,$power,8), $out
-=======
-	leaq	($out,$power,4), $out
->>>>>>> origin/master
 	movl	\$8, %r9d
 	jmp	.Loop_scatter
 .align	16
 .Loop_scatter:
 	movq	($inp), %rax
 	leaq	8($inp), $inp
-<<<<<<< HEAD
 	movq	%rax, ($out)
-=======
-	movl	%eax, ($out)
-	shrq	\$32, %rax
-	movl	%eax, 64($out)
->>>>>>> origin/master
 	leaq	128($out), $out
 	decl	%r9d
 	jnz	.Loop_scatter
@@ -2286,7 +2077,6 @@ rsaz_512_scatter4:
 .type	rsaz_512_gather4,\@abi-omnipotent
 .align	16
 rsaz_512_gather4:
-<<<<<<< HEAD
 ___
 $code.=<<___	if ($win64);
 .LSEH_begin_rsaz_512_gather4:
@@ -2329,14 +2119,10 @@ ___
 }
 $code.=<<___;
 	pcmpeqd	%xmm8,%xmm7
-=======
-	leaq	($inp,$power,4), $inp
->>>>>>> origin/master
 	movl	\$8, %r9d
 	jmp	.Loop_gather
 .align	16
 .Loop_gather:
-<<<<<<< HEAD
 	movdqa	16*0($inp),%xmm8
 	movdqa	16*1($inp),%xmm9
 	movdqa	16*2($inp),%xmm10
@@ -2391,19 +2177,6 @@ $code.=<<___;
 .Linc:
 	.long	0,0, 1,1
 	.long	2,2, 2,2
-=======
-	movl	($inp), %eax
-	movl	64($inp), %r8d
-	leaq	128($inp), $inp
-	shlq	\$32, %r8
-	or	%r8, %rax
-	movq	%rax, ($out)
-	leaq	8($out), $out
-	decl	%r9d
-	jnz	.Loop_gather
-	ret
-.size	rsaz_512_gather4,.-rsaz_512_gather4
->>>>>>> origin/master
 ___
 }
 
@@ -2451,7 +2224,6 @@ se_handler:
 
 	lea	128+24+48(%rax),%rax
 
-<<<<<<< HEAD
 	lea	.Lmul_gather4_epilogue(%rip),%rbx
 	cmp	%r10,%rbx
 	jne	.Lse_not_in_mul_gather4
@@ -2464,8 +2236,6 @@ se_handler:
 	.long	0xa548f3fc		# cld; rep movsq
 
 .Lse_not_in_mul_gather4:
-=======
->>>>>>> origin/master
 	mov	-8(%rax),%rbx
 	mov	-16(%rax),%rbp
 	mov	-24(%rax),%r12
@@ -2517,11 +2287,7 @@ se_handler:
 	pop	%rdi
 	pop	%rsi
 	ret
-<<<<<<< HEAD
 .size	se_handler,.-se_handler
-=======
-.size	sqr_handler,.-sqr_handler
->>>>>>> origin/master
 
 .section	.pdata
 .align	4
@@ -2545,13 +2311,10 @@ se_handler:
 	.rva	.LSEH_end_rsaz_512_mul_by_one
 	.rva	.LSEH_info_rsaz_512_mul_by_one
 
-<<<<<<< HEAD
 	.rva	.LSEH_begin_rsaz_512_gather4
 	.rva	.LSEH_end_rsaz_512_gather4
 	.rva	.LSEH_info_rsaz_512_gather4
 
-=======
->>>>>>> origin/master
 .section	.xdata
 .align	8
 .LSEH_info_rsaz_512_sqr:
@@ -2574,7 +2337,6 @@ se_handler:
 	.byte	9,0,0,0
 	.rva	se_handler
 	.rva	.Lmul_by_one_body,.Lmul_by_one_epilogue		# HandlerData[]
-<<<<<<< HEAD
 .LSEH_info_rsaz_512_gather4:
 	.byte	0x01,0x46,0x16,0x00
 	.byte	0x46,0xf8,0x09,0x00	# vmovaps 0x90(rsp),xmm15
@@ -2588,8 +2350,6 @@ se_handler:
 	.byte	0x10,0x78,0x01,0x00	# vmovaps 0x10(rsp),xmm7
 	.byte	0x0b,0x68,0x00,0x00	# vmovaps 0x00(rsp),xmm6
 	.byte	0x07,0x01,0x15,0x00	# sub     rsp,0xa8
-=======
->>>>>>> origin/master
 ___
 }
 

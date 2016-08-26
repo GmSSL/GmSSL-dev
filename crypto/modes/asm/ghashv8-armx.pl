@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -38,16 +34,12 @@
 # Apple A7	0.92		5.62
 # Cortex-A53	1.01		8.39
 # Cortex-A57	1.17		7.61
-<<<<<<< HEAD
 # Denver	0.71		6.02
 # Mongoose	1.10		8.06
-=======
->>>>>>> origin/master
 #
 # (*)	presented for reference/comparison purposes;
 
 $flavour = shift;
-<<<<<<< HEAD
 $output  = shift;
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
@@ -57,9 +49,6 @@ die "can't locate arm-xlate.pl";
 
 open OUT,"| \"$^X\" $xlate $flavour $output";
 *STDOUT=*OUT;
-=======
-open STDOUT,">".shift;
->>>>>>> origin/master
 
 $Xi="x0";	# argument block
 $Htbl="x1";
@@ -163,17 +152,10 @@ gcm_gmult_v8:
 #endif
 	vext.8		$IN,$t1,$t1,#8
 
-<<<<<<< HEAD
 	vpmull.p64	$Xl,$H,$IN		@ H.loÂ·Xi.lo
 	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
 	vpmull2.p64	$Xh,$H,$IN		@ H.hiÂ·Xi.hi
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)Â·(Xi.lo+Xi.hi)
-=======
-	vpmull.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
-	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
-	vpmull2.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
-	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
->>>>>>> origin/master
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
 	veor		$t2,$Xl,$Xh
@@ -261,11 +243,7 @@ $code.=<<___;
 #endif
 	vext.8		$In,$t1,$t1,#8
 	veor		$IN,$IN,$Xl		@ I[i]^=Xi
-<<<<<<< HEAD
 	vpmull.p64	$Xln,$H,$In		@ HÂ·Ii+1
-=======
-	vpmull.p64	$Xln,$H,$In		@ H·Ii+1
->>>>>>> origin/master
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 	vpmull2.p64	$Xhn,$H,$In
 	b		.Loop_mod2x_v8
@@ -274,24 +252,14 @@ $code.=<<___;
 .Loop_mod2x_v8:
 	vext.8		$t2,$IN,$IN,#8
 	subs		$len,$len,#32		@ is there more data?
-<<<<<<< HEAD
 	vpmull.p64	$Xl,$H2,$IN		@ H^2.loÂ·Xi.lo
-=======
-	vpmull.p64	$Xl,$H2,$IN		@ H^2.lo·Xi.lo
->>>>>>> origin/master
 	cclr		$inc,lo			@ is it time to zero $inc?
 
 	 vpmull.p64	$Xmn,$Hhl,$t1
 	veor		$t2,$t2,$IN		@ Karatsuba pre-processing
-<<<<<<< HEAD
 	vpmull2.p64	$Xh,$H2,$IN		@ H^2.hiÂ·Xi.hi
 	veor		$Xl,$Xl,$Xln		@ accumulate
 	vpmull2.p64	$Xm,$Hhl,$t2		@ (H^2.lo+H^2.hi)Â·(Xi.lo+Xi.hi)
-=======
-	vpmull2.p64	$Xh,$H2,$IN		@ H^2.hi·Xi.hi
-	veor		$Xl,$Xl,$Xln		@ accumulate
-	vpmull2.p64	$Xm,$Hhl,$t2		@ (H^2.lo+H^2.hi)·(Xi.lo+Xi.hi)
->>>>>>> origin/master
 	 vld1.64	{$t0},[$inp],$inc	@ load [rotated] I[i+2]
 
 	veor		$Xh,$Xh,$Xhn
@@ -316,11 +284,7 @@ $code.=<<___;
 	 vext.8		$In,$t1,$t1,#8
 	 vext.8		$IN,$t0,$t0,#8
 	veor		$Xl,$Xm,$t2
-<<<<<<< HEAD
 	 vpmull.p64	$Xln,$H,$In		@ HÂ·Ii+1
-=======
-	 vpmull.p64	$Xln,$H,$In		@ H·Ii+1
->>>>>>> origin/master
 	veor		$IN,$IN,$Xh		@ accumulate $IN early
 
 	vext.8		$t2,$Xl,$Xl,#8		@ 2nd phase of reduction
@@ -344,17 +308,10 @@ $code.=<<___;
 	veor		$IN,$IN,$Xl		@ inp^=Xi
 	veor		$t1,$t0,$t2		@ $t1 is rotated inp^Xi
 
-<<<<<<< HEAD
 	vpmull.p64	$Xl,$H,$IN		@ H.loÂ·Xi.lo
 	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
 	vpmull2.p64	$Xh,$H,$IN		@ H.hiÂ·Xi.hi
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)Â·(Xi.lo+Xi.hi)
-=======
-	vpmull.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
-	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
-	vpmull2.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
-	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
->>>>>>> origin/master
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
 	veor		$t2,$Xl,$Xh

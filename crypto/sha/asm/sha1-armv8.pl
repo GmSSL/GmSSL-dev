@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -29,17 +25,13 @@
 # Cortex-A57	2.35			7.88 (+74%)
 # Denver	2.13			3.97 (+0%)(**)
 # X-Gene				8.80 (+200%)
-<<<<<<< HEAD
 # Mongoose	2.05			6.50 (+160%)
-=======
->>>>>>> origin/master
 #
 # (*)	Software results are presented mostly for reference purposes.
 # (**)	Keep in mind that Denver relies on binary translation, which
 #	optimizes compiler output at run-time.
 
 $flavour = shift;
-<<<<<<< HEAD
 $output  = shift;
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
@@ -49,9 +41,6 @@ die "can't locate arm-xlate.pl";
 
 open OUT,"| \"$^X\" $xlate $flavour $output";
 *STDOUT=*OUT;
-=======
-open STDOUT,">".shift;
->>>>>>> origin/master
 
 ($ctx,$inp,$num)=("x0","x1","x2");
 @Xw=map("w$_",(3..17,19));
@@ -185,23 +174,16 @@ $code.=<<___;
 
 .text
 
-<<<<<<< HEAD
 .extern	OPENSSL_armcap_P
-=======
->>>>>>> origin/master
 .globl	sha1_block_data_order
 .type	sha1_block_data_order,%function
 .align	6
 sha1_block_data_order:
-<<<<<<< HEAD
 #ifdef	__ILP32__
 	ldrsw	x16,.LOPENSSL_armcap_P
 #else
 	ldr	x16,.LOPENSSL_armcap_P
 #endif
-=======
-	ldr	x16,.LOPENSSL_armcap_P
->>>>>>> origin/master
 	adr	x17,.LOPENSSL_armcap_P
 	add	x16,x16,x17
 	ldr	w16,[x16]
@@ -339,15 +321,11 @@ $code.=<<___;
 .long	0x8f1bbcdc,0x8f1bbcdc,0x8f1bbcdc,0x8f1bbcdc	//K_40_59
 .long	0xca62c1d6,0xca62c1d6,0xca62c1d6,0xca62c1d6	//K_60_79
 .LOPENSSL_armcap_P:
-<<<<<<< HEAD
 #ifdef	__ILP32__
 .long	OPENSSL_armcap_P-.
 #else
 .quad	OPENSSL_armcap_P-.
 #endif
-=======
-.quad	OPENSSL_armcap_P-.
->>>>>>> origin/master
 .asciz	"SHA1 block transform for ARMv8, CRYPTOGAMS by <appro\@openssl.org>"
 .align	2
 .comm	OPENSSL_armcap_P,4,4

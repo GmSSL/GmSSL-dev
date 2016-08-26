@@ -34,11 +34,7 @@ them to suit its needs: for example to add a hostname check.
 Check hostname matches "www.foo.com" in peer certificate:
 
  X509_VERIFY_PARAM *vpm = SSL_get0_param(ssl);
-<<<<<<< HEAD
  X509_VERIFY_PARAM_set1_host(vpm, "www.foo.com", 0);
-=======
- X509_VERIFY_PARAM_set1_host(vpm, "www.foo.com");
->>>>>>> origin/master
 
 =head1 RETURN VALUES
 
@@ -50,17 +46,12 @@ for failure.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<X509_VERIFY_PARAM_set_flags(3)>
-=======
-L<X509_VERIFY_PARAM_set_flags(3)|X509_VERIFY_PARAM_set_flags(3)>
->>>>>>> origin/master
 
 =head1 HISTORY
 
 These functions were first added to OpenSSL 1.0.2.
 
-<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2015-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -70,6 +61,4 @@ this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
-=======
->>>>>>> origin/master
 =cut

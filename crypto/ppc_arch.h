@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -23,15 +22,5 @@ extern unsigned int OPENSSL_ppccap_P;
 # define PPC_CRYPTO207   (1<<2)
 # define PPC_FPU         (1<<3)
 # define PPC_MADD300     (1<<4)
-=======
-#ifndef __PPC_ARCH_H__
-# define __PPC_ARCH_H__
-
-extern unsigned int OPENSSL_ppccap_P;
-
-# define PPC_FPU64       (1<<0)
-# define PPC_ALTIVEC     (1<<1)
-# define PPC_CRYPTO207   (1<<2)
->>>>>>> origin/master
 
 #endif

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -33,18 +29,11 @@
 # [1] and [2], with MOVBE twist suggested by Ilya Albrekht and Max
 # Locktyukhin of Intel Corp. who verified that it reduces shuffles
 # pressure with notable relative improvement, achieving 1.0 cycle per
-<<<<<<< HEAD
 # byte processed with 128-bit key on Haswell processor, 0.74 - on
 # Broadwell, 0.63 - on Skylake... [Mentioned results are raw profiled
 # measurements for favourable packet size, one divisible by 96.
 # Applications using the EVP interface will observe a few percent
 # worse performance.]
-=======
-# byte processed with 128-bit key on Haswell processor, and 0.74 -
-# on Broadwell. [Mentioned results are raw profiled measurements for
-# favourable packet size, one divisible by 96. Applications using the
-# EVP interface will observe a few percent worse performance.]
->>>>>>> origin/master
 #
 # [1] http://rt.openssl.org/Ticket/Display.html?id=2900&user=guest&pass=guest
 # [2] http://www.intel.com/content/dam/www/public/us/en/documents/software-support/enabling-high-performance-gcm.pdf
@@ -62,11 +51,7 @@ die "can't locate x86_64-xlate.pl";
 
 if (`$ENV{CC} -Wa,-v -c -o /dev/null -x assembler /dev/null 2>&1`
 		=~ /GNU assembler version ([2-9]\.[0-9]+)/) {
-<<<<<<< HEAD
 	$avx = ($1>=2.20) + ($1>=2.22);
-=======
-	$avx = ($1>=2.19) + ($1>=2.22);
->>>>>>> origin/master
 }
 
 if (!$avx && $win64 && ($flavour =~ /nasm/ || $ENV{ASM} =~ /nasm/) &&
@@ -79,19 +64,11 @@ if (!$avx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	$avx = ($1>=10) + ($1>=11);
 }
 
-<<<<<<< HEAD
 if (!$avx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9]\.[0-9]+)/) {
 	$avx = ($2>=3.0) + ($2>3.0);
 }
 
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-if (!$avx && `$ENV{CC} -v 2>&1` =~ /(^clang version|based on LLVM) ([3-9]\.[0-9]+)/) {
-	$avx = ($2>=3.0) + ($2>3.0);
-}
-
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 if ($avx>1) {{{
@@ -139,7 +116,6 @@ _aesni_ctr32_ghash_6x:
 	  vpxor		$rndkey,$inout3,$inout3
 	  vmovups	0x10-0x80($key),$T2	# borrow $T2 for $rndkey
 	vpclmulqdq	\$0x01,$Hkey,$Z3,$Z2
-<<<<<<< HEAD
 
 	# At this point, the current block of 96 (0x60) bytes has already been
 	# loaded into registers. Concurrently with processing it, we want to
@@ -157,8 +133,6 @@ _aesni_ctr32_ghash_6x:
 	# registers) block, and |$end0| points to 2*96 bytes before the end of
 	# the input. Thus, |$in0| > |$end0| means that we do not have the next
 	# 96-byte block to read in, and |$in0| <= |$end0| means we do.
-=======
->>>>>>> origin/master
 	xor		%r12,%r12
 	cmp		$in0,$end0
 
@@ -451,12 +425,9 @@ $code.=<<___;
 .align	32
 aesni_gcm_decrypt:
 	xor	$ret,$ret
-<<<<<<< HEAD
 
 	# We call |_aesni_ctr32_ghash_6x|, which requires at least 96 (0x60)
 	# bytes of input.
-=======
->>>>>>> origin/master
 	cmp	\$0x60,$len			# minimal accepted length
 	jb	.Lgcm_dec_abort
 
@@ -511,7 +482,6 @@ $code.=<<___;
 	vmovdqu		0x50($inp),$Z3		# I[5]
 	lea		($inp),$in0
 	vmovdqu		0x40($inp),$Z0
-<<<<<<< HEAD
 
 	# |_aesni_ctr32_ghash_6x| requires |$end0| to point to 2*96 (0xc0)
 	# bytes before the end of the input. Note, in particular, that this is
@@ -521,9 +491,6 @@ $code.=<<___;
 	# (0xc0).
 	lea		-0xc0($inp,$len),$end0
 
-=======
-	lea		-0xc0($inp,$len),$end0
->>>>>>> origin/master
 	vmovdqu		0x30($inp),$Z1
 	shr		\$4,$len
 	xor		$ret,$ret
@@ -558,11 +525,7 @@ $code.=<<___;
 ___
 $code.=<<___ if ($win64);
 	movaps	-0xd8(%rax),%xmm6
-<<<<<<< HEAD
 	movaps	-0xc8(%rax),%xmm7
-=======
-	movaps	-0xd8(%rax),%xmm7
->>>>>>> origin/master
 	movaps	-0xb8(%rax),%xmm8
 	movaps	-0xa8(%rax),%xmm9
 	movaps	-0x98(%rax),%xmm10
@@ -683,13 +646,10 @@ _aesni_ctr32_6x:
 .align	32
 aesni_gcm_encrypt:
 	xor	$ret,$ret
-<<<<<<< HEAD
 
 	# We call |_aesni_ctr32_6x| twice, each call consuming 96 bytes of
 	# input. Then we call |_aesni_ctr32_ghash_6x|, which requires at
 	# least 96 more bytes of input.
-=======
->>>>>>> origin/master
 	cmp	\$0x60*3,$len			# minimal accepted length
 	jb	.Lgcm_enc_abort
 
@@ -739,7 +699,6 @@ $code.=<<___;
 .Lenc_no_key_aliasing:
 
 	lea		($out),$in0
-<<<<<<< HEAD
 
 	# |_aesni_ctr32_ghash_6x| requires |$end0| to point to 2*96 (0xc0)
 	# bytes before the end of the input. Note, in particular, that this is
@@ -750,9 +709,6 @@ $code.=<<___;
 	# |$out| + |$len| >= 2*96 (0xc0).
 	lea		-0xc0($out,$len),$end0
 
-=======
-	lea		-0xc0($out,$len),$end0
->>>>>>> origin/master
 	shr		\$4,$len
 
 	call		_aesni_ctr32_6x

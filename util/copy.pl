@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 use Fcntl;
 
@@ -30,11 +26,7 @@ foreach $arg (@ARGV) {
 		next;
 		}
 	$arg =~ s|\\|/|g;	# compensate for bug/feature in cygwin glob...
-<<<<<<< HEAD
 	foreach (glob qq("$arg"))
-=======
-	foreach (glob $arg)
->>>>>>> origin/master
 		{
 		push @filelist, $_;
 		}

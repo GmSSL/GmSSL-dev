@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -92,12 +88,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"via-mont.pl");
 
 # int bn_mul_mont(BN_ULONG *rp, const BN_ULONG *ap, const BN_ULONG *bp, const BN_ULONG *np,const BN_ULONG *n0, int num);
@@ -257,8 +250,5 @@ $sp=&DWP(28,"esp");
 &asciz("Padlock Montgomery Multiplication, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
-<<<<<<< HEAD
 
 close STDOUT;
-=======
->>>>>>> origin/master

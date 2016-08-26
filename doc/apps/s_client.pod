@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 =pod
 
 =head1 NAME
@@ -11,13 +7,9 @@ s_client - SSL/TLS client program
 =head1 SYNOPSIS
 
 B<openssl> B<s_client>
-<<<<<<< HEAD
 [B<-help>]
 [B<-connect host:port>]
 [B<-proxy host:port>]
-=======
-[B<-connect host:port>]
->>>>>>> origin/master
 [B<-servername name>]
 [B<-verify depth>]
 [B<-verify_return_error>]
@@ -28,7 +20,6 @@ B<openssl> B<s_client>
 [B<-pass arg>]
 [B<-CApath directory>]
 [B<-CAfile filename>]
-<<<<<<< HEAD
 [B<-no-CAfile>]
 [B<-no-CApath>]
 [B<-dane_tlsa_domain domain>]
@@ -63,11 +54,6 @@ B<openssl> B<s_client>
 [B<-verify_name name>]
 [B<-x509_strict>]
 [B<-reconnect>]
-=======
-[B<-no_alt_chains>]
-[B<-reconnect>]
-[B<-pause>]
->>>>>>> origin/master
 [B<-showcerts>]
 [B<-debug>]
 [B<-msg>]
@@ -78,22 +64,14 @@ B<openssl> B<s_client>
 [B<-ign_eof>]
 [B<-no_ign_eof>]
 [B<-quiet>]
-<<<<<<< HEAD
 [B<-ssl3>]
 [B<-tls1>]
 [B<-tls1_1>]
 [B<-tls1_2>]
-=======
-[B<-ssl2>]
-[B<-ssl3>]
-[B<-tls1>]
-[B<-no_ssl2>]
->>>>>>> origin/master
 [B<-no_ssl3>]
 [B<-no_tls1>]
 [B<-no_tls1_1>]
 [B<-no_tls1_2>]
-<<<<<<< HEAD
 [B<-dtls>]
 [B<-dtls1>]
 [B<-dtls1_2>]
@@ -109,13 +87,6 @@ B<openssl> B<s_client>
 [B<-serverpref>]
 [B<-starttls protocol>]
 [B<-xmpphost hostname>]
-=======
-[B<-fallback_scsv>]
-[B<-bugs>]
-[B<-cipher cipherlist>]
-[B<-serverpref>]
-[B<-starttls protocol>]
->>>>>>> origin/master
 [B<-engine id>]
 [B<-tlsextdebug>]
 [B<-no_ticket>]
@@ -125,11 +96,8 @@ B<openssl> B<s_client>
 [B<-serverinfo types>]
 [B<-status>]
 [B<-nextprotoneg protocols>]
-<<<<<<< HEAD
 [B<-ct|noct>]
 [B<-ctlogfile>]
-=======
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -139,7 +107,6 @@ SSL servers.
 
 =head1 OPTIONS
 
-<<<<<<< HEAD
 In addition to the options below the B<s_client> utility also supports the
 common and client only options documented in the
 in the L<SSL_CONF_cmd(3)|SSL_CONF_cmd(3)/SUPPORTED COMMAND LINE COMMANDS>
@@ -151,24 +118,17 @@ manual page.
 
 Print out a usage message.
 
-=======
-=over 4
-
->>>>>>> origin/master
 =item B<-connect host:port>
 
 This specifies the host and optional port to connect to. If not specified
 then an attempt is made to connect to the local host on port 4433.
 
-<<<<<<< HEAD
 =item B<-proxy host:port>
 
 When used with the B<-connect> flag, the program uses the host and port
 specified with this flag and issues an HTTP CONNECT command to connect
 to the desired server.
 
-=======
->>>>>>> origin/master
 =item B<-servername name>
 
 Set the TLS SNI (Server Name Indication) extension in the ClientHello message.
@@ -194,11 +154,7 @@ The private format to use: DER or PEM. PEM is the default.
 =item B<-pass arg>
 
 the private key password source. For more information about the format of B<arg>
-<<<<<<< HEAD
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
-=======
-see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
->>>>>>> origin/master
 
 =item B<-verify depth>
 
@@ -224,7 +180,6 @@ also used when building the client certificate chain.
 A file containing trusted certificates to use during server authentication
 and to use when attempting to build the client certificate chain.
 
-<<<<<<< HEAD
 =item B<-no-CAfile>
 
 Do not load the trusted CA certificates from the default file location
@@ -299,25 +254,12 @@ B<-verify_ip>, B<-verify_name>, B<-x509_strict>
 
 Set various certificate chain validation options. See the
 L<verify(1)> manual page for details.
-=======
-=item B<-purpose, -ignore_critical, -issuer_checks, -crl_check, -crl_check_all, -policy_check, -extended_crl, -x509_strict, -policy -check_ss_sig -no_alt_chains>
-
-Set various certificate chain valiadition option. See the
-L<B<verify>|verify(1)> manual page for details.
->>>>>>> origin/master
 
 =item B<-reconnect>
 
 reconnects to the same server 5 times using the same session ID, this can
 be used as a test that session caching is working.
 
-<<<<<<< HEAD
-=======
-=item B<-pause>
-
-pauses 1 second between each read and write call.
-
->>>>>>> origin/master
 =item B<-showcerts>
 
 display the whole server certificate chain: normally only the server
@@ -346,7 +288,6 @@ print extensive debugging information including a hex dump of all traffic.
 
 show all protocol messages with hex dump.
 
-<<<<<<< HEAD
 =item B<-trace>
 
 show verbose trace output of protocol messages. OpenSSL needs to be compiled
@@ -356,8 +297,6 @@ with B<enable-ssl-trace> for this option to work.
 
 file to send output of B<-msg> or B<-trace> to, default standard output.
 
-=======
->>>>>>> origin/master
 =item B<-nbio_test>
 
 tests non-blocking I/O
@@ -396,7 +335,6 @@ Use the PSK key B<key> when using a PSK cipher suite. The key is
 given as a hexadecimal number without leading 0x, for example -psk
 1a2b3c4d.
 
-<<<<<<< HEAD
 =item B<-ssl3>, B<-tls1>, B<-tls1_1>, B<-tls1_2>, B<-no_ssl3>, B<-no_tls1>, B<-no_tls1_1>, B<-no_tls1_2>
 
 These options require or disable the use of the specified SSL or TLS protocols.
@@ -411,23 +349,11 @@ These options make B<s_client> use DTLS protocols instead of TLS.
 With B<-dtls>, B<s_client> will negotiate any supported DTLS protocol version,
 whilst B<-dtls1> and B<-dtls1_2> will only support DTLS1.0 and DTLS1.2
 respectively.
-=======
-=item B<-ssl2>, B<-ssl3>, B<-tls1>, B<-no_ssl2>, B<-no_ssl3>, B<-no_tls1>, B<-no_tls1_1>, B<-no_tls1_2>
-
-these options disable the use of certain SSL or TLS protocols. By default
-the initial handshake uses a method which should be compatible with all
-servers and permit them to use SSL v3, SSL v2 or TLS as appropriate.
-
-Unfortunately there are still ancient and broken servers in use which
-cannot handle this technique and will fail to connect. Some servers only
-work if TLS is turned off.
->>>>>>> origin/master
 
 =item B<-fallback_scsv>
 
 Send TLS_FALLBACK_SCSV in the ClientHello.
 
-<<<<<<< HEAD
 =item B<-async>
 
 switch on asynchronous mode. Cryptographic operations will be performed
@@ -458,14 +384,11 @@ effect if the buffer size is larger than the size that would otherwise be used
 and pipelining is in use (see L<SSL_CTX_set_default_read_buffer_len(3)> for
 further information).
 
-=======
->>>>>>> origin/master
 =item B<-bugs>
 
 there are several known bug in SSL and TLS implementations. Adding this
 option enables various workarounds.
 
-<<<<<<< HEAD
 =item B<-comp>
 
 Enables support for SSL/TLS compression.
@@ -484,8 +407,6 @@ OpenSSL 1.1.0.
 only provide a brief summary of connection parameters instead of the
 normal verbose output.
 
-=======
->>>>>>> origin/master
 =item B<-cipher cipherlist>
 
 this allows the cipher list sent by the client to be modified. Although
@@ -493,18 +414,10 @@ the server determines which cipher suite is used it should take the first
 supported cipher in the list sent by the client. See the B<ciphers>
 command for more information.
 
-<<<<<<< HEAD
-=======
-=item B<-serverpref>
-
-use the server's cipher preferences; only used for SSLV2.
-
->>>>>>> origin/master
 =item B<-starttls protocol>
 
 send the protocol-specific message(s) to switch to TLS for communication.
 B<protocol> is a keyword for the intended protocol.  Currently, the only
-<<<<<<< HEAD
 supported keywords are "smtp", "pop3", "imap", "ftp", "xmpp", "xmpp-server",
 and "irc."
 
@@ -514,9 +427,6 @@ This option, when used with "-starttls xmpp" or "-starttls xmpp-server",
 specifies the host for the "to" attribute of the stream element.
 If this option is not specified, then the host specified with "-connect"
 will be used.
-=======
-supported keywords are "smtp", "pop3", "imap", and "ftp".
->>>>>>> origin/master
 
 =item B<-tlsextdebug>
 
@@ -524,11 +434,7 @@ print out a hex dump of any TLS extensions received from the server.
 
 =item B<-no_ticket>
 
-<<<<<<< HEAD
 disable RFC4507bis session ticket support.
-=======
-disable RFC4507bis session ticket support. 
->>>>>>> origin/master
 
 =item B<-sess_out filename>
 
@@ -549,23 +455,14 @@ for all available algorithms.
 =item B<-rand file(s)>
 
 a file or files containing random data used to seed the random number
-<<<<<<< HEAD
 generator, or an EGD socket (see L<RAND_egd(3)>).
 Multiple files can be specified separated by an OS-dependent character.
-=======
-generator, or an EGD socket (see L<RAND_egd(3)|RAND_egd(3)>).
-Multiple files can be specified separated by a OS-dependent character.
->>>>>>> origin/master
 The separator is B<;> for MS-Windows, B<,> for OpenVMS, and B<:> for
 all others.
 
 =item B<-serverinfo types>
 
-<<<<<<< HEAD
 a list of comma-separated TLS Extension Types (numbers between 0 and
-=======
-a list of comma-separated TLS Extension Types (numbers between 0 and 
->>>>>>> origin/master
 65535).  Each type will be sent as an empty ClientHello TLS Extension.
 The server's response (if any) will be encoded and displayed as a PEM
 file.
@@ -584,7 +481,6 @@ Protocol names are printable ASCII strings, for example "http/1.1" or
 "spdy/3".
 Empty list of protocols is treated specially and will cause the client to
 advertise support for the TLS extension but disconnect just after
-<<<<<<< HEAD
 receiving ServerHello with a list of server supported protocols.
 
 =item B<-ct|noct>
@@ -601,9 +497,6 @@ for SCTs.
 
 A file containing a list of known Certificate Transparency logs. See
 L<SSL_CTX_set_ctlog_list_file(3)> for the expected file format.
-=======
-reciving ServerHello with a list of server supported protocols.
->>>>>>> origin/master
 
 =back
 
@@ -627,13 +520,8 @@ would typically be used (https uses port 443). If the connection succeeds
 then an HTTP command can be given such as "GET /" to retrieve a web page.
 
 If the handshake fails then there are several possible causes, if it is
-<<<<<<< HEAD
 nothing obvious like no client certificate then the B<-bugs>,
 B<-ssl3>, B<-tls1>, B<-no_ssl3>, B<-no_tls1> options can be tried
-=======
-nothing obvious like no client certificate then the B<-bugs>, B<-ssl2>,
-B<-ssl3>, B<-tls1>, B<-no_ssl2>, B<-no_ssl3>, B<-no_tls1> options can be tried
->>>>>>> origin/master
 in case it is a buggy server. In particular you should play with these
 options B<before> submitting a bug report to an OpenSSL mailing list.
 
@@ -655,13 +543,6 @@ on the command line is no guarantee that the certificate works.
 If there are problems verifying a server certificate then the
 B<-showcerts> option can be used to show the whole chain.
 
-<<<<<<< HEAD
-=======
-Since the SSLv23 client hello cannot include compression methods or extensions
-these will only be supported if its use is disabled, for example by using the
-B<-no_sslv2> option.
-
->>>>>>> origin/master
 The B<s_client> utility is a test tool and is designed to continue the
 handshake after any certificate verification errors. As a result it will
 accept any certificate chain (trusted or not) sent by the peer. None test
@@ -671,24 +552,16 @@ option: any verify errors are then returned aborting the handshake.
 
 =head1 BUGS
 
-<<<<<<< HEAD
 Because this program has a lot of options and also because some of the
 techniques used are rather old, the C source of B<s_client> is rather hard to
 read and not a model of how things should be done.
 A typical SSL client program would be much simpler.
-=======
-Because this program has a lot of options and also because some of
-the techniques used are rather old, the C source of s_client is rather
-hard to read and not a model of how things should be done. A typical
-SSL client program would be much simpler.
->>>>>>> origin/master
 
 The B<-prexit> option is a bit of a hack. We should really report
 information whenever a session is renegotiated.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<sess_id(1)>, L<s_server(1)>, L<ciphers(1)>
 
 =head1 HISTORY
@@ -703,12 +576,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<sess_id(1)|sess_id(1)>, L<s_server(1)|s_server(1)>, L<ciphers(1)|ciphers(1)>
-
-=head1 HISTORY
-
-The -no_alt_chains options was first added to OpenSSL 1.0.2b.
->>>>>>> origin/master
 
 =cut

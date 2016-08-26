@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -46,110 +45,12 @@ void EVP_CIPHER_CTX_free(EVP_CIPHER_CTX *ctx)
 {
     EVP_CIPHER_CTX_reset(ctx);
     OPENSSL_free(ctx);
-=======
-/* crypto/evp/evp_enc.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
-#include <openssl/evp.h>
-#include <openssl/err.h>
-#include <openssl/rand.h>
-#ifndef OPENSSL_NO_ENGINE
-# include <openssl/engine.h>
-#endif
-#ifdef OPENSSL_FIPS
-# include <openssl/fips.h>
-#endif
-#include "evp_locl.h"
-
-#ifdef OPENSSL_FIPS
-# define M_do_cipher(ctx, out, in, inl) FIPS_cipher(ctx, out, in, inl)
-#else
-# define M_do_cipher(ctx, out, in, inl) ctx->cipher->do_cipher(ctx, out, in, inl)
-#endif
-
-const char EVP_version[] = "EVP" OPENSSL_VERSION_PTEXT;
-
-void EVP_CIPHER_CTX_init(EVP_CIPHER_CTX *ctx)
-{
-    memset(ctx, 0, sizeof(EVP_CIPHER_CTX));
-    /* ctx->cipher=NULL; */
-}
-
-EVP_CIPHER_CTX *EVP_CIPHER_CTX_new(void)
-{
-    EVP_CIPHER_CTX *ctx = OPENSSL_malloc(sizeof *ctx);
-    if (ctx)
-        EVP_CIPHER_CTX_init(ctx);
-    return ctx;
->>>>>>> origin/master
 }
 
 int EVP_CipherInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                    const unsigned char *key, const unsigned char *iv, int enc)
 {
-<<<<<<< HEAD
     EVP_CIPHER_CTX_reset(ctx);
-=======
-    if (cipher)
-        EVP_CIPHER_CTX_init(ctx);
->>>>>>> origin/master
     return EVP_CipherInit_ex(ctx, cipher, NULL, key, iv, enc);
 }
 
@@ -169,19 +70,10 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
      * Whether it's nice or not, "Inits" can be used on "Final"'d contexts so
      * this context may already have an ENGINE! Try to avoid releasing the
      * previous handle, re-querying for an ENGINE, and having a
-<<<<<<< HEAD
      * reinitialisation, when it may all be unnecessary.
      */
     if (ctx->engine && ctx->cipher
         && (cipher == NULL || cipher->nid == ctx->cipher->nid))
-=======
-     * reinitialisation, when it may all be unecessary.
-     */
-    if (ctx->engine && ctx->cipher && (!cipher ||
-                                       (cipher
-                                        && (cipher->nid ==
-                                            ctx->cipher->nid))))
->>>>>>> origin/master
         goto skip_to_init;
 #endif
     if (cipher) {
@@ -192,11 +84,7 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
          */
         if (ctx->cipher) {
             unsigned long flags = ctx->flags;
-<<<<<<< HEAD
             EVP_CIPHER_CTX_reset(ctx);
-=======
-            EVP_CIPHER_CTX_cleanup(ctx);
->>>>>>> origin/master
             /* Restore encrypt and flags */
             ctx->encrypt = enc;
             ctx->flags = flags;
@@ -217,11 +105,7 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                 /*
                  * One positive side-effect of US's export control history,
                  * is that we should at least be able to avoid using US
-<<<<<<< HEAD
                  * misspellings of "initialisation"?
-=======
-                 * mispellings of "initialisation"?
->>>>>>> origin/master
                  */
                 EVPerr(EVP_F_EVP_CIPHERINIT_EX, EVP_R_INITIALIZATION_ERROR);
                 return 0;
@@ -237,27 +121,10 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
             ctx->engine = NULL;
 #endif
 
-<<<<<<< HEAD
         ctx->cipher = cipher;
         if (ctx->cipher->ctx_size) {
             ctx->cipher_data = OPENSSL_zalloc(ctx->cipher->ctx_size);
             if (ctx->cipher_data == NULL) {
-=======
-#ifdef OPENSSL_FIPS
-        if (FIPS_mode()) {
-            const EVP_CIPHER *fcipher;
-            if (cipher)
-                fcipher = evp_get_fips_cipher(cipher);
-            if (fcipher)
-                cipher = fcipher;
-            return FIPS_cipherinit(ctx, cipher, key, iv, enc);
-        }
-#endif
-        ctx->cipher = cipher;
-        if (ctx->cipher->ctx_size) {
-            ctx->cipher_data = OPENSSL_malloc(ctx->cipher->ctx_size);
-            if (!ctx->cipher_data) {
->>>>>>> origin/master
                 EVPerr(EVP_F_EVP_CIPHERINIT_EX, ERR_R_MALLOC_FAILURE);
                 return 0;
             }
@@ -280,13 +147,6 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
 #ifndef OPENSSL_NO_ENGINE
  skip_to_init:
 #endif
-<<<<<<< HEAD
-=======
-#ifdef OPENSSL_FIPS
-    if (FIPS_mode())
-        return FIPS_cipherinit(ctx, cipher, key, iv, enc);
-#endif
->>>>>>> origin/master
     /* we assume block size is a power of 2 in *cryptUpdate */
     OPENSSL_assert(ctx->cipher->block_size == 1
                    || ctx->cipher->block_size == 8
@@ -298,11 +158,7 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
         return 0;
     }
 
-<<<<<<< HEAD
     if (!(EVP_CIPHER_flags(EVP_CIPHER_CTX_cipher(ctx)) & EVP_CIPH_CUSTOM_IV)) {
-=======
-    if (!(EVP_CIPHER_CTX_flags(ctx) & EVP_CIPH_CUSTOM_IV)) {
->>>>>>> origin/master
         switch (EVP_CIPHER_CTX_mode(ctx)) {
 
         case EVP_CIPH_STREAM_CIPHER:
@@ -333,10 +189,6 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
 
         default:
             return 0;
-<<<<<<< HEAD
-=======
-            break;
->>>>>>> origin/master
         }
     }
 
@@ -401,7 +253,6 @@ int EVP_DecryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
     return EVP_CipherInit_ex(ctx, cipher, impl, key, iv, 0);
 }
 
-<<<<<<< HEAD
 /*
  * According to the letter of standard difference between pointers
  * is specified to be valid only within same object. This makes
@@ -440,24 +291,18 @@ static int is_partially_overlapping(const void *ptr1, const void *ptr2,
     return overlapped;
 }
 
-=======
->>>>>>> origin/master
 int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
                       const unsigned char *in, int inl)
 {
     int i, j, bl;
 
     if (ctx->cipher->flags & EVP_CIPH_FLAG_CUSTOM_CIPHER) {
-<<<<<<< HEAD
         if (is_partially_overlapping(out, in, inl)) {
             EVPerr(EVP_F_EVP_ENCRYPTUPDATE, EVP_R_PARTIALLY_OVERLAPPING);
             return 0;
         }
 
         i = ctx->cipher->do_cipher(ctx, out, in, inl);
-=======
-        i = M_do_cipher(ctx, out, in, inl);
->>>>>>> origin/master
         if (i < 0)
             return 0;
         else
@@ -469,7 +314,6 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
         *outl = 0;
         return inl == 0;
     }
-<<<<<<< HEAD
     if (is_partially_overlapping(out, in, inl)) {
         EVPerr(EVP_F_EVP_ENCRYPTUPDATE, EVP_R_PARTIALLY_OVERLAPPING);
         return 0;
@@ -477,11 +321,6 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
 
     if (ctx->buf_len == 0 && (inl & (ctx->block_mask)) == 0) {
         if (ctx->cipher->do_cipher(ctx, out, in, inl)) {
-=======
-
-    if (ctx->buf_len == 0 && (inl & (ctx->block_mask)) == 0) {
-        if (M_do_cipher(ctx, out, in, inl)) {
->>>>>>> origin/master
             *outl = inl;
             return 1;
         } else {
@@ -493,11 +332,7 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     bl = ctx->cipher->block_size;
     OPENSSL_assert(bl <= (int)sizeof(ctx->buf));
     if (i != 0) {
-<<<<<<< HEAD
         if (bl - i > inl) {
-=======
-        if (i + inl < bl) {
->>>>>>> origin/master
             memcpy(&(ctx->buf[i]), in, inl);
             ctx->buf_len += inl;
             *outl = 0;
@@ -505,7 +340,6 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
         } else {
             j = bl - i;
             memcpy(&(ctx->buf[i]), in, j);
-<<<<<<< HEAD
             inl -= j;
             in += j;
             if (is_partially_overlapping(out, in, bl)) {
@@ -514,12 +348,6 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
             }
             if (!ctx->cipher->do_cipher(ctx, out, ctx->buf, bl))
                 return 0;
-=======
-            if (!M_do_cipher(ctx, out, ctx->buf, bl))
-                return 0;
-            inl -= j;
-            in += j;
->>>>>>> origin/master
             out += bl;
             *outl = bl;
         }
@@ -528,11 +356,7 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     i = inl & (bl - 1);
     inl -= i;
     if (inl > 0) {
-<<<<<<< HEAD
         if (!ctx->cipher->do_cipher(ctx, out, in, inl))
-=======
-        if (!M_do_cipher(ctx, out, in, inl))
->>>>>>> origin/master
             return 0;
         *outl += inl;
     }
@@ -556,11 +380,7 @@ int EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     unsigned int i, b, bl;
 
     if (ctx->cipher->flags & EVP_CIPH_FLAG_CUSTOM_CIPHER) {
-<<<<<<< HEAD
         ret = ctx->cipher->do_cipher(ctx, out, NULL, 0);
-=======
-        ret = M_do_cipher(ctx, out, NULL, 0);
->>>>>>> origin/master
         if (ret < 0)
             return 0;
         else
@@ -588,11 +408,7 @@ int EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     n = b - bl;
     for (i = bl; i < b; i++)
         ctx->buf[i] = n;
-<<<<<<< HEAD
     ret = ctx->cipher->do_cipher(ctx, out, ctx->buf, b);
-=======
-    ret = M_do_cipher(ctx, out, ctx->buf, b);
->>>>>>> origin/master
 
     if (ret)
         *outl = b;
@@ -607,16 +423,12 @@ int EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     unsigned int b;
 
     if (ctx->cipher->flags & EVP_CIPH_FLAG_CUSTOM_CIPHER) {
-<<<<<<< HEAD
         if (is_partially_overlapping(out, in, inl)) {
             EVPerr(EVP_F_EVP_DECRYPTUPDATE, EVP_R_PARTIALLY_OVERLAPPING);
             return 0;
         }
 
         fix_len = ctx->cipher->do_cipher(ctx, out, in, inl);
-=======
-        fix_len = M_do_cipher(ctx, out, in, inl);
->>>>>>> origin/master
         if (fix_len < 0) {
             *outl = 0;
             return 0;
@@ -637,15 +449,12 @@ int EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     OPENSSL_assert(b <= sizeof ctx->final);
 
     if (ctx->final_used) {
-<<<<<<< HEAD
         /* see comment about PTRDIFF_T comparison above */
         if (((PTRDIFF_T)out == (PTRDIFF_T)in)
             || is_partially_overlapping(out, in, b)) {
             EVPerr(EVP_F_EVP_DECRYPTUPDATE, EVP_R_PARTIALLY_OVERLAPPING);
             return 0;
         }
-=======
->>>>>>> origin/master
         memcpy(out, ctx->final, b);
         out += b;
         fix_len = 1;
@@ -686,11 +495,7 @@ int EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     *outl = 0;
 
     if (ctx->cipher->flags & EVP_CIPH_FLAG_CUSTOM_CIPHER) {
-<<<<<<< HEAD
         i = ctx->cipher->do_cipher(ctx, out, NULL, 0);
-=======
-        i = M_do_cipher(ctx, out, NULL, 0);
->>>>>>> origin/master
         if (i < 0)
             return 0;
         else
@@ -739,45 +544,6 @@ int EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     return (1);
 }
 
-<<<<<<< HEAD
-=======
-void EVP_CIPHER_CTX_free(EVP_CIPHER_CTX *ctx)
-{
-    if (ctx) {
-        EVP_CIPHER_CTX_cleanup(ctx);
-        OPENSSL_free(ctx);
-    }
-}
-
-int EVP_CIPHER_CTX_cleanup(EVP_CIPHER_CTX *c)
-{
-#ifndef OPENSSL_FIPS
-    if (c->cipher != NULL) {
-        if (c->cipher->cleanup && !c->cipher->cleanup(c))
-            return 0;
-        /* Cleanse cipher context data */
-        if (c->cipher_data)
-            OPENSSL_cleanse(c->cipher_data, c->cipher->ctx_size);
-    }
-    if (c->cipher_data)
-        OPENSSL_free(c->cipher_data);
-#endif
-#ifndef OPENSSL_NO_ENGINE
-    if (c->engine)
-        /*
-         * The EVP_CIPHER we used belongs to an ENGINE, release the
-         * functional reference we held for this reason.
-         */
-        ENGINE_finish(c->engine);
-#endif
-#ifdef OPENSSL_FIPS
-    FIPS_cipher_ctx_cleanup(c);
-#endif
-    memset(c, 0, sizeof(EVP_CIPHER_CTX));
-    return 1;
-}
-
->>>>>>> origin/master
 int EVP_CIPHER_CTX_set_key_length(EVP_CIPHER_CTX *c, int keylen)
 {
     if (c->cipher->flags & EVP_CIPH_CUSTOM_KEY_LENGTH)
@@ -846,21 +612,12 @@ int EVP_CIPHER_CTX_copy(EVP_CIPHER_CTX *out, const EVP_CIPHER_CTX *in)
     }
 #endif
 
-<<<<<<< HEAD
     EVP_CIPHER_CTX_reset(out);
     memcpy(out, in, sizeof(*out));
 
     if (in->cipher_data && in->cipher->ctx_size) {
         out->cipher_data = OPENSSL_malloc(in->cipher->ctx_size);
         if (out->cipher_data == NULL) {
-=======
-    EVP_CIPHER_CTX_cleanup(out);
-    memcpy(out, in, sizeof *out);
-
-    if (in->cipher_data && in->cipher->ctx_size) {
-        out->cipher_data = OPENSSL_malloc(in->cipher->ctx_size);
-        if (!out->cipher_data) {
->>>>>>> origin/master
             EVPerr(EVP_F_EVP_CIPHER_CTX_COPY, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -871,7 +628,3 @@ int EVP_CIPHER_CTX_copy(EVP_CIPHER_CTX *out, const EVP_CIPHER_CTX *in)
         return in->cipher->ctrl((EVP_CIPHER_CTX *)in, EVP_CTRL_COPY, 0, out);
     return 1;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -14,71 +13,6 @@
 #include <openssl/x509v3.h>
 #include <openssl/x509_vfy.h>
 #include "internal/x509_int.h"
-=======
-/* v3_purp.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 2001.
- */
-/* ====================================================================
- * Copyright (c) 1999-2004 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
-#include <openssl/x509v3.h>
-#include <openssl/x509_vfy.h>
->>>>>>> origin/master
 
 static void x509v3_cache_extensions(X509 *x);
 
@@ -126,13 +60,7 @@ static X509_PURPOSE xstandard[] = {
      NULL},
 };
 
-<<<<<<< HEAD
 #define X509_PURPOSE_COUNT OSSL_NELEM(xstandard)
-=======
-#define X509_PURPOSE_COUNT (sizeof(xstandard)/sizeof(X509_PURPOSE))
-
-IMPLEMENT_STACK_OF(X509_PURPOSE)
->>>>>>> origin/master
 
 static STACK_OF(X509_PURPOSE) *xptable = NULL;
 
@@ -151,18 +79,11 @@ int X509_check_purpose(X509 *x, int id, int ca)
     int idx;
     const X509_PURPOSE *pt;
     if (!(x->ex_flags & EXFLAG_SET)) {
-<<<<<<< HEAD
         CRYPTO_THREAD_write_lock(x->lock);
         x509v3_cache_extensions(x);
         CRYPTO_THREAD_unlock(x->lock);
     }
     /* Return if side-effect only call */
-=======
-        CRYPTO_w_lock(CRYPTO_LOCK_X509);
-        x509v3_cache_extensions(x);
-        CRYPTO_w_unlock(CRYPTO_LOCK_X509);
-    }
->>>>>>> origin/master
     if (id == -1)
         return 1;
     idx = X509_PURPOSE_get_by_id(id);
@@ -198,21 +119,13 @@ X509_PURPOSE *X509_PURPOSE_get0(int idx)
     return sk_X509_PURPOSE_value(xptable, idx - X509_PURPOSE_COUNT);
 }
 
-<<<<<<< HEAD
 int X509_PURPOSE_get_by_sname(const char *sname)
-=======
-int X509_PURPOSE_get_by_sname(char *sname)
->>>>>>> origin/master
 {
     int i;
     X509_PURPOSE *xptmp;
     for (i = 0; i < X509_PURPOSE_get_count(); i++) {
         xptmp = X509_PURPOSE_get0(i);
-<<<<<<< HEAD
         if (strcmp(xptmp->sname, sname) == 0)
-=======
-        if (!strcmp(xptmp->sname, sname))
->>>>>>> origin/master
             return i;
     }
     return -1;
@@ -235,11 +148,7 @@ int X509_PURPOSE_get_by_id(int purpose)
 
 int X509_PURPOSE_add(int id, int trust, int flags,
                      int (*ck) (const X509_PURPOSE *, const X509 *, int),
-<<<<<<< HEAD
                      const char *name, const char *sname, void *arg)
-=======
-                     char *name, char *sname, void *arg)
->>>>>>> origin/master
 {
     int idx;
     X509_PURPOSE *ptmp;
@@ -253,11 +162,7 @@ int X509_PURPOSE_add(int id, int trust, int flags,
     idx = X509_PURPOSE_get_by_id(id);
     /* Need a new entry */
     if (idx == -1) {
-<<<<<<< HEAD
         if ((ptmp = OPENSSL_malloc(sizeof(*ptmp))) == NULL) {
-=======
-        if (!(ptmp = OPENSSL_malloc(sizeof(X509_PURPOSE)))) {
->>>>>>> origin/master
             X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -271,19 +176,11 @@ int X509_PURPOSE_add(int id, int trust, int flags,
         OPENSSL_free(ptmp->sname);
     }
     /* dup supplied name */
-<<<<<<< HEAD
     ptmp->name = OPENSSL_strdup(name);
     ptmp->sname = OPENSSL_strdup(sname);
     if (!ptmp->name || !ptmp->sname) {
         X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
         goto err;
-=======
-    ptmp->name = BUF_strdup(name);
-    ptmp->sname = BUF_strdup(sname);
-    if (!ptmp->name || !ptmp->sname) {
-        X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
-        return 0;
->>>>>>> origin/master
     }
     /* Keep the dynamic flag of existing entry */
     ptmp->flags &= X509_PURPOSE_DYNAMIC;
@@ -297,7 +194,6 @@ int X509_PURPOSE_add(int id, int trust, int flags,
 
     /* If its a new entry manage the dynamic table */
     if (idx == -1) {
-<<<<<<< HEAD
         if (xptable == NULL
             && (xptable = sk_X509_PURPOSE_new(xp_cmp)) == NULL) {
             X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
@@ -316,18 +212,6 @@ int X509_PURPOSE_add(int id, int trust, int flags,
         OPENSSL_free(ptmp);
     }
     return 0;
-=======
-        if (!xptable && !(xptable = sk_X509_PURPOSE_new(xp_cmp))) {
-            X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
-            return 0;
-        }
-        if (!sk_X509_PURPOSE_push(xptable, ptmp)) {
-            X509V3err(X509V3_F_X509_PURPOSE_ADD, ERR_R_MALLOC_FAILURE);
-            return 0;
-        }
-    }
-    return 1;
->>>>>>> origin/master
 }
 
 static void xptable_free(X509_PURPOSE *p)
@@ -345,49 +229,26 @@ static void xptable_free(X509_PURPOSE *p)
 
 void X509_PURPOSE_cleanup(void)
 {
-<<<<<<< HEAD
     sk_X509_PURPOSE_pop_free(xptable, xptable_free);
     xptable = NULL;
 }
 
 int X509_PURPOSE_get_id(const X509_PURPOSE *xp)
-=======
-    unsigned int i;
-    sk_X509_PURPOSE_pop_free(xptable, xptable_free);
-    for (i = 0; i < X509_PURPOSE_COUNT; i++)
-        xptable_free(xstandard + i);
-    xptable = NULL;
-}
-
-int X509_PURPOSE_get_id(X509_PURPOSE *xp)
->>>>>>> origin/master
 {
     return xp->purpose;
 }
 
-<<<<<<< HEAD
 char *X509_PURPOSE_get0_name(const X509_PURPOSE *xp)
-=======
-char *X509_PURPOSE_get0_name(X509_PURPOSE *xp)
->>>>>>> origin/master
 {
     return xp->name;
 }
 
-<<<<<<< HEAD
 char *X509_PURPOSE_get0_sname(const X509_PURPOSE *xp)
-=======
-char *X509_PURPOSE_get0_sname(X509_PURPOSE *xp)
->>>>>>> origin/master
 {
     return xp->sname;
 }
 
-<<<<<<< HEAD
 int X509_PURPOSE_get_trust(const X509_PURPOSE *xp)
-=======
-int X509_PURPOSE_get_trust(X509_PURPOSE *xp)
->>>>>>> origin/master
 {
     return xp->trust;
 }
@@ -433,12 +294,7 @@ int X509_supported_extension(X509_EXTENSION *ex)
     if (ex_nid == NID_undef)
         return 0;
 
-<<<<<<< HEAD
     if (OBJ_bsearch_nid(&ex_nid, supported_nids, OSSL_NELEM(supported_nids)))
-=======
-    if (OBJ_bsearch_nid(&ex_nid, supported_nids,
-                        sizeof(supported_nids) / sizeof(int)))
->>>>>>> origin/master
         return 1;
     return 0;
 }
@@ -479,7 +335,6 @@ static void setup_crldp(X509 *x)
         setup_dp(x, sk_DIST_POINT_value(x->crldp, i));
 }
 
-<<<<<<< HEAD
 #define V1_ROOT (EXFLAG_V1|EXFLAG_SS)
 #define ku_reject(x, usage) \
         (((x)->ex_flags & EXFLAG_KUSAGE) && !((x)->ex_kusage & (usage)))
@@ -488,8 +343,6 @@ static void setup_crldp(X509 *x)
 #define ns_reject(x, usage) \
         (((x)->ex_flags & EXFLAG_NSCERT) && !((x)->ex_nscert & (usage)))
 
-=======
->>>>>>> origin/master
 static void x509v3_cache_extensions(X509 *x)
 {
     BASIC_CONSTRAINTS *bs;
@@ -502,13 +355,7 @@ static void x509v3_cache_extensions(X509 *x)
     int i;
     if (x->ex_flags & EXFLAG_SET)
         return;
-<<<<<<< HEAD
     X509_digest(x, EVP_sha1(), x->sha1_hash, NULL);
-=======
-#ifndef OPENSSL_NO_SHA
-    X509_digest(x, EVP_sha1(), x->sha1_hash, NULL);
-#endif
->>>>>>> origin/master
     /* V1 should mean no extensions ... */
     if (!X509_get_version(x))
         x->ex_flags |= EXFLAG_V1;
@@ -613,12 +460,8 @@ static void x509v3_cache_extensions(X509 *x)
     if (!X509_NAME_cmp(X509_get_subject_name(x), X509_get_issuer_name(x))) {
         x->ex_flags |= EXFLAG_SI;
         /* If SKID matches AKID also indicate self signed */
-<<<<<<< HEAD
         if (X509_check_akid(x, x->akid) == X509_V_OK &&
             !ku_reject(x, KU_KEY_CERT_SIGN))
-=======
-        if (X509_check_akid(x, x->akid) == X509_V_OK)
->>>>>>> origin/master
             x->ex_flags |= EXFLAG_SS;
     }
     x->altname = X509_get_ext_d2i(x, NID_subject_alt_name, NULL, NULL);
@@ -657,17 +500,6 @@ static void x509v3_cache_extensions(X509 *x)
  * 4 basicConstraints absent but keyUsage present and keyCertSign asserted.
  */
 
-<<<<<<< HEAD
-=======
-#define V1_ROOT (EXFLAG_V1|EXFLAG_SS)
-#define ku_reject(x, usage) \
-        (((x)->ex_flags & EXFLAG_KUSAGE) && !((x)->ex_kusage & (usage)))
-#define xku_reject(x, usage) \
-        (((x)->ex_flags & EXFLAG_XKUSAGE) && !((x)->ex_xkusage & (usage)))
-#define ns_reject(x, usage) \
-        (((x)->ex_flags & EXFLAG_NSCERT) && !((x)->ex_nscert & (usage)))
-
->>>>>>> origin/master
 static int check_ca(const X509 *x)
 {
     /* keyUsage if present should allow cert signing */
@@ -696,7 +528,6 @@ static int check_ca(const X509 *x)
     }
 }
 
-<<<<<<< HEAD
 void X509_set_proxy_flag(X509 *x)
 {
     x->ex_flags |= EXFLAG_PROXY;
@@ -713,14 +544,6 @@ int X509_check_ca(X509 *x)
         CRYPTO_THREAD_write_lock(x->lock);
         x509v3_cache_extensions(x);
         CRYPTO_THREAD_unlock(x->lock);
-=======
-int X509_check_ca(X509 *x)
-{
-    if (!(x->ex_flags & EXFLAG_SET)) {
-        CRYPTO_w_lock(CRYPTO_LOCK_X509);
-        x509v3_cache_extensions(x);
-        CRYPTO_w_unlock(CRYPTO_LOCK_X509);
->>>>>>> origin/master
     }
 
     return check_ca(x);
@@ -902,11 +725,7 @@ static int check_purpose_timestamp_sign(const X509_PURPOSE *xp, const X509 *x,
         return 0;
 
     /* Extended Key Usage MUST be critical */
-<<<<<<< HEAD
     i_ext = X509_get_ext_by_NID(x, NID_ext_key_usage, -1);
-=======
-    i_ext = X509_get_ext_by_NID((X509 *)x, NID_ext_key_usage, -1);
->>>>>>> origin/master
     if (i_ext >= 0) {
         X509_EXTENSION *ext = X509_get_ext((X509 *)x, i_ext);
         if (!X509_EXTENSION_get_critical(ext))
@@ -994,7 +813,6 @@ int X509_check_akid(X509 *issuer, AUTHORITY_KEYID *akid)
     }
     return X509_V_OK;
 }
-<<<<<<< HEAD
 
 uint32_t X509_get_extension_flags(X509 *x)
 {
@@ -1045,5 +863,3 @@ long X509_get_proxy_pathlen(X509 *x)
         return -1;
     return x->ex_pcpathlen;
 }
-=======
->>>>>>> origin/master

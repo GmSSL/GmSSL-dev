@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -18,27 +17,6 @@
 #include <openssl/opensslv.h>
 
 int SHA224_Init(SHA256_CTX *c)
-=======
-/* crypto/sha/sha256.c */
-/* ====================================================================
- * Copyright (c) 2004 The OpenSSL Project.  All rights reserved
- * according to the OpenSSL license [found in ../../LICENSE].
- * ====================================================================
- */
-#include <openssl/opensslconf.h>
-#if !defined(OPENSSL_NO_SHA) && !defined(OPENSSL_NO_SHA256)
-
-# include <stdlib.h>
-# include <string.h>
-
-# include <openssl/crypto.h>
-# include <openssl/sha.h>
-# include <openssl/opensslv.h>
-
-const char SHA256_version[] = "SHA-256" OPENSSL_VERSION_PTEXT;
-
-fips_md_init_ctx(SHA224, SHA256)
->>>>>>> origin/master
 {
     memset(c, 0, sizeof(*c));
     c->h[0] = 0xc1059ed8UL;
@@ -53,11 +31,7 @@ fips_md_init_ctx(SHA224, SHA256)
     return 1;
 }
 
-<<<<<<< HEAD
 int SHA256_Init(SHA256_CTX *c)
-=======
-fips_md_init(SHA256)
->>>>>>> origin/master
 {
     memset(c, 0, sizeof(*c));
     c->h[0] = 0x6a09e667UL;
@@ -110,36 +84,21 @@ int SHA224_Final(unsigned char *md, SHA256_CTX *c)
     return SHA256_Final(md, c);
 }
 
-<<<<<<< HEAD
 #define DATA_ORDER_IS_BIG_ENDIAN
 
 #define HASH_LONG               SHA_LONG
 #define HASH_CTX                SHA256_CTX
 #define HASH_CBLOCK             SHA_CBLOCK
 
-=======
-# define DATA_ORDER_IS_BIG_ENDIAN
-
-# define HASH_LONG               SHA_LONG
-# define HASH_CTX                SHA256_CTX
-# define HASH_CBLOCK             SHA_CBLOCK
->>>>>>> origin/master
 /*
  * Note that FIPS180-2 discusses "Truncation of the Hash Function Output."
  * default: case below covers for it. It's not clear however if it's
  * permitted to truncate to amount of bytes not divisible by 4. I bet not,
  * but if it is, then default: case shall be extended. For reference.
-<<<<<<< HEAD
  * Idea behind separate cases for pre-defined lengths is to let the
  * compiler decide if it's appropriate to unroll small loops.
  */
 #define HASH_MAKE_STRING(c,s)   do {    \
-=======
- * Idea behind separate cases for pre-defined lenghts is to let the
- * compiler decide if it's appropriate to unroll small loops.
- */
-# define HASH_MAKE_STRING(c,s)   do {    \
->>>>>>> origin/master
         unsigned long ll;               \
         unsigned int  nn;               \
         switch ((c)->md_len)            \
@@ -160,7 +119,6 @@ int SHA224_Final(unsigned char *md, SHA256_CTX *c)
         }                               \
         } while (0)
 
-<<<<<<< HEAD
 #define HASH_UPDATE             SHA256_Update
 #define HASH_TRANSFORM          SHA256_Transform
 #define HASH_FINAL              SHA256_Final
@@ -173,20 +131,6 @@ void sha256_block_data_order(SHA256_CTX *ctx, const void *in, size_t num);
 #include "internal/md32_common.h"
 
 #ifndef SHA256_ASM
-=======
-# define HASH_UPDATE             SHA256_Update
-# define HASH_TRANSFORM          SHA256_Transform
-# define HASH_FINAL              SHA256_Final
-# define HASH_BLOCK_DATA_ORDER   sha256_block_data_order
-# ifndef SHA256_ASM
-static
-# endif
-void sha256_block_data_order(SHA256_CTX *ctx, const void *in, size_t num);
-
-# include "md32_common.h"
-
-# ifndef SHA256_ASM
->>>>>>> origin/master
 static const SHA_LONG K256[64] = {
     0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL,
     0x3956c25bUL, 0x59f111f1UL, 0x923f82a4UL, 0xab1c5ed5UL,
@@ -211,7 +155,6 @@ static const SHA_LONG K256[64] = {
  * is left one. This is why you might notice that rotation coefficients
  * differ from those observed in FIPS document by 32-N...
  */
-<<<<<<< HEAD
 # define Sigma0(x)       (ROTATE((x),30) ^ ROTATE((x),19) ^ ROTATE((x),10))
 # define Sigma1(x)       (ROTATE((x),26) ^ ROTATE((x),21) ^ ROTATE((x),7))
 # define sigma0(x)       (ROTATE((x),25) ^ ROTATE((x),14) ^ ((x)>>3))
@@ -221,17 +164,6 @@ static const SHA_LONG K256[64] = {
 # define Maj(x,y,z)      (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
 
 # ifdef OPENSSL_SMALL_FOOTPRINT
-=======
-#  define Sigma0(x)       (ROTATE((x),30) ^ ROTATE((x),19) ^ ROTATE((x),10))
-#  define Sigma1(x)       (ROTATE((x),26) ^ ROTATE((x),21) ^ ROTATE((x),7))
-#  define sigma0(x)       (ROTATE((x),25) ^ ROTATE((x),14) ^ ((x)>>3))
-#  define sigma1(x)       (ROTATE((x),15) ^ ROTATE((x),13) ^ ((x)>>10))
-
-#  define Ch(x,y,z)       (((x) & (y)) ^ ((~(x)) & (z)))
-#  define Maj(x,y,z)      (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
-
-#  ifdef OPENSSL_SMALL_FOOTPRINT
->>>>>>> origin/master
 
 static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
                                     size_t num)
@@ -253,11 +185,7 @@ static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
         h = ctx->h[7];
 
         for (i = 0; i < 16; i++) {
-<<<<<<< HEAD
             (void)HOST_c2l(data, l);
-=======
-            HOST_c2l(data, l);
->>>>>>> origin/master
             T1 = X[i] = l;
             T1 += h + Sigma1(e) + Ch(e, f, g) + K256[i];
             T2 = Sigma0(a) + Maj(a, b, c);
@@ -302,24 +230,14 @@ static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
     }
 }
 
-<<<<<<< HEAD
 # else
 
 #  define ROUND_00_15(i,a,b,c,d,e,f,g,h)          do {    \
-=======
-#  else
-
-#   define ROUND_00_15(i,a,b,c,d,e,f,g,h)          do {    \
->>>>>>> origin/master
         T1 += h + Sigma1(e) + Ch(e,f,g) + K256[i];      \
         h = Sigma0(a) + Maj(a,b,c);                     \
         d += T1;        h += T1;                } while (0)
 
-<<<<<<< HEAD
 #  define ROUND_16_63(i,a,b,c,d,e,f,g,h,X)        do {    \
-=======
-#   define ROUND_16_63(i,a,b,c,d,e,f,g,h,X)        do {    \
->>>>>>> origin/master
         s0 = X[(i+1)&0x0f];     s0 = sigma0(s0);        \
         s1 = X[(i+14)&0x0f];    s1 = sigma1(s1);        \
         T1 = X[(i)&0x0f] += s0 + s1 + X[(i+9)&0x0f];    \
@@ -391,7 +309,6 @@ static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
         } else {
             SHA_LONG l;
 
-<<<<<<< HEAD
             (void)HOST_c2l(data, l);
             T1 = X[0] = l;
             ROUND_00_15(0, a, b, c, d, e, f, g, h);
@@ -438,54 +355,6 @@ static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
             T1 = X[14] = l;
             ROUND_00_15(14, c, d, e, f, g, h, a, b);
             (void)HOST_c2l(data, l);
-=======
-            HOST_c2l(data, l);
-            T1 = X[0] = l;
-            ROUND_00_15(0, a, b, c, d, e, f, g, h);
-            HOST_c2l(data, l);
-            T1 = X[1] = l;
-            ROUND_00_15(1, h, a, b, c, d, e, f, g);
-            HOST_c2l(data, l);
-            T1 = X[2] = l;
-            ROUND_00_15(2, g, h, a, b, c, d, e, f);
-            HOST_c2l(data, l);
-            T1 = X[3] = l;
-            ROUND_00_15(3, f, g, h, a, b, c, d, e);
-            HOST_c2l(data, l);
-            T1 = X[4] = l;
-            ROUND_00_15(4, e, f, g, h, a, b, c, d);
-            HOST_c2l(data, l);
-            T1 = X[5] = l;
-            ROUND_00_15(5, d, e, f, g, h, a, b, c);
-            HOST_c2l(data, l);
-            T1 = X[6] = l;
-            ROUND_00_15(6, c, d, e, f, g, h, a, b);
-            HOST_c2l(data, l);
-            T1 = X[7] = l;
-            ROUND_00_15(7, b, c, d, e, f, g, h, a);
-            HOST_c2l(data, l);
-            T1 = X[8] = l;
-            ROUND_00_15(8, a, b, c, d, e, f, g, h);
-            HOST_c2l(data, l);
-            T1 = X[9] = l;
-            ROUND_00_15(9, h, a, b, c, d, e, f, g);
-            HOST_c2l(data, l);
-            T1 = X[10] = l;
-            ROUND_00_15(10, g, h, a, b, c, d, e, f);
-            HOST_c2l(data, l);
-            T1 = X[11] = l;
-            ROUND_00_15(11, f, g, h, a, b, c, d, e);
-            HOST_c2l(data, l);
-            T1 = X[12] = l;
-            ROUND_00_15(12, e, f, g, h, a, b, c, d);
-            HOST_c2l(data, l);
-            T1 = X[13] = l;
-            ROUND_00_15(13, d, e, f, g, h, a, b, c);
-            HOST_c2l(data, l);
-            T1 = X[14] = l;
-            ROUND_00_15(14, c, d, e, f, g, h, a, b);
-            HOST_c2l(data, l);
->>>>>>> origin/master
             T1 = X[15] = l;
             ROUND_00_15(15, b, c, d, e, f, g, h, a);
         }
@@ -513,12 +382,5 @@ static void sha256_block_data_order(SHA256_CTX *ctx, const void *in,
     }
 }
 
-<<<<<<< HEAD
 # endif
 #endif                         /* SHA256_ASM */
-=======
-#  endif
-# endif                         /* SHA256_ASM */
-
-#endif                          /* OPENSSL_NO_SHA256 */
->>>>>>> origin/master

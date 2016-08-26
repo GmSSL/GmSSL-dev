@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -29,12 +25,9 @@
 # ~100-230% faster than gcc-generated code and ~35-90% faster than
 # the pure SPARCv9 code path.
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 $locals=16*8;
 
 $tab="%l0";

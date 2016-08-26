@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # Specific modes implementations for SPARC Architecture 2011. There
 # is T4 dependency though, an ASI value that is not specified in the
@@ -27,13 +23,10 @@
 # block sizes [though few percent better for not so long ones]. All
 # this based on suggestions from David Miller.
 
-<<<<<<< HEAD
 $::bias="STACK_BIAS";
 $::frame="STACK_FRAME";
 $::size_t_cc="SIZE_T_CC";
 
-=======
->>>>>>> origin/master
 sub asm_init {		# to be called with @ARGV as argument
     for (@_)		{ $::abibits=64 if (/\-m64/ || /\-xarch\=v9/); }
     if ($::abibits==64)	{ $::bias=2047; $::frame=192; $::size_t_cc="%xcc"; }
@@ -55,10 +48,7 @@ ${alg}${bits}_t4_cbc_encrypt:
 	save		%sp, -$::frame, %sp
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .L${bits}_cbc_enc_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
->>>>>>> origin/master
 	sub		$inp, $out, $blk_init	! $inp!=$out
 ___
 $::code.=<<___ if (!$::evp);
@@ -276,10 +266,7 @@ ${alg}${bits}_t4_cbc_decrypt:
 	save		%sp, -$::frame, %sp
 	cmp		$len, 0
 	be,pn		$::size_t_cc, .L${bits}_cbc_dec_abort
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
->>>>>>> origin/master
 	sub		$inp, $out, $blk_init	! $inp!=$out
 ___
 $::code.=<<___ if (!$::evp);
@@ -639,10 +626,7 @@ $::code.=<<___;
 .align	32
 ${alg}${bits}_t4_ctr32_encrypt:
 	save		%sp, -$::frame, %sp
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
->>>>>>> origin/master
 
 	prefetch	[$inp], 20
 	prefetch	[$inp + 63], 20
@@ -946,10 +930,7 @@ $::code.=<<___;
 .align	32
 ${alg}${bits}_t4_xts_${dir}crypt:
 	save		%sp, -$::frame-16, %sp
-<<<<<<< HEAD
 	srln		$len, 0, $len		! needed on v8+, "nop" on v9
-=======
->>>>>>> origin/master
 
 	mov		$ivec, %o0
 	add		%fp, $::bias-16, %o1
@@ -1417,11 +1398,7 @@ ___
 
 # Purpose of these subroutines is to explicitly encode VIS instructions,
 # so that one can compile the module without having to specify VIS
-<<<<<<< HEAD
 # extensions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
-=======
-# extentions on compiler command line, e.g. -xarch=v9 vs. -xarch=v9a.
->>>>>>> origin/master
 # Idea is to reserve for option to produce "universal" binary and let
 # programmer detect if current CPU is VIS capable at run-time.
 sub unvis {

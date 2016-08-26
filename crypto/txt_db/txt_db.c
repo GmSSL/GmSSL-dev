@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,92 +5,21 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* crypto/txt_db/txt_db.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
->>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-<<<<<<< HEAD
 #include "internal/cryptlib.h"
-=======
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/buffer.h>
 #include <openssl/txt_db.h>
 
 #undef BUFSIZE
 #define BUFSIZE 512
 
-<<<<<<< HEAD
 TXT_DB *TXT_DB_read(BIO *in, int num)
 {
     TXT_DB *ret = NULL;
-=======
-const char TXT_DB_version[] = "TXT_DB" OPENSSL_VERSION_PTEXT;
-
-TXT_DB *TXT_DB_read(BIO *in, int num)
-{
-    TXT_DB *ret = NULL;
-    int er = 1;
->>>>>>> origin/master
     int esc = 0;
     long ln = 0;
     int i, add, n;
@@ -106,11 +34,7 @@ TXT_DB *TXT_DB_read(BIO *in, int num)
     if (!BUF_MEM_grow(buf, size))
         goto err;
 
-<<<<<<< HEAD
     if ((ret = OPENSSL_malloc(sizeof(*ret))) == NULL)
-=======
-    if ((ret = OPENSSL_malloc(sizeof(TXT_DB))) == NULL)
->>>>>>> origin/master
         goto err;
     ret->num_fields = num;
     ret->index = NULL;
@@ -148,11 +72,7 @@ TXT_DB *TXT_DB_read(BIO *in, int num)
             continue;
         else {
             buf->data[offset - 1] = '\0'; /* blat the '\n' */
-<<<<<<< HEAD
             if ((p = OPENSSL_malloc(add + offset)) == NULL)
-=======
-            if (!(p = OPENSSL_malloc(add + offset)))
->>>>>>> origin/master
                 goto err;
             offset = 0;
         }
@@ -184,7 +104,6 @@ TXT_DB *TXT_DB_read(BIO *in, int num)
         }
         *(p++) = '\0';
         if ((n != num) || (*f != '\0')) {
-<<<<<<< HEAD
             ret->error = DB_ERROR_WRONG_NUM_FIELDS;
             goto err;
         }
@@ -203,48 +122,6 @@ TXT_DB *TXT_DB_read(BIO *in, int num)
         OPENSSL_free(ret);
     }
     return (NULL);
-=======
-#if !defined(OPENSSL_NO_STDIO) && !defined(OPENSSL_SYS_WIN16) /* temporary
-                                                               * fix :-( */
-            fprintf(stderr,
-                    "wrong number of fields on line %ld (looking for field %d, got %d, '%s' left)\n",
-                    ln, num, n, f);
-#endif
-            er = 2;
-            goto err;
-        }
-        pp[n] = p;
-        if (!sk_OPENSSL_PSTRING_push(ret->data, pp)) {
-#if !defined(OPENSSL_NO_STDIO) && !defined(OPENSSL_SYS_WIN16) /* temporary
-                                                               * fix :-( */
-            fprintf(stderr, "failure in sk_push\n");
-#endif
-            er = 2;
-            goto err;
-        }
-    }
-    er = 0;
- err:
-    BUF_MEM_free(buf);
-    if (er) {
-#if !defined(OPENSSL_NO_STDIO) && !defined(OPENSSL_SYS_WIN16)
-        if (er == 1)
-            fprintf(stderr, "OPENSSL_malloc failure\n");
-#endif
-        if (ret != NULL) {
-            if (ret->data != NULL)
-                sk_OPENSSL_PSTRING_free(ret->data);
-            if (ret->index != NULL)
-                OPENSSL_free(ret->index);
-            if (ret->qual != NULL)
-                OPENSSL_free(ret->qual);
-            if (ret != NULL)
-                OPENSSL_free(ret);
-        }
-        return (NULL);
-    } else
-        return (ret);
->>>>>>> origin/master
 }
 
 OPENSSL_STRING *TXT_DB_get_by_index(TXT_DB *db, int idx,
@@ -268,11 +145,7 @@ OPENSSL_STRING *TXT_DB_get_by_index(TXT_DB *db, int idx,
 }
 
 int TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
-<<<<<<< HEAD
                         OPENSSL_LH_HASHFUNC hash, OPENSSL_LH_COMPFUNC cmp)
-=======
-                        LHASH_HASH_FN_TYPE hash, LHASH_COMP_FN_TYPE cmp)
->>>>>>> origin/master
 {
     LHASH_OF(OPENSSL_STRING) *idx;
     OPENSSL_STRING *r;
@@ -283,11 +156,7 @@ int TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
         return (0);
     }
     /* FIXME: we lose type checking at this point */
-<<<<<<< HEAD
     if ((idx = (LHASH_OF(OPENSSL_STRING) *)OPENSSL_LH_new(hash, cmp)) == NULL) {
-=======
-    if ((idx = (LHASH_OF(OPENSSL_STRING) *)lh_new(hash, cmp)) == NULL) {
->>>>>>> origin/master
         db->error = DB_ERROR_MALLOC;
         return (0);
     }
@@ -304,12 +173,7 @@ int TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
             return (0);
         }
     }
-<<<<<<< HEAD
     lh_OPENSSL_STRING_free(db->index[field]);
-=======
-    if (db->index[field] != NULL)
-        lh_OPENSSL_STRING_free(db->index[field]);
->>>>>>> origin/master
     db->index[field] = idx;
     db->qual[field] = qual;
     return (1);
@@ -358,12 +222,7 @@ long TXT_DB_write(BIO *out, TXT_DB *db)
     }
     ret = tot;
  err:
-<<<<<<< HEAD
     BUF_MEM_free(buf);
-=======
-    if (buf != NULL)
-        BUF_MEM_free(buf);
->>>>>>> origin/master
     return (ret);
 }
 
@@ -413,19 +272,10 @@ void TXT_DB_free(TXT_DB *db)
 
     if (db->index != NULL) {
         for (i = db->num_fields - 1; i >= 0; i--)
-<<<<<<< HEAD
             lh_OPENSSL_STRING_free(db->index[i]);
         OPENSSL_free(db->index);
     }
     OPENSSL_free(db->qual);
-=======
-            if (db->index[i] != NULL)
-                lh_OPENSSL_STRING_free(db->index[i]);
-        OPENSSL_free(db->index);
-    }
-    if (db->qual != NULL)
-        OPENSSL_free(db->qual);
->>>>>>> origin/master
     if (db->data != NULL) {
         for (i = sk_OPENSSL_PSTRING_num(db->data) - 1; i >= 0; i--) {
             /*
@@ -436,19 +286,10 @@ void TXT_DB_free(TXT_DB *db)
             max = p[db->num_fields]; /* last address */
             if (max == NULL) {  /* new row */
                 for (n = 0; n < db->num_fields; n++)
-<<<<<<< HEAD
                     OPENSSL_free(p[n]);
             } else {
                 for (n = 0; n < db->num_fields; n++) {
                     if (((p[n] < (char *)p) || (p[n] > max)))
-=======
-                    if (p[n] != NULL)
-                        OPENSSL_free(p[n]);
-            } else {
-                for (n = 0; n < db->num_fields; n++) {
-                    if (((p[n] < (char *)p) || (p[n] > max))
-                        && (p[n] != NULL))
->>>>>>> origin/master
                         OPENSSL_free(p[n]);
                 }
             }

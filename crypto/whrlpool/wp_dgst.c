@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 /**
  * The Whirlpool hashing function.
  *
@@ -60,7 +57,6 @@
  *
  * Unlike authors' reference implementation, block processing
  * routine whirlpool_block is designed to operate on multi-block
-<<<<<<< HEAD
  * input. This is done for performance.
  */
 
@@ -69,16 +65,6 @@
 #include <string.h>
 
 int WHIRLPOOL_Init(WHIRLPOOL_CTX *c)
-=======
- * input. This is done for perfomance.
- */
-
-#include "wp_locl.h"
-#include <openssl/crypto.h>
-#include <string.h>
-
-fips_md_init(WHIRLPOOL)
->>>>>>> origin/master
 {
     memset(c, 0, sizeof(*c));
     return (1);
@@ -260,11 +246,7 @@ int WHIRLPOOL_Final(unsigned char *md, WHIRLPOOL_CTX *c)
 
     if (md) {
         memcpy(md, c->H.c, WHIRLPOOL_DIGEST_LENGTH);
-<<<<<<< HEAD
         OPENSSL_cleanse(c, sizeof(*c));
-=======
-        memset(c, 0, sizeof(*c));
->>>>>>> origin/master
         return (1);
     }
     return (0);

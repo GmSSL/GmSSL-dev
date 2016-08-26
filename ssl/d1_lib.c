@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,79 +5,16 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* ssl/d1_lib.c */
-/*
- * DTLS implementation written by Nagendra Modadugu
- * (nagendra@cs.stanford.edu) for the OpenSSL project 2005.
- */
-/* ====================================================================
- * Copyright (c) 1999-2005 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
->>>>>>> origin/master
  */
 
 #include <stdio.h>
 #define USE_SOCKETS
 #include <openssl/objects.h>
-<<<<<<< HEAD
 #include <openssl/rand.h>
-=======
->>>>>>> origin/master
 #include "ssl_locl.h"
 
 #if defined(OPENSSL_SYS_VMS)
 # include <sys/timeb.h>
-<<<<<<< HEAD
 #elif defined(OPENSSL_SYS_VXWORKS)
 # include <sys/times.h>
 #elif !defined(OPENSSL_SYS_WIN32)
@@ -94,17 +30,6 @@ static unsigned int dtls1_link_min_mtu(void);
 static const unsigned int g_probable_mtu[] = { 1500, 512, 256 };
 
 const SSL3_ENC_METHOD DTLSv1_enc_data = {
-=======
-#endif
-
-static void get_current_time(struct timeval *t);
-static void dtls1_set_handshake_header(SSL *s, int type, unsigned long len);
-static int dtls1_handshake_write(SSL *s);
-const char dtls1_version_str[] = "DTLSv1" OPENSSL_VERSION_PTEXT;
-int dtls1_listen(SSL *s, struct sockaddr *client);
-
-SSL3_ENC_METHOD DTLSv1_enc_data = {
->>>>>>> origin/master
     tls1_enc,
     tls1_mac,
     tls1_setup_key_block,
@@ -112,10 +37,6 @@ SSL3_ENC_METHOD DTLSv1_enc_data = {
     tls1_change_cipher_state,
     tls1_final_finish_mac,
     TLS1_FINISH_MAC_LENGTH,
-<<<<<<< HEAD
-=======
-    tls1_cert_verify_mac,
->>>>>>> origin/master
     TLS_MD_CLIENT_FINISH_CONST, TLS_MD_CLIENT_FINISH_CONST_SIZE,
     TLS_MD_SERVER_FINISH_CONST, TLS_MD_SERVER_FINISH_CONST_SIZE,
     tls1_alert_code,
@@ -126,11 +47,7 @@ SSL3_ENC_METHOD DTLSv1_enc_data = {
     dtls1_handshake_write
 };
 
-<<<<<<< HEAD
 const SSL3_ENC_METHOD DTLSv1_2_enc_data = {
-=======
-SSL3_ENC_METHOD DTLSv1_2_enc_data = {
->>>>>>> origin/master
     tls1_enc,
     tls1_mac,
     tls1_setup_key_block,
@@ -138,10 +55,6 @@ SSL3_ENC_METHOD DTLSv1_2_enc_data = {
     tls1_change_cipher_state,
     tls1_final_finish_mac,
     TLS1_FINISH_MAC_LENGTH,
-<<<<<<< HEAD
-=======
-    tls1_cert_verify_mac,
->>>>>>> origin/master
     TLS_MD_CLIENT_FINISH_CONST, TLS_MD_CLIENT_FINISH_CONST_SIZE,
     TLS_MD_SERVER_FINISH_CONST, TLS_MD_SERVER_FINISH_CONST_SIZE,
     tls1_alert_code,
@@ -166,7 +79,6 @@ int dtls1_new(SSL *s)
 {
     DTLS1_STATE *d1;
 
-<<<<<<< HEAD
     if (!DTLS_RECORD_LAYER_new(&s->rlayer)) {
         return 0;
     }
@@ -180,21 +92,6 @@ int dtls1_new(SSL *s)
 
     d1->buffered_messages = pqueue_new();
     d1->sent_messages = pqueue_new();
-=======
-    if (!ssl3_new(s))
-        return (0);
-    if ((d1 = OPENSSL_malloc(sizeof *d1)) == NULL)
-        return (0);
-    memset(d1, 0, sizeof *d1);
-
-    /* d1->handshake_epoch=0; */
-
-    d1->unprocessed_rcds.q = pqueue_new();
-    d1->processed_rcds.q = pqueue_new();
-    d1->buffered_messages = pqueue_new();
-    d1->sent_messages = pqueue_new();
-    d1->buffered_app_data.q = pqueue_new();
->>>>>>> origin/master
 
     if (s->server) {
         d1->cookie_len = sizeof(s->d1->cookie);
@@ -203,28 +100,11 @@ int dtls1_new(SSL *s)
     d1->link_mtu = 0;
     d1->mtu = 0;
 
-<<<<<<< HEAD
     if (d1->buffered_messages == NULL || d1->sent_messages == NULL) {
         pqueue_free(d1->buffered_messages);
         pqueue_free(d1->sent_messages);
         OPENSSL_free(d1);
         ssl3_free(s);
-=======
-    if (!d1->unprocessed_rcds.q || !d1->processed_rcds.q
-        || !d1->buffered_messages || !d1->sent_messages
-        || !d1->buffered_app_data.q) {
-        if (d1->unprocessed_rcds.q)
-            pqueue_free(d1->unprocessed_rcds.q);
-        if (d1->processed_rcds.q)
-            pqueue_free(d1->processed_rcds.q);
-        if (d1->buffered_messages)
-            pqueue_free(d1->buffered_messages);
-        if (d1->sent_messages)
-            pqueue_free(d1->sent_messages);
-        if (d1->buffered_app_data.q)
-            pqueue_free(d1->buffered_app_data.q);
-        OPENSSL_free(d1);
->>>>>>> origin/master
         return (0);
     }
 
@@ -235,7 +115,6 @@ int dtls1_new(SSL *s)
 
 static void dtls1_clear_queues(SSL *s)
 {
-<<<<<<< HEAD
     dtls1_clear_received_buffer(s);
     dtls1_clear_sent_buffer(s);
 }
@@ -244,51 +123,24 @@ void dtls1_clear_received_buffer(SSL *s)
 {
     pitem *item = NULL;
     hm_fragment *frag = NULL;
-=======
-    pitem *item = NULL;
-    hm_fragment *frag = NULL;
-    DTLS1_RECORD_DATA *rdata;
-
-    while ((item = pqueue_pop(s->d1->unprocessed_rcds.q)) != NULL) {
-        rdata = (DTLS1_RECORD_DATA *)item->data;
-        if (rdata->rbuf.buf) {
-            OPENSSL_free(rdata->rbuf.buf);
-        }
-        OPENSSL_free(item->data);
-        pitem_free(item);
-    }
-
-    while ((item = pqueue_pop(s->d1->processed_rcds.q)) != NULL) {
-        rdata = (DTLS1_RECORD_DATA *)item->data;
-        if (rdata->rbuf.buf) {
-            OPENSSL_free(rdata->rbuf.buf);
-        }
-        OPENSSL_free(item->data);
-        pitem_free(item);
-    }
->>>>>>> origin/master
 
     while ((item = pqueue_pop(s->d1->buffered_messages)) != NULL) {
         frag = (hm_fragment *)item->data;
         dtls1_hm_fragment_free(frag);
         pitem_free(item);
     }
-<<<<<<< HEAD
 }
 
 void dtls1_clear_sent_buffer(SSL *s)
 {
     pitem *item = NULL;
     hm_fragment *frag = NULL;
-=======
->>>>>>> origin/master
 
     while ((item = pqueue_pop(s->d1->sent_messages)) != NULL) {
         frag = (hm_fragment *)item->data;
         dtls1_hm_fragment_free(frag);
         pitem_free(item);
     }
-<<<<<<< HEAD
 }
 
 
@@ -296,35 +148,12 @@ void dtls1_free(SSL *s)
 {
     DTLS_RECORD_LAYER_free(&s->rlayer);
 
-=======
-
-    while ((item = pqueue_pop(s->d1->buffered_app_data.q)) != NULL) {
-        rdata = (DTLS1_RECORD_DATA *)item->data;
-        if (rdata->rbuf.buf) {
-            OPENSSL_free(rdata->rbuf.buf);
-        }
-        OPENSSL_free(item->data);
-        pitem_free(item);
-    }
-}
-
-void dtls1_free(SSL *s)
-{
->>>>>>> origin/master
     ssl3_free(s);
 
     dtls1_clear_queues(s);
 
-<<<<<<< HEAD
     pqueue_free(s->d1->buffered_messages);
     pqueue_free(s->d1->sent_messages);
-=======
-    pqueue_free(s->d1->unprocessed_rcds.q);
-    pqueue_free(s->d1->processed_rcds.q);
-    pqueue_free(s->d1->buffered_messages);
-    pqueue_free(s->d1->sent_messages);
-    pqueue_free(s->d1->buffered_app_data.q);
->>>>>>> origin/master
 
     OPENSSL_free(s->d1);
     s->d1 = NULL;
@@ -332,7 +161,6 @@ void dtls1_free(SSL *s)
 
 void dtls1_clear(SSL *s)
 {
-<<<<<<< HEAD
     pqueue *buffered_messages;
     pqueue *sent_messages;
     unsigned int mtu;
@@ -343,32 +171,12 @@ void dtls1_clear(SSL *s)
     if (s->d1) {
         buffered_messages = s->d1->buffered_messages;
         sent_messages = s->d1->sent_messages;
-=======
-    pqueue unprocessed_rcds;
-    pqueue processed_rcds;
-    pqueue buffered_messages;
-    pqueue sent_messages;
-    pqueue buffered_app_data;
-    unsigned int mtu;
-    unsigned int link_mtu;
-
-    if (s->d1) {
-        unprocessed_rcds = s->d1->unprocessed_rcds.q;
-        processed_rcds = s->d1->processed_rcds.q;
-        buffered_messages = s->d1->buffered_messages;
-        sent_messages = s->d1->sent_messages;
-        buffered_app_data = s->d1->buffered_app_data.q;
->>>>>>> origin/master
         mtu = s->d1->mtu;
         link_mtu = s->d1->link_mtu;
 
         dtls1_clear_queues(s);
 
-<<<<<<< HEAD
         memset(s->d1, 0, sizeof(*s->d1));
-=======
-        memset(s->d1, 0, sizeof(*(s->d1)));
->>>>>>> origin/master
 
         if (s->server) {
             s->d1->cookie_len = sizeof(s->d1->cookie);
@@ -379,7 +187,6 @@ void dtls1_clear(SSL *s)
             s->d1->link_mtu = link_mtu;
         }
 
-<<<<<<< HEAD
         s->d1->buffered_messages = buffered_messages;
         s->d1->sent_messages = sent_messages;
     }
@@ -392,20 +199,6 @@ void dtls1_clear(SSL *s)
     else if (s->options & SSL_OP_CISCO_ANYCONNECT)
         s->client_version = s->version = DTLS1_BAD_VER;
 #endif
-=======
-        s->d1->unprocessed_rcds.q = unprocessed_rcds;
-        s->d1->processed_rcds.q = processed_rcds;
-        s->d1->buffered_messages = buffered_messages;
-        s->d1->sent_messages = sent_messages;
-        s->d1->buffered_app_data.q = buffered_app_data;
-    }
-
-    ssl3_clear(s);
-    if (s->options & SSL_OP_CISCO_ANYCONNECT)
-        s->client_version = s->version = DTLS1_BAD_VER;
-    else if (s->method->version == DTLS_ANY_VERSION)
-        s->version = DTLS1_2_VERSION;
->>>>>>> origin/master
     else
         s->version = s->method->version;
 }
@@ -423,34 +216,6 @@ long dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
     case DTLS_CTRL_HANDLE_TIMEOUT:
         ret = dtls1_handle_timeout(s);
         break;
-<<<<<<< HEAD
-=======
-    case DTLS_CTRL_LISTEN:
-        ret = dtls1_listen(s, parg);
-        break;
-    case SSL_CTRL_CHECK_PROTO_VERSION:
-        /*
-         * For library-internal use; checks that the current protocol is the
-         * highest enabled version (according to s->ctx->method, as version
-         * negotiation may have changed s->method).
-         */
-        if (s->version == s->ctx->method->version)
-            return 1;
-        /*
-         * Apparently we're using a version-flexible SSL_METHOD (not at its
-         * highest protocol version).
-         */
-        if (s->ctx->method->version == DTLS_method()->version) {
-#if DTLS_MAX_VERSION != DTLS1_2_VERSION
-# error Code needs update for DTLS_method() support beyond DTLS1_2_VERSION.
-#endif
-            if (!(s->options & SSL_OP_NO_DTLSv1_2))
-                return s->version == DTLS1_2_VERSION;
-            if (!(s->options & SSL_OP_NO_DTLSv1))
-                return s->version == DTLS1_VERSION;
-        }
-        return 0;               /* Unexpected state; fail closed. */
->>>>>>> origin/master
     case DTLS_CTRL_SET_LINK_MTU:
         if (larg < (long)dtls1_link_min_mtu())
             return 0;
@@ -474,38 +239,12 @@ long dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
     return (ret);
 }
 
-<<<<<<< HEAD
-=======
-/*
- * As it's impossible to use stream ciphers in "datagram" mode, this
- * simple filter is designed to disengage them in DTLS. Unfortunately
- * there is no universal way to identify stream SSL_CIPHER, so we have
- * to explicitly list their SSL_* codes. Currently RC4 is the only one
- * available, but if new ones emerge, they will have to be added...
- */
-const SSL_CIPHER *dtls1_get_cipher(unsigned int u)
-{
-    const SSL_CIPHER *ciph = ssl3_get_cipher(u);
-
-    if (ciph != NULL) {
-        if (ciph->algorithm_enc == SSL_RC4)
-            return NULL;
-    }
-
-    return ciph;
-}
-
->>>>>>> origin/master
 void dtls1_start_timer(SSL *s)
 {
 #ifndef OPENSSL_NO_SCTP
     /* Disable timer for SCTP */
     if (BIO_dgram_is_sctp(SSL_get_wbio(s))) {
-<<<<<<< HEAD
         memset(&s->d1->next_timeout, 0, sizeof(s->d1->next_timeout));
-=======
-        memset(&(s->d1->next_timeout), 0, sizeof(struct timeval));
->>>>>>> origin/master
         return;
     }
 #endif
@@ -540,11 +279,7 @@ struct timeval *dtls1_get_timeout(SSL *s, struct timeval *timeleft)
     if (s->d1->next_timeout.tv_sec < timenow.tv_sec ||
         (s->d1->next_timeout.tv_sec == timenow.tv_sec &&
          s->d1->next_timeout.tv_usec <= timenow.tv_usec)) {
-<<<<<<< HEAD
         memset(timeleft, 0, sizeof(*timeleft));
-=======
-        memset(timeleft, 0, sizeof(struct timeval));
->>>>>>> origin/master
         return timeleft;
     }
 
@@ -559,17 +294,10 @@ struct timeval *dtls1_get_timeout(SSL *s, struct timeval *timeleft)
 
     /*
      * If remaining time is less than 15 ms, set it to 0 to prevent issues
-<<<<<<< HEAD
      * because of small divergences with socket timeouts.
      */
     if (timeleft->tv_sec == 0 && timeleft->tv_usec < 15000) {
         memset(timeleft, 0, sizeof(*timeleft));
-=======
-     * because of small devergences with socket timeouts.
-     */
-    if (timeleft->tv_sec == 0 && timeleft->tv_usec < 15000) {
-        memset(timeleft, 0, sizeof(struct timeval));
->>>>>>> origin/master
     }
 
     return timeleft;
@@ -604,22 +332,13 @@ void dtls1_double_timeout(SSL *s)
 void dtls1_stop_timer(SSL *s)
 {
     /* Reset everything */
-<<<<<<< HEAD
     memset(&s->d1->timeout, 0, sizeof(s->d1->timeout));
     memset(&s->d1->next_timeout, 0, sizeof(s->d1->next_timeout));
-=======
-    memset(&(s->d1->timeout), 0, sizeof(struct dtls1_timeout_st));
-    memset(&(s->d1->next_timeout), 0, sizeof(struct timeval));
->>>>>>> origin/master
     s->d1->timeout_duration = 1;
     BIO_ctrl(SSL_get_rbio(s), BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT, 0,
              &(s->d1->next_timeout));
     /* Clear retransmission buffer */
-<<<<<<< HEAD
     dtls1_clear_sent_buffer(s);
-=======
-    dtls1_clear_record_buffer(s);
->>>>>>> origin/master
 }
 
 int dtls1_check_timeout_num(SSL *s)
@@ -632,12 +351,7 @@ int dtls1_check_timeout_num(SSL *s)
     if (s->d1->timeout.num_alerts > 2
         && !(SSL_get_options(s) & SSL_OP_NO_QUERY_MTU)) {
         mtu =
-<<<<<<< HEAD
             BIO_ctrl(SSL_get_wbio(s), BIO_CTRL_DGRAM_GET_FALLBACK_MTU, 0, NULL);
-=======
-            BIO_ctrl(SSL_get_wbio(s), BIO_CTRL_DGRAM_GET_FALLBACK_MTU, 0,
-                     NULL);
->>>>>>> origin/master
         if (mtu < s->d1->mtu)
             s->d1->mtu = mtu;
     }
@@ -689,7 +403,6 @@ static void get_current_time(struct timeval *t)
 
     GetSystemTime(&st);
     SystemTimeToFileTime(&st, &now.ft);
-<<<<<<< HEAD
     /* re-bias to 1/1/1970 */
 # ifdef  __MINGW32__
     now.ul -= 116444736000000000ULL;
@@ -697,12 +410,6 @@ static void get_current_time(struct timeval *t)
     /* *INDENT-OFF* */
     now.ul -= 116444736000000000UI64;
     /* *INDENT-ON* */
-=======
-# ifdef  __MINGW32__
-    now.ul -= 116444736000000000ULL;
-# else
-    now.ul -= 116444736000000000UI64; /* re-bias to 1/1/1970 */
->>>>>>> origin/master
 # endif
     t->tv_sec = (long)(now.ul / 10000000);
     t->tv_usec = ((int)(now.ul % 10000000)) / 10;
@@ -716,7 +423,6 @@ static void get_current_time(struct timeval *t)
 #endif
 }
 
-<<<<<<< HEAD
 #define LISTEN_SUCCESS              2
 #define LISTEN_SEND_VERIFY_REQUEST  1
 
@@ -1142,41 +848,12 @@ static int dtls1_set_handshake_header(SSL *s, int htype, unsigned long len)
         return 0;
 
     return 1;
-=======
-int dtls1_listen(SSL *s, struct sockaddr *client)
-{
-    int ret;
-
-    /* Ensure there is no state left over from a previous invocation */
-    SSL_clear(s);
-
-    SSL_set_options(s, SSL_OP_COOKIE_EXCHANGE);
-    s->d1->listen = 1;
-
-    ret = SSL_accept(s);
-    if (ret <= 0)
-        return ret;
-
-    (void)BIO_dgram_get_peer(SSL_get_rbio(s), client);
-    return 1;
-}
-
-static void dtls1_set_handshake_header(SSL *s, int htype, unsigned long len)
-{
-    unsigned char *p = (unsigned char *)s->init_buf->data;
-    dtls1_set_message_header(s, p, htype, len, 0, len);
-    s->init_num = (int)len + DTLS1_HM_HEADER_LENGTH;
-    s->init_off = 0;
-    /* Buffer the message to handle re-xmits */
-    dtls1_buffer_message(s, 0);
->>>>>>> origin/master
 }
 
 static int dtls1_handshake_write(SSL *s)
 {
     return dtls1_do_write(s, SSL3_RT_HANDSHAKE);
 }
-<<<<<<< HEAD
 
 #ifndef OPENSSL_NO_HEARTBEATS
 
@@ -1403,5 +1080,3 @@ unsigned int dtls1_min_mtu(SSL *s)
 {
     return dtls1_link_min_mtu() - BIO_dgram_get_mtu_overhead(SSL_get_wbio(s));
 }
-=======
->>>>>>> origin/master

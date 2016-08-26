@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -12,70 +11,6 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
-=======
-/* v3_lib.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 1999.
- */
-/* ====================================================================
- * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-/* X509 v3 extension utilities */
-
-#include <stdio.h>
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/conf.h>
 #include <openssl/x509v3.h>
 
@@ -89,12 +24,8 @@ static void ext_list_free(X509V3_EXT_METHOD *ext);
 
 int X509V3_EXT_add(X509V3_EXT_METHOD *ext)
 {
-<<<<<<< HEAD
     if (ext_list == NULL
         && (ext_list = sk_X509V3_EXT_METHOD_new(ext_cmp)) == NULL) {
-=======
-    if (!ext_list && !(ext_list = sk_X509V3_EXT_METHOD_new(ext_cmp))) {
->>>>>>> origin/master
         X509V3err(X509V3_F_X509V3_EXT_ADD, ERR_R_MALLOC_FAILURE);
         return 0;
     }
@@ -116,7 +47,6 @@ DECLARE_OBJ_BSEARCH_CMP_FN(const X509V3_EXT_METHOD *,
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const X509V3_EXT_METHOD *,
                              const X509V3_EXT_METHOD *, ext);
 
-<<<<<<< HEAD
 /*
  * This table will be searched using OBJ_bsearch so it *must* kept in order
  * of the ext_nid values.
@@ -185,8 +115,6 @@ static const X509V3_EXT_METHOD *standard_exts[] = {
 
 #define STANDARD_EXTENSION_COUNT OSSL_NELEM(standard_exts)
 
-=======
->>>>>>> origin/master
 const X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid)
 {
     X509V3_EXT_METHOD tmp;
@@ -209,40 +137,11 @@ const X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid)
 const X509V3_EXT_METHOD *X509V3_EXT_get(X509_EXTENSION *ext)
 {
     int nid;
-<<<<<<< HEAD
     if ((nid = OBJ_obj2nid(X509_EXTENSION_get_object(ext))) == NID_undef)
-=======
-    if ((nid = OBJ_obj2nid(ext->object)) == NID_undef)
->>>>>>> origin/master
         return NULL;
     return X509V3_EXT_get_nid(nid);
 }
 
-<<<<<<< HEAD
-=======
-int X509V3_EXT_free(int nid, void *ext_data)
-{
-    const X509V3_EXT_METHOD *ext_method = X509V3_EXT_get_nid(nid);
-    if (ext_method == NULL) {
-        X509V3err(X509V3_F_X509V3_EXT_FREE,
-                  X509V3_R_CANNOT_FIND_FREE_FUNCTION);
-        return 0;
-    }
-
-    if (ext_method->it != NULL)
-        ASN1_item_free(ext_data, ASN1_ITEM_ptr(ext_method->it));
-    else if (ext_method->ext_free != NULL)
-        ext_method->ext_free(ext_data);
-    else {
-        X509V3err(X509V3_F_X509V3_EXT_FREE,
-                  X509V3_R_CANNOT_FIND_FREE_FUNCTION);
-        return 0;
-    }
-
-    return 1;
-}
-
->>>>>>> origin/master
 int X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist)
 {
     for (; extlist->ext_nid != -1; extlist++)
@@ -256,22 +155,11 @@ int X509V3_EXT_add_alias(int nid_to, int nid_from)
     const X509V3_EXT_METHOD *ext;
     X509V3_EXT_METHOD *tmpext;
 
-<<<<<<< HEAD
     if ((ext = X509V3_EXT_get_nid(nid_from)) == NULL) {
         X509V3err(X509V3_F_X509V3_EXT_ADD_ALIAS, X509V3_R_EXTENSION_NOT_FOUND);
         return 0;
     }
     if ((tmpext = OPENSSL_malloc(sizeof(*tmpext))) == NULL) {
-=======
-    if (!(ext = X509V3_EXT_get_nid(nid_from))) {
-        X509V3err(X509V3_F_X509V3_EXT_ADD_ALIAS,
-                  X509V3_R_EXTENSION_NOT_FOUND);
-        return 0;
-    }
-    if (!
-        (tmpext =
-         (X509V3_EXT_METHOD *)OPENSSL_malloc(sizeof(X509V3_EXT_METHOD)))) {
->>>>>>> origin/master
         X509V3err(X509V3_F_X509V3_EXT_ADD_ALIAS, ERR_R_MALLOC_FAILURE);
         return 0;
     }
@@ -309,7 +197,6 @@ void *X509V3_EXT_d2i(X509_EXTENSION *ext)
 {
     const X509V3_EXT_METHOD *method;
     const unsigned char *p;
-<<<<<<< HEAD
     ASN1_STRING *extvalue;
     int extlen;
 
@@ -321,16 +208,6 @@ void *X509V3_EXT_d2i(X509_EXTENSION *ext)
     if (method->it)
         return ASN1_item_d2i(NULL, &p, extlen, ASN1_ITEM_ptr(method->it));
     return method->d2i(NULL, &p, extlen);
-=======
-
-    if (!(method = X509V3_EXT_get(ext)))
-        return NULL;
-    p = ext->value->data;
-    if (method->it)
-        return ASN1_item_d2i(NULL, &p, ext->value->length,
-                             ASN1_ITEM_ptr(method->it));
-    return method->d2i(NULL, &p, ext->value->length);
->>>>>>> origin/master
 }
 
 /*-
@@ -349,11 +226,7 @@ void *X509V3_EXT_d2i(X509_EXTENSION *ext)
  * -2 extension occurs more than once.
  */
 
-<<<<<<< HEAD
 void *X509V3_get_d2i(const STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
-=======
-void *X509V3_get_d2i(STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
->>>>>>> origin/master
                      int *idx)
 {
     int lastpos, i;
@@ -373,11 +246,7 @@ void *X509V3_get_d2i(STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
         lastpos = 0;
     for (i = lastpos; i < sk_X509_EXTENSION_num(x); i++) {
         ex = sk_X509_EXTENSION_value(x, i);
-<<<<<<< HEAD
         if (OBJ_obj2nid(X509_EXTENSION_get_object(ex)) == nid) {
-=======
-        if (OBJ_obj2nid(ex->object) == nid) {
->>>>>>> origin/master
             if (idx) {
                 *idx = i;
                 found_ex = ex;
@@ -476,12 +345,8 @@ int X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value,
         return 1;
     }
 
-<<<<<<< HEAD
     if (*x == NULL
         && (*x = sk_X509_EXTENSION_new_null()) == NULL)
-=======
-    if (!*x && !(*x = sk_X509_EXTENSION_new_null()))
->>>>>>> origin/master
         return -1;
     if (!sk_X509_EXTENSION_push(*x, ext))
         return -1;
@@ -493,8 +358,3 @@ int X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value,
         X509V3err(X509V3_F_X509V3_ADD1_I2D, errcode);
     return 0;
 }
-<<<<<<< HEAD
-=======
-
-IMPLEMENT_STACK_OF(X509V3_EXT_METHOD)
->>>>>>> origin/master

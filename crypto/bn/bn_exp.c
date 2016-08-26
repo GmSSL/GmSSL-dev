@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,120 +9,6 @@
 
 #include "internal/cryptlib.h"
 #include "internal/constant_time_locl.h"
-=======
-/* crypto/bn/bn_exp.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
- */
-/* ====================================================================
- * Copyright (c) 1998-2005 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@openssl.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include "cryptlib.h"
->>>>>>> origin/master
 #include "bn_lcl.h"
 
 #include <stdlib.h>
@@ -161,11 +46,7 @@ int BN_exp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
     if (BN_get_flags(p, BN_FLG_CONSTTIME) != 0) {
         /* BN_FLG_CONSTTIME only supported by BN_mod_exp_mont() */
         BNerr(BN_F_BN_EXP, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
-<<<<<<< HEAD
         return 0;
-=======
-        return -1;
->>>>>>> origin/master
     }
 
     BN_CTX_start(ctx);
@@ -216,11 +97,7 @@ int BN_mod_exp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p, const BIGNUM *m,
     bn_check_top(m);
 
     /*-
-<<<<<<< HEAD
      * For even modulus  m = 2^k*m_odd, it might make sense to compute
-=======
-     * For even modulus  m = 2^k*m_odd,  it might make sense to compute
->>>>>>> origin/master
      * a^p mod m_odd  and  a^p mod 2^k  separately (with Montgomery
      * exponentiation for the odd part), using appropriate exponent
      * reductions, and combine the results using the CRT.
@@ -300,7 +177,6 @@ int BN_mod_exp_recp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
     if (BN_get_flags(p, BN_FLG_CONSTTIME) != 0) {
         /* BN_FLG_CONSTTIME only supported by BN_mod_exp_mont() */
         BNerr(BN_F_BN_MOD_EXP_RECP, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
-<<<<<<< HEAD
         return 0;
     }
 
@@ -313,15 +189,6 @@ int BN_mod_exp_recp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
         } else {
             ret = BN_one(r);
         }
-=======
-        return -1;
-    }
-
-    bits = BN_num_bits(p);
-
-    if (bits == 0) {
-        ret = BN_one(r);
->>>>>>> origin/master
         return ret;
     }
 
@@ -455,7 +322,6 @@ int BN_mod_exp_mont(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
     }
     bits = BN_num_bits(p);
     if (bits == 0) {
-<<<<<<< HEAD
         /* x**0 mod 1 is still zero. */
         if (BN_is_one(m)) {
             ret = 1;
@@ -463,9 +329,6 @@ int BN_mod_exp_mont(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         } else {
             ret = BN_one(rr);
         }
-=======
-        ret = BN_one(rr);
->>>>>>> origin/master
         return ret;
     }
 
@@ -605,11 +468,7 @@ int BN_mod_exp_mont(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         goto err;
     ret = 1;
  err:
-<<<<<<< HEAD
     if (in_mont == NULL)
-=======
-    if ((in_mont == NULL) && (mont != NULL))
->>>>>>> origin/master
         BN_MONT_CTX_free(mont);
     BN_CTX_end(ctx);
     bn_check_top(rr);
@@ -646,28 +505,17 @@ static BN_ULONG bn_get_bits(const BIGNUM *a, int bitpos)
 
 static int MOD_EXP_CTIME_COPY_TO_PREBUF(const BIGNUM *b, int top,
                                         unsigned char *buf, int idx,
-<<<<<<< HEAD
                                         int window)
 {
     int i, j;
     int width = 1 << window;
     BN_ULONG *table = (BN_ULONG *)buf;
-=======
-                                        int width)
-{
-    size_t i, j;
->>>>>>> origin/master
 
     if (top > b->top)
         top = b->top;           /* this works because 'buf' is explicitly
                                  * zeroed */
-<<<<<<< HEAD
     for (i = 0, j = idx; i < top; i++, j += width) {
         table[j] = b->d[i];
-=======
-    for (i = 0, j = idx; i < top * sizeof b->d[0]; i++, j += width) {
-        buf[j] = ((unsigned char *)b->d)[i];
->>>>>>> origin/master
     }
 
     return 1;
@@ -675,7 +523,6 @@ static int MOD_EXP_CTIME_COPY_TO_PREBUF(const BIGNUM *b, int top,
 
 static int MOD_EXP_CTIME_COPY_FROM_PREBUF(BIGNUM *b, int top,
                                           unsigned char *buf, int idx,
-<<<<<<< HEAD
                                           int window)
 {
     int i, j;
@@ -689,16 +536,10 @@ static int MOD_EXP_CTIME_COPY_FROM_PREBUF(BIGNUM *b, int top,
      * argued that doing so would be violation of standard...
      */
     volatile BN_ULONG *table = (volatile BN_ULONG *)buf;
-=======
-                                          int width)
-{
-    size_t i, j;
->>>>>>> origin/master
 
     if (bn_wexpand(b, top) == NULL)
         return 0;
 
-<<<<<<< HEAD
     if (window <= 3) {
         for (i = 0; i < top; i++, table += width) {
             BN_ULONG acc = 0;
@@ -735,10 +576,6 @@ static int MOD_EXP_CTIME_COPY_FROM_PREBUF(BIGNUM *b, int top,
 
             b->d[i] = acc;
         }
-=======
-    for (i = 0, j = idx; i < top * sizeof b->d[0]; i++, j += width) {
-        ((unsigned char *)b->d)[i] = buf[j];
->>>>>>> origin/master
     }
 
     b->top = top;
@@ -758,11 +595,7 @@ static int MOD_EXP_CTIME_COPY_FROM_PREBUF(BIGNUM *b, int top,
  * precomputation memory layout to limit data-dependency to a minimum to
  * protect secret exponents (cf. the hyper-threading timing attacks pointed
  * out by Colin Percival,
-<<<<<<< HEAD
  * http://www.daemonology.net/hyperthreading-considered-harmful/)
-=======
- * http://www.daemong-consideredperthreading-considered-harmful/)
->>>>>>> origin/master
  */
 int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
                               const BIGNUM *m, BN_CTX *ctx,
@@ -785,7 +618,6 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
     bn_check_top(p);
     bn_check_top(m);
 
-<<<<<<< HEAD
     if (!BN_is_odd(m)) {
         BNerr(BN_F_BN_MOD_EXP_MONT_CONSTTIME, BN_R_CALLED_WITH_EVEN_MODULUS);
         return (0);
@@ -802,17 +634,6 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         } else {
             ret = BN_one(rr);
         }
-=======
-    top = m->top;
-
-    if (!(m->d[0] & 1)) {
-        BNerr(BN_F_BN_MOD_EXP_MONT_CONSTTIME, BN_R_CALLED_WITH_EVEN_MODULUS);
-        return (0);
-    }
-    bits = BN_num_bits(p);
-    if (bits == 0) {
-        ret = BN_one(rr);
->>>>>>> origin/master
         return ret;
     }
 
@@ -873,13 +694,8 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
     if (window >= 5) {
         window = 5;             /* ~5% improvement for RSA2048 sign, and even
                                  * for RSA4096 */
-<<<<<<< HEAD
         /* reserve space for mont->N.d[] copy */
         powerbufLen += top * sizeof(mont->N.d[0]);
-=======
-        if ((top & 7) == 0)
-            powerbufLen += 2 * top * sizeof(m->d[0]);
->>>>>>> origin/master
     }
 #endif
     (void)0;
@@ -899,12 +715,7 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
     else
 #endif
         if ((powerbufFree =
-<<<<<<< HEAD
              OPENSSL_malloc(powerbufLen + MOD_EXP_CTIME_MIN_CACHE_LINE_WIDTH))
-=======
-             (unsigned char *)OPENSSL_malloc(powerbufLen +
-                                             MOD_EXP_CTIME_MIN_CACHE_LINE_WIDTH))
->>>>>>> origin/master
             == NULL)
         goto err;
 
@@ -1104,11 +915,7 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
                                const BN_ULONG *not_used, const BN_ULONG *np,
                                const BN_ULONG *n0, int num);
 
-<<<<<<< HEAD
         BN_ULONG *n0 = mont->n0, *np;
-=======
-        BN_ULONG *np = mont->N.d, *n0 = mont->n0, *np2;
->>>>>>> origin/master
 
         /*
          * BN_to_montgomery can contaminate words above .top [in
@@ -1119,19 +926,11 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         for (i = tmp.top; i < top; i++)
             tmp.d[i] = 0;
 
-<<<<<<< HEAD
         /*
          * copy mont->N.d[] to improve cache locality
          */
         for (np = am.d + top, i = 0; i < top; i++)
             np[i] = mont->N.d[i];
-=======
-        if (top & 7)
-            np2 = np;
-        else
-            for (np2 = am.d + top, i = 0; i < top; i++)
-                np2[2 * i] = np[i];
->>>>>>> origin/master
 
         bn_scatter5(tmp.d, top, powerbuf, 0);
         bn_scatter5(am.d, am.top, powerbuf, 1);
@@ -1141,11 +940,7 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
 # if 0
         for (i = 3; i < 32; i++) {
             /* Calculate a^i = a^(i-1) * a */
-<<<<<<< HEAD
             bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np, n0, top, i - 1);
-=======
-            bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np2, n0, top, i - 1);
->>>>>>> origin/master
             bn_scatter5(tmp.d, top, powerbuf, i);
         }
 # else
@@ -1156,11 +951,7 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         }
         for (i = 3; i < 8; i += 2) {
             int j;
-<<<<<<< HEAD
             bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np, n0, top, i - 1);
-=======
-            bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np2, n0, top, i - 1);
->>>>>>> origin/master
             bn_scatter5(tmp.d, top, powerbuf, i);
             for (j = 2 * i; j < 32; j *= 2) {
                 bn_mul_mont(tmp.d, tmp.d, tmp.d, np, n0, top);
@@ -1168,21 +959,13 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
             }
         }
         for (; i < 16; i += 2) {
-<<<<<<< HEAD
             bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np, n0, top, i - 1);
-=======
-            bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np2, n0, top, i - 1);
->>>>>>> origin/master
             bn_scatter5(tmp.d, top, powerbuf, i);
             bn_mul_mont(tmp.d, tmp.d, tmp.d, np, n0, top);
             bn_scatter5(tmp.d, top, powerbuf, 2 * i);
         }
         for (; i < 32; i += 2) {
-<<<<<<< HEAD
             bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np, n0, top, i - 1);
-=======
-            bn_mul_mont_gather5(tmp.d, am.d, powerbuf, np2, n0, top, i - 1);
->>>>>>> origin/master
             bn_scatter5(tmp.d, top, powerbuf, i);
         }
 # endif
@@ -1211,19 +994,11 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
             while (bits >= 0) {
                 wvalue = bn_get_bits5(p->d, bits - 4);
                 bits -= 5;
-<<<<<<< HEAD
                 bn_power5(tmp.d, tmp.d, powerbuf, np, n0, top, wvalue);
             }
         }
 
         ret = bn_from_montgomery(tmp.d, tmp.d, NULL, np, n0, top);
-=======
-                bn_power5(tmp.d, tmp.d, powerbuf, np2, n0, top, wvalue);
-            }
-        }
-
-        ret = bn_from_montgomery(tmp.d, tmp.d, NULL, np2, n0, top);
->>>>>>> origin/master
         tmp.top = top;
         bn_correct_top(&tmp);
         if (ret) {
@@ -1234,15 +1009,9 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
     } else
 #endif
     {
-<<<<<<< HEAD
         if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&tmp, top, powerbuf, 0, window))
             goto err;
         if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&am, top, powerbuf, 1, window))
-=======
-        if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&tmp, top, powerbuf, 0, numPowers))
-            goto err;
-        if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&am, top, powerbuf, 1, numPowers))
->>>>>>> origin/master
             goto err;
 
         /*
@@ -1254,25 +1023,15 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         if (window > 1) {
             if (!BN_mod_mul_montgomery(&tmp, &am, &am, mont, ctx))
                 goto err;
-<<<<<<< HEAD
             if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&tmp, top, powerbuf, 2,
                                               window))
-=======
-            if (!MOD_EXP_CTIME_COPY_TO_PREBUF
-                (&tmp, top, powerbuf, 2, numPowers))
->>>>>>> origin/master
                 goto err;
             for (i = 3; i < numPowers; i++) {
                 /* Calculate a^i = a^(i-1) * a */
                 if (!BN_mod_mul_montgomery(&tmp, &am, &tmp, mont, ctx))
                     goto err;
-<<<<<<< HEAD
                 if (!MOD_EXP_CTIME_COPY_TO_PREBUF(&tmp, top, powerbuf, i,
                                                   window))
-=======
-                if (!MOD_EXP_CTIME_COPY_TO_PREBUF
-                    (&tmp, top, powerbuf, i, numPowers))
->>>>>>> origin/master
                     goto err;
             }
         }
@@ -1280,13 +1039,8 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         bits--;
         for (wvalue = 0, i = bits % window; i >= 0; i--, bits--)
             wvalue = (wvalue << 1) + BN_is_bit_set(p, bits);
-<<<<<<< HEAD
         if (!MOD_EXP_CTIME_COPY_FROM_PREBUF(&tmp, top, powerbuf, wvalue,
                                             window))
-=======
-        if (!MOD_EXP_CTIME_COPY_FROM_PREBUF
-            (&tmp, top, powerbuf, wvalue, numPowers))
->>>>>>> origin/master
             goto err;
 
         /*
@@ -1306,13 +1060,8 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
             /*
              * Fetch the appropriate pre-computed value from the pre-buf
              */
-<<<<<<< HEAD
             if (!MOD_EXP_CTIME_COPY_FROM_PREBUF(&am, top, powerbuf, wvalue,
                                                 window))
-=======
-            if (!MOD_EXP_CTIME_COPY_FROM_PREBUF
-                (&am, top, powerbuf, wvalue, numPowers))
->>>>>>> origin/master
                 goto err;
 
             /* Multiply the result into the intermediate result */
@@ -1335,20 +1084,11 @@ int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
         goto err;
     ret = 1;
  err:
-<<<<<<< HEAD
     if (in_mont == NULL)
         BN_MONT_CTX_free(mont);
     if (powerbuf != NULL) {
         OPENSSL_cleanse(powerbuf, powerbufLen);
         OPENSSL_free(powerbufFree);
-=======
-    if ((in_mont == NULL) && (mont != NULL))
-        BN_MONT_CTX_free(mont);
-    if (powerbuf != NULL) {
-        OPENSSL_cleanse(powerbuf, powerbufLen);
-        if (powerbufFree)
-            OPENSSL_free(powerbufFree);
->>>>>>> origin/master
     }
     BN_CTX_end(ctx);
     return (ret);
@@ -1383,11 +1123,7 @@ int BN_mod_exp_mont_word(BIGNUM *rr, BN_ULONG a, const BIGNUM *p,
     if (BN_get_flags(p, BN_FLG_CONSTTIME) != 0) {
         /* BN_FLG_CONSTTIME only supported by BN_mod_exp_mont() */
         BNerr(BN_F_BN_MOD_EXP_MONT_WORD, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
-<<<<<<< HEAD
         return 0;
-=======
-        return -1;
->>>>>>> origin/master
     }
 
     bn_check_top(p);
@@ -1406,14 +1142,9 @@ int BN_mod_exp_mont_word(BIGNUM *rr, BN_ULONG a, const BIGNUM *p,
         if (BN_is_one(m)) {
             ret = 1;
             BN_zero(rr);
-<<<<<<< HEAD
         } else {
             ret = BN_one(rr);
         }
-=======
-        } else
-            ret = BN_one(rr);
->>>>>>> origin/master
         return ret;
     }
     if (a == 0) {
@@ -1503,11 +1234,7 @@ int BN_mod_exp_mont_word(BIGNUM *rr, BN_ULONG a, const BIGNUM *p,
     }
     ret = 1;
  err:
-<<<<<<< HEAD
     if (in_mont == NULL)
-=======
-    if ((in_mont == NULL) && (mont != NULL))
->>>>>>> origin/master
         BN_MONT_CTX_free(mont);
     BN_CTX_end(ctx);
     bn_check_top(rr);
@@ -1527,7 +1254,6 @@ int BN_mod_exp_simple(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
     if (BN_get_flags(p, BN_FLG_CONSTTIME) != 0) {
         /* BN_FLG_CONSTTIME only supported by BN_mod_exp_mont() */
         BNerr(BN_F_BN_MOD_EXP_SIMPLE, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
-<<<<<<< HEAD
         return 0;
     }
 
@@ -1540,15 +1266,6 @@ int BN_mod_exp_simple(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
         } else {
             ret = BN_one(r);
         }
-=======
-        return -1;
-    }
-
-    bits = BN_num_bits(p);
-
-    if (bits == 0) {
-        ret = BN_one(r);
->>>>>>> origin/master
         return ret;
     }
 

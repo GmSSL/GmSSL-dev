@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -71,19 +67,14 @@
 # is ~2.5x larger and there are some redundant instructions executed
 # when processing last block, improvement is not as big for smallest
 # blocks, only ~30%. Snapdragon S4 is a tad faster, 6.4 cycles per
-<<<<<<< HEAD
 # byte, which is also >80% faster than integer-only code. Cortex-A15
 # is even faster spending 5.6 cycles per byte outperforming integer-
 # only code by factor of 2.
-=======
-# byte, which is also >80% faster than integer-only code.
->>>>>>> origin/master
 
 # May 2014.
 #
 # Add ARMv8 code path performing at 2.35 cpb on Apple A7.
 
-<<<<<<< HEAD
 $flavour = shift;
 if ($flavour=~/\w[\w\-]*\.\w+$/) { $output=$flavour; undef $flavour; }
 else { while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {} }
@@ -98,10 +89,6 @@ if ($flavour && $flavour ne "void") {
 } else {
     open STDOUT,">$output";
 }
-=======
-while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
-open STDOUT,">$output";
->>>>>>> origin/master
 
 $ctx="r0";
 $inp="r1";
@@ -201,16 +188,12 @@ $code=<<___;
 #include "arm_arch.h"
 
 .text
-<<<<<<< HEAD
 #if defined(__thumb2__)
 .syntax	unified
 .thumb
 #else
 .code	32
 #endif
-=======
-.code	32
->>>>>>> origin/master
 
 .global	sha1_block_data_order
 .type	sha1_block_data_order,%function
@@ -218,7 +201,6 @@ $code=<<___;
 .align	5
 sha1_block_data_order:
 #if __ARM_MAX_ARCH__>=7
-<<<<<<< HEAD
 .Lsha1_block:
 	adr	r3,.Lsha1_block
 	ldr	r12,.LOPENSSL_armcap
@@ -226,11 +208,6 @@ sha1_block_data_order:
 #ifdef	__APPLE__
 	ldr	r12,[r12]
 #endif
-=======
-	sub	r3,pc,#8		@ sha1_block_data_order
-	ldr	r12,.LOPENSSL_armcap
-	ldr	r12,[r3,r12]		@ OPENSSL_armcap_P
->>>>>>> origin/master
 	tst	r12,#ARMV8_SHA1
 	bne	.LARMv8
 	tst	r12,#ARMV7_NEON
@@ -252,16 +229,12 @@ for($i=0;$i<5;$i++) {
 	&BODY_00_15(@V);	unshift(@V,pop(@V));
 }
 $code.=<<___;
-<<<<<<< HEAD
 #if defined(__thumb2__)
 	mov	$t3,sp
 	teq	$Xi,$t3
 #else
 	teq	$Xi,sp
 #endif
-=======
-	teq	$Xi,sp
->>>>>>> origin/master
 	bne	.L_00_15		@ [((11+4)*5+2)*3]
 	sub	sp,sp,#25*4
 ___
@@ -280,16 +253,12 @@ for($i=0;$i<5;$i++) {
 	&BODY_20_39(@V);	unshift(@V,pop(@V));
 }
 $code.=<<___;
-<<<<<<< HEAD
 #if defined(__thumb2__)
 	mov	$t3,sp
 	teq	$Xi,$t3
 #else
 	teq	$Xi,sp			@ preserve carry
 #endif
-=======
-	teq	$Xi,sp			@ preserve carry
->>>>>>> origin/master
 	bne	.L_20_39_or_60_79	@ [+((12+3)*5+2)*4]
 	bcs	.L_done			@ [+((12+3)*5+2)*4], spare 300 bytes
 
@@ -301,16 +270,12 @@ for($i=0;$i<5;$i++) {
 	&BODY_40_59(@V);	unshift(@V,pop(@V));
 }
 $code.=<<___;
-<<<<<<< HEAD
 #if defined(__thumb2__)
 	mov	$t3,sp
 	teq	$Xi,$t3
 #else
 	teq	$Xi,sp
 #endif
-=======
-	teq	$Xi,sp
->>>>>>> origin/master
 	bne	.L_40_59		@ [+((12+5)*5+2)*4]
 
 	ldr	$K,.LK_60_79
@@ -346,11 +311,7 @@ $code.=<<___;
 .LK_60_79:	.word	0xca62c1d6
 #if __ARM_MAX_ARCH__>=7
 .LOPENSSL_armcap:
-<<<<<<< HEAD
 .word	OPENSSL_armcap_P-.Lsha1_block
-=======
-.word	OPENSSL_armcap_P-sha1_block_data_order
->>>>>>> origin/master
 #endif
 .asciz	"SHA1 block transform for ARMv4/NEON/ARMv8, CRYPTOGAMS by <appro\@openssl.org>"
 .align	5
@@ -525,10 +486,7 @@ sub Xuplast_80 ()
 
 	&teq		($inp,$len);
 	&sub		($K_XX_XX,$K_XX_XX,16);	# rewind $K_XX_XX
-<<<<<<< HEAD
 	&it		("eq");
-=======
->>>>>>> origin/master
 	&subeq		($inp,$inp,64);		# reload last block to avoid SEGV
 	&vld1_8		("{@X[-4&7]-@X[-3&7]}","[$inp]!");
 	 eval(shift(@insns));
@@ -579,21 +537,12 @@ sha1_block_data_order_neon:
 	@ dmb				@ errata #451034 on early Cortex A8
 	@ vstmdb	sp!,{d8-d15}	@ ABI specification says so
 	mov	$saved_sp,sp
-<<<<<<< HEAD
 	sub	$Xfer,sp,#64
 	adr	$K_XX_XX,.LK_00_19
 	bic	$Xfer,$Xfer,#15		@ align for 128-bit stores
 
 	ldmia	$ctx,{$a,$b,$c,$d,$e}	@ load context
 	mov	sp,$Xfer		@ alloca
-=======
-	sub	sp,sp,#64		@ alloca
-	adr	$K_XX_XX,.LK_00_19
-	bic	sp,sp,#15		@ align for 128-bit stores
-
-	ldmia	$ctx,{$a,$b,$c,$d,$e}	@ load context
-	mov	$Xfer,sp
->>>>>>> origin/master
 
 	vld1.8		{@X[-4&7]-@X[-3&7]},[$inp]!	@ handles unaligned
 	veor		$zero,$zero,$zero
@@ -640,7 +589,6 @@ $code.=<<___;
 	add	$b,$b,$t0
 	add	$c,$c,$t1
 	add	$d,$d,$Xfer
-<<<<<<< HEAD
 	it	eq
 	moveq	sp,$saved_sp
 	add	$e,$e,$Ki
@@ -648,12 +596,6 @@ $code.=<<___;
 	ldrne	$Ki,[sp]
 	stmia	$ctx,{$a,$b,$c,$d,$e}
 	itt	ne
-=======
-	moveq	sp,$saved_sp
-	add	$e,$e,$Ki
-	ldrne	$Ki,[sp]
-	stmia	$ctx,{$a,$b,$c,$d,$e}
->>>>>>> origin/master
 	addne	$Xfer,sp,#3*16
 	bne	.Loop_neon
 
@@ -674,7 +616,6 @@ my ($W0,$W1,$ABCD_SAVE)=map("q$_",(12..14));
 
 $code.=<<___;
 #if __ARM_MAX_ARCH__>=7
-<<<<<<< HEAD
 
 # if defined(__thumb2__)
 #  define INST(a,b,c,d)	.byte	c,d|0xf,a,b
@@ -682,8 +623,6 @@ $code.=<<___;
 #  define INST(a,b,c,d)	.byte	a,b,c,d|0x10
 # endif
 
-=======
->>>>>>> origin/master
 .type	sha1_block_data_order_armv8,%function
 .align	5
 sha1_block_data_order_armv8:
@@ -777,14 +716,10 @@ ___
 	    # since ARMv7 instructions are always encoded little-endian.
 	    # correct solution is to use .inst directive, but older
 	    # assemblers don't implement it:-(
-<<<<<<< HEAD
 
 	    # this fix-up provides Thumb encoding in conjunction with INST
 	    $word &= ~0x10000000 if (($word & 0x0f000000) == 0x02000000);
 	    sprintf "INST(0x%02x,0x%02x,0x%02x,0x%02x)\t@ %s %s",
-=======
-	    sprintf ".byte\t0x%02x,0x%02x,0x%02x,0x%02x\t@ %s %s",
->>>>>>> origin/master
 			$word&0xff,($word>>8)&0xff,
 			($word>>16)&0xff,($word>>24)&0xff,
 			$mnemonic,$arg;

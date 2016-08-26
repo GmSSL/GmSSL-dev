@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 package x86masm;
 
@@ -29,17 +25,10 @@ sub ::generic
 
     if ($opcode =~ /lea/ && @arg[1] =~ s/.*PTR\s+(\(.*\))$/OFFSET $1/)	# no []
     {	$opcode="mov";	}
-<<<<<<< HEAD
     elsif ($opcode !~ /mov[dq]$/)
     {	# fix xmm references
 	$arg[0] =~ s/\b[A-Z]+WORD\s+PTR/XMMWORD PTR/i if ($arg[-1]=~/\bxmm[0-7]\b/i);
 	$arg[-1] =~ s/\b[A-Z]+WORD\s+PTR/XMMWORD PTR/i if ($arg[0]=~/\bxmm[0-7]\b/i);
-=======
-    elsif ($opcode !~ /movq/)
-    {	# fix xmm references
-	$arg[0] =~ s/\b[A-Z]+WORD\s+PTR/XMMWORD PTR/i if ($arg[1]=~/\bxmm[0-7]\b/i);
-	$arg[1] =~ s/\b[A-Z]+WORD\s+PTR/XMMWORD PTR/i if ($arg[0]=~/\bxmm[0-7]\b/i);
->>>>>>> origin/master
     }
 
     &::emit($opcode,@arg);
@@ -100,11 +89,7 @@ TITLE	$_[0].asm
 IF \@Version LT 800
 ECHO MASM version 8.00 or later is strongly recommended.
 ENDIF
-<<<<<<< HEAD
 .686
-=======
-.486
->>>>>>> origin/master
 .MODEL	FLAT
 OPTION	DOTNAME
 IF \@Version LT 800
@@ -182,7 +167,6 @@ sub ::public_label
 {   push(@out,"PUBLIC\t".&::LABEL($_[0],$nmdecor.$_[0])."\n");   }
 
 sub ::data_byte
-<<<<<<< HEAD
 {   push(@out,("DB\t").join(',',splice(@_,0,16))."\n") while(@_);	}
 
 sub ::data_short
@@ -190,15 +174,6 @@ sub ::data_short
 
 sub ::data_word
 {   push(@out,("DD\t").join(',',splice(@_,0,4))."\n") while(@_);	}
-=======
-{   push(@out,("DB\t").join(',',@_)."\n");	}
-
-sub ::data_short
-{   push(@out,("DW\t").join(',',@_)."\n");	}
-
-sub ::data_word
-{   push(@out,("DD\t").join(',',@_)."\n");	}
->>>>>>> origin/master
 
 sub ::align
 {   push(@out,"ALIGN\t$_[0]\n");	}

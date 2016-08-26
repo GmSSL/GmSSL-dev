@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -41,12 +37,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
  
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 $sse2=0;
@@ -80,23 +73,15 @@ $frame=32;				# size of above frame rounded up to 16n
 
 	&lea	("esi",&wparam(0));	# put aside pointer to argument block
 	&lea	("edx",&wparam(1));	# load ap
-<<<<<<< HEAD
 	&add	("edi",2);		# extra two words on top of tp
 	&neg	("edi");
 	&lea	("ebp",&DWP(-$frame,"esp","edi",4));	# future alloca($frame+4*(num+2))
-=======
-	&mov	("ebp","esp");		# saved stack pointer!
-	&add	("edi",2);		# extra two words on top of tp
-	&neg	("edi");
-	&lea	("esp",&DWP(-$frame,"esp","edi",4));	# alloca($frame+4*(num+2))
->>>>>>> origin/master
 	&neg	("edi");
 
 	# minimize cache contention by arraning 2K window between stack
 	# pointer and ap argument [np is also position sensitive vector,
 	# but it's assumed to be near ap, as it's allocated at ~same
 	# time].
-<<<<<<< HEAD
 	&mov	("eax","ebp");
 	&sub	("eax","edx");
 	&and	("eax",2047);
@@ -133,29 +118,12 @@ $frame=32;				# size of above frame rounded up to 16n
 	&cmp	("esp","ebp");
 	&ja	(&label("page_walk"));
 &set_label("page_walk_done");
-=======
-	&mov	("eax","esp");
-	&sub	("eax","edx");
-	&and	("eax",2047);
-	&sub	("esp","eax");		# this aligns sp and ap modulo 2048
-
-	&xor	("edx","esp");
-	&and	("edx",2048);
-	&xor	("edx",2048);
-	&sub	("esp","edx");		# this splits them apart modulo 4096
-
-	&and	("esp",-64);		# align to cache line
->>>>>>> origin/master
 
 	################################# load argument block...
 	&mov	("eax",&DWP(0*4,"esi"));# BN_ULONG *rp
 	&mov	("ebx",&DWP(1*4,"esi"));# const BN_ULONG *ap
 	&mov	("ecx",&DWP(2*4,"esi"));# const BN_ULONG *bp
-<<<<<<< HEAD
 	&mov	("ebp",&DWP(3*4,"esi"));# const BN_ULONG *np
-=======
-	&mov	("edx",&DWP(3*4,"esi"));# const BN_ULONG *np
->>>>>>> origin/master
 	&mov	("esi",&DWP(4*4,"esi"));# const BN_ULONG *n0
 	#&mov	("edi",&DWP(5*4,"esi"));# int num
 
@@ -163,19 +131,11 @@ $frame=32;				# size of above frame rounded up to 16n
 	&mov	($_rp,"eax");		# ... save a copy of argument block
 	&mov	($_ap,"ebx");
 	&mov	($_bp,"ecx");
-<<<<<<< HEAD
 	&mov	($_np,"ebp");
 	&mov	($_n0,"esi");
 	&lea	($num,&DWP(-3,"edi"));	# num=num-1 to assist modulo-scheduling
 	#&mov	($_num,$num);		# redundant as $num is not reused
 	&mov	($_sp,"edx");		# saved stack pointer!
-=======
-	&mov	($_np,"edx");
-	&mov	($_n0,"esi");
-	&lea	($num,&DWP(-3,"edi"));	# num=num-1 to assist modulo-scheduling
-	#&mov	($_num,$num);		# redundant as $num is not reused
-	&mov	($_sp,"ebp");		# saved stack pointer!
->>>>>>> origin/master
 
 if($sse2) {
 $acc0="mm0";	# mmx register bank layout
@@ -341,11 +301,7 @@ if (0) {
 	&xor	("eax","eax");	# signal "not fast enough [yet]"
 	&jmp	(&label("just_leave"));
 	# While the below code provides competitive performance for
-<<<<<<< HEAD
 	# all key lengths on modern Intel cores, it's still more
-=======
-	# all key lengthes on modern Intel cores, it's still more
->>>>>>> origin/master
 	# than 10% slower for 4096-bit key elsewhere:-( "Competitive"
 	# means compared to the original integer-only assembler.
 	# 512-bit RSA sign is better by ~40%, but that's about all
@@ -669,8 +625,5 @@ $sbit=$num;
 &asciz("Montgomery Multiplication for x86, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
-<<<<<<< HEAD
 
 close STDOUT;
-=======
->>>>>>> origin/master

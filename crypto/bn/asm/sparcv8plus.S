@@ -3,21 +3,12 @@
 
 /*
  * ====================================================================
-<<<<<<< HEAD
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
- * Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
- * project.
- *
- * Rights for redistribution and usage in source and binary forms are
- * granted according to the OpenSSL license. Warranty of any kind is
- * disclaimed.
->>>>>>> origin/master
  * ====================================================================
  */
 
@@ -61,11 +52,7 @@
  *	# cd ../..
  *	# make; make test
  *
-<<<<<<< HEAD
  * Q. V8plus architecture? What kind of beast is that?
-=======
- * Q. V8plus achitecture? What kind of beast is that?
->>>>>>> origin/master
  * A. Well, it's rather a programming model than an architecture...
  *    It's actually v9-compliant, i.e. *any* UltraSPARC, CPU under
  *    special conditions, namely when kernel doesn't preserve upper
@@ -84,11 +71,7 @@
  *
  * Q. 64-bit registers under 32-bit kernels? Didn't you just say it
  *    doesn't work?
-<<<<<<< HEAD
  * A. You can't address *all* registers as 64-bit wide:-( The catch is
-=======
- * A. You can't adress *all* registers as 64-bit wide:-( The catch is
->>>>>>> origin/master
  *    that you actually may rely upon %o0-%o5 and %g1-%g4 being fully
  *    preserved if you're in a leaf function, i.e. such never calling
  *    any other functions. All functions in this module are leaf and
@@ -161,13 +144,10 @@
  *	    }
  */
 
-<<<<<<< HEAD
 #ifdef OPENSSL_FIPSCANISTER
 #include <openssl/fipssyms.h>
 #endif
 
-=======
->>>>>>> origin/master
 #if defined(__SUNPRO_C) && defined(__sparcv9)
   /* They've said -xarch=v9 at command line */
   .register	%g2,#scratch

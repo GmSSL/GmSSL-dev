@@ -1,5 +1,4 @@
 /*
-<<<<<<< HEAD
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -9,8 +8,6 @@
  */
 
 /*
-=======
->>>>>>> origin/master
  * S/MIME detached data decrypt example: rarely done but should the need
  * arise this is an example....
  */
@@ -80,7 +77,6 @@ int main(int argc, char **argv)
         ERR_print_errors_fp(stderr);
     }
 
-<<<<<<< HEAD
     CMS_ContentInfo_free(cms);
     X509_free(rcert);
     EVP_PKEY_free(rkey);
@@ -89,24 +85,4 @@ int main(int argc, char **argv)
     BIO_free(tbio);
     BIO_free(dcont);
     return ret;
-=======
-    if (cms)
-        CMS_ContentInfo_free(cms);
-    if (rcert)
-        X509_free(rcert);
-    if (rkey)
-        EVP_PKEY_free(rkey);
-
-    if (in)
-        BIO_free(in);
-    if (out)
-        BIO_free(out);
-    if (tbio)
-        BIO_free(tbio);
-    if (dcont)
-        BIO_free(dcont);
-
-    return ret;
-
->>>>>>> origin/master
 }

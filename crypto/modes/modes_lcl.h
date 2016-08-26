@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,13 +5,6 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* ====================================================================
- * Copyright (c) 2010 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use is governed by OpenSSL license.
- * ====================================================================
->>>>>>> origin/master
  */
 
 #include <openssl/modes.h>
@@ -151,7 +143,6 @@ struct ccm128_context {
     block128_f block;
     void *key;
 };
-<<<<<<< HEAD
 
 #ifndef OPENSSL_NO_OCB
 
@@ -192,5 +183,3 @@ struct ocb128_context {
     OCB_BLOCK checksum;
 };
 #endif                          /* OPENSSL_NO_OCB */
-=======
->>>>>>> origin/master

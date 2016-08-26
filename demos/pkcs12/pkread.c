@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,9 +6,6 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
-=======
-/* pkread.c */
->>>>>>> origin/master
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,11 +29,7 @@ int main(int argc, char **argv)
     }
     OpenSSL_add_all_algorithms();
     ERR_load_crypto_strings();
-<<<<<<< HEAD
     if ((fp = fopen(argv[1], "rb")) == NULL) {
-=======
-    if (!(fp = fopen(argv[1], "rb"))) {
->>>>>>> origin/master
         fprintf(stderr, "Error opening file %s\n", argv[1]);
         exit(1);
     }
@@ -54,11 +46,7 @@ int main(int argc, char **argv)
         exit(1);
     }
     PKCS12_free(p12);
-<<<<<<< HEAD
     if ((fp = fopen(argv[3], "w")) == NULL) {
-=======
-    if (!(fp = fopen(argv[3], "w"))) {
->>>>>>> origin/master
         fprintf(stderr, "Error opening file %s\n", argv[1]);
         exit(1);
     }

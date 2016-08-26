@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2001-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -11,69 +10,6 @@
 #include "eng_int.h"
 #include "internal/dso.h"
 #include <openssl/crypto.h>
-=======
-/* crypto/engine/eng_dyn.c */
-/*
- * Written by Geoff Thorpe (geoff@geoffthorpe.net) for the OpenSSL project
- * 2001.
- */
-/* ====================================================================
- * Copyright (c) 1999-2001 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include "eng_int.h"
-#include <openssl/dso.h>
->>>>>>> origin/master
 
 /*
  * Shared libraries implementing ENGINEs for use by the "dynamic" ENGINE
@@ -151,19 +87,11 @@ struct st_dynamic_data_ctx {
      */
     dynamic_bind_engine bind_engine;
     /* The default name/path for loading the shared library */
-<<<<<<< HEAD
     char *DYNAMIC_LIBNAME;
     /* Whether to continue loading on a version check failure */
     int no_vcheck;
     /* If non-NULL, stipulates the 'id' of the ENGINE to be loaded */
     char *engine_id;
-=======
-    const char *DYNAMIC_LIBNAME;
-    /* Whether to continue loading on a version check failure */
-    int no_vcheck;
-    /* If non-NULL, stipulates the 'id' of the ENGINE to be loaded */
-    const char *engine_id;
->>>>>>> origin/master
     /*
      * If non-zero, a successfully loaded ENGINE should be added to the
      * internal ENGINE list. If 2, the add must succeed or the entire load
@@ -209,21 +137,10 @@ static void dynamic_data_ctx_free_func(void *parent, void *ptr,
 {
     if (ptr) {
         dynamic_data_ctx *ctx = (dynamic_data_ctx *)ptr;
-<<<<<<< HEAD
         DSO_free(ctx->dynamic_dso);
         OPENSSL_free(ctx->DYNAMIC_LIBNAME);
         OPENSSL_free(ctx->engine_id);
         sk_OPENSSL_STRING_pop_free(ctx->dirs, int_free_str);
-=======
-        if (ctx->dynamic_dso)
-            DSO_free(ctx->dynamic_dso);
-        if (ctx->DYNAMIC_LIBNAME)
-            OPENSSL_free((void *)ctx->DYNAMIC_LIBNAME);
-        if (ctx->engine_id)
-            OPENSSL_free((void *)ctx->engine_id);
-        if (ctx->dirs)
-            sk_OPENSSL_STRING_pop_free(ctx->dirs, int_free_str);
->>>>>>> origin/master
         OPENSSL_free(ctx);
     }
 }
@@ -236,7 +153,6 @@ static void dynamic_data_ctx_free_func(void *parent, void *ptr,
  */
 static int dynamic_set_data_ctx(ENGINE *e, dynamic_data_ctx **ctx)
 {
-<<<<<<< HEAD
     dynamic_data_ctx *c = OPENSSL_zalloc(sizeof(*c));
     int ret = 1;
 
@@ -246,44 +162,18 @@ static int dynamic_set_data_ctx(ENGINE *e, dynamic_data_ctx **ctx)
     }
     c->dirs = sk_OPENSSL_STRING_new_null();
     if (c->dirs == NULL) {
-=======
-    dynamic_data_ctx *c;
-    c = OPENSSL_malloc(sizeof(dynamic_data_ctx));
-    if (!c) {
-        ENGINEerr(ENGINE_F_DYNAMIC_SET_DATA_CTX, ERR_R_MALLOC_FAILURE);
-        return 0;
-    }
-    memset(c, 0, sizeof(dynamic_data_ctx));
-    c->dynamic_dso = NULL;
-    c->v_check = NULL;
-    c->bind_engine = NULL;
-    c->DYNAMIC_LIBNAME = NULL;
-    c->no_vcheck = 0;
-    c->engine_id = NULL;
-    c->list_add_value = 0;
-    c->DYNAMIC_F1 = "v_check";
-    c->DYNAMIC_F2 = "bind_engine";
-    c->dir_load = 1;
-    c->dirs = sk_OPENSSL_STRING_new_null();
-    if (!c->dirs) {
->>>>>>> origin/master
         ENGINEerr(ENGINE_F_DYNAMIC_SET_DATA_CTX, ERR_R_MALLOC_FAILURE);
         OPENSSL_free(c);
         return 0;
     }
-<<<<<<< HEAD
     c->DYNAMIC_F1 = "v_check";
     c->DYNAMIC_F2 = "bind_engine";
     c->dir_load = 1;
     CRYPTO_THREAD_write_lock(global_engine_lock);
-=======
-    CRYPTO_w_lock(CRYPTO_LOCK_ENGINE);
->>>>>>> origin/master
     if ((*ctx = (dynamic_data_ctx *)ENGINE_get_ex_data(e,
                                                        dynamic_ex_data_idx))
         == NULL) {
         /* Good, we're the first */
-<<<<<<< HEAD
         ret = ENGINE_set_ex_data(e, dynamic_ex_data_idx, c);
         if (ret) {
             *ctx = c;
@@ -291,26 +181,14 @@ static int dynamic_set_data_ctx(ENGINE *e, dynamic_data_ctx **ctx)
         }
     }
     CRYPTO_THREAD_unlock(global_engine_lock);
-=======
-        ENGINE_set_ex_data(e, dynamic_ex_data_idx, c);
-        *ctx = c;
-        c = NULL;
-    }
-    CRYPTO_w_unlock(CRYPTO_LOCK_ENGINE);
->>>>>>> origin/master
     /*
      * If we lost the race to set the context, c is non-NULL and *ctx is the
      * context of the thread that won.
      */
     if (c)
-<<<<<<< HEAD
         sk_OPENSSL_STRING_free(c->dirs);
     OPENSSL_free(c);
     return ret;
-=======
-        OPENSSL_free(c);
-    return 1;
->>>>>>> origin/master
 }
 
 /*
@@ -332,22 +210,14 @@ static dynamic_data_ctx *dynamic_get_data_ctx(ENGINE *e)
             ENGINEerr(ENGINE_F_DYNAMIC_GET_DATA_CTX, ENGINE_R_NO_INDEX);
             return NULL;
         }
-<<<<<<< HEAD
         CRYPTO_THREAD_write_lock(global_engine_lock);
-=======
-        CRYPTO_w_lock(CRYPTO_LOCK_ENGINE);
->>>>>>> origin/master
         /* Avoid a race by checking again inside this lock */
         if (dynamic_ex_data_idx < 0) {
             /* Good, someone didn't beat us to it */
             dynamic_ex_data_idx = new_idx;
             new_idx = -1;
         }
-<<<<<<< HEAD
         CRYPTO_THREAD_unlock(global_engine_lock);
-=======
-        CRYPTO_w_unlock(CRYPTO_LOCK_ENGINE);
->>>>>>> origin/master
         /*
          * In theory we could "give back" the index here if (new_idx>-1), but
          * it's not possible and wouldn't gain us much if it were.
@@ -364,11 +234,7 @@ static dynamic_data_ctx *dynamic_get_data_ctx(ENGINE *e)
 static ENGINE *engine_dynamic(void)
 {
     ENGINE *ret = ENGINE_new();
-<<<<<<< HEAD
     if (ret == NULL)
-=======
-    if (!ret)
->>>>>>> origin/master
         return NULL;
     if (!ENGINE_set_id(ret, engine_dynamic_id) ||
         !ENGINE_set_name(ret, engine_dynamic_name) ||
@@ -383,11 +249,7 @@ static ENGINE *engine_dynamic(void)
     return ret;
 }
 
-<<<<<<< HEAD
 void engine_load_dynamic_int(void)
-=======
-void ENGINE_load_dynamic(void)
->>>>>>> origin/master
 {
     ENGINE *toadd = engine_dynamic();
     if (!toadd)
@@ -409,11 +271,7 @@ void ENGINE_load_dynamic(void)
 static int dynamic_init(ENGINE *e)
 {
     /*
-<<<<<<< HEAD
      * We always return failure - the "dynamic" engine itself can't be used
-=======
-     * We always return failure - the "dyanamic" engine itself can't be used
->>>>>>> origin/master
      * for anything.
      */
     return 0;
@@ -448,16 +306,9 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
         /* a NULL 'p' or a string of zero-length is the same thing */
         if (p && (strlen((const char *)p) < 1))
             p = NULL;
-<<<<<<< HEAD
         OPENSSL_free(ctx->DYNAMIC_LIBNAME);
         if (p)
             ctx->DYNAMIC_LIBNAME = OPENSSL_strdup(p);
-=======
-        if (ctx->DYNAMIC_LIBNAME)
-            OPENSSL_free((void *)ctx->DYNAMIC_LIBNAME);
-        if (p)
-            ctx->DYNAMIC_LIBNAME = BUF_strdup(p);
->>>>>>> origin/master
         else
             ctx->DYNAMIC_LIBNAME = NULL;
         return (ctx->DYNAMIC_LIBNAME ? 1 : 0);
@@ -468,16 +319,9 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
         /* a NULL 'p' or a string of zero-length is the same thing */
         if (p && (strlen((const char *)p) < 1))
             p = NULL;
-<<<<<<< HEAD
         OPENSSL_free(ctx->engine_id);
         if (p)
             ctx->engine_id = OPENSSL_strdup(p);
-=======
-        if (ctx->engine_id)
-            OPENSSL_free((void *)ctx->engine_id);
-        if (p)
-            ctx->engine_id = BUF_strdup(p);
->>>>>>> origin/master
         else
             ctx->engine_id = NULL;
         return (ctx->engine_id ? 1 : 0);
@@ -504,7 +348,6 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
             return 0;
         }
         {
-<<<<<<< HEAD
             char *tmp_str = OPENSSL_strdup(p);
             if (tmp_str == NULL) {
                 ENGINEerr(ENGINE_F_DYNAMIC_CTRL, ERR_R_MALLOC_FAILURE);
@@ -515,14 +358,6 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
                 ENGINEerr(ENGINE_F_DYNAMIC_CTRL, ERR_R_MALLOC_FAILURE);
                 return 0;
             }
-=======
-            char *tmp_str = BUF_strdup(p);
-            if (!tmp_str) {
-                ENGINEerr(ENGINE_F_DYNAMIC_CTRL, ERR_R_MALLOC_FAILURE);
-                return 0;
-            }
-            sk_OPENSSL_STRING_insert(ctx->dirs, tmp_str, -1);
->>>>>>> origin/master
         }
         return 1;
     default:
@@ -563,7 +398,6 @@ static int dynamic_load(ENGINE *e, dynamic_data_ctx *ctx)
     ENGINE cpy;
     dynamic_fns fns;
 
-<<<<<<< HEAD
     if (ctx->dynamic_dso == NULL)
         ctx->dynamic_dso = DSO_new();
     if (ctx->dynamic_dso == NULL)
@@ -573,13 +407,6 @@ static int dynamic_load(ENGINE *e, dynamic_data_ctx *ctx)
             return 0;
         DSO_ctrl(ctx->dynamic_dso, DSO_CTRL_SET_FLAGS,
                  DSO_FLAG_NAME_TRANSLATION_EXT_ONLY, NULL);
-=======
-    if (!ctx->dynamic_dso)
-        ctx->dynamic_dso = DSO_new();
-    if (!ctx->DYNAMIC_LIBNAME) {
-        if (!ctx->engine_id)
-            return 0;
->>>>>>> origin/master
         ctx->DYNAMIC_LIBNAME =
             DSO_convert_filename(ctx->dynamic_dso, ctx->engine_id);
     }
@@ -641,20 +468,8 @@ static int dynamic_load(ENGINE *e, dynamic_data_ctx *ctx)
      * would also increase opaqueness.
      */
     fns.static_state = ENGINE_get_static_state();
-<<<<<<< HEAD
     CRYPTO_get_mem_functions(&fns.mem_fns.malloc_fn, &fns.mem_fns.realloc_fn,
                              &fns.mem_fns.free_fn);
-=======
-    fns.err_fns = ERR_get_implementation();
-    fns.ex_data_fns = CRYPTO_get_ex_data_implementation();
-    CRYPTO_get_mem_functions(&fns.mem_fns.malloc_cb,
-                             &fns.mem_fns.realloc_cb, &fns.mem_fns.free_cb);
-    fns.lock_fns.lock_locking_cb = CRYPTO_get_locking_callback();
-    fns.lock_fns.lock_add_lock_cb = CRYPTO_get_add_lock_callback();
-    fns.lock_fns.dynlock_create_cb = CRYPTO_get_dynlock_create_callback();
-    fns.lock_fns.dynlock_lock_cb = CRYPTO_get_dynlock_lock_callback();
-    fns.lock_fns.dynlock_destroy_cb = CRYPTO_get_dynlock_destroy_callback();
->>>>>>> origin/master
     /*
      * Now that we've loaded the dynamic engine, make sure no "dynamic"
      * ENGINE elements will show through.

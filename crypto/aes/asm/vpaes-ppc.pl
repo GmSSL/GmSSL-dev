@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 ######################################################################
 ## Constant-time SSSE3 AES core implementation.
@@ -348,19 +344,11 @@ Lenc_entry:
 	addi	$inp, $inp, 15		# 15 is not a typo
 	 ?lvsr	$outperm, 0, $out
 	?lvsl	$keyperm, 0, $key	# prepare for unaligned access
-<<<<<<< HEAD
 	lvx	$inptail, 0, $inp	# redundant in aligned case
-=======
-	 vnor	$outmask, v7, v7	# 0xff..ff
-	lvx	$inptail, 0, $inp	# redundant in aligned case
-	 ?vperm	$outmask, v7, $outmask, $outperm
-	 lvx	$outhead, 0, $out
->>>>>>> origin/master
 	?vperm	v0, v0, $inptail, $inpperm
 
 	bl	_vpaes_encrypt_core
 
-<<<<<<< HEAD
 	andi.	r8, $out, 15
 	li	r9, 16
 	beq	Lenc_out_aligned
@@ -377,18 +365,6 @@ Lenc_out_unaligned:
 Lenc_out_aligned:
 	stvx	v0, 0, $out
 Lenc_done:
-=======
-	vperm	v0, v0, v0, $outperm	# rotate right/left
-	vsel	v1, $outhead, v0, $outmask
-	vmr	$outhead, v0
-	stvx	v1, 0, $out
-	addi	$out, $out, 15		# 15 is not a typo
-	########
-
-	lvx	v1, 0, $out		# redundant in aligned case
-	vsel	v1, $outhead, v1, $outmask
-	stvx	v1, 0, $out
->>>>>>> origin/master
 
 	li	r10,`15+6*$SIZE_T`
 	li	r11,`31+6*$SIZE_T`
@@ -600,19 +576,11 @@ Ldec_entry:
 	addi	$inp, $inp, 15		# 15 is not a typo
 	 ?lvsr	$outperm, 0, $out
 	?lvsl	$keyperm, 0, $key
-<<<<<<< HEAD
 	lvx	$inptail, 0, $inp	# redundant in aligned case
-=======
-	 vnor	$outmask, v7, v7	# 0xff..ff
-	lvx	$inptail, 0, $inp	# redundant in aligned case
-	 ?vperm	$outmask, v7, $outmask, $outperm
-	 lvx	$outhead, 0, $out
->>>>>>> origin/master
 	?vperm	v0, v0, $inptail, $inpperm
 
 	bl	_vpaes_decrypt_core
 
-<<<<<<< HEAD
 	andi.	r8, $out, 15
 	li	r9, 16
 	beq	Ldec_out_aligned
@@ -629,18 +597,6 @@ Ldec_out_unaligned:
 Ldec_out_aligned:
 	stvx	v0, 0, $out
 Ldec_done:
-=======
-	vperm	v0, v0, v0, $outperm	# rotate right/left
-	vsel	v1, $outhead, v0, $outmask
-	vmr	$outhead, v0
-	stvx	v1, 0, $out
-	addi	$out, $out, 15		# 15 is not a typo
-	########
-
-	lvx	v1, 0, $out		# redundant in aligned case
-	vsel	v1, $outhead, v1, $outmask
-	stvx	v1, 0, $out
->>>>>>> origin/master
 
 	li	r10,`15+6*$SIZE_T`
 	li	r11,`31+6*$SIZE_T`
@@ -715,19 +671,11 @@ Ldec_done:
 	$PUSH	r0, `$FRAME+$SIZE_T*2+$LRSAVE`($sp)
 
 	and	r30, r5, r9		# copy length&-16
-<<<<<<< HEAD
 	andi.	r9, $out, 15		# is $out aligned?
 	mr	r5, r6			# copy pointer to key
 	mr	r31, r7			# copy pointer to iv
 	li	r6, -1
 	mcrf	cr1, cr0		# put aside $out alignment flag
-=======
-	mr	r5, r6			# copy pointer to key
-	mr	r31, r7			# copy pointer to iv
-	blt	Lcbc_abort
-	cmpwi	r8, 0			# test direction
-	li	r6, -1
->>>>>>> origin/master
 	mr	r7, r12			# copy vrsave
 	mtspr	256, r6			# preserve all AltiVec registers
 
@@ -737,10 +685,7 @@ Ldec_done:
 	lvx	v25, r9, r31
 	?vperm	v24, v24, v25, $inpperm
 
-<<<<<<< HEAD
 	cmpwi	r8, 0			# test direction
-=======
->>>>>>> origin/master
 	neg	r8, $inp		# prepare for unaligned access
 	 vxor	v7, v7, v7
 	?lvsl	$keyperm, 0, $key
@@ -750,17 +695,12 @@ Ldec_done:
 	lvx	$inptail, 0, $inp
 	 ?vperm	$outmask, v7, $outmask, $outperm
 	addi	$inp, $inp, 15		# 15 is not a typo
-<<<<<<< HEAD
-=======
-	 lvx	$outhead, 0, $out
->>>>>>> origin/master
 
 	beq	Lcbc_decrypt
 
 	bl	_vpaes_encrypt_preheat
 	li	r0, 16
 
-<<<<<<< HEAD
 	beq	cr1, Lcbc_enc_loop	# $out is aligned
 
 	vmr	v0, $inptail
@@ -786,8 +726,6 @@ Lcbc_enc_head:
 	addi	$out, $out, 16
 	beq	Lcbc_unaligned_done
 
-=======
->>>>>>> origin/master
 Lcbc_enc_loop:
 	vmr	v0, $inptail
 	lvx	$inptail, 0, $inp
@@ -813,7 +751,6 @@ Lcbc_decrypt:
 	bl	_vpaes_decrypt_preheat
 	li	r0, 16
 
-<<<<<<< HEAD
 	beq	cr1, Lcbc_dec_loop	# $out is aligned
 
 	vmr	v0, $inptail
@@ -840,8 +777,6 @@ Lcbc_dec_head:
 	addi	$out, $out, 16
 	beq	Lcbc_unaligned_done
 
-=======
->>>>>>> origin/master
 Lcbc_dec_loop:
 	vmr	v0, $inptail
 	lvx	$inptail, 0, $inp
@@ -862,7 +797,6 @@ Lcbc_dec_loop:
 	bne	Lcbc_dec_loop
 
 Lcbc_done:
-<<<<<<< HEAD
 	beq	cr1, Lcbc_write_iv	# $out is aligned
 
 Lcbc_unaligned_done:
@@ -886,25 +820,6 @@ Lcbc_write_iv:
 	stvewx	v24, r10, r31
 	stvewx	v24, r11, r31
 	stvewx	v24, r12, r31
-=======
-	addi	$out, $out, -1
-	lvx	v1, 0, $out		# redundant in aligned case
-	vsel	v1, $outhead, v1, $outmask
-	stvx	v1, 0, $out
-
-	neg	r8, r31			# write [potentially unaligned] iv
-	?lvsl	$outperm, 0, r8
-	li	r6, 15
-	vnor	$outmask, v7, v7	# 0xff..ff
-	?vperm	$outmask, v7, $outmask, $outperm
-	lvx	$outhead, 0, r31
-	vperm	v24, v24, v24, $outperm	# rotate right/left
-	vsel	v0, $outhead, v24, $outmask
-	lvx	v1, r6, r31
-	stvx	v0, 0, r31
-	vsel	v1, v24, v1, $outmask
-	stvx	v1, r6, r31
->>>>>>> origin/master
 
 	mtspr	256, r7			# restore vrsave
 	li	r10,`15+6*$SIZE_T`
@@ -1027,7 +942,6 @@ _vpaes_schedule_core:
 
 	# encrypting, output zeroth round key after transform
 	li	r8, 0x30		# mov	\$0x30,%r8d
-<<<<<<< HEAD
 	li	r9, 4
 	li	r10, 8
 	li	r11, 12
@@ -1043,20 +957,6 @@ _vpaes_schedule_core:
 	stvewx	$outhead, r10, $out
 	addi	r10, r12, 0x80		# lea	.Lk_sr(%rip),%r10
 	stvewx	$outhead, r11, $out
-=======
-	addi	r10, r12, 0x80		# lea	.Lk_sr(%rip),%r10
-
-	?lvsr	$outperm, 0, $out	# prepare for unaligned access
-	vnor	$outmask, v9, v9	# 0xff..ff
-	lvx	$outhead, 0, $out
-	?vperm	$outmask, v9, $outmask, $outperm
-
-	#stvx	v0, 0, $out		# vmovdqu	%xmm0,	(%rdx)
-	vperm	v1, v0, v0, $outperm	# rotate right/left
-	vsel	v2, $outhead, v1, $outmask
-	vmr	$outhead, v1
-	stvx	v2, 0, $out
->>>>>>> origin/master
 	b	Lschedule_go
 
 Lschedule_am_decrypting:
@@ -1066,17 +966,13 @@ Lschedule_am_decrypting:
 	addi	r10, r12, 0x80		# lea	.Lk_sr(%rip),%r10
 	# decrypting, output zeroth round key after shiftrows
 	lvx	v1, r8, r10		# vmovdqa	(%r8,%r10),	%xmm1
-<<<<<<< HEAD
 	li	r9, 4
 	li	r10, 8
 	li	r11, 12
-=======
->>>>>>> origin/master
 	vperm	v4, v3, v3, v1		# vpshufb	%xmm1,	%xmm3,	%xmm3
 
 	neg	r0, $out		# prepare for unaligned access
 	?lvsl	$outperm, 0, r0
-<<<<<<< HEAD
 	vnor	$outmask, v9, v9	# 0xff..ff
 	?vperm	$outmask, $outmask, v9, $outperm
 
@@ -1088,18 +984,6 @@ Lschedule_am_decrypting:
 	addi	r10, r12, 0x80		# lea	.Lk_sr(%rip),%r10
 	stvewx	$outhead, r11, $out
 	addi	$out, $out, 15		# 15 is not typo
-=======
-	addi	$out, $out, 15		# 15 is not typo
-	vnor	$outmask, v9, v9	# 0xff..ff
-	lvx	$outhead, 0, $out
-	?vperm	$outmask, $outmask, v9, $outperm
-
-	#stvx	v4, 0, $out		# vmovdqu	%xmm3,	(%rdx)
-	vperm	v4, v4, v4, $outperm	# rotate right/left
-	vsel	v2, $outhead, v4, $outmask
-	vmr	$outhead, v4
-	stvx	v2, 0, $out
->>>>>>> origin/master
 	xori	r8, r8, 0x30		# xor	\$0x30, %r8
 
 Lschedule_go:
@@ -1231,7 +1115,6 @@ Lschedule_mangle_last:
 
 	#stvx	v0, r0, $out		# vmovdqu	%xmm0,	(%rdx)		# save last key
 	vperm	v0, v0, v0, $outperm	# rotate right/left
-<<<<<<< HEAD
 	li	r10, 4
 	vsel	v2, $outhead, v0, $outmask
 	li	r11, 8
@@ -1241,16 +1124,6 @@ Lschedule_mangle_last:
 	stvewx	v0, r10, $out
 	stvewx	v0, r11, $out
 	stvewx	v0, r12, $out
-=======
-	vsel	v2, $outhead, v0, $outmask
-	vmr	$outhead, v0
-	stvx	v2, 0, $out
-
-	addi	$out, $out, 15		# 15 is not typo
-	lvx	v1, 0, $out		# redundant in aligned case
-	vsel	v1, $outhead, v1, $outmask
-	stvx	v1, 0, $out
->>>>>>> origin/master
 	b	Lschedule_mangle_done
 
 .align	4
@@ -1262,7 +1135,6 @@ Lschedule_mangle_last_dec:
 	bl	_vpaes_schedule_transform	# output transform
 
 	#stvx	v0, r0, $out		# vmovdqu	%xmm0,	(%rdx)		# save last key
-<<<<<<< HEAD
 	addi	r9, $out, -15		# -15 is not typo
 	vperm	v0, v0, v0, $outperm	# rotate right/left
 	li	r10, 4
@@ -1275,17 +1147,6 @@ Lschedule_mangle_last_dec:
 	stvewx	v0, r11, r9
 	stvewx	v0, r12, r9
 
-=======
-	vperm	v0, v0, v0, $outperm	# rotate right/left
-	vsel	v2, $outhead, v0, $outmask
-	vmr	$outhead, v0
-	stvx	v2, 0, $out
-
-	addi	$out, $out, -15		# -15 is not typo
-	lvx	v1, 0, $out		# redundant in aligned case
-	vsel	v1, $outhead, v1, $outmask
-	stvx	v1, 0, $out
->>>>>>> origin/master
 
 Lschedule_mangle_done:
 	mtlr	r7

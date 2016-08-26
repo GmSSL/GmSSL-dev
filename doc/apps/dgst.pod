@@ -2,7 +2,6 @@
 
 =head1 NAME
 
-<<<<<<< HEAD
 dgst, sha, sha1, mdc2, ripemd160, sha224, sha256, sha384, sha512, md4, md5, blake2b, blake2s - message digests
 
 =head1 SYNOPSIS
@@ -10,24 +9,11 @@ dgst, sha, sha1, mdc2, ripemd160, sha224, sha256, sha384, sha512, md4, md5, blak
 B<openssl> B<dgst>
 [B<-help>]
 [B<-I<digest>>]
-=======
-dgst, sha, sha1, mdc2, ripemd160, sha224, sha256, sha384, sha512, md2, md4, md5, dss1 - message digests
-
-=head1 SYNOPSIS
-
-B<openssl> B<dgst> 
-[B<-sha|-sha1|-mdc2|-ripemd160|-sha224|-sha256|-sha384|-sha512|-md2|-md4|-md5|-dss1>]
->>>>>>> origin/master
 [B<-c>]
 [B<-d>]
 [B<-hex>]
 [B<-binary>]
 [B<-r>]
-<<<<<<< HEAD
-=======
-[B<-hmac arg>]
-[B<-non-fips-allow>]
->>>>>>> origin/master
 [B<-out filename>]
 [B<-sign filename>]
 [B<-keyform arg>]
@@ -36,14 +22,9 @@ B<openssl> B<dgst>
 [B<-prverify filename>]
 [B<-signature filename>]
 [B<-hmac key>]
-<<<<<<< HEAD
 [B<-fips-fingerprint>]
 [B<-engine id>]
 [B<-engine_impl>]
-=======
-[B<-non-fips-allow>]
-[B<-fips-fingerprint>]
->>>>>>> origin/master
 [B<file...>]
 
 B<openssl>
@@ -56,7 +37,6 @@ The digest functions output the message digest of a supplied file or files
 in hexadecimal.  The digest functions also generate and verify digital
 signatures using message digests.
 
-<<<<<<< HEAD
 The generic name, B<dgst>, may be used with an option specifying the
 algorithm to be used.
 The default digest is I<sha256>.
@@ -64,13 +44,10 @@ A supported I<digest> name may also be used as the command name.
 To see the list of supported algorithms, use the I<list --digest-commands>
 command.
 
-=======
->>>>>>> origin/master
 =head1 OPTIONS
 
 =over 4
 
-<<<<<<< HEAD
 =item B<-help>
 
 Print out a usage message.
@@ -80,8 +57,6 @@ Print out a usage message.
 Specifies name of a supported digest to be used. To see the list of
 supported digests, use the command I<list --digest-commands>.
 
-=======
->>>>>>> origin/master
 =item B<-c>
 
 print out the digest in two digit groups separated by colons, only relevant if
@@ -105,18 +80,6 @@ output the digest or signature in binary form.
 
 output the digest in the "coreutils" format used by programs like B<sha1sum>.
 
-<<<<<<< HEAD
-=======
-=item B<-hmac arg>
-
-set the HMAC key to "arg".
-
-=item B<-non-fips-allow>
-
-Allow use of non FIPS digest when in FIPS mode.  This has no effect when not in
-FIPS mode.
-
->>>>>>> origin/master
 =item B<-out filename>
 
 filename to output to, or standard output by default.
@@ -130,15 +93,6 @@ digitally sign the digest using the private key in "filename".
 Specifies the key format to sign digest with. The DER, PEM, P12,
 and ENGINE formats are supported.
 
-<<<<<<< HEAD
-=======
-=item B<-engine id>
-
-Use engine B<id> for operations (including private key storage).
-This engine is not used as source for digest algorithms, unless it is
-also specified in the configuration file.
-
->>>>>>> origin/master
 =item B<-sigopt nm:v>
 
 Pass options to the signature algorithm during sign or verify operations.
@@ -148,28 +102,16 @@ Names and values of these options are algorithm-specific.
 =item B<-passin arg>
 
 the private key password source. For more information about the format of B<arg>
-<<<<<<< HEAD
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
 
 =item B<-verify filename>
 
 verify the signature using the public key in "filename".
-=======
-see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
-
-=item B<-verify filename>
-
-verify the signature using the the public key in "filename".
->>>>>>> origin/master
 The output is either "Verification OK" or "Verification Failure".
 
 =item B<-prverify filename>
 
-<<<<<<< HEAD
 verify the signature using the private key in "filename".
-=======
-verify the signature using the  the private key in "filename".
->>>>>>> origin/master
 
 =item B<-signature filename>
 
@@ -196,11 +138,7 @@ Following options are supported by both by B<HMAC> and B<gost-mac>:
 
 =item B<key:string>
 
-<<<<<<< HEAD
 Specifies MAC key as alphanumeric string (use if key contain printable
-=======
-Specifies MAC key as alphnumeric string (use if key contain printable
->>>>>>> origin/master
 characters only). String length must conform to any restrictions of
 the MAC algorithm for example exactly 32 chars for gost-mac.
 
@@ -215,28 +153,16 @@ for example exactly 32 chars for gost-mac.
 =item B<-rand file(s)>
 
 a file or files containing random data used to seed the random number
-<<<<<<< HEAD
 generator, or an EGD socket (see L<RAND_egd(3)>).
 Multiple files can be specified separated by an OS-dependent character.
 The separator is B<;> for MS-Windows, B<,> for OpenVMS, and B<:> for
 all others.
-=======
-generator, or an EGD socket (see L<RAND_egd(3)|RAND_egd(3)>).
-Multiple files can be specified separated by a OS-dependent character.
-The separator is B<;> for MS-Windows, B<,> for OpenVMS, and B<:> for
-all others. 
-
-=item B<-non-fips-allow>
-
-enable use of non-FIPS algorithms such as MD5 even in FIPS mode.
->>>>>>> origin/master
 
 =item B<-fips-fingerprint>
 
 compute HMAC using a specific key
 for certain OpenSSL-FIPS operations.
 
-<<<<<<< HEAD
 =item B<-engine id>
 
 Use engine B<id> for operations (including private key storage).
@@ -249,8 +175,6 @@ specified.
 When used with the B<-engine> option, it specifies to also use
 engine B<id> for digest operations.
 
-=======
->>>>>>> origin/master
 =item B<file...>
 
 file or files to digest. If no files are specified then standard input is
@@ -275,7 +199,6 @@ To verify a signature:
 
 =head1 NOTES
 
-<<<<<<< HEAD
 The digest mechanisms that are available will depend on the options
 used when building OpenSSL.
 The B<list digest-commands> command can be used to list them.
@@ -283,10 +206,6 @@ The B<list digest-commands> command can be used to list them.
 New or agile applications should use probably use SHA-256. Other digests,
 particularly SHA-1 and MD5, are still widely used for interoperating
 with existing formats and protocols.
-=======
-The digest of choice for all new applications is SHA1. Other digests are
-however still widely used.
->>>>>>> origin/master
 
 When signing a file, B<dgst> will automatically determine the algorithm
 (RSA, ECC, etc) to use for signing based on the private key's ASN.1 info.
@@ -304,7 +223,6 @@ Hex signatures cannot be verified using B<openssl>.  Instead, use "xxd -r"
 or similar program to transform the hex signature into a binary signature
 prior to verification.
 
-<<<<<<< HEAD
 =head1 HISTORY
 
 The default digest was changed from MD5 to SHA256 in OpenSSL 1.1.0
@@ -318,7 +236,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
->>>>>>> origin/master
 
 =cut

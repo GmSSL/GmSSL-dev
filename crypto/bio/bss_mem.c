@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,75 +5,12 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* crypto/bio/bss_mem.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
->>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <errno.h>
-<<<<<<< HEAD
 #include "bio_lcl.h"
 #include "internal/cryptlib.h"
-=======
-#include "cryptlib.h"
-#include <openssl/bio.h>
->>>>>>> origin/master
 
 static int mem_write(BIO *h, const char *buf, int num);
 static int mem_read(BIO *h, char *buf, int size);
@@ -82,17 +18,12 @@ static int mem_puts(BIO *h, const char *str);
 static int mem_gets(BIO *h, char *str, int size);
 static long mem_ctrl(BIO *h, int cmd, long arg1, void *arg2);
 static int mem_new(BIO *h);
-<<<<<<< HEAD
 static int secmem_new(BIO *h);
 static int mem_free(BIO *data);
 static int mem_buf_free(BIO *data, int free_all);
 static int mem_buf_sync(BIO *h);
 
 static const BIO_METHOD mem_method = {
-=======
-static int mem_free(BIO *data);
-static BIO_METHOD mem_method = {
->>>>>>> origin/master
     BIO_TYPE_MEM,
     "memory buffer",
     mem_write,
@@ -105,7 +36,6 @@ static BIO_METHOD mem_method = {
     NULL,
 };
 
-<<<<<<< HEAD
 static const BIO_METHOD secmem_method = {
     BIO_TYPE_MEM,
     "secure memory buffer",
@@ -125,23 +55,16 @@ typedef struct bio_buf_mem_st {
     struct buf_mem_st *readp; /* read pointer */
 } BIO_BUF_MEM;
 
-=======
->>>>>>> origin/master
 /*
  * bio->num is used to hold the value to return on 'empty', if it is 0,
  * should_retry is not set
  */
 
-<<<<<<< HEAD
 const BIO_METHOD *BIO_s_mem(void)
-=======
-BIO_METHOD *BIO_s_mem(void)
->>>>>>> origin/master
 {
     return (&mem_method);
 }
 
-<<<<<<< HEAD
 const BIO_METHOD *BIO_s_secmem(void)
 {
     return(&secmem_method);
@@ -155,20 +78,10 @@ BIO *BIO_new_mem_buf(const void *buf, int len)
     size_t sz;
 
     if (buf == NULL) {
-=======
-BIO *BIO_new_mem_buf(void *buf, int len)
-{
-    BIO *ret;
-    BUF_MEM *b;
-    size_t sz;
-
-    if (!buf) {
->>>>>>> origin/master
         BIOerr(BIO_F_BIO_NEW_MEM_BUF, BIO_R_NULL_PARAMETER);
         return NULL;
     }
     sz = (len < 0) ? strlen(buf) : (size_t)len;
-<<<<<<< HEAD
     if ((ret = BIO_new(BIO_s_mem())) == NULL)
         return NULL;
     bb = (BIO_BUF_MEM *)ret->ptr;
@@ -180,21 +93,10 @@ BIO *BIO_new_mem_buf(void *buf, int len)
     *bb->readp = *bb->buf;
     ret->flags |= BIO_FLAGS_MEM_RDONLY;
     /* Since this is static data retrying won't help */
-=======
-    if (!(ret = BIO_new(BIO_s_mem())))
-        return NULL;
-    b = (BUF_MEM *)ret->ptr;
-    b->data = buf;
-    b->length = sz;
-    b->max = sz;
-    ret->flags |= BIO_FLAGS_MEM_RDONLY;
-    /* Since this is static data retrying wont help */
->>>>>>> origin/master
     ret->num = 0;
     return ret;
 }
 
-<<<<<<< HEAD
 static int mem_init(BIO *bi, unsigned long flags)
 {
     BIO_BUF_MEM *bb = OPENSSL_zalloc(sizeof(*bb));
@@ -226,37 +128,20 @@ static int mem_new(BIO *bi)
 static int secmem_new(BIO *bi)
 {
     return (mem_init(bi, BUF_MEM_FLAG_SECURE));
-=======
-static int mem_new(BIO *bi)
-{
-    BUF_MEM *b;
-
-    if ((b = BUF_MEM_new()) == NULL)
-        return (0);
-    bi->shutdown = 1;
-    bi->init = 1;
-    bi->num = -1;
-    bi->ptr = (char *)b;
-    return (1);
->>>>>>> origin/master
 }
 
 static int mem_free(BIO *a)
 {
-<<<<<<< HEAD
     return (mem_buf_free(a, 1));
 }
 
 static int mem_buf_free(BIO *a, int free_all)
 {
-=======
->>>>>>> origin/master
     if (a == NULL)
         return (0);
     if (a->shutdown) {
         if ((a->init) && (a->ptr != NULL)) {
             BUF_MEM *b;
-<<<<<<< HEAD
             BIO_BUF_MEM *bb = (BIO_BUF_MEM *)a->ptr;
 
             if (bb != NULL) {
@@ -269,19 +154,12 @@ static int mem_buf_free(BIO *a, int free_all)
                     OPENSSL_free(bb);
                 }
             }
-=======
-            b = (BUF_MEM *)a->ptr;
-            if (a->flags & BIO_FLAGS_MEM_RDONLY)
-                b->data = NULL;
-            BUF_MEM_free(b);
->>>>>>> origin/master
             a->ptr = NULL;
         }
     }
     return (1);
 }
 
-<<<<<<< HEAD
 /*
  * Reallocate memory buffer if read pointer differs
  */
@@ -305,28 +183,12 @@ static int mem_read(BIO *b, char *out, int outl)
     BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)b->ptr;
     BUF_MEM *bm = bbm->readp;
 
-=======
-static int mem_read(BIO *b, char *out, int outl)
-{
-    int ret = -1;
-    BUF_MEM *bm;
-
-    bm = (BUF_MEM *)b->ptr;
->>>>>>> origin/master
     BIO_clear_retry_flags(b);
     ret = (outl >= 0 && (size_t)outl > bm->length) ? (int)bm->length : outl;
     if ((out != NULL) && (ret > 0)) {
         memcpy(out, bm->data, ret);
         bm->length -= ret;
-<<<<<<< HEAD
         bm->data += ret;
-=======
-        if (b->flags & BIO_FLAGS_MEM_RDONLY)
-            bm->data += ret;
-        else {
-            memmove(&(bm->data[0]), &(bm->data[ret]), bm->length);
-        }
->>>>>>> origin/master
     } else if (bm->length == 0) {
         ret = b->num;
         if (ret != 0)
@@ -339,27 +201,16 @@ static int mem_write(BIO *b, const char *in, int inl)
 {
     int ret = -1;
     int blen;
-<<<<<<< HEAD
     BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)b->ptr;
 
-=======
-    BUF_MEM *bm;
-
-    bm = (BUF_MEM *)b->ptr;
->>>>>>> origin/master
     if (in == NULL) {
         BIOerr(BIO_F_MEM_WRITE, BIO_R_NULL_PARAMETER);
         goto end;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
     if (b->flags & BIO_FLAGS_MEM_RDONLY) {
         BIOerr(BIO_F_MEM_WRITE, BIO_R_WRITE_TO_READ_ONLY_BIO);
         goto end;
     }
-<<<<<<< HEAD
     BIO_clear_retry_flags(b);
     blen = bbm->readp->length;
     mem_buf_sync(b);
@@ -367,14 +218,6 @@ static int mem_write(BIO *b, const char *in, int inl)
         goto end;
     memcpy(bbm->buf->data + blen, in, inl);
     *bbm->readp = *bbm->buf;
-=======
-
-    BIO_clear_retry_flags(b);
-    blen = bm->length;
-    if (BUF_MEM_grow_clean(bm, blen + inl) != (blen + inl))
-        goto end;
-    memcpy(&(bm->data[blen]), in, inl);
->>>>>>> origin/master
     ret = inl;
  end:
     return (ret);
@@ -384,7 +227,6 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     char **pptr;
-<<<<<<< HEAD
     BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)b->ptr;
     BUF_MEM *bm;
 
@@ -394,43 +236,23 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
         if (bm->data != NULL) {
             /* For read only case reset to the start again */
             if ((b->flags & BIO_FLAGS_MEM_RDONLY) || (b->flags & BIO_FLAGS_NONCLEAR_RST)) {
-=======
-
-    BUF_MEM *bm = (BUF_MEM *)b->ptr;
-
-    switch (cmd) {
-    case BIO_CTRL_RESET:
-        if (bm->data != NULL) {
-            /* For read only case reset to the start again */
-            if (b->flags & BIO_FLAGS_MEM_RDONLY) {
-                bm->data -= bm->max - bm->length;
->>>>>>> origin/master
                 bm->length = bm->max;
             } else {
                 memset(bm->data, 0, bm->max);
                 bm->length = 0;
             }
-<<<<<<< HEAD
             *bbm->readp = *bbm->buf;
         }
         break;
     case BIO_CTRL_EOF:
         bm = bbm->readp;
-=======
-        }
-        break;
-    case BIO_CTRL_EOF:
->>>>>>> origin/master
         ret = (long)(bm->length == 0);
         break;
     case BIO_C_SET_BUF_MEM_EOF_RETURN:
         b->num = (int)num;
         break;
     case BIO_CTRL_INFO:
-<<<<<<< HEAD
         bm = bbm->readp;
-=======
->>>>>>> origin/master
         ret = (long)bm->length;
         if (ptr != NULL) {
             pptr = (char **)ptr;
@@ -438,7 +260,6 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
         }
         break;
     case BIO_C_SET_BUF_MEM:
-<<<<<<< HEAD
         mem_buf_free(b, 0);
         b->shutdown = (int)num;
         bbm->buf = ptr;
@@ -449,14 +270,6 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
         if (ptr != NULL) {
             mem_buf_sync(b);
             bm = bbm->readp;
-=======
-        mem_free(b);
-        b->shutdown = (int)num;
-        b->ptr = ptr;
-        break;
-    case BIO_C_GET_BUF_MEM_PTR:
-        if (ptr != NULL) {
->>>>>>> origin/master
             pptr = (char **)ptr;
             *pptr = (char *)bm;
         }
@@ -467,18 +280,11 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
     case BIO_CTRL_SET_CLOSE:
         b->shutdown = (int)num;
         break;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
     case BIO_CTRL_WPENDING:
         ret = 0L;
         break;
     case BIO_CTRL_PENDING:
-<<<<<<< HEAD
         bm = bbm->readp;
-=======
->>>>>>> origin/master
         ret = (long)bm->length;
         break;
     case BIO_CTRL_DUP:
@@ -499,12 +305,8 @@ static int mem_gets(BIO *bp, char *buf, int size)
     int i, j;
     int ret = -1;
     char *p;
-<<<<<<< HEAD
     BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)bp->ptr;
     BUF_MEM *bm = bbm->readp;
-=======
-    BUF_MEM *bm = (BUF_MEM *)bp->ptr;
->>>>>>> origin/master
 
     BIO_clear_retry_flags(bp);
     j = bm->length;

@@ -240,7 +240,6 @@ This text was been written in large parts by Eric Young in his original
 documentation for SSLeay, the predecessor of OpenSSL.  In turn, he attributed
 it to:
 
-<<<<<<< HEAD
         AS 2805.5.2
         Australian Standard
         Electronic funds transfer - Requirements for interfaces,
@@ -262,18 +261,3 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
-=======
-	AS 2805.5.2
-	Australian Standard
-	Electronic funds transfer - Requirements for interfaces,
-	Part 5.2: Modes of operation for an n-bit block cipher algorithm
-	Appendix A
-
-=head1 SEE ALSO
-
-L<blowfish(3)|blowfish(3)>, L<des(3)|des(3)>, L<idea(3)|idea(3)>,
-L<rc2(3)|rc2(3)>
-
-=cut
-
->>>>>>> origin/master

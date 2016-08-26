@@ -8,11 +8,7 @@ BIO_s_null - null data sink
 
  #include <openssl/bio.h>
 
-<<<<<<< HEAD
  const BIO_METHOD *     BIO_s_null(void);
-=======
- BIO_METHOD *	BIO_s_null(void);
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -36,7 +32,6 @@ by adding a null sink BIO to the end of the chain
 
 BIO_s_null() returns the null sink BIO method.
 
-<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -47,8 +42,3 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
-=======
-=head1 SEE ALSO
-
-TBA
->>>>>>> origin/master

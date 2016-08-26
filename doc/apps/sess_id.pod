@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 =pod
 
 =head1 NAME
@@ -11,14 +7,9 @@ sess_id - SSL/TLS session handling utility
 =head1 SYNOPSIS
 
 B<openssl> B<sess_id>
-<<<<<<< HEAD
 [B<-help>]
 [B<-inform PEM|DER>]
 [B<-outform PEM|DER|NSS>]
-=======
-[B<-inform PEM|DER>]
-[B<-outform PEM|DER>]
->>>>>>> origin/master
 [B<-in filename>]
 [B<-out filename>]
 [B<-text>]
@@ -33,7 +24,6 @@ master key) in human readable format. Since this is a diagnostic tool that
 needs some knowledge of the SSL protocol to use properly, most users will
 not need to use it.
 
-<<<<<<< HEAD
 =head1 COMMAND OPTIONS
 
 =over 4
@@ -42,10 +32,6 @@ not need to use it.
 
 Print out a usage message.
 
-=======
-=over 4
-
->>>>>>> origin/master
 =item B<-inform DER|PEM>
 
 This specifies the input format. The B<DER> option uses an ASN1 DER encoded
@@ -53,18 +39,11 @@ format containing session details. The precise format can vary from one version
 to the next.  The B<PEM> form is the default format: it consists of the B<DER>
 format base64 encoded with additional header and footer lines.
 
-<<<<<<< HEAD
 =item B<-outform DER|PEM|NSS>
 
 This specifies the output format. The B<PEM> and B<DER> options have the same meaning
 as the B<-inform> option. The B<NSS> option outputs the session id and the master key
 in NSS keylog format.
-=======
-=item B<-outform DER|PEM>
-
-This specifies the output format, the options have the same meaning as the 
-B<-inform> option.
->>>>>>> origin/master
 
 =item B<-in filename>
 
@@ -79,11 +58,7 @@ output if this option is not specified.
 =item B<-text>
 
 prints out the various public or private key components in
-<<<<<<< HEAD
 plain text in addition to the encoded version.
-=======
-plain text in addition to the encoded version. 
->>>>>>> origin/master
 
 =item B<-cert>
 
@@ -97,11 +72,7 @@ this option prevents output of the encoded version of the session.
 =item B<-context ID>
 
 this option can set the session id so the output session information uses the
-<<<<<<< HEAD
 supplied ID. The ID can be any string of characters. This option won't normally
-=======
-supplied ID. The ID can be any string of characters. This option wont normally
->>>>>>> origin/master
 be used.
 
 =back
@@ -127,11 +98,7 @@ Theses are described below in more detail.
 
 =item B<Protocol>
 
-<<<<<<< HEAD
 this is the protocol in use TLSv1.2, TLSv1.1, TLSv1 or SSLv3.
-=======
-this is the protocol in use TLSv1, SSLv3 or SSLv2.
->>>>>>> origin/master
 
 =item B<Cipher>
 
@@ -150,13 +117,6 @@ the session ID context in hex format.
 
 this is the SSL session master key.
 
-<<<<<<< HEAD
-=======
-=item B<Key-Arg>
-
-the key argument, this is only used in SSL v2.
-
->>>>>>> origin/master
 =item B<Start Time>
 
 this is the session start time represented as an integer in standard Unix format.
@@ -189,7 +149,6 @@ The cipher and start time should be printed out in human readable form.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<ciphers(1)>, L<s_server(1)>
 
 =head1 COPYRIGHT
@@ -200,8 +159,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<ciphers(1)|ciphers(1)>, L<s_server(1)|s_server(1)>
->>>>>>> origin/master
 
 =cut

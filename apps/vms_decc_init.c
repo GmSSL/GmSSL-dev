@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 #if defined( __VMS) && !defined( OPENSSL_NO_DECC_INIT) && \
  defined( __DECC) && !defined( __VAX) && (__CRTL_VER >= 70301000)
 # define USE_DECC_INIT 1
@@ -17,36 +14,19 @@
 
 #ifdef USE_DECC_INIT
 
-<<<<<<< HEAD
 /*
  * ----------------------------------------------------------------------
  * decc_init() On non-VAX systems, uses LIB$INITIALIZE to set a collection
  * of C RTL features without using the DECC$* logical name method.
  * ----------------------------------------------------------------------
-=======
-/*-
- * 2010-04-26 SMS.
- *
- *----------------------------------------------------------------------
- *
- *       decc_init()
- *
- *    On non-VAX systems, uses LIB$INITIALIZE to set a collection of C
- *    RTL features without using the DECC$* logical name method.
- *
- *----------------------------------------------------------------------
->>>>>>> origin/master
  */
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unixlib.h>
 
-<<<<<<< HEAD
 # include "apps.h"
 
-=======
->>>>>>> origin/master
 /* Global storage. */
 
 /* Flag to sense if decc_init() was called. */
@@ -82,7 +62,6 @@ decc_feat_t decc_feat_array[] = {
     {(char *)NULL, 0}
 };
 
-<<<<<<< HEAD
 
 char **copy_argv(int *argc, char *argv[])
 {
@@ -120,8 +99,6 @@ char **copy_argv(int *argc, char *argv[])
     return newargv;
 }
 
-=======
->>>>>>> origin/master
 /* LIB$INITIALIZE initialization function. */
 
 static void decc_init(void)

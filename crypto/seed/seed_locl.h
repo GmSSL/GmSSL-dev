@@ -1,5 +1,4 @@
 /*
-<<<<<<< HEAD
  * Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -9,8 +8,6 @@
  */
 
 /*
-=======
->>>>>>> origin/master
  * Copyright (c) 2007 KISA(Korea Information Security Agency). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,13 +49,6 @@ typedef unsigned int seed_word;
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-=======
-# define G_FUNC(v)       \
-        SS[0][(unsigned char)      (v) & 0xff] ^ SS[1][(unsigned char) ((v)>>8) & 0xff] ^ \
-        SS[2][(unsigned char)((v)>>16) & 0xff] ^ SS[3][(unsigned char)((v)>>24) & 0xff]
-
->>>>>>> origin/master
 # define char2word(c, i)  \
         (i) = ((((seed_word)(c)[0]) << 24) | (((seed_word)(c)[1]) << 16) | (((seed_word)(c)[2]) << 8) | ((seed_word)(c)[3]))
 

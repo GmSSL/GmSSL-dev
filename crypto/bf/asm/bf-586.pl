@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,21 +6,15 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 require "cbc.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"bf-586.pl",$ARGV[$#ARGV] eq "386");
 
 $BF_ROUNDS=16;
@@ -39,11 +32,8 @@ $tmp4="edx";
 &cbc("BF_cbc_encrypt","BF_encrypt","BF_decrypt",1,4,5,3,-1,-1);
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
 
-=======
->>>>>>> origin/master
 sub BF_encrypt
 	{
 	local($name,$enc)=@_;

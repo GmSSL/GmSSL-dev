@@ -1,20 +1,16 @@
 .text
-<<<<<<< HEAD
 // Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 //
 // Licensed under the OpenSSL license (the "License").  You may not use
 // this file except in compliance with the License.  You can obtain a copy
 // in the file LICENSE in the source distribution or at
 // https://www.openssl.org/source/license.html
-=======
->>>>>>> origin/master
 
 .globl	OPENSSL_s390x_facilities
 .type	OPENSSL_s390x_facilities,@function
 .align	16
 OPENSSL_s390x_facilities:
 	lghi	%r0,0
-<<<<<<< HEAD
 	larl	%r4,OPENSSL_s390xcap_P
 	stg	%r0,8(%r4)	# wipe capability vectors
 	stg	%r0,16(%r4)
@@ -55,16 +51,6 @@ OPENSSL_s390x_facilities:
 	.long	0xb92d2042	# kmctr %r4,%r2,%r2
 
 .Lret:
-=======
-	larl	%r2,OPENSSL_s390xcap_P
-	stg	%r0,8(%r2)
-	.long	0xb2b02000	# stfle	0(%r2)
-	brc	8,.Ldone
-	lghi	%r0,1
-	.long	0xb2b02000	# stfle 0(%r2)
-.Ldone:
-	lg	%r2,0(%r2)
->>>>>>> origin/master
 	br	%r14
 .size	OPENSSL_s390x_facilities,.-OPENSSL_s390x_facilities
 
@@ -145,7 +131,6 @@ OPENSSL_cleanse:
 	br	%r14
 .size	OPENSSL_cleanse,.-OPENSSL_cleanse
 
-<<<<<<< HEAD
 .globl	CRYPTO_memcmp
 .type	CRYPTO_memcmp,@function
 .align	16
@@ -193,9 +178,3 @@ OPENSSL_instrument_bus2:
 	brasl	%r14,OPENSSL_cpuid_setup
 
 .comm	OPENSSL_s390xcap_P,80,8
-=======
-.section	.init
-	brasl	%r14,OPENSSL_cpuid_setup
-
-.comm	OPENSSL_s390xcap_P,16,8
->>>>>>> origin/master

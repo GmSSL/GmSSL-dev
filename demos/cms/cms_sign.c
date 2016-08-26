@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 /* Simple S/MIME signing example */
 #include <openssl/pem.h>
 #include <openssl/cms.h>
@@ -81,7 +78,6 @@ int main(int argc, char **argv)
         ERR_print_errors_fp(stderr);
     }
 
-<<<<<<< HEAD
     CMS_ContentInfo_free(cms);
     X509_free(scert);
     EVP_PKEY_free(skey);
@@ -89,22 +85,4 @@ int main(int argc, char **argv)
     BIO_free(out);
     BIO_free(tbio);
     return ret;
-=======
-    if (cms)
-        CMS_ContentInfo_free(cms);
-    if (scert)
-        X509_free(scert);
-    if (skey)
-        EVP_PKEY_free(skey);
-
-    if (in)
-        BIO_free(in);
-    if (out)
-        BIO_free(out);
-    if (tbio)
-        BIO_free(tbio);
-
-    return ret;
-
->>>>>>> origin/master
 }

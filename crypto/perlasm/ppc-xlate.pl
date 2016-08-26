@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,11 +5,6 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
-=======
-#!/usr/bin/env perl
-
-# PowerPC assembler distiller by <appro>.
->>>>>>> origin/master
 
 my $flavour = shift;
 my $output = shift;
@@ -161,7 +155,6 @@ my $vmr = sub {
     "	vor	$vx,$vy,$vy";
 };
 
-<<<<<<< HEAD
 # Some ABIs specify vrsave, special-purpose register #256, as reserved
 # for system use.
 my $no_vrsave = ($flavour =~ /aix|linux64le/);
@@ -182,8 +175,6 @@ my $mfspr = sub {
     }
 };
 
-=======
->>>>>>> origin/master
 # PowerISA 2.06 stuff
 sub vsxmem_op {
     my ($f, $vrt, $ra, $rb, $op) = @_;
@@ -220,7 +211,6 @@ my $mtsle	= sub {
     "	.long	".sprintf "0x%X",(31<<26)|($arg<<21)|(147*2);
 };
 
-<<<<<<< HEAD
 # PowerISA 3.0 stuff
 my $maddhdu = sub {
     my ($f, $rt, $ra, $rb, $rc) = @_;
@@ -236,8 +226,6 @@ my $darn = sub {
     "	.long	".sprintf "0x%X",(31<<26)|($rt<<21)|($l<<16)|(755<<1);
 };
 
-=======
->>>>>>> origin/master
 while($line=<>) {
 
     $line =~ s|[#!;].*$||;	# get rid of asm-style comments...

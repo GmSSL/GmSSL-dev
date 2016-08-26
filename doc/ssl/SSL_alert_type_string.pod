@@ -217,11 +217,7 @@ point. This message is always a warning.
 =item "UP"/"unknown PSK identity"
 
 Sent by the server to indicate that it does not recognize a PSK
-<<<<<<< HEAD
 identity or an SRP identity.
-=======
-identity or an SRP identity. 
->>>>>>> origin/master
 
 =item "UK"/"unknown"
 
@@ -232,7 +228,6 @@ Probably B<value> does not contain a correct alert message.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<ssl(3)>, L<SSL_CTX_set_info_callback(3)>
 
 =head1 COPYRIGHT
@@ -243,8 +238,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<ssl(3)|ssl(3)>, L<SSL_CTX_set_info_callback(3)|SSL_CTX_set_info_callback(3)>
->>>>>>> origin/master
 
 =cut

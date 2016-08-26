@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,61 +5,6 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* bio_ndef.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
- * project.
- */
-/* ====================================================================
- * Copyright (c) 2008 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
->>>>>>> origin/master
  */
 
 #include <openssl/asn1.h>
@@ -75,11 +19,7 @@
 /*
  * The usage is quite simple, initialize an ASN1 structure, get a BIO from it
  * then any data written through the BIO will end up translated to
-<<<<<<< HEAD
  * appropriate format on the fly. The data is streamed out and does *not*
-=======
- * approptiate format on the fly. The data is streamed out and does *not*
->>>>>>> origin/master
  * need to be all held in memory at once. When the BIO is flushed the output
  * is finalized and any signatures etc written out. The BIO is a 'proper'
  * BIO and can handle non blocking I/O correctly. The usage is simple. The
@@ -120,7 +60,6 @@ BIO *BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
         ASN1err(ASN1_F_BIO_NEW_NDEF, ASN1_R_STREAMING_NOT_SUPPORTED);
         return NULL;
     }
-<<<<<<< HEAD
     ndef_aux = OPENSSL_zalloc(sizeof(*ndef_aux));
     asn_bio = BIO_new(BIO_f_asn1());
     if (ndef_aux == NULL || asn_bio == NULL)
@@ -129,27 +68,13 @@ BIO *BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
     /* ASN1 bio needs to be next to output BIO */
     out = BIO_push(asn_bio, out);
     if (out == NULL)
-=======
-    ndef_aux = OPENSSL_malloc(sizeof(NDEF_SUPPORT));
-    asn_bio = BIO_new(BIO_f_asn1());
-
-    /* ASN1 bio needs to be next to output BIO */
-
-    out = BIO_push(asn_bio, out);
-
-    if (!ndef_aux || !asn_bio || !out)
->>>>>>> origin/master
         goto err;
 
     BIO_asn1_set_prefix(asn_bio, ndef_prefix, ndef_prefix_free);
     BIO_asn1_set_suffix(asn_bio, ndef_suffix, ndef_suffix_free);
 
     /*
-<<<<<<< HEAD
      * Now let callback prepends any digest, cipher etc BIOs ASN1 structure
-=======
-     * Now let callback prepend any digest, cipher etc BIOs ASN1 structure
->>>>>>> origin/master
      * needs.
      */
 
@@ -171,15 +96,8 @@ BIO *BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
     return sarg.ndef_bio;
 
  err:
-<<<<<<< HEAD
     BIO_free(asn_bio);
     OPENSSL_free(ndef_aux);
-=======
-    if (asn_bio)
-        BIO_free(asn_bio);
-    if (ndef_aux)
-        OPENSSL_free(ndef_aux);
->>>>>>> origin/master
     return NULL;
 }
 
@@ -196,11 +114,7 @@ static int ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
 
     derlen = ASN1_item_ndef_i2d(ndef_aux->val, NULL, ndef_aux->it);
     p = OPENSSL_malloc(derlen);
-<<<<<<< HEAD
     if (p == NULL)
-=======
-    if (!p)
->>>>>>> origin/master
         return 0;
 
     ndef_aux->derbuf = p;
@@ -225,12 +139,7 @@ static int ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
 
     ndef_aux = *(NDEF_SUPPORT **)parg;
 
-<<<<<<< HEAD
     OPENSSL_free(ndef_aux->derbuf);
-=======
-    if (ndef_aux->derbuf)
-        OPENSSL_free(ndef_aux->derbuf);
->>>>>>> origin/master
 
     ndef_aux->derbuf = NULL;
     *pbuf = NULL;
@@ -274,11 +183,7 @@ static int ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
 
     derlen = ASN1_item_ndef_i2d(ndef_aux->val, NULL, ndef_aux->it);
     p = OPENSSL_malloc(derlen);
-<<<<<<< HEAD
     if (p == NULL)
-=======
-    if (!p)
->>>>>>> origin/master
         return 0;
 
     ndef_aux->derbuf = p;

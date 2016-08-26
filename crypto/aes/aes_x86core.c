@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,9 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
-/* crypto/aes/aes_core.c -*- mode:C; c-file-style: "eay" -*- */
->>>>>>> origin/master
 /**
  * rijndael-alg-fst.c
  *
@@ -47,14 +43,6 @@
  */
 
 
-<<<<<<< HEAD
-=======
-#ifndef AES_DEBUG
-# ifndef NDEBUG
-#  define NDEBUG
-# endif
-#endif
->>>>>>> origin/master
 #include <assert.h>
 
 #include <stdlib.h>
@@ -633,11 +621,7 @@ int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
             rk[j] = tpe ^ ROTATE(tpd,16) ^
                 ROTATE(tp9,8) ^ ROTATE(tpb,24);
 #else
-<<<<<<< HEAD
             rk[j] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^
-=======
-            rk[j] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^ 
->>>>>>> origin/master
                 (tp9 >> 24) ^ (tp9 << 8) ^
                 (tpb >> 8) ^ (tpb << 24);
 #endif
@@ -926,11 +910,7 @@ void AES_decrypt(const unsigned char *in, unsigned char *out,
            (u32)Td4[(s1 >> 16) & 0xff] << 16 ^
            (u32)Td4[(s0 >> 24)       ] << 24;
 
-<<<<<<< HEAD
     /* now do the linear transform using words */
-=======
-    /* now do the linear transform using words */ 
->>>>>>> origin/master
     {
         int i;
         u32 tp1, tp2, tp4, tp8, tp9, tpb, tpd, tpe, m;
@@ -954,11 +934,7 @@ void AES_decrypt(const unsigned char *in, unsigned char *out,
             t[i] = tpe ^ ROTATE(tpd,16) ^
                 ROTATE(tp9,8) ^ ROTATE(tpb,24);
 #else
-<<<<<<< HEAD
             t[i] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^
-=======
-            t[i] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^ 
->>>>>>> origin/master
                 (tp9 >> 24) ^ (tp9 << 8) ^
                 (tpb >> 8) ^ (tpb << 24);
 #endif
@@ -1011,11 +987,7 @@ void AES_decrypt(const unsigned char *in, unsigned char *out,
                (u32)Td4[(s1 >> 16) & 0xff] << 16 ^
                (u32)Td4[(s0 >> 24)       ] << 24;
 
-<<<<<<< HEAD
     /* now do the linear transform using words */
-=======
-    /* now do the linear transform using words */ 
->>>>>>> origin/master
     {
         int i;
         u32 tp1, tp2, tp4, tp8, tp9, tpb, tpd, tpe, m;
@@ -1039,11 +1011,7 @@ void AES_decrypt(const unsigned char *in, unsigned char *out,
             t[i] = tpe ^ ROTATE(tpd,16) ^
                 ROTATE(tp9,8) ^ ROTATE(tpb,24);
 #else
-<<<<<<< HEAD
             t[i] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^
-=======
-            t[i] = tpe ^ (tpd >> 16) ^ (tpd << 16) ^ 
->>>>>>> origin/master
                 (tp9 >> 24) ^ (tp9 << 8) ^
                 (tpb >> 8) ^ (tpb << 24);
 #endif

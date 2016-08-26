@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,124 +5,12 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* apps/apps.h */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
- */
-/* ====================================================================
- * Copyright (c) 1998-2001 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@openssl.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
->>>>>>> origin/master
  */
 
 #ifndef HEADER_APPS_H
 # define HEADER_APPS_H
 
 # include "e_os.h"
-<<<<<<< HEAD
 # if defined(__unix) || defined(__unix__)
 #  include <sys/time.h> /* struct timeval for DTLS */
 # endif
@@ -131,15 +18,11 @@
 
 # include <openssl/e_os2.h>
 # include <openssl/ossl_typ.h>
-=======
-
->>>>>>> origin/master
 # include <openssl/bio.h>
 # include <openssl/x509.h>
 # include <openssl/lhash.h>
 # include <openssl/conf.h>
 # include <openssl/txt_db.h>
-<<<<<<< HEAD
 # include <openssl/engine.h>
 # include <openssl/ocsp.h>
 # include <signal.h>
@@ -159,18 +42,6 @@
 
 int app_RAND_load_file(const char *file, int dont_warn);
 int app_RAND_write_file(const char *file);
-=======
-# ifndef OPENSSL_NO_ENGINE
-#  include <openssl/engine.h>
-# endif
-# ifndef OPENSSL_NO_OCSP
-#  include <openssl/ocsp.h>
-# endif
-# include <openssl/ossl_typ.h>
-
-int app_RAND_load_file(const char *file, BIO *bio_e, int dont_warn);
-int app_RAND_write_file(const char *file, BIO *bio_e);
->>>>>>> origin/master
 /*
  * When `file' is NULL, use defaults. `bio_e' is for error messages.
  */
@@ -180,7 +51,6 @@ long app_RAND_load_files(char *file); /* `file' is a list of files to read,
                                        * (see e_os.h).  The string is
                                        * destroyed! */
 
-<<<<<<< HEAD
 extern char *default_config_file;
 extern BIO *bio_in;
 extern BIO *bio_out;
@@ -507,86 +377,6 @@ char **copy_argv(int *argc, char *argv[]);
 void win32_utf8argv(int *argc, char **argv[]);
 
 
-=======
-# ifndef MONOLITH
-
-#  define MAIN(a,v)       main(a,v)
-
-#  ifndef NON_MAIN
-CONF *config = NULL;
-BIO *bio_err = NULL;
-#  else
-extern CONF *config;
-extern BIO *bio_err;
-#  endif
-
-# else
-
-#  define MAIN(a,v)       PROG(a,v)
-extern CONF *config;
-extern char *default_config_file;
-extern BIO *bio_err;
-
-# endif
-
-# ifndef OPENSSL_SYS_NETWARE
-#  include <signal.h>
-# endif
-
-# ifdef SIGPIPE
-#  define do_pipe_sig()   signal(SIGPIPE,SIG_IGN)
-# else
-#  define do_pipe_sig()
-# endif
-
-# ifdef OPENSSL_NO_COMP
-#  define zlib_cleanup()
-# else
-#  define zlib_cleanup() COMP_zlib_cleanup()
-# endif
-
-# if defined(MONOLITH) && !defined(OPENSSL_C)
-#  define apps_startup() \
-                do_pipe_sig()
-#  define apps_shutdown()
-# else
-#  ifndef OPENSSL_NO_ENGINE
-#   define apps_startup() \
-                        do { do_pipe_sig(); CRYPTO_malloc_init(); \
-                        ERR_load_crypto_strings(); OpenSSL_add_all_algorithms(); \
-                        ENGINE_load_builtin_engines(); setup_ui_method(); } while(0)
-#   define apps_shutdown() \
-                        do { CONF_modules_unload(1); destroy_ui_method(); \
-                        OBJ_cleanup(); EVP_cleanup(); ENGINE_cleanup(); \
-                        CRYPTO_cleanup_all_ex_data(); ERR_remove_thread_state(NULL); \
-                        RAND_cleanup(); \
-                        ERR_free_strings(); zlib_cleanup();} while(0)
-#  else
-#   define apps_startup() \
-                        do { do_pipe_sig(); CRYPTO_malloc_init(); \
-                        ERR_load_crypto_strings(); OpenSSL_add_all_algorithms(); \
-                        setup_ui_method(); } while(0)
-#   define apps_shutdown() \
-                        do { CONF_modules_unload(1); destroy_ui_method(); \
-                        OBJ_cleanup(); EVP_cleanup(); \
-                        CRYPTO_cleanup_all_ex_data(); ERR_remove_thread_state(NULL); \
-                        RAND_cleanup(); \
-                        ERR_free_strings(); zlib_cleanup(); } while(0)
-#  endif
-# endif
-
-# if defined(OPENSSL_SYSNAME_WIN32) || defined(OPENSSL_SYSNAME_WINCE)
-#  define openssl_fdset(a,b) FD_SET((unsigned int)a, b)
-# else
-#  define openssl_fdset(a,b) FD_SET(a, b)
-# endif
-
-typedef struct args_st {
-    char **data;
-    int count;
-} ARGS;
-
->>>>>>> origin/master
 # define PW_MIN_LENGTH 4
 typedef struct pw_cb_data {
     const void *password;
@@ -598,31 +388,19 @@ int password_callback(char *buf, int bufsiz, int verify, PW_CB_DATA *cb_data);
 int setup_ui_method(void);
 void destroy_ui_method(void);
 
-<<<<<<< HEAD
 int chopup_args(ARGS *arg, char *buf);
-=======
-int should_retry(int i);
-int args_from_file(char *file, int *argc, char **argv[]);
-int str2fmt(char *s);
-void program_name(char *in, char *out, int size);
-int chopup_args(ARGS *arg, char *buf, int *argc, char **argv[]);
->>>>>>> origin/master
 # ifdef HEADER_X509_H
 int dump_cert_text(BIO *out, X509 *x);
 void print_name(BIO *out, const char *title, X509_NAME *nm,
                 unsigned long lflags);
 # endif
-<<<<<<< HEAD
 void print_bignum_var(BIO *, const BIGNUM *, const char*,
                       int, unsigned char *);
 void print_array(BIO *, const char *, int, const unsigned char *);
-=======
->>>>>>> origin/master
 int set_cert_ex(unsigned long *flags, const char *arg);
 int set_name_ex(unsigned long *flags, const char *arg);
 int set_ext_copy(int *copy_type, const char *arg);
 int copy_extensions(X509 *x, X509_REQ *req, int copy_type);
-<<<<<<< HEAD
 int app_passwd(const char *arg1, const char *arg2, char **pass1, char **pass2);
 int add_oid_section(CONF *conf);
 X509 *load_cert(const char *file, int format, const char *cert_descrip);
@@ -665,41 +443,6 @@ OCSP_RESPONSE *process_responder(OCSP_REQUEST *req,
                                  int req_timeout);
 # endif
 
-=======
-int app_passwd(BIO *err, char *arg1, char *arg2, char **pass1, char **pass2);
-int add_oid_section(BIO *err, CONF *conf);
-X509 *load_cert(BIO *err, const char *file, int format,
-                const char *pass, ENGINE *e, const char *cert_descrip);
-X509_CRL *load_crl(const char *infile, int format);
-int load_cert_crl_http(const char *url, BIO *err,
-                       X509 **pcert, X509_CRL **pcrl);
-EVP_PKEY *load_key(BIO *err, const char *file, int format, int maybe_stdin,
-                   const char *pass, ENGINE *e, const char *key_descrip);
-EVP_PKEY *load_pubkey(BIO *err, const char *file, int format, int maybe_stdin,
-                      const char *pass, ENGINE *e, const char *key_descrip);
-STACK_OF(X509) *load_certs(BIO *err, const char *file, int format,
-                           const char *pass, ENGINE *e,
-                           const char *cert_descrip);
-STACK_OF(X509_CRL) *load_crls(BIO *err, const char *file, int format,
-                              const char *pass, ENGINE *e,
-                              const char *cert_descrip);
-X509_STORE *setup_verify(BIO *bp, char *CAfile, char *CApath);
-# ifndef OPENSSL_NO_ENGINE
-ENGINE *setup_engine(BIO *err, const char *engine, int debug);
-# endif
-
-# ifndef OPENSSL_NO_OCSP
-OCSP_RESPONSE *process_responder(BIO *err, OCSP_REQUEST *req,
-                                 const char *host, const char *path,
-                                 const char *port, int use_ssl,
-                                 const STACK_OF(CONF_VALUE) *headers,
-                                 int req_timeout);
-# endif
-
-int load_config(BIO *err, CONF *cnf);
-char *make_config_name(void);
-
->>>>>>> origin/master
 /* Functions defined in ca.c and also used in ocsp.c */
 int unpack_revinfo(ASN1_TIME **prevtm, int *preason, ASN1_OBJECT **phold,
                    ASN1_GENERALIZEDTIME **pinvtm, const char *str);
@@ -725,7 +468,6 @@ typedef struct ca_db_st {
     TXT_DB *db;
 } CA_DB;
 
-<<<<<<< HEAD
 void* app_malloc(int sz, const char *what);
 BIGNUM *load_serial(const char *serialfile, int create, ASN1_INTEGER **retai);
 int save_serial(const char *serialfile, const char *suffix, const BIGNUM *serial,
@@ -734,14 +476,6 @@ int rotate_serial(const char *serialfile, const char *new_suffix,
                   const char *old_suffix);
 int rand_serial(BIGNUM *b, ASN1_INTEGER *ai);
 CA_DB *load_index(const char *dbfile, DB_ATTR *dbattr);
-=======
-BIGNUM *load_serial(char *serialfile, int create, ASN1_INTEGER **retai);
-int save_serial(char *serialfile, char *suffix, BIGNUM *serial,
-                ASN1_INTEGER **retai);
-int rotate_serial(char *serialfile, char *new_suffix, char *old_suffix);
-int rand_serial(BIGNUM *b, ASN1_INTEGER *ai);
-CA_DB *load_index(char *dbfile, DB_ATTR *dbattr);
->>>>>>> origin/master
 int index_index(CA_DB *db);
 int save_index(const char *dbfile, const char *suffix, CA_DB *db);
 int rotate_index(const char *dbfile, const char *new_suffix,
@@ -753,7 +487,6 @@ void free_index(CA_DB *db);
 int index_name_cmp(const OPENSSL_CSTRING *a, const OPENSSL_CSTRING *b);
 int parse_yesno(const char *str, int def);
 
-<<<<<<< HEAD
 X509_NAME *parse_name(const char *str, long chtype, int multirdn);
 int args_verify(char ***pargs, int *pargc,
                 int *badarg, X509_VERIFY_PARAM **pm);
@@ -767,38 +500,12 @@ int do_X509_sign(X509 *x, EVP_PKEY *pkey, const EVP_MD *md,
 int do_X509_REQ_sign(X509_REQ *x, EVP_PKEY *pkey, const EVP_MD *md,
                      STACK_OF(OPENSSL_STRING) *sigopts);
 int do_X509_CRL_sign(X509_CRL *x, EVP_PKEY *pkey, const EVP_MD *md,
-=======
-X509_NAME *parse_name(char *str, long chtype, int multirdn);
-int args_verify(char ***pargs, int *pargc,
-                int *badarg, BIO *err, X509_VERIFY_PARAM **pm);
-void policies_print(BIO *out, X509_STORE_CTX *ctx);
-int bio_to_mem(unsigned char **out, int maxlen, BIO *in);
-int pkey_ctrl_string(EVP_PKEY_CTX *ctx, char *value);
-int init_gen_str(BIO *err, EVP_PKEY_CTX **pctx,
-                 const char *algname, ENGINE *e, int do_param);
-int do_X509_sign(BIO *err, X509 *x, EVP_PKEY *pkey, const EVP_MD *md,
-                 STACK_OF(OPENSSL_STRING) *sigopts);
-int do_X509_REQ_sign(BIO *err, X509_REQ *x, EVP_PKEY *pkey, const EVP_MD *md,
-                     STACK_OF(OPENSSL_STRING) *sigopts);
-int do_X509_CRL_sign(BIO *err, X509_CRL *x, EVP_PKEY *pkey, const EVP_MD *md,
->>>>>>> origin/master
                      STACK_OF(OPENSSL_STRING) *sigopts);
 # ifndef OPENSSL_NO_PSK
 extern char *psk_key;
 # endif
-<<<<<<< HEAD
 
 unsigned char *next_protos_parse(size_t *outlen, const char *in);
-=======
-# ifndef OPENSSL_NO_JPAKE
-void jpake_client_auth(BIO *out, BIO *conn, const char *secret);
-void jpake_server_auth(BIO *out, BIO *conn, const char *secret);
-# endif
-
-# ifndef OPENSSL_NO_TLSEXT
-unsigned char *next_protos_parse(unsigned short *outlen, const char *in);
-# endif                         /* ndef OPENSSL_NO_TLSEXT */
->>>>>>> origin/master
 
 void print_cert_checks(BIO *bio, X509 *x,
                        const char *checkhost,
@@ -806,7 +513,6 @@ void print_cert_checks(BIO *bio, X509 *x,
 
 void store_setup_crl_download(X509_STORE *st);
 
-<<<<<<< HEAD
 /* See OPT_FMT_xxx, above. */
 /* On some platforms, it's important to distinguish between text and binary
  * files.  On some, there might even be specific file formats for different
@@ -829,23 +535,6 @@ void store_setup_crl_download(X509_STORE *st);
 # define FORMAT_PVK      12                     /* MS PVK file format */
 # define FORMAT_HTTP     13                     /* Download using HTTP */
 # define FORMAT_NSS      14                     /* NSS keylog format */
-=======
-# define FORMAT_UNDEF    0
-# define FORMAT_ASN1     1
-# define FORMAT_TEXT     2
-# define FORMAT_PEM      3
-# define FORMAT_NETSCAPE 4
-# define FORMAT_PKCS12   5
-# define FORMAT_SMIME    6
-# define FORMAT_ENGINE   7
-# define FORMAT_IISSGC   8      /* XXX this stupid macro helps us to avoid
-                                 * adding yet another param to load_*key() */
-# define FORMAT_PEMRSA   9      /* PEM RSAPubicKey format */
-# define FORMAT_ASN1RSA  10     /* DER RSAPubicKey format */
-# define FORMAT_MSBLOB   11     /* MS Key blob format */
-# define FORMAT_PVK      12     /* MS PVK file format */
-# define FORMAT_HTTP     13     /* Download using HTTP */
->>>>>>> origin/master
 
 # define EXT_COPY_NONE   0
 # define EXT_COPY_ADD    1
@@ -858,10 +547,7 @@ void store_setup_crl_download(X509_STORE *st);
 # define SERIAL_RAND_BITS        64
 
 int app_isdir(const char *);
-<<<<<<< HEAD
 int app_access(const char *, int flag);
-=======
->>>>>>> origin/master
 int raw_read_stdin(void *, int);
 int raw_write_stdout(const void *, int);
 
@@ -869,7 +555,6 @@ int raw_write_stdout(const void *, int);
 # define TM_STOP         1
 double app_tminterval(int stop, int usertime);
 
-<<<<<<< HEAD
 typedef struct verify_options_st {
     int depth;
     int quiet;
@@ -880,8 +565,5 @@ typedef struct verify_options_st {
 extern VERIFY_CB_ARGS verify_args;
 
 # include "progs.h"
-=======
-# define OPENSSL_NO_SSL_INTERN
->>>>>>> origin/master
 
 #endif

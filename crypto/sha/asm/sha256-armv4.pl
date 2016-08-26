@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -48,7 +44,6 @@
 #
 # Add ARMv8 code path performing at 2.0 cpb on Apple A7.
 
-<<<<<<< HEAD
 $flavour = shift;
 if ($flavour=~/\w[\w\-]*\.\w+$/) { $output=$flavour; undef $flavour; }
 else { while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {} }
@@ -63,10 +58,6 @@ if ($flavour && $flavour ne "void") {
 } else {
     open STDOUT,">$output";
 }
-=======
-while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
-open STDOUT,">$output";
->>>>>>> origin/master
 
 $ctx="r0";	$t0="r0";
 $inp="r1";	$t4="r1";
@@ -101,13 +92,9 @@ $code.=<<___ if ($i<16);
 	eor	$t0,$e,$e,ror#`$Sigma1[1]-$Sigma1[0]`
 	add	$a,$a,$t2			@ h+=Maj(a,b,c) from the past
 	eor	$t0,$t0,$e,ror#`$Sigma1[2]-$Sigma1[0]`	@ Sigma1(e)
-<<<<<<< HEAD
 # ifndef __ARMEB__
 	rev	$t1,$t1
 # endif
-=======
-	rev	$t1,$t1
->>>>>>> origin/master
 #else
 	@ ldrb	$t1,[$inp,#3]			@ $i
 	add	$a,$a,$t2			@ h+=Maj(a,b,c) from the past
@@ -195,23 +182,11 @@ $code=<<___;
 #endif
 
 .text
-<<<<<<< HEAD
 #if defined(__thumb2__)
 .syntax unified
 .thumb
 #else
 .code   32
-=======
-#if __ARM_ARCH__<7
-.code	32
-#else
-.syntax unified
-# ifdef __thumb2__
-.thumb
-# else
-.code   32
-# endif
->>>>>>> origin/master
 #endif
 
 .type	K256,%object
@@ -237,39 +212,25 @@ K256:
 .word	0				@ terminator
 #if __ARM_MAX_ARCH__>=7 && !defined(__KERNEL__)
 .LOPENSSL_armcap:
-<<<<<<< HEAD
 .word	OPENSSL_armcap_P-.Lsha256_block_data_order
-=======
-.word	OPENSSL_armcap_P-sha256_block_data_order
->>>>>>> origin/master
 #endif
 .align	5
 
 .global	sha256_block_data_order
 .type	sha256_block_data_order,%function
 sha256_block_data_order:
-<<<<<<< HEAD
 .Lsha256_block_data_order:
 #if __ARM_ARCH__<7 && !defined(__thumb2__)
 	sub	r3,pc,#8		@ sha256_block_data_order
 #else
 	adr	r3,.Lsha256_block_data_order
-=======
-#if __ARM_ARCH__<7
-	sub	r3,pc,#8		@ sha256_block_data_order
-#else
-	adr	r3,sha256_block_data_order
->>>>>>> origin/master
 #endif
 #if __ARM_MAX_ARCH__>=7 && !defined(__KERNEL__)
 	ldr	r12,.LOPENSSL_armcap
 	ldr	r12,[r3,r12]		@ OPENSSL_armcap_P
-<<<<<<< HEAD
 #ifdef	__APPLE__
 	ldr	r12,[r12]
 #endif
-=======
->>>>>>> origin/master
 	tst	r12,#ARMV8_SHA256
 	bne	.LARMv8
 	tst	r12,#ARMV7_NEON
@@ -514,12 +475,8 @@ $code.=<<___;
 
 .global	sha256_block_data_order_neon
 .type	sha256_block_data_order_neon,%function
-<<<<<<< HEAD
 .align	5
 .skip	16
-=======
-.align	4
->>>>>>> origin/master
 sha256_block_data_order_neon:
 .LNEON:
 	stmdb	sp!,{r4-r12,lr}
@@ -645,11 +602,7 @@ my $Ktbl="r3";
 $code.=<<___;
 #if __ARM_MAX_ARCH__>=7 && !defined(__KERNEL__)
 
-<<<<<<< HEAD
 # if defined(__thumb2__)
-=======
-# ifdef __thumb2__
->>>>>>> origin/master
 #  define INST(a,b,c,d)	.byte	c,d|0xc,a,b
 # else
 #  define INST(a,b,c,d)	.byte	a,b,c,d
@@ -660,22 +613,11 @@ $code.=<<___;
 sha256_block_data_order_armv8:
 .LARMv8:
 	vld1.32	{$ABCD,$EFGH},[$ctx]
-<<<<<<< HEAD
 	sub	$Ktbl,$Ktbl,#256+32
 	add	$len,$inp,$len,lsl#6	@ len to point at the end of inp
 	b	.Loop_v8
 
 .align	4
-=======
-# ifdef __thumb2__
-	adr	$Ktbl,.LARMv8
-	sub	$Ktbl,$Ktbl,#.LARMv8-K256
-# else
-	adrl	$Ktbl,K256
-# endif
-	add	$len,$inp,$len,lsl#6	@ len to point at the end of inp
-
->>>>>>> origin/master
 .Loop_v8:
 	vld1.8		{@MSG[0]-@MSG[1]},[$inp]!
 	vld1.8		{@MSG[2]-@MSG[3]},[$inp]!

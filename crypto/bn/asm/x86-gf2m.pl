@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -25,11 +21,7 @@
 # the time being... Except that it has three code paths: pure integer
 # code suitable for any x86 CPU, MMX code suitable for PIII and later
 # and PCLMULQDQ suitable for Westmere and later. Improvement varies
-<<<<<<< HEAD
 # from one benchmark and Âµ-arch to another. Below are interval values
-=======
-# from one benchmark and µ-arch to another. Below are interval values
->>>>>>> origin/master
 # for 163- and 571-bit ECDH benchmarks relative to compiler-generated
 # code:
 #
@@ -51,12 +43,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],$0,$x86only = $ARGV[$#ARGV] eq "386");
 
 $sse2=0;
@@ -247,37 +236,22 @@ if ($sse2) {
 	&push	("edi");
 	&mov	($a,&wparam(1));
 	&mov	($b,&wparam(3));
-<<<<<<< HEAD
 	&call	("_mul_1x1_mmx");	# a1Â·b1
-=======
-	&call	("_mul_1x1_mmx");	# a1·b1
->>>>>>> origin/master
 	&movq	("mm7",$R);
 
 	&mov	($a,&wparam(2));
 	&mov	($b,&wparam(4));
-<<<<<<< HEAD
 	&call	("_mul_1x1_mmx");	# a0Â·b0
-=======
-	&call	("_mul_1x1_mmx");	# a0·b0
->>>>>>> origin/master
 	&movq	("mm6",$R);
 
 	&mov	($a,&wparam(1));
 	&mov	($b,&wparam(3));
 	&xor	($a,&wparam(2));
 	&xor	($b,&wparam(4));
-<<<<<<< HEAD
 	&call	("_mul_1x1_mmx");	# (a0+a1)Â·(b0+b1)
 	&pxor	($R,"mm7");
 	&mov	($a,&wparam(0));
 	&pxor	($R,"mm6");		# (a0+a1)Â·(b0+b1)-a1Â·b1-a0Â·b0
-=======
-	&call	("_mul_1x1_mmx");	# (a0+a1)·(b0+b1)
-	&pxor	($R,"mm7");
-	&mov	($a,&wparam(0));
-	&pxor	($R,"mm6");		# (a0+a1)·(b0+b1)-a1·b1-a0·b0
->>>>>>> origin/master
 
 	&movq	($A,$R);
 	&psllq	($R,32);
@@ -302,21 +276,13 @@ if ($sse2) {
 
 	&mov	($a,&wparam(1));
 	&mov	($b,&wparam(3));
-<<<<<<< HEAD
 	&call	("_mul_1x1_ialu");	# a1Â·b1
-=======
-	&call	("_mul_1x1_ialu");	# a1·b1
->>>>>>> origin/master
 	&mov	(&DWP(8,"esp"),$lo);
 	&mov	(&DWP(12,"esp"),$hi);
 
 	&mov	($a,&wparam(2));
 	&mov	($b,&wparam(4));
-<<<<<<< HEAD
 	&call	("_mul_1x1_ialu");	# a0Â·b0
-=======
-	&call	("_mul_1x1_ialu");	# a0·b0
->>>>>>> origin/master
 	&mov	(&DWP(0,"esp"),$lo);
 	&mov	(&DWP(4,"esp"),$hi);
 
@@ -324,11 +290,7 @@ if ($sse2) {
 	&mov	($b,&wparam(3));
 	&xor	($a,&wparam(2));
 	&xor	($b,&wparam(4));
-<<<<<<< HEAD
 	&call	("_mul_1x1_ialu");	# (a0+a1)Â·(b0+b1)
-=======
-	&call	("_mul_1x1_ialu");	# (a0+a1)·(b0+b1)
->>>>>>> origin/master
 
 	&mov	("ebp",&wparam(0));
 		 @r=("ebx","ecx","edi","esi");
@@ -359,8 +321,5 @@ if ($sse2) {
 &asciz	("GF(2^m) Multiplication for x86, CRYPTOGAMS by <appro\@openssl.org>");
 
 &asm_finish();
-<<<<<<< HEAD
 
 close STDOUT;
-=======
->>>>>>> origin/master

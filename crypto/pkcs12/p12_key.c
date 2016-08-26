@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,83 +9,14 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
-=======
-/* p12_key.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 1999.
- */
-/* ====================================================================
- * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/pkcs12.h>
 #include <openssl/bn.h>
 
 /* Uncomment out this line to get debugging info about key generation */
 /*
-<<<<<<< HEAD
  * #define OPENSSL_DEBUG_KEYGEN
  */
 #ifdef OPENSSL_DEBUG_KEYGEN
-=======
- * #define DEBUG_KEYGEN
- */
-#ifdef DEBUG_KEYGEN
->>>>>>> origin/master
 # include <openssl/bio.h>
 extern BIO *bio_err;
 void h__dump(unsigned char *p, int len);
@@ -116,7 +46,6 @@ int PKCS12_key_gen_asc(const char *pass, int passlen, unsigned char *salt,
                              id, iter, n, out, md_type);
     if (ret <= 0)
         return 0;
-<<<<<<< HEAD
     OPENSSL_clear_free(unipass, uniplen);
     return ret;
 }
@@ -141,12 +70,6 @@ int PKCS12_key_gen_utf8(const char *pass, int passlen, unsigned char *salt,
     if (ret <= 0)
         return 0;
     OPENSSL_clear_free(unipass, uniplen);
-=======
-    if (unipass) {
-        OPENSSL_cleanse(unipass, uniplen); /* Clear password from memory */
-        OPENSSL_free(unipass);
-    }
->>>>>>> origin/master
     return ret;
 }
 
@@ -154,7 +77,6 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
                        int saltlen, int id, int iter, int n,
                        unsigned char *out, const EVP_MD *md_type)
 {
-<<<<<<< HEAD
     unsigned char *B = NULL, *D = NULL, *I = NULL, *p = NULL, *Ai = NULL;
     int Slen, Plen, Ilen, Ijlen;
     int i, j, u, v;
@@ -162,36 +84,15 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
     BIGNUM *Ij = NULL, *Bpl1 = NULL; /* These hold Ij and B + 1 */
     EVP_MD_CTX *ctx = NULL;
 #ifdef  OPENSSL_DEBUG_KEYGEN
-=======
-    unsigned char *B, *D, *I, *p, *Ai;
-    int Slen, Plen, Ilen, Ijlen;
-    int i, j, u, v;
-    int ret = 0;
-    BIGNUM *Ij, *Bpl1;          /* These hold Ij and B + 1 */
-    EVP_MD_CTX ctx;
-#ifdef  DEBUG_KEYGEN
->>>>>>> origin/master
     unsigned char *tmpout = out;
     int tmpn = n;
 #endif
 
-<<<<<<< HEAD
     ctx = EVP_MD_CTX_new();
     if (ctx == NULL)
         goto err;
 
 #ifdef  OPENSSL_DEBUG_KEYGEN
-=======
-#if 0
-    if (!pass) {
-        PKCS12err(PKCS12_F_PKCS12_KEY_GEN_UNI, ERR_R_PASSED_NULL_PARAMETER);
-        return 0;
-    }
-#endif
-
-    EVP_MD_CTX_init(&ctx);
-#ifdef  DEBUG_KEYGEN
->>>>>>> origin/master
     fprintf(stderr, "KEYGEN DEBUG\n");
     fprintf(stderr, "ID %d, ITER %d\n", id, iter);
     fprintf(stderr, "Password (length %d):\n", passlen);
@@ -201,13 +102,8 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
 #endif
     v = EVP_MD_block_size(md_type);
     u = EVP_MD_size(md_type);
-<<<<<<< HEAD
     if (u < 0 || v <= 0)
         goto err;
-=======
-    if (u < 0)
-        return 0;
->>>>>>> origin/master
     D = OPENSSL_malloc(v);
     Ai = OPENSSL_malloc(u);
     B = OPENSSL_malloc(v + 1);
@@ -220,12 +116,8 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
     I = OPENSSL_malloc(Ilen);
     Ij = BN_new();
     Bpl1 = BN_new();
-<<<<<<< HEAD
     if (D == NULL || Ai == NULL || B == NULL || I == NULL || Ij == NULL
             || Bpl1 == NULL)
-=======
-    if (!D || !Ai || !B || !I || !Ij || !Bpl1)
->>>>>>> origin/master
         goto err;
     for (i = 0; i < v; i++)
         D[i] = id;
@@ -235,7 +127,6 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
     for (i = 0; i < Plen; i++)
         *p++ = pass[i % passlen];
     for (;;) {
-<<<<<<< HEAD
         if (!EVP_DigestInit_ex(ctx, md_type, NULL)
             || !EVP_DigestUpdate(ctx, D, v)
             || !EVP_DigestUpdate(ctx, I, Ilen)
@@ -245,26 +136,11 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
             if (!EVP_DigestInit_ex(ctx, md_type, NULL)
                 || !EVP_DigestUpdate(ctx, Ai, u)
                 || !EVP_DigestFinal_ex(ctx, Ai, NULL))
-=======
-        if (!EVP_DigestInit_ex(&ctx, md_type, NULL)
-            || !EVP_DigestUpdate(&ctx, D, v)
-            || !EVP_DigestUpdate(&ctx, I, Ilen)
-            || !EVP_DigestFinal_ex(&ctx, Ai, NULL))
-            goto err;
-        for (j = 1; j < iter; j++) {
-            if (!EVP_DigestInit_ex(&ctx, md_type, NULL)
-                || !EVP_DigestUpdate(&ctx, Ai, u)
-                || !EVP_DigestFinal_ex(&ctx, Ai, NULL))
->>>>>>> origin/master
                 goto err;
         }
         memcpy(out, Ai, min(n, u));
         if (u >= n) {
-<<<<<<< HEAD
 #ifdef OPENSSL_DEBUG_KEYGEN
-=======
-#ifdef DEBUG_KEYGEN
->>>>>>> origin/master
             fprintf(stderr, "Output KEY (length %d)\n", tmpn);
             h__dump(tmpout, tmpn);
 #endif
@@ -315,19 +191,11 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
     OPENSSL_free(I);
     BN_free(Ij);
     BN_free(Bpl1);
-<<<<<<< HEAD
     EVP_MD_CTX_free(ctx);
     return ret;
 }
 
 #ifdef OPENSSL_DEBUG_KEYGEN
-=======
-    EVP_MD_CTX_cleanup(&ctx);
-    return ret;
-}
-
-#ifdef DEBUG_KEYGEN
->>>>>>> origin/master
 void h__dump(unsigned char *p, int len)
 {
     for (; len--; p++)

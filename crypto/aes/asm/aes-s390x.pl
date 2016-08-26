@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -103,11 +99,7 @@ if ($flavour =~ /3[12]/) {
 	$g="g";
 }
 
-<<<<<<< HEAD
 while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {}
-=======
-while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
->>>>>>> origin/master
 open STDOUT,">$output";
 
 $softonly=0;	# allow hardware support
@@ -794,17 +786,10 @@ ___
 $code.=<<___;
 # void AES_set_encrypt_key(const unsigned char *in, int bits,
 # 		 AES_KEY *key) {
-<<<<<<< HEAD
 .globl	AES_set_encrypt_key
 .type	AES_set_encrypt_key,\@function
 .align	16
 AES_set_encrypt_key:
-=======
-.globl	private_AES_set_encrypt_key
-.type	private_AES_set_encrypt_key,\@function
-.align	16
-private_AES_set_encrypt_key:
->>>>>>> origin/master
 _s390x_AES_set_encrypt_key:
 	lghi	$t0,0
 	cl${g}r	$inp,$t0
@@ -840,19 +825,9 @@ $code.=<<___ if (!$softonly);
 	tmhl	%r0,0x4000	# check for message-security assist
 	jz	.Lekey_internal
 
-<<<<<<< HEAD
 	llihh	%r0,0x8000
 	srlg	%r0,%r0,0(%r5)
 	ng	%r0,48(%r1)	# check kmc capability vector
-=======
-	lghi	%r0,0		# query capability vector
-	la	%r1,16($sp)
-	.long	0xb92f0042	# kmc %r4,%r2
-
-	llihh	%r1,0x8000
-	srlg	%r1,%r1,0(%r5)
-	ng	%r1,16($sp)
->>>>>>> origin/master
 	jz	.Lekey_internal
 
 	lmg	%r0,%r1,0($inp)	# just copy 128 bits...
@@ -1091,7 +1066,6 @@ $code.=<<___;
 .Lminus1:
 	lghi	%r2,-1
 	br	$ra
-<<<<<<< HEAD
 .size	AES_set_encrypt_key,.-AES_set_encrypt_key
 
 # void AES_set_decrypt_key(const unsigned char *in, int bits,
@@ -1100,16 +1074,6 @@ $code.=<<___;
 .type	AES_set_decrypt_key,\@function
 .align	16
 AES_set_decrypt_key:
-=======
-.size	private_AES_set_encrypt_key,.-private_AES_set_encrypt_key
-
-# void AES_set_decrypt_key(const unsigned char *in, int bits,
-# 		 AES_KEY *key) {
-.globl	private_AES_set_decrypt_key
-.type	private_AES_set_decrypt_key,\@function
-.align	16
-private_AES_set_decrypt_key:
->>>>>>> origin/master
 	#st${g}	$key,4*$SIZE_T($sp)	# I rely on AES_set_encrypt_key to
 	st${g}	$ra,14*$SIZE_T($sp)	# save non-volatile registers and $key!
 	bras	$ra,_s390x_AES_set_encrypt_key
@@ -1209,11 +1173,7 @@ $code.=<<___;
 	lm${g}	%r6,%r13,6*$SIZE_T($sp)# as was saved by AES_set_encrypt_key!
 	lghi	%r2,0
 	br	$ra
-<<<<<<< HEAD
 .size	AES_set_decrypt_key,.-AES_set_decrypt_key
-=======
-.size	private_AES_set_decrypt_key,.-private_AES_set_decrypt_key
->>>>>>> origin/master
 ___
 
 ########################################################################
@@ -1487,20 +1447,10 @@ $code.=<<___ if (0);	######### kmctr code was measured to be ~12% slower
 
 	llgfr	$s0,%r0
 	lgr	$s1,%r1
-<<<<<<< HEAD
 	larl	%r1,OPENSSL_s390xcap_P
 	llihh	%r0,0x8000	# check if kmctr supports the function code
 	srlg	%r0,%r0,0($s0)
 	ng	%r0,64(%r1)	# check kmctr capability vector
-=======
-	lghi	%r0,0
-	la	%r1,16($sp)
-	.long	0xb92d2042	# kmctr %r4,%r2,%r2
-
-	llihh	%r0,0x8000	# check if kmctr supports the function code
-	srlg	%r0,%r0,0($s0)
-	ng	%r0,16($sp)
->>>>>>> origin/master
 	lgr	%r0,$s0
 	lgr	%r1,$s1
 	jz	.Lctr32_km_loop
@@ -1647,19 +1597,10 @@ $code.=<<___ if(1);
 	llgfr	$s0,%r0			# put aside the function code
 	lghi	$s1,0x7f
 	nr	$s1,%r0
-<<<<<<< HEAD
 	larl	%r1,OPENSSL_s390xcap_P
 	llihh	%r0,0x8000
 	srlg	%r0,%r0,32($s1)		# check for 32+function code
 	ng	%r0,32(%r1)		# check km capability vector
-=======
-	lghi	%r0,0			# query capability vector
-	la	%r1,$tweak-16($sp)
-	.long	0xb92e0042		# km %r4,%r2
-	llihh	%r1,0x8000
-	srlg	%r1,%r1,32($s1)		# check for 32+function code
-	ng	%r1,$tweak-16($sp)
->>>>>>> origin/master
 	lgr	%r0,$s0			# restore the function code
 	la	%r1,0($key1)		# restore $key1
 	jz	.Lxts_km_vanilla
@@ -2286,11 +2227,7 @@ ___
 }
 $code.=<<___;
 .string	"AES for s390x, CRYPTOGAMS by <appro\@openssl.org>"
-<<<<<<< HEAD
 .comm	OPENSSL_s390xcap_P,80,8
-=======
-.comm	OPENSSL_s390xcap_P,16,8
->>>>>>> origin/master
 ___
 
 $code =~ s/\`([^\`]*)\`/eval $1/gem;

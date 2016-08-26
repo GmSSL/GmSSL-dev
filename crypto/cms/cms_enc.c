@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,63 +8,6 @@
  */
 
 #include "internal/cryptlib.h"
-=======
-/* crypto/cms/cms_enc.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
- * project.
- */
-/* ====================================================================
- * Copyright (c) 2008 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- */
-
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/asn1t.h>
 #include <openssl/pem.h>
 #include <openssl/x509v3.h>
@@ -76,11 +18,6 @@
 
 /* CMS EncryptedData Utilities */
 
-<<<<<<< HEAD
-=======
-DECLARE_ASN1_ITEM(CMS_EncryptedData)
-
->>>>>>> origin/master
 /* Return BIO based on EncryptedContentInfo and key */
 
 BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
@@ -100,11 +37,7 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
     enc = ec->cipher ? 1 : 0;
 
     b = BIO_new(BIO_f_cipher());
-<<<<<<< HEAD
     if (b == NULL) {
-=======
-    if (!b) {
->>>>>>> origin/master
         CMSerr(CMS_F_CMS_ENCRYPTEDCONTENT_INIT_BIO, ERR_R_MALLOC_FAILURE);
         return NULL;
     }
@@ -139,11 +72,7 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
         /* Generate a random IV if we need one */
         ivlen = EVP_CIPHER_CTX_iv_length(ctx);
         if (ivlen > 0) {
-<<<<<<< HEAD
             if (RAND_bytes(iv, ivlen) <= 0)
-=======
-            if (RAND_pseudo_bytes(iv, ivlen) <= 0)
->>>>>>> origin/master
                 goto err;
             piv = iv;
         }
@@ -156,11 +85,7 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
     /* Generate random session key */
     if (!enc || !ec->key) {
         tkey = OPENSSL_malloc(tkeylen);
-<<<<<<< HEAD
         if (tkey == NULL) {
-=======
-        if (!tkey) {
->>>>>>> origin/master
             CMSerr(CMS_F_CMS_ENCRYPTEDCONTENT_INIT_BIO, ERR_R_MALLOC_FAILURE);
             goto err;
         }
@@ -192,12 +117,7 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
                 goto err;
             } else {
                 /* Use random key */
-<<<<<<< HEAD
                 OPENSSL_clear_free(ec->key, ec->keylen);
-=======
-                OPENSSL_cleanse(ec->key, ec->keylen);
-                OPENSSL_free(ec->key);
->>>>>>> origin/master
                 ec->key = tkey;
                 ec->keylen = tkeylen;
                 tkey = NULL;
@@ -211,16 +131,9 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
                CMS_R_CIPHER_INITIALISATION_ERROR);
         goto err;
     }
-<<<<<<< HEAD
     if (enc) {
         calg->parameter = ASN1_TYPE_new();
         if (calg->parameter == NULL) {
-=======
-
-    if (piv) {
-        calg->parameter = ASN1_TYPE_new();
-        if (!calg->parameter) {
->>>>>>> origin/master
             CMSerr(CMS_F_CMS_ENCRYPTEDCONTENT_INIT_BIO, ERR_R_MALLOC_FAILURE);
             goto err;
         }
@@ -229,35 +142,20 @@ BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec)
                    CMS_R_CIPHER_PARAMETER_INITIALISATION_ERROR);
             goto err;
         }
-<<<<<<< HEAD
         /* If parameter type not set omit parameter */
         if (calg->parameter->type == V_ASN1_UNDEF) {
             ASN1_TYPE_free(calg->parameter);
             calg->parameter = NULL;
         }
-=======
->>>>>>> origin/master
     }
     ok = 1;
 
  err:
-<<<<<<< HEAD
     if (!keep_key || !ok) {
         OPENSSL_clear_free(ec->key, ec->keylen);
         ec->key = NULL;
     }
     OPENSSL_clear_free(tkey, tkeylen);
-=======
-    if (ec->key && !keep_key) {
-        OPENSSL_cleanse(ec->key, ec->keylen);
-        OPENSSL_free(ec->key);
-        ec->key = NULL;
-    }
-    if (tkey) {
-        OPENSSL_cleanse(tkey, tkeylen);
-        OPENSSL_free(tkey);
-    }
->>>>>>> origin/master
     if (ok)
         return b;
     BIO_free(b);
@@ -271,11 +169,7 @@ int cms_EncryptedContent_init(CMS_EncryptedContentInfo *ec,
     ec->cipher = cipher;
     if (key) {
         ec->key = OPENSSL_malloc(keylen);
-<<<<<<< HEAD
         if (ec->key == NULL)
-=======
-        if (!ec->key)
->>>>>>> origin/master
             return 0;
         memcpy(ec->key, key, keylen);
     }

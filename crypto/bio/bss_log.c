@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,61 +5,6 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* crypto/bio/bss_log.c */
-/* ====================================================================
- * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
->>>>>>> origin/master
  */
 
 /*
@@ -75,12 +19,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-<<<<<<< HEAD
 #include "bio_lcl.h"
 #include "internal/cryptlib.h"
-=======
-#include "cryptlib.h"
->>>>>>> origin/master
 
 #if defined(OPENSSL_SYS_WINCE)
 #elif defined(OPENSSL_SYS_WIN32)
@@ -99,11 +39,6 @@ void *_malloc32(__size_t);
 #  endif                        /* __INITIAL_POINTER_SIZE == 64 */
 # endif                         /* __INITIAL_POINTER_SIZE && defined
                                  * _ANSI_C_SOURCE */
-<<<<<<< HEAD
-=======
-#elif defined(__ultrix)
-# include <sys/syslog.h>
->>>>>>> origin/master
 #elif defined(OPENSSL_SYS_NETWARE)
 # define NO_SYSLOG
 #elif (!defined(MSDOS) || defined(WATT32)) && !defined(OPENSSL_SYS_VXWORKS) && !defined(NO_SYSLOG)
@@ -140,28 +75,16 @@ void *_malloc32(__size_t);
 #  define LOG_DAEMON      OPC$M_NM_NTWORK
 # endif
 
-<<<<<<< HEAD
 static int slg_write(BIO *h, const char *buf, int num);
 static int slg_puts(BIO *h, const char *str);
 static long slg_ctrl(BIO *h, int cmd, long arg1, void *arg2);
 static int slg_new(BIO *h);
 static int slg_free(BIO *data);
-=======
-static int MS_CALLBACK slg_write(BIO *h, const char *buf, int num);
-static int MS_CALLBACK slg_puts(BIO *h, const char *str);
-static long MS_CALLBACK slg_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int MS_CALLBACK slg_new(BIO *h);
-static int MS_CALLBACK slg_free(BIO *data);
->>>>>>> origin/master
 static void xopenlog(BIO *bp, char *name, int level);
 static void xsyslog(BIO *bp, int priority, const char *string);
 static void xcloselog(BIO *bp);
 
-<<<<<<< HEAD
 static const BIO_METHOD methods_slg = {
-=======
-static BIO_METHOD methods_slg = {
->>>>>>> origin/master
     BIO_TYPE_MEM, "syslog",
     slg_write,
     NULL,
@@ -173,20 +96,12 @@ static BIO_METHOD methods_slg = {
     NULL,
 };
 
-<<<<<<< HEAD
 const BIO_METHOD *BIO_s_log(void)
-=======
-BIO_METHOD *BIO_s_log(void)
->>>>>>> origin/master
 {
     return (&methods_slg);
 }
 
-<<<<<<< HEAD
 static int slg_new(BIO *bi)
-=======
-static int MS_CALLBACK slg_new(BIO *bi)
->>>>>>> origin/master
 {
     bi->init = 1;
     bi->num = 0;
@@ -195,11 +110,7 @@ static int MS_CALLBACK slg_new(BIO *bi)
     return (1);
 }
 
-<<<<<<< HEAD
 static int slg_free(BIO *a)
-=======
-static int MS_CALLBACK slg_free(BIO *a)
->>>>>>> origin/master
 {
     if (a == NULL)
         return (0);
@@ -207,11 +118,7 @@ static int MS_CALLBACK slg_free(BIO *a)
     return (1);
 }
 
-<<<<<<< HEAD
 static int slg_write(BIO *b, const char *in, int inl)
-=======
-static int MS_CALLBACK slg_write(BIO *b, const char *in, int inl)
->>>>>>> origin/master
 {
     int ret = inl;
     char *buf;
@@ -285,11 +192,7 @@ static int MS_CALLBACK slg_write(BIO *b, const char *in, int inl)
         /* The default */
     };
 
-<<<<<<< HEAD
     if ((buf = OPENSSL_malloc(inl + 1)) == NULL) {
-=======
-    if ((buf = (char *)OPENSSL_malloc(inl + 1)) == NULL) {
->>>>>>> origin/master
         return (0);
     }
     strncpy(buf, in, inl);
@@ -307,11 +210,7 @@ static int MS_CALLBACK slg_write(BIO *b, const char *in, int inl)
     return (ret);
 }
 
-<<<<<<< HEAD
 static long slg_ctrl(BIO *b, int cmd, long num, void *ptr)
-=======
-static long MS_CALLBACK slg_ctrl(BIO *b, int cmd, long num, void *ptr)
->>>>>>> origin/master
 {
     switch (cmd) {
     case BIO_CTRL_SET:
@@ -324,11 +223,7 @@ static long MS_CALLBACK slg_ctrl(BIO *b, int cmd, long num, void *ptr)
     return (0);
 }
 
-<<<<<<< HEAD
 static int slg_puts(BIO *bp, const char *str)
-=======
-static int MS_CALLBACK slg_puts(BIO *bp, const char *str)
->>>>>>> origin/master
 {
     int n, ret;
 
@@ -380,11 +275,7 @@ static void xsyslog(BIO *bp, int priority, const char *string)
         break;
     }
 
-<<<<<<< HEAD
     sprintf(pidbuf, "[%lu] ", GetCurrentProcessId());
-=======
-    sprintf(pidbuf, "[%u] ", GetCurrentProcessId());
->>>>>>> origin/master
     lpszStrings[0] = pidbuf;
     lpszStrings[1] = string;
 

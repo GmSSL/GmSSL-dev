@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -18,70 +17,10 @@
 #include <openssl/modes.h>
 
 /** RFC 3394 section 2.2.3.1 Default Initial Value */
-=======
-/* crypto/modes/wrap128.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
- * project.
- */
-/* ====================================================================
- * Copyright (c) 2013 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- */
-
-#include "cryptlib.h"
-#include <openssl/modes.h>
-
->>>>>>> origin/master
 static const unsigned char default_iv[] = {
     0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6,
 };
 
-<<<<<<< HEAD
 /** RFC 5649 section 3 Alternative Initial Value 32-bit constant */
 static const unsigned char default_aiv[] = {
     0xA6, 0x59, 0x59, 0xA6
@@ -106,14 +45,6 @@ static const unsigned char default_aiv[] = {
  *                     or if inlen > CRYPTO128_WRAP_MAX.
  *                     Output length if wrapping succeeded.
  */
-=======
-/*
- * Input size limit: lower than maximum of standards but far larger than
- * anything that will be used in practice.
- */
-#define CRYPTO128_WRAP_MAX (1UL << 31)
-
->>>>>>> origin/master
 size_t CRYPTO_128_wrap(void *key, const unsigned char *iv,
                        unsigned char *out,
                        const unsigned char *in, size_t inlen,
@@ -121,19 +52,11 @@ size_t CRYPTO_128_wrap(void *key, const unsigned char *iv,
 {
     unsigned char *A, B[16], *R;
     size_t i, j, t;
-<<<<<<< HEAD
     if ((inlen & 0x7) || (inlen < 16) || (inlen > CRYPTO128_WRAP_MAX))
         return 0;
     A = B;
     t = 1;
     memmove(out + 8, in, inlen);
-=======
-    if ((inlen & 0x7) || (inlen < 8) || (inlen > CRYPTO128_WRAP_MAX))
-        return 0;
-    A = B;
-    t = 1;
-    memcpy(out + 8, in, inlen);
->>>>>>> origin/master
     if (!iv)
         iv = default_iv;
 
@@ -157,7 +80,6 @@ size_t CRYPTO_128_wrap(void *key, const unsigned char *iv,
     return inlen + 8;
 }
 
-<<<<<<< HEAD
 /** Unwrapping according to RFC 3394 section 2.2.2 steps 1-2.
  *  The IV check (step 3) is responsibility of the caller.
  *
@@ -178,12 +100,6 @@ static size_t crypto_128_unwrap_raw(void *key, unsigned char *iv,
                                     unsigned char *out,
                                     const unsigned char *in, size_t inlen,
                                     block128_f block)
-=======
-size_t CRYPTO_128_unwrap(void *key, const unsigned char *iv,
-                         unsigned char *out,
-                         const unsigned char *in, size_t inlen,
-                         block128_f block)
->>>>>>> origin/master
 {
     unsigned char *A, B[16], *R;
     size_t i, j, t;
@@ -193,11 +109,7 @@ size_t CRYPTO_128_unwrap(void *key, const unsigned char *iv,
     A = B;
     t = 6 * (inlen >> 3);
     memcpy(A, in, 8);
-<<<<<<< HEAD
     memmove(out, in + 8, inlen);
-=======
-    memcpy(out, in + 8, inlen);
->>>>>>> origin/master
     for (j = 0; j < 6; j++) {
         R = out + inlen - 8;
         for (i = 0; i < inlen; i += 8, t--, R -= 8) {
@@ -212,7 +124,6 @@ size_t CRYPTO_128_unwrap(void *key, const unsigned char *iv,
             memcpy(R, B + 8, 8);
         }
     }
-<<<<<<< HEAD
     memcpy(iv, A, 8);
     return inlen;
 }
@@ -415,13 +326,4 @@ size_t CRYPTO_128_unwrap_pad(void *key, const unsigned char *icv,
 
     /* Section 4.2 step 3: Remove padding */
     return ptext_len;
-=======
-    if (!iv)
-        iv = default_iv;
-    if (memcmp(A, iv, 8)) {
-        OPENSSL_cleanse(out, inlen);
-        return 0;
-    }
-    return inlen;
->>>>>>> origin/master
 }

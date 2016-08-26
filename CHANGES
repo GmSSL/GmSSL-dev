@@ -2,7 +2,6 @@
  OpenSSL CHANGES
  _______________
 
-<<<<<<< HEAD
  Changes between 1.0.2h and 1.1.0  [25 Aug 2016]
 
   *) Windows command-line tool supports UTF-8 opt-in option for arguments
@@ -1397,17 +1396,11 @@
      return an error
      [Rich Salz and Ismo Puustinen <ismo.puustinen@intel.com>]
 
-=======
->>>>>>> origin/master
  Changes between 1.0.2c and 1.0.2d [9 Jul 2015]
 
   *) Alternate chains certificate forgery
 
-<<<<<<< HEAD
      During certificate verification, OpenSSL will attempt to find an
-=======
-     During certificate verfification, OpenSSL will attempt to find an
->>>>>>> origin/master
      alternative certificate chain if the first attempt to build such a chain
      fails. An error in the implementation of this logic can mean that an
      attacker could cause certain checks on untrusted certificates to be
@@ -1423,10 +1416,7 @@
   *) Fix HMAC ABI incompatibility. The previous version introduced an ABI
      incompatibility in the handling of HMAC. The previous ABI has now been
      restored.
-<<<<<<< HEAD
      [Matt Caswell]
-=======
->>>>>>> origin/master
 
  Changes between 1.0.2a and 1.0.2b [11 Jun 2015]
 
@@ -1460,15 +1450,9 @@
      callbacks.
 
      This issue was reported to OpenSSL by Robert Swiecki (Google), and
-<<<<<<< HEAD
      independently by Hanno BÃ¶ck.
      (CVE-2015-1789)
      [Emilia KÃ¤sper]
-=======
-     independently by Hanno Böck.
-     (CVE-2015-1789)
-     [Emilia Käsper]
->>>>>>> origin/master
 
   *) PKCS7 crash with missing EnvelopedContent
 
@@ -1482,11 +1466,7 @@
 
      This issue was reported to OpenSSL by Michal Zalewski (Google).
      (CVE-2015-1790)
-<<<<<<< HEAD
      [Emilia KÃ¤sper]
-=======
-     [Emilia Käsper]
->>>>>>> origin/master
 
   *) CMS verify infinite loop with unknown hash function
 
@@ -1506,28 +1486,11 @@
      (CVE-2015-1791)
      [Matt Caswell]
 
-<<<<<<< HEAD
-=======
-  *) Removed support for the two export grade static DH ciphersuites
-     EXP-DH-RSA-DES-CBC-SHA and EXP-DH-DSS-DES-CBC-SHA. These two ciphersuites
-     were newly added (along with a number of other static DH ciphersuites) to
-     1.0.2. However the two export ones have *never* worked since they were
-     introduced. It seems strange in any case to be adding new export
-     ciphersuites, and given "logjam" it also does not seem correct to fix them.
-     [Matt Caswell]
-
->>>>>>> origin/master
   *) Only support 256-bit or stronger elliptic curves with the
      'ecdh_auto' setting (server) or by default (client). Of supported
      curves, prefer P-256 (both).
      [Emilia Kasper]
 
-<<<<<<< HEAD
-=======
-  *) Reject DH handshakes with parameters shorter than 768 bits.
-     [Kurt Roeckx and Emilia Kasper]
-
->>>>>>> origin/master
  Changes between 1.0.2 and 1.0.2a [19 Mar 2015]
 
   *) ClientHello sigalgs DoS fix
@@ -1622,11 +1585,7 @@
 
      This issue was reported to OpenSSL by Michal Zalewski (Google).
      (CVE-2015-0289)
-<<<<<<< HEAD
      [Emilia KÃ¤sper]
-=======
-     [Emilia Käsper]
->>>>>>> origin/master
 
   *) DoS via reachable assert in SSLv2 servers fix
 
@@ -1634,17 +1593,10 @@
      servers that both support SSLv2 and enable export cipher suites by sending
      a specially crafted SSLv2 CLIENT-MASTER-KEY message.
 
-<<<<<<< HEAD
      This issue was discovered by Sean Burford (Google) and Emilia KÃ¤sper
      (OpenSSL development team).
      (CVE-2015-0293)
      [Emilia KÃ¤sper]
-=======
-     This issue was discovered by Sean Burford (Google) and Emilia Käsper
-     (OpenSSL development team).
-     (CVE-2015-0293)
-     [Emilia Käsper]
->>>>>>> origin/master
 
   *) Empty CKE with client auth and DHE fix
 
@@ -1706,11 +1658,7 @@
 
   *) Facilitate "universal" ARM builds targeting range of ARM ISAs, e.g.
      ARMv5 through ARMv8, as opposite to "locking" it to single one.
-<<<<<<< HEAD
      So far those who have to target multiple platforms would compromise
-=======
-     So far those who have to target multiple plaforms would compromise
->>>>>>> origin/master
      and argue that binary targeting say ARMv5 would still execute on
      ARMv8. "Universal" build resolves this compromise by providing
      near-optimal performance even on newer platforms.
@@ -1770,11 +1718,7 @@
      [Steve Henson]
 
   *) Use algorithm specific chains in SSL_CTX_use_certificate_chain_file():
-<<<<<<< HEAD
      this fixes a limitation in previous versions of OpenSSL.
-=======
-     this fixes a limiation in previous versions of OpenSSL.
->>>>>>> origin/master
      [Steve Henson]
 
   *) Extended RSA OAEP support via EVP_PKEY API. Options to specify digest,
@@ -1883,15 +1827,9 @@
 
   *) Add support for certificate stores in CERT structure. This makes it
      possible to have different stores per SSL structure or one store in
-<<<<<<< HEAD
      the parent SSL_CTX. Include distinct stores for certificate chain
      verification and chain building. New ctrl SSL_CTRL_BUILD_CERT_CHAIN
      to build and store a certificate chain in CERT structure: returning
-=======
-     the parent SSL_CTX. Include distint stores for certificate chain
-     verification and chain building. New ctrl SSL_CTRL_BUILD_CERT_CHAIN
-     to build and store a certificate chain in CERT structure: returing
->>>>>>> origin/master
      an error if the chain cannot be built: this will allow applications
      to test if a chain is correctly configured.
 
@@ -1952,11 +1890,7 @@
      [Steve Henson]
 
   *) Integrate hostname, email address and IP address checking with certificate
-<<<<<<< HEAD
      verification. New verify options supporting checking in openssl utility.
-=======
-     verification. New verify options supporting checking in opensl utility.
->>>>>>> origin/master
      [Steve Henson]
 
   *) Fixes and wildcard matching support to hostname and email checking
@@ -1993,11 +1927,7 @@
      When in FIPS mode the approved implementations are used as normal,
      when not in FIPS mode the internal unapproved versions are used instead.
      This means that the FIPS capable OpenSSL isn't forced to use the
-<<<<<<< HEAD
      (often lower performance) FIPS implementations outside FIPS mode.
-=======
-     (often lower perfomance) FIPS implementations outside FIPS mode.
->>>>>>> origin/master
      [Steve Henson]
 
   *) Transparently support X9.42 DH parameters when calling
@@ -2142,11 +2072,7 @@
 
      3. Check DSA/ECDSA signatures use DER.
 
-<<<<<<< HEAD
      Re-encode DSA/ECDSA signatures and compare with the original received
-=======
-     Reencode DSA/ECDSA signatures and compare with the original received
->>>>>>> origin/master
      signature. Return an error if there is a mismatch.
 
      This will reject various cases including garbage after signature
@@ -2175,20 +2101,12 @@
       version does not match the session's version. Resuming with a different
       version, while not strictly forbidden by the RFC, is of questionable
       sanity and breaks all known clients.
-<<<<<<< HEAD
       [David Benjamin, Emilia KÃ¤sper]
-=======
-      [David Benjamin, Emilia Käsper]
->>>>>>> origin/master
 
    *) Tighten handling of the ChangeCipherSpec (CCS) message: reject
       early CCS messages during renegotiation. (Note that because
       renegotiation is encrypted, this early CCS was not exploitable.)
-<<<<<<< HEAD
       [Emilia KÃ¤sper]
-=======
-      [Emilia Käsper]
->>>>>>> origin/master
 
    *) Tighten client-side session ticket handling during renegotiation:
       ensure that the client only accepts a session ticket if the server sends
@@ -2199,11 +2117,7 @@
       Similarly, ensure that the client requires a session ticket if one
       was advertised in the ServerHello. Previously, a TLS client would
       ignore a missing NewSessionTicket message.
-<<<<<<< HEAD
       [Emilia KÃ¤sper]
-=======
-      [Emilia Käsper]
->>>>>>> origin/master
 
  Changes between 1.0.1i and 1.0.1j [15 Oct 2014]
 
@@ -2248,11 +2162,7 @@
 
   *) Add additional DigestInfo checks.
  
-<<<<<<< HEAD
      Re-encode DigestInto in DER and check against the original when
-=======
-     Reencode DigestInto in DER and check against the original when
->>>>>>> origin/master
      verifying RSA signature: this will reject any improperly encoded
      DigestInfo structures.
 
@@ -2287,17 +2197,10 @@
      with a null pointer dereference (read) by specifying an anonymous (EC)DH
      ciphersuite and sending carefully crafted handshake messages.
 
-<<<<<<< HEAD
      Thanks to Felix GrÃ¶bert (Google) for discovering and researching this
      issue.
      (CVE-2014-3510)
      [Emilia KÃ¤sper]
-=======
-     Thanks to Felix Gröbert (Google) for discovering and researching this
-     issue.
-     (CVE-2014-3510)
-     [Emilia Käsper]
->>>>>>> origin/master
 
   *) By sending carefully crafted DTLS packets an attacker could cause openssl
      to leak memory. This can be exploited through a Denial of Service attack.
@@ -2334,11 +2237,7 @@
      properly negotiated with the client. This can be exploited through a
      Denial of Service attack.
 
-<<<<<<< HEAD
      Thanks to Joonas Kuorilehto and Riku HietamÃ¤ki (Codenomicon) for
-=======
-     Thanks to Joonas Kuorilehto and Riku Hietamäki (Codenomicon) for
->>>>>>> origin/master
      discovering and researching this issue.
      (CVE-2014-5139)
      [Steve Henson]
@@ -2350,11 +2249,7 @@
 
      Thanks to Ivan Fratric (Google) for discovering this issue.
      (CVE-2014-3508)
-<<<<<<< HEAD
      [Emilia KÃ¤sper, and Steve Henson]
-=======
-     [Emilia Käsper, and Steve Henson]
->>>>>>> origin/master
 
   *) Fix ec_GFp_simple_points_make_affine (thus, EC_POINTs_mul etc.)
      for corner cases. (Certain input points at infinity could lead to
@@ -2384,26 +2279,15 @@
      client or server. This is potentially exploitable to run arbitrary
      code on a vulnerable client or server.
 
-<<<<<<< HEAD
      Thanks to JÃ¼ri Aedla for reporting this issue. (CVE-2014-0195)
      [JÃ¼ri Aedla, Steve Henson]
-=======
-     Thanks to Jüri Aedla for reporting this issue. (CVE-2014-0195)
-     [Jüri Aedla, Steve Henson]
->>>>>>> origin/master
 
   *) Fix bug in TLS code where clients enable anonymous ECDH ciphersuites
      are subject to a denial of service attack.
 
-<<<<<<< HEAD
      Thanks to Felix GrÃ¶bert and Ivan Fratric at Google for discovering
      this issue. (CVE-2014-3470)
      [Felix GrÃ¶bert, Ivan Fratric, Steve Henson]
-=======
-     Thanks to Felix Gröbert and Ivan Fratric at Google for discovering
-     this issue. (CVE-2014-3470)
-     [Felix Gröbert, Ivan Fratric, Steve Henson]
->>>>>>> origin/master
 
   *) Harmonize version and its documentation. -f flag is used to display
      compilation flags.
@@ -2482,15 +2366,9 @@
      Thanks go to Nadhem Alfardan and Kenny Paterson of the Information
      Security Group at Royal Holloway, University of London
      (www.isg.rhul.ac.uk) for discovering this flaw and Adam Langley and
-<<<<<<< HEAD
      Emilia KÃ¤sper for the initial patch.
      (CVE-2013-0169)
      [Emilia KÃ¤sper, Adam Langley, Ben Laurie, Andy Polyakov, Steve Henson]
-=======
-     Emilia Käsper for the initial patch.
-     (CVE-2013-0169)
-     [Emilia Käsper, Adam Langley, Ben Laurie, Andy Polyakov, Steve Henson]
->>>>>>> origin/master
 
   *) Fix flaw in AESNI handling of TLS 1.2 and 1.1 records for CBC mode
      ciphersuites which can be exploited in a denial of service attack.
@@ -2607,11 +2485,7 @@
 
   *) Some servers which support TLS 1.0 can choke if we initially indicate
      support for TLS 1.2 and later renegotiate using TLS 1.0 in the RSA
-<<<<<<< HEAD
      encrypted premaster secret. As a workaround use the maximum permitted
-=======
-     encrypted premaster secret. As a workaround use the maximum pemitted
->>>>>>> origin/master
      client version in client hello, this should keep such servers happy
      and still work with previous versions of OpenSSL.
      [Steve Henson]
@@ -2669,11 +2543,7 @@
      EC_GROUP_new_by_curve_name() will automatically use these (while
      EC_GROUP_new_curve_GFp() currently prefers the more flexible
      implementations).
-<<<<<<< HEAD
      [Emilia KÃ¤sper, Adam Langley, Bodo Moeller (Google)]
-=======
-     [Emilia Käsper, Adam Langley, Bodo Moeller (Google)]
->>>>>>> origin/master
 
   *) Use type ossl_ssize_t instad of ssize_t which isn't available on
      all platforms. Move ssize_t definition from e_os.h to the public
@@ -2745,11 +2615,7 @@
   *) Add GCM support to TLS library. Some custom code is needed to split
      the IV between the fixed (from PRF) and explicit (from TLS record)
      portions. This adds all GCM ciphersuites supported by RFC5288 and 
-<<<<<<< HEAD
      RFC5289. Generalise some AES* cipherstrings to include GCM and
-=======
-     RFC5289. Generalise some AES* cipherstrings to inlclude GCM and
->>>>>>> origin/master
      add a special AESGCM string for GCM only.
      [Steve Henson]
 
@@ -2763,15 +2629,9 @@
      [Steve Henson]
 
   *) For FIPS capable OpenSSL interpret a NULL default public key method
-<<<<<<< HEAD
      as unset and return the appropriate default but do *not* set the default.
      This means we can return the appropriate method in applications that
      switch between FIPS and non-FIPS modes.
-=======
-     as unset and return the appopriate default but do *not* set the default.
-     This means we can return the appopriate method in applications that
-     swicth between FIPS and non-FIPS modes.
->>>>>>> origin/master
      [Steve Henson]
 
   *) Redirect HMAC and CMAC operations to FIPS module in FIPS mode. If an
@@ -2899,11 +2759,7 @@
      in CMS and PKCS7 code. When RSA decryption fails use a random key for
      content decryption and always return the same error. Note: this attack
      needs on average 2^20 messages so it only affects automated senders. The
-<<<<<<< HEAD
      old behaviour can be re-enabled in the CMS code by setting the
-=======
-     old behaviour can be reenabled in the CMS code by setting the
->>>>>>> origin/master
      CMS_DEBUG_DECRYPT flag: this is useful for debugging and testing where
      an MMA defence is not necessary.
      Thanks to Ivan Nestlerode <inestlerode@us.ibm.com> for discovering
@@ -2963,11 +2819,7 @@
      [Adam Langley (Google)]
 
   *) Fix spurious failures in ecdsatest.c.
-<<<<<<< HEAD
      [Emilia KÃ¤sper (Google)]
-=======
-     [Emilia Käsper (Google)]
->>>>>>> origin/master
 
   *) Fix the BIO_f_buffer() implementation (which was mixing different
      interpretations of the '..._len' fields).
@@ -2981,11 +2833,7 @@
      lock to call BN_BLINDING_invert_ex, and avoids one use of
      BN_BLINDING_update for each BN_BLINDING structure (previously,
      the last update always remained unused).
-<<<<<<< HEAD
      [Emilia KÃ¤sper (Google)]
-=======
-     [Emilia Käsper (Google)]
->>>>>>> origin/master
 
   *) In ssl3_clear, preserve s3->init_extra along with s3->rbuf.
      [Bob Buckholz (Google)]
@@ -3207,11 +3055,7 @@
      as part of the CRL checking and indicate a new error "CRL path validation
      error" in this case. Applications wanting additional details can use
      the verify callback and check the new "parent" field. If this is not
-<<<<<<< HEAD
      NULL CRL path validation is taking place. Existing applications won't
-=======
-     NULL CRL path validation is taking place. Existing applications wont
->>>>>>> origin/master
      see this because it requires extended CRL support which is off by
      default.
 
@@ -3444,11 +3288,7 @@
 
   *) New option -sigopt to dgst utility. Update dgst to use
      EVP_Digest{Sign,Verify}*. These two changes make it possible to use
-<<<<<<< HEAD
      alternative signing parameters such as X9.31 or PSS in the dgst 
-=======
-     alternative signing paramaters such as X9.31 or PSS in the dgst 
->>>>>>> origin/master
      utility.
      [Steve Henson]
 
@@ -3688,11 +3528,7 @@
   *) Add a ctrl to asn1 method to allow a public key algorithm to express
      a default digest type to use. In most cases this will be SHA1 but some
      algorithms (such as GOST) need to specify an alternative digest. The
-<<<<<<< HEAD
      return value indicates how strong the preference is 1 means optional and
-=======
-     return value indicates how strong the prefernce is 1 means optional and
->>>>>>> origin/master
      2 is mandatory (that is it is the only supported type). Modify
      ASN1_item_sign() to accept a NULL digest argument to indicate it should
      use the default md. Update openssl utilities to use the default digest
@@ -3737,11 +3573,7 @@
      manual pages.
      [Oliver Tappe <zooey@hirschkaefer.de>]
 
-<<<<<<< HEAD
   *) New utility "genpkey" this is analogous to "genrsa" etc except it can
-=======
-  *) New utility "genpkey" this is analagous to "genrsa" etc except it can
->>>>>>> origin/master
      generate keys for any algorithm. Extend and update EVP_PKEY_METHOD to
      support key and parameter generation and add initial key generation
      functionality for RSA.
@@ -3810,11 +3642,7 @@
 
   *) Add RFC 3161 compliant time stamp request creation, response generation
      and response verification functionality.
-<<<<<<< HEAD
      [ZoltÃ¡n GlÃ³zik <zglozik@opentsa.org>, The OpenTSA Project]
-=======
-     [Zoltán Glózik <zglozik@opentsa.org>, The OpenTSA Project]
->>>>>>> origin/master
 
   *) Add initial support for TLS extensions, specifically for the server_name
      extension so far.  The SSL_SESSION, SSL_CTX, and SSL data structures now
@@ -3844,11 +3672,7 @@
      '-key2 ...', '-servername_fatal' (subject to change).  This allows
      testing the HostName extension for a specific single host name ('-cert'
      and '-key' remain fallbacks for handshakes without HostName
-<<<<<<< HEAD
      negotiation).  If the unrecognized_name alert has to be sent, this by
-=======
-     negotiation).  If the unrecogninzed_name alert has to be sent, this by
->>>>>>> origin/master
      default is a warning; it becomes fatal with the '-servername_fatal'
      option.
 
@@ -4079,11 +3903,7 @@
      processed after finishing the corresponding handshake. There is
      currently no limitation to this buffer allowing an attacker to perform
      a DOS attack with sending records with future epochs until there is no
-<<<<<<< HEAD
      memory left. This patch adds the pqueue_size() function to determine
-=======
-     memory left. This patch adds the pqueue_size() function to detemine
->>>>>>> origin/master
      the size of a buffer and limits the record buffer to 100 entries.
      (CVE-2009-1377)
      [Robin Seggelmann, discovered by Daniel Mentz] 	
@@ -4196,11 +4016,7 @@
      ChangeCipherSpec as first record (CVE-2009-1386).
      [PR #1679]
 
-<<<<<<< HEAD
   *) Fix a state transition in s3_srvr.c and d1_srvr.c
-=======
-  *) Fix a state transitition in s3_srvr.c and d1_srvr.c
->>>>>>> origin/master
      (was using SSL3_ST_CW_CLNT_HELLO_B, should be ..._ST_SW_SRVR_...).
      [Nagendra Modadugu]
 
@@ -4252,15 +4068,9 @@
      This work was sponsored by Logica.
      [Steve Henson]
 
-<<<<<<< HEAD
   *) Fix bug in X509_ATTRIBUTE creation: don't set attribute using
      ASN1_TYPE_set1 if MBSTRING flag set. This bug would crash certain
      attribute creation routines such as certificate requests and PKCS#12
-=======
-  *) Fix bug in X509_ATTRIBUTE creation: dont set attribute using
-     ASN1_TYPE_set1 if MBSTRING flag set. This bug would crash certain
-     attribute creation routines such as certifcate requests and PKCS#12
->>>>>>> origin/master
      files.
      [Steve Henson]
 
@@ -4335,11 +4145,7 @@
      [Ian Lister (tweaked by Geoff Thorpe)]
 
   *) Backport of CMS code to OpenSSL 0.9.8. This differs from the 0.9.9
-<<<<<<< HEAD
      implementation in the following ways:
-=======
-     implemention in the following ways:
->>>>>>> origin/master
 
      Lack of EVP_PKEY_ASN1_METHOD means algorithm parameters have to be
      hard coded.
@@ -4480,11 +4286,7 @@
      '-key2 ...', '-servername_fatal' (subject to change).  This allows
      testing the HostName extension for a specific single host name ('-cert'
      and '-key' remain fallbacks for handshakes without HostName
-<<<<<<< HEAD
      negotiation).  If the unrecognized_name alert has to be sent, this by
-=======
-     negotiation).  If the unrecogninzed_name alert has to be sent, this by
->>>>>>> origin/master
      default is a warning; it becomes fatal with the '-servername_fatal'
      option.
 
@@ -4541,11 +4343,7 @@
      implementation in BN_mod_exp_mont_consttime().)  The old name
      remains as a deprecated alias.
 
-<<<<<<< HEAD
      Similarly, RSA_FLAG_NO_EXP_CONSTTIME is replaced by a more general
-=======
-     Similary, RSA_FLAG_NO_EXP_CONSTTIME is replaced by a more general
->>>>>>> origin/master
      RSA_FLAG_NO_CONSTTIME flag since the RSA implementation now uses
      constant-time implementations for more than just exponentiation.
      Here too the old name is kept as a deprecated alias.
@@ -4697,11 +4495,7 @@
      unofficial, and the ID has long expired.
      [Bodo Moeller]
 
-<<<<<<< HEAD
   *) Fix RSA blinding Heisenbug (problems sometimes occurred on
-=======
-  *) Fix RSA blinding Heisenbug (problems sometimes occured on
->>>>>>> origin/master
      dual-core machines) and other potential thread-safety issues.
      [Bodo Moeller]
 
@@ -4856,11 +4650,7 @@
      to SSL_CTX_use_PrivateKey_file() and SSL_use_PrivateKey_file()
      [Walter Goulet]
 
-<<<<<<< HEAD
   *) Remove buggy and incomplete DH cert support from
-=======
-  *) Remove buggy and incompletet DH cert support from
->>>>>>> origin/master
      ssl/ssl_rsa.c and ssl/s3_both.c
      [Nils Larsch]
 
@@ -5020,11 +4810,7 @@
 
   *) BN_CTX_get() should return zero-valued bignums, providing the same
      initialised value as BN_new().
-<<<<<<< HEAD
      [Geoff Thorpe, suggested by Ulf MÃ¶ller]
-=======
-     [Geoff Thorpe, suggested by Ulf Möller]
->>>>>>> origin/master
 
   *) Support for inhibitAnyPolicy certificate extension.
      [Steve Henson]
@@ -5043,11 +4829,7 @@
      some point, these tighter rules will become openssl's default to improve
      maintainability, though the assert()s and other overheads will remain only
      in debugging configurations. See bn.h for more details.
-<<<<<<< HEAD
      [Geoff Thorpe, Nils Larsch, Ulf MÃ¶ller]
-=======
-     [Geoff Thorpe, Nils Larsch, Ulf Möller]
->>>>>>> origin/master
 
   *) BN_CTX_init() has been deprecated, as BN_CTX is an opaque structure
      that can only be obtained through BN_CTX_new() (which implicitly
@@ -5082,11 +4864,7 @@
      [Geoff Thorpe]
 
   *) Reorganise PKCS#7 code to separate the digest location functionality
-<<<<<<< HEAD
      into PKCS7_find_digest(), digest addition into PKCS7_bio_add_digest().
-=======
-     into PKCS7_find_digest(), digest addtion into PKCS7_bio_add_digest().
->>>>>>> origin/master
      New function PKCS7_set_digest() to set the digest type for PKCS#7
      digestedData type. Add additional code to correctly generate the
      digestedData type and add support for this type in PKCS7 initialization
@@ -5118,11 +4896,7 @@
      [Douglas Stebila (Sun Microsystems Laboratories)]
 
   *) Add the possibility to load symbols globally with DSO.
-<<<<<<< HEAD
      [GÃ¶tz Babin-Ebell <babin-ebell@trustcenter.de> via Richard Levitte]
-=======
-     [Götz Babin-Ebell <babin-ebell@trustcenter.de> via Richard Levitte]
->>>>>>> origin/master
 
   *) Add the functions ERR_set_mark() and ERR_pop_to_mark() for better
      control of the error stack.
@@ -5273,11 +5047,7 @@
   *) Key-generation can now be implemented in RSA_METHOD, DSA_METHOD
      and DH_METHOD (eg. by ENGINE implementations) to override the normal
      software implementations. For DSA and DH, parameter generation can
-<<<<<<< HEAD
      also be overridden by providing the appropriate method callbacks.
-=======
-     also be overriden by providing the appropriate method callbacks.
->>>>>>> origin/master
      [Geoff Thorpe]
 
   *) Change the "progress" mechanism used in key-generation and
@@ -5360,21 +5130,13 @@
      the "shared" options was given to ./Configure or ./config.
      Otherwise, they are inserted in libcrypto.a.
      /usr/local/ssl/engines is the default directory for dynamic
-<<<<<<< HEAD
      engines, but that can be overridden at configure time through
-=======
-     engines, but that can be overriden at configure time through
->>>>>>> origin/master
      the usual use of --prefix and/or --openssldir, and at run
      time with the environment variable OPENSSL_ENGINES.
      [Geoff Thorpe and Richard Levitte]
 
   *) Add Makefile.shared, a helper makefile to build shared
-<<<<<<< HEAD
      libraries.  Adapt Makefile.org.
-=======
-     libraries.  Addapt Makefile.org.
->>>>>>> origin/master
      [Richard Levitte]
 
   *) Add version info to Win32 DLLs.
@@ -5748,11 +5510,7 @@
      unofficial, and the ID has long expired.
      [Bodo Moeller]
 
-<<<<<<< HEAD
   *) Fix RSA blinding Heisenbug (problems sometimes occurred on
-=======
-  *) Fix RSA blinding Heisenbug (problems sometimes occured on
->>>>>>> origin/master
      dual-core machines) and other potential thread-safety issues.
      [Bodo Moeller]
 
@@ -5853,19 +5611,11 @@
      [Steve Henson]
 
   *) Undo Cygwin change.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) Added support for proxy certificates according to RFC 3820.
      Because they may be a security thread to unaware applications,
      they must be explicitly allowed in run-time.  See
-=======
-     [Ulf Möller]
-
-  *) Added support for proxy certificates according to RFC 3820.
-     Because they may be a security thread to unaware applications,
-     they must be explicitely allowed in run-time.  See
->>>>>>> origin/master
      docs/HOWTO/proxy_certificates.txt for further information.
      [Richard Levitte]
 
@@ -5894,19 +5644,11 @@
      [Stephen Henson, reported by UK NISCC]
 
   *) Use Windows randomness collection on Cygwin.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) Fix hang in EGD/PRNGD query when communication socket is closed
      prematurely by EGD/PRNGD.
      [Darren Tucker <dtucker@zip.com.au> via Lutz JÃ¤nicke, resolves #1014]
-=======
-     [Ulf Möller]
-
-  *) Fix hang in EGD/PRNGD query when communication socket is closed
-     prematurely by EGD/PRNGD.
-     [Darren Tucker <dtucker@zip.com.au> via Lutz Jänicke, resolves #1014]
->>>>>>> origin/master
 
   *) Prompt for pass phrases when appropriate for PKCS12 input format.
      [Steve Henson]
@@ -5923,13 +5665,8 @@
      [Steve Henson]
 
   *) Perform some character comparisons of different types in X509_NAME_cmp:
-<<<<<<< HEAD
      this is needed for some certificates that re-encode DNs into UTF8Strings
      (in violation of RFC3280) and can't or won't issue name rollover
-=======
-     this is needed for some certificates that reencode DNs into UTF8Strings
-     (in violation of RFC3280) and can't or wont issue name rollover
->>>>>>> origin/master
      certificates.
      [Steve Henson]
 
@@ -6103,11 +5840,7 @@
  Changes between 0.9.7 and 0.9.7a  [19 Feb 2003]
 
   *) In ssl3_get_record (ssl/s3_pkt.c), minimize information leaked
-<<<<<<< HEAD
      via timing by performing a MAC computation even if incorrect
-=======
-     via timing by performing a MAC computation even if incorrrect
->>>>>>> origin/master
      block cipher padding has been found.  This is a countermeasure
      against active attacks where the attacker has to distinguish
      between bad padding and a MAC verification error. (CVE-2003-0078)
@@ -6369,11 +6102,7 @@
 	done
 
      To be absolutely sure not to disturb the source tree, a "make clean"
-<<<<<<< HEAD
      is a good thing.  If it isn't successful, don't worry about it,
-=======
-     is a good thing.  If it isn't successfull, don't worry about it,
->>>>>>> origin/master
      it probably means the source directory is very clean.
      [Richard Levitte]
 
@@ -6381,11 +6110,7 @@
      pointers passed to them whenever necessary. Otherwise it is possible
      the caller may have overwritten (or deallocated) the original string
      data when a later ENGINE operation tries to use the stored values.
-<<<<<<< HEAD
      [GÃ¶tz Babin-Ebell <babinebell@trustcenter.de>]
-=======
-     [Götz Babin-Ebell <babinebell@trustcenter.de>]
->>>>>>> origin/master
 
   *) Improve diagnostics in file reading and command-line digests.
      [Ben Laurie aided and abetted by Solar Designer <solar@openwall.com>]
@@ -6536,11 +6261,7 @@
      default_algorithms = RSA, DSA, RAND, CIPHERS, DIGESTS
      [Steve Henson]
 
-<<<<<<< HEAD
   *) Preliminary ENGINE config module.
-=======
-  *) Prelminary ENGINE config module.
->>>>>>> origin/master
      [Steve Henson]
 
   *) New experimental application configuration code.
@@ -6715,11 +6436,7 @@
 
   *) New function SSL_renegotiate_pending().  This returns true once
      renegotiation has been requested (either SSL_renegotiate() call
-<<<<<<< HEAD
      or HelloRequest/ClientHello received from the peer) and becomes
-=======
-     or HelloRequest/ClientHello receveived from the peer) and becomes
->>>>>>> origin/master
      false once a handshake has been completed.
      (For servers, SSL_renegotiate() followed by SSL_do_handshake()
      sends a HelloRequest, but does not ensure that a handshake takes
@@ -7007,11 +6724,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
         const ASN1_ITEM *it = &ASN1_INTEGER_it;
 
-<<<<<<< HEAD
      won't compile. This is used by the any applications that need to
-=======
-     wont compile. This is used by the any applications that need to
->>>>>>> origin/master
      declare their own ASN1 modules. This was fixed by adding the option
      EXPORT_VAR_AS_FN to all Win32 platforms, although this isn't strictly
      needed for static libraries under Win32.
@@ -7612,11 +7325,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      entropy, EGD style sockets (served by EGD or PRNGD) will automatically
      be queried.
      The locations /var/run/egd-pool, /dev/egd-pool, /etc/egd-pool, and
-<<<<<<< HEAD
      /etc/entropy will be queried once each in this sequence, querying stops
-=======
-     /etc/entropy will be queried once each in this sequence, quering stops
->>>>>>> origin/master
      when enough entropy was collected without querying more sockets.
      [Lutz Jaenicke]
 
@@ -7644,11 +7353,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      information from an OCSP_CERTID structure (which will be created
      when the request structure is built). These are built from lower
      level functions which work on OCSP_SINGLERESP structures but
-<<<<<<< HEAD
      won't normally be used unless the application wishes to examine
-=======
-     wont normally be used unless the application wishes to examine
->>>>>>> origin/master
      extensions in the OCSP response for example.
 
      Replace nonce routines with a pair of functions.
@@ -7724,11 +7429,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) New function X509V3_add1_i2d(). This automatically encodes and
      adds an extension. Its behaviour can be customised with various
      flags to append, replace or delete. Various wrappers added for
-<<<<<<< HEAD
      certificates and CRLs.
-=======
-     certifcates and CRLs.
->>>>>>> origin/master
      [Steve Henson]
 
   *) Fix to avoid calling the underlying ASN1 print routine when
@@ -7736,11 +7437,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      OCSP_SERVICELOC extension. Tidy up print OCSP format.
      [Steve Henson]
 
-<<<<<<< HEAD
   *) Make mkdef.pl parse some of the ASN1 macros and add appropriate
-=======
-  *) Make mkdef.pl parse some of the ASN1 macros and add apropriate
->>>>>>> origin/master
      entries for variables.
      [Steve Henson]
 
@@ -7900,11 +7597,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Lenka Fibikova <fibikova@exp-math.uni-essen.de>, Bodo Moeller]
 
 #if 0
-<<<<<<< HEAD
      The following entry accidentally appeared in the CHANGES file
-=======
-     The following entry accidentily appeared in the CHANGES file
->>>>>>> origin/master
      distributed with OpenSSL 0.9.7.  The modifications described in
      it do *not* apply to OpenSSL 0.9.7.
 
@@ -8281,11 +7974,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Nils Larsch <nla@trustcenter.de>]
 
   *) Fix BASE64 decode (EVP_DecodeUpdate) for data with CR/LF ended lines:
-<<<<<<< HEAD
      an end-of-file condition would erroneously be flagged, when the CRLF
-=======
-     an end-of-file condition would erronously be flagged, when the CRLF
->>>>>>> origin/master
      was just at the end of a processed block. The bug was discovered when
      processing data through a buffering memory BIO handing the data to a
      BASE64-decoding BIO. Bug fund and patch submitted by Pavel Tsekov
@@ -8492,11 +8181,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller; bug noticed by Andy Schneider <andy.schneider@bjss.co.uk>]
 
   *) Bugfix in ssl3_accept (ssl/s3_srvr.c): Case SSL3_ST_SW_HELLO_REQ_C
-<<<<<<< HEAD
      should end in 'break', not 'goto end' which circumvents various
-=======
-     should end in 'break', not 'goto end' which circuments various
->>>>>>> origin/master
      cleanups done in state SSL_ST_OK.   But session related stuff
      must be disabled for SSL_ST_OK in the case that we just sent a
      HelloRequest.
@@ -8507,11 +8192,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Fix ssl/s3_enc.c, ssl/t1_enc.c and ssl/s3_pkt.c so that we don't
      reveal whether illegal block cipher padding was found or a MAC
-<<<<<<< HEAD
      verification error occurred.  (Neither SSLerr() codes nor alerts
-=======
-     verification error occured.  (Neither SSLerr() codes nor alerts
->>>>>>> origin/master
      are directly visible to potential attackers, but the information
      may leak via logfiles.)
 
@@ -8534,11 +8215,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) BN_sqr() bug fix.
-<<<<<<< HEAD
      [Ulf MÃ¶ller, reported by Jim Ellis <jim.ellis@cavium.com>]
-=======
-     [Ulf Möller, reported by Jim Ellis <jim.ellis@cavium.com>]
->>>>>>> origin/master
 
   *) Rabin-Miller test analyses assume uniformly distributed witnesses,
      so use BN_pseudo_rand_range() instead of using BN_pseudo_rand()
@@ -8698,11 +8375,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) Fix OAEP check.
-<<<<<<< HEAD
      [Ulf MÃ¶ller, Bodo MÃ¶ller]
-=======
-     [Ulf Möller, Bodo Möller]
->>>>>>> origin/master
 
   *) The countermeasure against Bleichbacher's attack on PKCS #1 v1.5
      RSA encryption was accidentally removed in s3_srvr.c in OpenSSL 0.9.5
@@ -8964,17 +8637,10 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) Use better test patterns in bntest.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) rand_win.c fix for Borland C.
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
-
-  *) rand_win.c fix for Borland C.
-     [Ulf Möller]
->>>>>>> origin/master
  
   *) BN_rshift bugfix for n == 0.
      [Bodo Moeller]
@@ -9048,11 +8714,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller; problems reported by Anders Gertz <gertz@epact.se>]     
 
   *) Correct util/mkdef.pl to be selective about disabled algorithms.
-<<<<<<< HEAD
      Previously, it would create entries for disabled algorithms no
-=======
-     Previously, it would create entries for disableed algorithms no
->>>>>>> origin/master
      matter what.
      [Richard Levitte]
 
@@ -9123,22 +8785,14 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) New BIO_shutdown_wr macro, which invokes the BIO_C_SHUTDOWN_WR
      BIO_ctrl (for BIO pairs).
-<<<<<<< HEAD
      [Bodo MÃ¶ller]
-=======
-     [Bodo Möller]
->>>>>>> origin/master
 
   *) Add DSO method for VMS.
      [Richard Levitte]
 
   *) Bug fix: Montgomery multiplication could produce results with the
      wrong sign.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add RPM specification openssl.spec and modify it to build three
      packages.  The default package contains applications, application
@@ -9156,11 +8810,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Don't set the two most significant bits to one when generating a
      random number < q in the DSA library.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) New SSL API mode 'SSL_MODE_AUTO_RETRY'.  This disables the default
      behaviour that SSL_read may result in SSL_ERROR_WANT_READ (even if
@@ -9189,11 +8839,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Sven Uszpelkat <su@celocom.de>]
 
   *) Major change in util/mkdef.pl to include extra information
-<<<<<<< HEAD
      about each symbol, as well as presenting variables as well
-=======
-     about each symbol, as well as presentig variables as well
->>>>>>> origin/master
      as functions.  This change means that there's n more need
      to rebuild the .num files when some algorithms are excluded.
      [Richard Levitte]
@@ -9258,11 +8904,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) When a certificate request is read in keep a copy of the
-<<<<<<< HEAD
      original encoding of the signed data and use it when outputting
-=======
-     original encoding of the signed data and use it when outputing
->>>>>>> origin/master
      again. Signatures then use the original encoding rather than
      a decoded, encoded version which may cause problems if the
      request is improperly encoded.
@@ -9434,11 +9076,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) Randomness polling function for Win9x, as described in:
      Peter Gutmann, Software Generation of Practically Strong
      Random Numbers.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Fix so PRNG is seeded in req if using an already existing
      DSA key.
@@ -9520,11 +9158,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) When some versions of IIS use the 'NET' form of private key the
      key derivation algorithm is different. Normally MD5(password) is
      used as a 128 bit RC4 key. In the modified case
-<<<<<<< HEAD
      MD5(MD5(password) + "SGCKEYSALT")  is used instead. Added some
-=======
-     MD5(MD5(password) + "SGCKEYSALT")  is used insted. Added some
->>>>>>> origin/master
      new functions i2d_RSA_NET(), d2i_RSA_NET() etc which are the same
      as the old Netscape_RSA functions except they have an additional
      'sgckey' parameter which uses the modified algorithm. Also added
@@ -9662,11 +9296,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) Eliminate non-ANSI declarations in crypto.h and stack.h.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Fix for SSL server purpose checking. Server checking was
      rejecting certificates which had extended key usage present
@@ -9698,11 +9328,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) Bugfix for linux-elf makefile.one.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) RSA_get_default_method() will now cause a default
      RSA_METHOD to be chosen if one doesn't exist already.
@@ -9791,11 +9417,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) des_quad_cksum() byte order bug fix.
-<<<<<<< HEAD
      [Ulf MÃ¶ller, using the problem description in krb4-0.9.7, where
-=======
-     [Ulf Möller, using the problem description in krb4-0.9.7, where
->>>>>>> origin/master
       the solution is attributed to Derrick J Brashear <shadow@DEMENTIA.ORG>]
 
   *) Fix so V_ASN1_APP_CHOOSE works again: however its use is strongly
@@ -9824,11 +9446,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      its own key.
      ssl_cert_dup, which is used by SSL_new, now copies DH keys in addition
      to parameters -- in previous versions (since OpenSSL 0.9.3) the
-<<<<<<< HEAD
      'default key' from SSL_CTX_set_tmp_dh would always be lost, meaning
-=======
-     'default key' from SSL_CTX_set_tmp_dh would always be lost, meanining
->>>>>>> origin/master
      you effectivly got SSL_OP_SINGLE_DH_USE when using this macro.
      [Bodo Moeller]
 
@@ -9900,11 +9518,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Rolf Haberrecker <rolf@suse.de>]
 
   *) Assembler module support for Mingw32.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Shared library support for HPUX (in shlib/).
      [Lutz Jaenicke <Lutz.Jaenicke@aet.TU-Cottbus.DE> and Anonymous]
@@ -9923,11 +9537,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) BN_mul bugfix: In bn_mul_part_recursion() only the a>a[n] && b>b[n]
      case was implemented. This caused BN_div_recp() to fail occasionally.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add an optional second argument to the set_label() in the perl
      assembly language builder. If this argument exists and is set
@@ -9957,22 +9567,14 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) Fix potential buffer overrun problem in BIO_printf().
-<<<<<<< HEAD
      [Ulf MÃ¶ller, using public domain code by Patrick Powell; problem
-=======
-     [Ulf Möller, using public domain code by Patrick Powell; problem
->>>>>>> origin/master
       pointed out by David Sacerdote <das33@cornell.edu>]
 
   *) Support EGD <http://www.lothar.com/tech/crypto/>.  New functions
      RAND_egd() and RAND_status().  In the command line application,
      the EGD socket can be specified like a seed file using RANDFILE
      or -rand.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Allow the string CERTIFICATE to be tolerated in PKCS#7 structures.
      Some CAs (e.g. Verisign) distribute certificates in this form.
@@ -10005,11 +9607,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
         #define OPENSSL_ALGORITHM_DEFINES
         #include <openssl/opensslconf.h>
      defines all pertinent NO_<algo> symbols, such as NO_IDEA, NO_RSA, etc.
-<<<<<<< HEAD
      [Richard Levitte, Ulf and Bodo MÃ¶ller]
-=======
-     [Richard Levitte, Ulf and Bodo Möller]
->>>>>>> origin/master
 
   *) Bugfix: Tolerate fragmentation and interleaving in the SSL 3/TLS
      record layer.
@@ -10060,28 +9658,17 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Bug fix for BN_div_recp() for numerators with an even number of
      bits.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) More tests in bntest.c, and changed test_bn output.
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
-
-  *) More tests in bntest.c, and changed test_bn output.
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) ./config recognizes MacOS X now.
      [Andy Polyakov]
 
   *) Bug fix for BN_div() when the first words of num and divsor are
      equal (it gave wrong results if (rem=(n1-q*d0)&BN_MASK2) < d0).
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add support for various broken PKCS#8 formats, and command line
      options to produce them.
@@ -10089,29 +9676,17 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) New functions BN_CTX_start(), BN_CTX_get() and BT_CTX_end() to
      get temporary BIGNUMs from a BN_CTX.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) Correct return values in BN_mod_exp_mont() and BN_mod_exp2_mont()
      for p == 0.
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
-
-  *) Correct return values in BN_mod_exp_mont() and BN_mod_exp2_mont()
-     for p == 0.
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Change the SSLeay_add_all_*() functions to OpenSSL_add_all_*() and
      include a #define from the old name to the new. The original intent
      was that statically linked binaries could for example just call
      SSLeay_add_all_ciphers() to just add ciphers to the table and not
-<<<<<<< HEAD
      link with digests. This never worked because SSLeay_add_all_digests()
-=======
-     link with digests. This never worked becayse SSLeay_add_all_digests()
->>>>>>> origin/master
      and SSLeay_add_all_ciphers() were in the same source file so calling
      one would link with the other. They are now in separate source files.
      [Steve Henson]
@@ -10129,11 +9704,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Source code cleanups: use const where appropriate, eliminate casts,
      use void * instead of char * in lhash.
-<<<<<<< HEAD
      [Ulf MÃ¶ller] 
-=======
-     [Ulf Möller] 
->>>>>>> origin/master
 
   *) Bugfix: ssl3_send_server_key_exchange was not restartable
      (the state was not changed to SSL3_ST_SW_KEY_EXCH_B, and because of
@@ -10178,21 +9749,13 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) New function BN_pseudo_rand().
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Clean up BN_mod_mul_montgomery(): replace the broken (and unreadable)
      bignum version of BN_from_montgomery() with the working code from
      SSLeay 0.9.0 (the word based version is faster anyway), and clean up
      the comments.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Avoid a race condition in s2_clnt.c (function get_server_hello) that
      made it impossible to use the same SSL_SESSION data structure in
@@ -10202,41 +9765,25 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) The return value of RAND_load_file() no longer counts bytes obtained
      by stat().  RAND_load_file(..., -1) is new and uses the complete file
      to seed the PRNG (previously an explicit byte count was required).
-<<<<<<< HEAD
      [Ulf MÃ¶ller, Bodo MÃ¶ller]
-=======
-     [Ulf Möller, Bodo Möller]
->>>>>>> origin/master
 
   *) Clean up CRYPTO_EX_DATA functions, some of these didn't have prototypes
      used (char *) instead of (void *) and had casts all over the place.
      [Steve Henson]
 
   *) Make BN_generate_prime() return NULL on error if ret!=NULL.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Retain source code compatibility for BN_prime_checks macro:
      BN_is_prime(..., BN_prime_checks, ...) now uses
      BN_prime_checks_for_size to determine the appropriate number of
      Rabin-Miller iterations.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Diffie-Hellman uses "safe" primes: DH_check() return code renamed to
      DH_CHECK_P_NOT_SAFE_PRIME.
      (Check if this is true? OpenPGP calls them "strong".)
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Merge the functionality of "dh" and "gendh" programs into a new program
      "dhparam". The old programs are retained for now but will handle DH keys
@@ -10278,11 +9825,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Changes to X509_ATTRIBUTE utilities. These have been renamed from
      X509_*() to X509at_*() on the grounds that they don't handle X509
-<<<<<<< HEAD
      structures and behave in an analogous way to the X509v3 functions:
-=======
-     structures and behave in an analagous way to the X509v3 functions:
->>>>>>> origin/master
      they shouldn't be called directly but wrapper functions should be used
      instead.
 
@@ -10296,11 +9839,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) Add missing #ifndefs that caused missing symbols when building libssl
      as a shared library without RSA.  Use #ifndef NO_SSL2 instead of
      NO_RSA in ssl/s2*.c. 
-<<<<<<< HEAD
      [Kris Kennaway <kris@hub.freebsd.org>, modified by Ulf MÃ¶ller]
-=======
-     [Kris Kennaway <kris@hub.freebsd.org>, modified by Ulf Möller]
->>>>>>> origin/master
 
   *) Precautions against using the PRNG uninitialized: RAND_bytes() now
      has a return value which indicates the quality of the random data
@@ -10309,11 +9848,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      guaranteed to be unique but not unpredictable. RAND_add is like
      RAND_seed, but takes an extra argument for an entropy estimate
      (RAND_seed always assumes full entropy).
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Do more iterations of Rabin-Miller probable prime test (specifically,
      3 for 1024-bit primes, 6 for 512-bit primes, 12 for 256-bit primes
@@ -10343,11 +9878,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) Honor the no-xxx Configure options when creating .DEF files.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add PKCS#10 attributes to field table: challengePassword, 
      unstructuredName and unstructuredAddress. These are taken from
@@ -11068,11 +10599,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) Bugfix: ssl23_get_client_hello did not work properly when called in
      state SSL23_ST_SR_CLNT_HELLO_B, i.e. when the first 7 bytes of
      a SSLv2-compatible client hello for SSLv3 or TLSv1 could be read,
-<<<<<<< HEAD
      but a retry condition occurred while trying to read the rest.
-=======
-     but a retry condition occured while trying to read the rest.
->>>>>>> origin/master
      [Bodo Moeller]
 
   *) The PKCS7_ENC_CONTENT_new() function was setting the content type as
@@ -11185,11 +10712,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) More DES library cleanups: remove references to srand/rand and
      delete an unused file.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add support for the the free Netwide assembler (NASM) under Win32,
      since not many people have MASM (ml) and it can be hard to obtain.
@@ -11278,11 +10801,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      worked.
 
   *) Fix problems with no-hmac etc.
-<<<<<<< HEAD
      [Ulf MÃ¶ller, pointed out by Brian Wellington <bwelling@tislabs.com>]
-=======
-     [Ulf Möller, pointed out by Brian Wellington <bwelling@tislabs.com>]
->>>>>>> origin/master
 
   *) New functions RSA_get_default_method(), RSA_set_method() and
      RSA_get_method(). These allows replacement of RSA_METHODs without having
@@ -11399,11 +10918,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Ben Laurie]
 
   *) DES library cleanups.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add support for PKCS#5 v2.0 PBE algorithms. This will permit PKCS#8 to be
      used with any cipher unlike PKCS#5 v1.5 which can at most handle 64 bit
@@ -11446,11 +10961,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Christian Forster <fo@hawo.stw.uni-erlangen.de>]
 
   *) config now generates no-xxx options for missing ciphers.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Support the EBCDIC character set (work in progress).
      File ebcdic.c not yet included because it has a different license.
@@ -11563,11 +11074,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) Move openssl.cnf out of lib/.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Fix various things to let OpenSSL even pass ``egcc -pipe -O2 -Wall
      -Wshadow -Wpointer-arith -Wcast-align -Wmissing-prototypes
@@ -11624,17 +11131,10 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Ben Laurie]
 
   *) Support Borland C++ builder.
-<<<<<<< HEAD
      [Janez Jere <jj@void.si>, modified by Ulf MÃ¶ller]
 
   *) Support Mingw32.
      [Ulf MÃ¶ller]
-=======
-     [Janez Jere <jj@void.si>, modified by Ulf Möller]
-
-  *) Support Mingw32.
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) SHA-1 cleanups and performance enhancements.
      [Andy Polyakov <appro@fy.chalmers.se>]
@@ -11643,11 +11143,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Andy Polyakov <appro@fy.chalmers.se>]
 
   *) Accept any -xxx and +xxx compiler options in Configure.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Update HPUX configuration.
      [Anonymous]
@@ -11680,11 +11176,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Bodo Moeller]
 
   *) OAEP decoding bug fix.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Support INSTALL_PREFIX for package builders, as proposed by
      David Harris.
@@ -11707,33 +11199,21 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Niels Poppe <niels@netbox.org>]
 
   *) New Configure option no-<cipher> (rsa, idea, rc5, ...).
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Add the PKCS#12 API documentation to openssl.txt. Preliminary support for
      extension adding in x509 utility.
      [Steve Henson]
 
   *) Remove NOPROTO sections and error code comments.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Partial rewrite of the DEF file generator to now parse the ANSI
      prototypes.
      [Steve Henson]
 
   *) New Configure options --prefix=DIR and --openssldir=DIR.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Complete rewrite of the error code script(s). It is all now handled
      by one script at the top level which handles error code gathering,
@@ -11762,11 +11242,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) Move the autogenerated header file parts to crypto/opensslconf.h.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Fix new 56-bit DES export ciphersuites: they were using 7 bytes instead of
      8 of keying material. Merlin has also confirmed interop with this fix
@@ -11784,7 +11260,6 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Andy Polyakov <appro@fy.chalmers.se>]
 
   *) Change functions to ANSI C.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) Fix typos in error codes.
@@ -11792,15 +11267,6 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Remove defunct assembler files from Configure.
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
-
-  *) Fix typos in error codes.
-     [Martin Kraemer <Martin.Kraemer@MchP.Siemens.De>, Ulf Möller]
-
-  *) Remove defunct assembler files from Configure.
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) SPARC v8 assembler BIGNUM implementation.
      [Andy Polyakov <appro@fy.chalmers.se>]
@@ -11837,11 +11303,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) New Configure option "rsaref".
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Don't auto-generate pem.h.
      [Bodo Moeller]
@@ -11889,11 +11351,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) New functions DSA_do_sign and DSA_do_verify to provide access to
      the raw DSA values prior to ASN.1 encoding.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
->>>>>>> origin/master
 
   *) Tweaks to Configure
      [Niels Poppe <niels@netbox.org>]
@@ -11903,19 +11361,11 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) New variables $(RANLIB) and $(PERL) in the Makefiles.
-<<<<<<< HEAD
      [Ulf MÃ¶ller]
 
   *) New config option to avoid instructions that are illegal on the 80386.
      The default code is faster, but requires at least a 486.
      [Ulf MÃ¶ller]
-=======
-     [Ulf Möller]
-
-  *) New config option to avoid instructions that are illegal on the 80386.
-     The default code is faster, but requires at least a 486.
-     [Ulf Möller]
->>>>>>> origin/master
   
   *) Got rid of old SSL2_CLIENT_VERSION (inconsistently used) and
      SSL2_SERVER_VERSION (not used at all) macros, which are now the
@@ -12019,11 +11469,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Matthias Loepfe <Matthias.Loepfe@adnovum.ch>]
 
   *) Fix Makefile.org so CC,CFLAG etc are passed to 'make links' add
-<<<<<<< HEAD
      advapi32.lib to Win32 build and change the pem test comparison
-=======
-     advapi32.lib to Win32 build and change the pem test comparision
->>>>>>> origin/master
      to fc.exe (thanks to Ulrich Kroener <kroneru@yahoo.com> for the
      suggestion). Fix misplaced ASNI prototypes and declarations in evp.h
      and crypto/des/ede_cbcm_enc.c.
@@ -12078,11 +11524,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      other platforms details on the command line without having to patch the
      Configure script everytime: One now can use ``perl Configure
      <id>:<details>'', i.e. platform ids are allowed to have details appended
-<<<<<<< HEAD
      to them (separated by colons). This is treated as there would be a static
-=======
-     to them (seperated by colons). This is treated as there would be a static
->>>>>>> origin/master
      pre-configured entry in Configure's %table under key <id> with value
      <details> and ``perl Configure <id>'' is called.  So, when you want to
      perform a quick test-compile under FreeBSD 3.1 with pgcc and without
@@ -12112,11 +11554,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) General source tree makefile cleanups: Made `making xxx in yyy...'
      display consistent in the source tree and replaced `/bin/rm' by `rm'.
-<<<<<<< HEAD
      Additionally cleaned up the `make links' target: Remove unnecessary
-=======
-     Additonally cleaned up the `make links' target: Remove unnecessary
->>>>>>> origin/master
      semicolons, subsequent redundant removes, inline point.sh into mklink.sh
      to speed processing and no longer clutter the display with confusing
      stuff. Instead only the actually done links are displayed.
@@ -12427,11 +11865,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      error code, add initial support to X509_print() and x509 application.
      [Steve Henson]
 
-<<<<<<< HEAD
   *) Takes a deep breath and start adding X509 V3 extension support code. Add
-=======
-  *) Takes a deep breath and start addding X509 V3 extension support code. Add
->>>>>>> origin/master
      files in crypto/x509v3. Move original stuff to crypto/x509v3/old. All this
      stuff is currently isolated and isn't even compiled yet.
      [Steve Henson]
@@ -12470,11 +11904,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
       Hagino <itojun@kame.net>]
 
   *) File was opened incorrectly in randfile.c.
-<<<<<<< HEAD
      [Ulf MÃ¶ller <ulf@fitug.de>]
-=======
-     [Ulf Möller <ulf@fitug.de>]
->>>>>>> origin/master
 
   *) Beginning of support for GeneralizedTime. d2i, i2d, check and print
      functions. Also ASN1_TIME suite which is a CHOICE of UTCTime or
@@ -12484,11 +11914,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      [Steve Henson]
 
   *) Correct Linux 1 recognition in config.
-<<<<<<< HEAD
      [Ulf MÃ¶ller <ulf@fitug.de>]
-=======
-     [Ulf Möller <ulf@fitug.de>]
->>>>>>> origin/master
 
   *) Remove pointless MD5 hash when using DSA keys in ca.
      [Anonymous <nobody@replay.com>]
@@ -12613,11 +12039,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) Fixed sk_insert which never worked properly.
      [Steve Henson]
 
-<<<<<<< HEAD
   *) Fix ASN1 macros so they can handle indefinite length constructed 
-=======
-  *) Fix ASN1 macros so they can handle indefinite length construted 
->>>>>>> origin/master
      EXPLICIT tags. Some non standard certificates use these: they can now
      be read in.
      [Steve Henson]
@@ -12625,11 +12047,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
   *) Merged the various old/obsolete SSLeay documentation files (doc/xxx.doc)
      into a single doc/ssleay.txt bundle. This way the information is still
      preserved but no longer messes up this directory. Now it's new room for
-<<<<<<< HEAD
      the new set of documentation files.
-=======
-     the new set of documenation files.
->>>>>>> origin/master
      [Ralf S. Engelschall]
 
   *) SETs were incorrectly DER encoded. This was a major pain, because they
@@ -12643,11 +12061,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
 
   *) Fix the RSA header declarations that hid a bug I fixed in 0.9.0b but
      was already fixed by Eric for 0.9.1 it seems.
-<<<<<<< HEAD
      [Ben Laurie - pointed out by Ulf MÃ¶ller <ulf@fitug.de>]
-=======
-     [Ben Laurie - pointed out by Ulf Möller <ulf@fitug.de>]
->>>>>>> origin/master
 
   *) Autodetect FreeBSD3.
      [Ben Laurie]

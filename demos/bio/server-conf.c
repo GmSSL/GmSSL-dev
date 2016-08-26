@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,10 +6,6 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
-=======
-/* NOCW */
-/* demos/bio/saccept-conf.c */
->>>>>>> origin/master
 
 /*
  * A minimal program to serve an SSL connection. It uses blocking. It uses
@@ -60,11 +55,7 @@ int main(int argc, char *argv[])
         goto err;
     }
 
-<<<<<<< HEAD
     ctx = SSL_CTX_new(TLS_server_method());
-=======
-    ctx = SSL_CTX_new(SSLv23_server_method());
->>>>>>> origin/master
     cctx = SSL_CONF_CTX_new();
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_SERVER);
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_CERTIFICATE);
@@ -82,11 +73,7 @@ int main(int argc, char *argv[])
             ERR_print_errors_fp(stderr);
             goto err;
         }
-<<<<<<< HEAD
         if (strcmp(cnf->name, "Port") == 0) {
-=======
-        if (!strcmp(cnf->name, "Port")) {
->>>>>>> origin/master
             port = cnf->value;
         } else {
             fprintf(stderr, "Unknown configuration option %s\n", cnf->name);
@@ -150,12 +137,7 @@ int main(int argc, char *argv[])
     if (ret) {
         ERR_print_errors_fp(stderr);
     }
-<<<<<<< HEAD
     BIO_free(in);
-=======
-    if (in != NULL)
-        BIO_free(in);
->>>>>>> origin/master
     exit(ret);
     return (!ret);
 }

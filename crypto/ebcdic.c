@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -15,26 +14,11 @@ NON_EMPTY_TRANSLATION_UNIT
 
 # include <openssl/ebcdic.h>
 
-=======
-/* crypto/ebcdic.c */
-
-#ifndef CHARSET_EBCDIC
-
-# include <openssl/e_os2.h>
-# if defined(PEDANTIC) || defined(__DECC) || defined(OPENSSL_SYS_MACOSX) || defined(__clang__)
-static void *dummy = &dummy;
-# endif
-
-#else                           /* CHARSET_EBCDIC */
-
-# include "ebcdic.h"
->>>>>>> origin/master
 /*-
  *      Initial Port for  Apache-1.3     by <Martin.Kraemer@Mch.SNI.De>
  *      Adapted for       OpenSSL-0.9.4  by <Martin.Kraemer@Mch.SNI.De>
  */
 
-<<<<<<< HEAD
 # ifdef CHARSET_EBCDIC_TEST
 /*
  * Here we're looking to test the EBCDIC code on an ASCII system so we don't do
@@ -114,9 +98,6 @@ const unsigned char os_toebcdic[256] = {
 };
 
 # elif defined(_OSD_POSIX)
-=======
-# ifdef _OSD_POSIX
->>>>>>> origin/master
 /*
  * "BS2000 OSD" is a POSIX subsystem on a main frame. It is made by Siemens
  * AG, Germany, for their BS2000 mainframe machines. Within the POSIX
@@ -274,11 +255,7 @@ const unsigned char os_toebcdic[256] = {
  * systems. It is a modified version of the BS2000 table.
  *
  * Bijective EBCDIC (character set IBM-1047) to US-ASCII table: This table is
-<<<<<<< HEAD
  * bijective - there are no ambiguous or duplicate characters.
-=======
- * bijective - there are no ambigous or duplicate characters.
->>>>>>> origin/master
  */
 const unsigned char os_toascii[256] = {
     0x00, 0x01, 0x02, 0x03, 0x85, 0x09, 0x86, 0x7f, /* 00-0f: */

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 $flavour = shift;
 $output  = shift;
@@ -22,11 +18,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 ($arg1,$arg2,$arg3,$arg4)=$win64?("%rcx","%rdx","%r8", "%r9") :	# Win64 order
@@ -232,7 +224,6 @@ OPENSSL_cleanse:
 	jne	.Little
 	ret
 .size	OPENSSL_cleanse,.-OPENSSL_cleanse
-<<<<<<< HEAD
 
 .globl  CRYPTO_memcmp
 .type   CRYPTO_memcmp,\@abi-omnipotent
@@ -255,8 +246,6 @@ CRYPTO_memcmp:
 .Lno_data:
 	ret
 .size	CRYPTO_memcmp,.-CRYPTO_memcmp
-=======
->>>>>>> origin/master
 ___
 
 print<<___ if (!$win64);
@@ -313,7 +302,6 @@ OPENSSL_wipe_cpu:
 	ret
 .size	OPENSSL_wipe_cpu,.-OPENSSL_wipe_cpu
 ___
-<<<<<<< HEAD
 {
 my $out="%r10";
 my $cnt="%rcx";
@@ -467,39 +455,5 @@ ___
 }
 gen_random("rdrand");
 gen_random("rdseed");
-=======
-
-print<<___;
-.globl	OPENSSL_ia32_rdrand
-.type	OPENSSL_ia32_rdrand,\@abi-omnipotent
-.align	16
-OPENSSL_ia32_rdrand:
-	mov	\$8,%ecx
-.Loop_rdrand:
-	rdrand	%rax
-	jc	.Lbreak_rdrand
-	loop	.Loop_rdrand
-.Lbreak_rdrand:
-	cmp	\$0,%rax
-	cmove	%rcx,%rax
-	ret
-.size	OPENSSL_ia32_rdrand,.-OPENSSL_ia32_rdrand
-
-.globl	OPENSSL_ia32_rdseed
-.type	OPENSSL_ia32_rdseed,\@abi-omnipotent
-.align	16
-OPENSSL_ia32_rdseed:
-	mov	\$8,%ecx
-.Loop_rdseed:
-	rdseed	%rax
-	jc	.Lbreak_rdseed
-	loop	.Loop_rdseed
-.Lbreak_rdseed:
-	cmp	\$0,%rax
-	cmove	%rcx,%rax
-	ret
-.size	OPENSSL_ia32_rdseed,.-OPENSSL_ia32_rdseed
-___
->>>>>>> origin/master
 
 close STDOUT;	# flush

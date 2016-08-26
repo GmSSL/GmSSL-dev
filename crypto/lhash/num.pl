@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,20 +5,13 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 #node     10 ->   4
 
 while (<>)
 	{
 	next unless /^node/;
-<<<<<<< HEAD
 	s|\R$||;                # Better chomp
-=======
-	chop;
->>>>>>> origin/master
 	@a=split;
 	$num{$a[3]}++;
 	}

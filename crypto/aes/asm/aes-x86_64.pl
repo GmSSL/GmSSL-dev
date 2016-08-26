@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -48,11 +44,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 $verticalspin=1;	# unlike 32-bit version $verticalspin performs
@@ -1297,7 +1289,6 @@ $code.=<<___;
 ___
 }
 
-<<<<<<< HEAD
 # int AES_set_encrypt_key(const unsigned char *userKey, const int bits,
 #                        AES_KEY *key)
 $code.=<<___;
@@ -1305,15 +1296,6 @@ $code.=<<___;
 .type	AES_set_encrypt_key,\@function,3
 .align	16
 AES_set_encrypt_key:
-=======
-# int private_AES_set_encrypt_key(const unsigned char *userKey, const int bits,
-#                        AES_KEY *key)
-$code.=<<___;
-.globl	private_AES_set_encrypt_key
-.type	private_AES_set_encrypt_key,\@function,3
-.align	16
-private_AES_set_encrypt_key:
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12			# redundant, but allows to share 
@@ -1330,11 +1312,7 @@ private_AES_set_encrypt_key:
 	add	\$56,%rsp
 .Lenc_key_epilogue:
 	ret
-<<<<<<< HEAD
 .size	AES_set_encrypt_key,.-AES_set_encrypt_key
-=======
-.size	private_AES_set_encrypt_key,.-private_AES_set_encrypt_key
->>>>>>> origin/master
 
 .type	_x86_64_AES_set_encrypt_key,\@abi-omnipotent
 .align	16
@@ -1577,7 +1555,6 @@ $code.=<<___;
 ___
 }
 
-<<<<<<< HEAD
 # int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
 #                        AES_KEY *key)
 $code.=<<___;
@@ -1585,15 +1562,6 @@ $code.=<<___;
 .type	AES_set_decrypt_key,\@function,3
 .align	16
 AES_set_decrypt_key:
-=======
-# int private_AES_set_decrypt_key(const unsigned char *userKey, const int bits,
-#                        AES_KEY *key)
-$code.=<<___;
-.globl	private_AES_set_decrypt_key
-.type	private_AES_set_decrypt_key,\@function,3
-.align	16
-private_AES_set_decrypt_key:
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
@@ -1662,11 +1630,7 @@ $code.=<<___;
 	add	\$56,%rsp
 .Ldec_key_epilogue:
 	ret
-<<<<<<< HEAD
 .size	AES_set_decrypt_key,.-AES_set_decrypt_key
-=======
-.size	private_AES_set_decrypt_key,.-private_AES_set_decrypt_key
->>>>>>> origin/master
 ___
 
 # void AES_cbc_encrypt (const void char *inp, unsigned char *out,
@@ -2813,7 +2777,6 @@ cbc_se_handler:
 	.rva	.LSEH_end_AES_decrypt
 	.rva	.LSEH_info_AES_decrypt
 
-<<<<<<< HEAD
 	.rva	.LSEH_begin_AES_set_encrypt_key
 	.rva	.LSEH_end_AES_set_encrypt_key
 	.rva	.LSEH_info_AES_set_encrypt_key
@@ -2821,15 +2784,6 @@ cbc_se_handler:
 	.rva	.LSEH_begin_AES_set_decrypt_key
 	.rva	.LSEH_end_AES_set_decrypt_key
 	.rva	.LSEH_info_AES_set_decrypt_key
-=======
-	.rva	.LSEH_begin_private_AES_set_encrypt_key
-	.rva	.LSEH_end_private_AES_set_encrypt_key
-	.rva	.LSEH_info_private_AES_set_encrypt_key
-
-	.rva	.LSEH_begin_private_AES_set_decrypt_key
-	.rva	.LSEH_end_private_AES_set_decrypt_key
-	.rva	.LSEH_info_private_AES_set_decrypt_key
->>>>>>> origin/master
 
 	.rva	.LSEH_begin_AES_cbc_encrypt
 	.rva	.LSEH_end_AES_cbc_encrypt
@@ -2845,19 +2799,11 @@ cbc_se_handler:
 	.byte	9,0,0,0
 	.rva	block_se_handler
 	.rva	.Ldec_prologue,.Ldec_epilogue	# HandlerData[]
-<<<<<<< HEAD
 .LSEH_info_AES_set_encrypt_key:
 	.byte	9,0,0,0
 	.rva	key_se_handler
 	.rva	.Lenc_key_prologue,.Lenc_key_epilogue	# HandlerData[]
 .LSEH_info_AES_set_decrypt_key:
-=======
-.LSEH_info_private_AES_set_encrypt_key:
-	.byte	9,0,0,0
-	.rva	key_se_handler
-	.rva	.Lenc_key_prologue,.Lenc_key_epilogue	# HandlerData[]
-.LSEH_info_private_AES_set_decrypt_key:
->>>>>>> origin/master
 	.byte	9,0,0,0
 	.rva	key_se_handler
 	.rva	.Ldec_key_prologue,.Ldec_key_epilogue	# HandlerData[]

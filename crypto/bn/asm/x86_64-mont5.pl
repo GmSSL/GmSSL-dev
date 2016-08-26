@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -46,11 +42,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 if (`$ENV{CC} -Wa,-v -c -o /dev/null -x assembler /dev/null 2>&1`
@@ -68,14 +60,11 @@ if (!$addx && $win64 && ($flavour =~ /masm/ || $ENV{ASM} =~ /ml64/) &&
 	$addx = ($1>=12);
 }
 
-<<<<<<< HEAD
 if (!$addx && `$ENV{CC} -v 2>&1` =~ /((?:^clang|LLVM) version|.*based on LLVM) ([3-9])\.([0-9]+)/) {
 	my $ver = $2 + $3/100.0;	# 3.1->3.01, 3.10->3.10
 	$addx = ($ver>=3.03);
 }
 
-=======
->>>>>>> origin/master
 # int bn_mul_mont_gather5(
 $rp="%rdi";	# BN_ULONG *rp,
 $ap="%rsi";	# const BN_ULONG *ap,
@@ -104,11 +93,8 @@ $code=<<___;
 .type	bn_mul_mont_gather5,\@function,6
 .align	64
 bn_mul_mont_gather5:
-<<<<<<< HEAD
 	mov	${num}d,${num}d
 	mov	%rsp,%rax
-=======
->>>>>>> origin/master
 	test	\$7,${num}d
 	jnz	.Lmul_enter
 ___
@@ -120,20 +106,13 @@ $code.=<<___;
 
 .align	16
 .Lmul_enter:
-<<<<<<< HEAD
 	movd	`($win64?56:8)`(%rsp),%xmm5	# load 7th argument
-=======
-	mov	${num}d,${num}d
-	mov	%rsp,%rax
-	mov	`($win64?56:8)`(%rsp),%r10d	# load 7th argument
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 
 	neg	$num
 	mov	%rsp,%r11
@@ -169,29 +148,11 @@ $code.=<<___;
 .Lmul_body:
 
 	lea	128($bp),%r12		# reassign $bp (+size optimization)
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	lea	2($num),%r11
-	neg	%r11
-	lea	(%rsp,%r11,8),%rsp	# tp=alloca(8*(num+2))
-	and	\$-1024,%rsp		# minimize TLB usage
-
-	mov	%rax,8(%rsp,$num,8)	# tp[num+1]=%rsp
-.Lmul_body:
-	mov	$bp,%r12		# reassign $bp
->>>>>>> origin/master
 ___
 		$bp="%r12";
 		$STRIDE=2**5*8;		# 5 is "window size"
 		$N=$STRIDE/4;		# should match cache line size
 $code.=<<___;
-<<<<<<< HEAD
 	movdqa	0(%r10),%xmm0		# 00000001000000010000000000000000
 	movdqa	16(%r10),%xmm1		# 00000002000000020000000200000002
 	lea	24-112(%rsp,$num,8),%r10# place the mask after tp[num+3] (+ICache optimization)
@@ -275,33 +236,6 @@ $code.=<<___;
 	pshufd	\$0x4e,%xmm0,%xmm1
 	por	%xmm1,%xmm0
 	lea	$STRIDE($bp),$bp
-=======
-	mov	%r10,%r11
-	shr	\$`log($N/8)/log(2)`,%r10
-	and	\$`$N/8-1`,%r11
-	not	%r10
-	lea	.Lmagic_masks(%rip),%rax
-	and	\$`2**5/($N/8)-1`,%r10	# 5 is "window size"
-	lea	96($bp,%r11,8),$bp	# pointer within 1st cache line
-	movq	0(%rax,%r10,8),%xmm4	# set of masks denoting which
-	movq	8(%rax,%r10,8),%xmm5	# cache line contains element
-	movq	16(%rax,%r10,8),%xmm6	# denoted by 7th argument
-	movq	24(%rax,%r10,8),%xmm7
-
-	movq	`0*$STRIDE/4-96`($bp),%xmm0
-	movq	`1*$STRIDE/4-96`($bp),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bp),%xmm2
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-96`($bp),%xmm3
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-	por	%xmm2,%xmm0
-	lea	$STRIDE($bp),$bp
-	por	%xmm3,%xmm0
-
->>>>>>> origin/master
 	movq	%xmm0,$m0		# m0=bp[0]
 
 	mov	($n0),$n0		# pull n0[0] value
@@ -310,38 +244,14 @@ $code.=<<___;
 	xor	$i,$i			# i=0
 	xor	$j,$j			# j=0
 
-<<<<<<< HEAD
-=======
-	movq	`0*$STRIDE/4-96`($bp),%xmm0
-	movq	`1*$STRIDE/4-96`($bp),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bp),%xmm2
-	pand	%xmm5,%xmm1
-
->>>>>>> origin/master
 	mov	$n0,$m1
 	mulq	$m0			# ap[0]*bp[0]
 	mov	%rax,$lo0
 	mov	($np),%rax
 
-<<<<<<< HEAD
 	imulq	$lo0,$m1		# "tp[0]"*n0
 	mov	%rdx,$hi0
 
-=======
-	movq	`3*$STRIDE/4-96`($bp),%xmm3
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-
-	imulq	$lo0,$m1		# "tp[0]"*n0
-	mov	%rdx,$hi0
-
-	por	%xmm2,%xmm0
-	lea	$STRIDE($bp),$bp
-	por	%xmm3,%xmm0
-
->>>>>>> origin/master
 	mulq	$m1			# np[0]*m1
 	add	%rax,$lo0		# discarded
 	mov	8($ap),%rax
@@ -372,7 +282,6 @@ $code.=<<___;
 
 	mulq	$m1			# np[j]*m1
 	cmp	$num,$j
-<<<<<<< HEAD
 	jne	.L1st			# note that upon exit $j==$num, so
 					# they can be used interchangeably
 
@@ -381,18 +290,6 @@ $code.=<<___;
 	add	$hi0,$hi1		# np[j]*m1+ap[j]*bp[0]
 	adc	\$0,%rdx
 	mov	$hi1,-16(%rsp,$num,8)	# tp[num-1]
-=======
-	jne	.L1st
-
-	movq	%xmm0,$m0		# bp[1]
-
-	add	%rax,$hi1
-	mov	($ap),%rax		# ap[0]
-	adc	\$0,%rdx
-	add	$hi0,$hi1		# np[j]*m1+ap[j]*bp[0]
-	adc	\$0,%rdx
-	mov	$hi1,-16(%rsp,$j,8)	# tp[j-1]
->>>>>>> origin/master
 	mov	%rdx,$hi1
 	mov	$lo0,$hi0
 
@@ -406,7 +303,6 @@ $code.=<<___;
 	jmp	.Louter
 .align	16
 .Louter:
-<<<<<<< HEAD
 	lea	24+128(%rsp,$num,8),%rdx	# where 256-byte mask is (+size optimization)
 	and	\$-16,%rdx
 	pxor	%xmm4,%xmm4
@@ -437,44 +333,18 @@ $code.=<<___;
 	mov	($ap),%rax		# ap[0]
 	movq	%xmm0,$m0		# m0=bp[i]
 
-=======
->>>>>>> origin/master
 	xor	$j,$j			# j=0
 	mov	$n0,$m1
 	mov	(%rsp),$lo0
 
-<<<<<<< HEAD
-=======
-	movq	`0*$STRIDE/4-96`($bp),%xmm0
-	movq	`1*$STRIDE/4-96`($bp),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bp),%xmm2
-	pand	%xmm5,%xmm1
-
->>>>>>> origin/master
 	mulq	$m0			# ap[0]*bp[i]
 	add	%rax,$lo0		# ap[0]*bp[i]+tp[0]
 	mov	($np),%rax
 	adc	\$0,%rdx
 
-<<<<<<< HEAD
 	imulq	$lo0,$m1		# tp[0]*n0
 	mov	%rdx,$hi0
 
-=======
-	movq	`3*$STRIDE/4-96`($bp),%xmm3
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-
-	imulq	$lo0,$m1		# tp[0]*n0
-	mov	%rdx,$hi0
-
-	por	%xmm2,%xmm0
-	lea	$STRIDE($bp),$bp
-	por	%xmm3,%xmm0
-
->>>>>>> origin/master
 	mulq	$m1			# np[0]*m1
 	add	%rax,$lo0		# discarded
 	mov	8($ap),%rax
@@ -508,7 +378,6 @@ $code.=<<___;
 
 	mulq	$m1			# np[j]*m1
 	cmp	$num,$j
-<<<<<<< HEAD
 	jne	.Linner			# note that upon exit $j==$num, so
 					# they can be used interchangeably
 	add	%rax,$hi1
@@ -517,19 +386,6 @@ $code.=<<___;
 	mov	(%rsp,$num,8),$lo0
 	adc	\$0,%rdx
 	mov	$hi1,-16(%rsp,$num,8)	# tp[num-1]
-=======
-	jne	.Linner
-
-	movq	%xmm0,$m0		# bp[i+1]
-
-	add	%rax,$hi1
-	mov	($ap),%rax		# ap[0]
-	adc	\$0,%rdx
-	add	$lo0,$hi1		# np[j]*m1+ap[j]*bp[i]+tp[j]
-	mov	(%rsp,$j,8),$lo0
-	adc	\$0,%rdx
-	mov	$hi1,-16(%rsp,$j,8)	# tp[j-1]
->>>>>>> origin/master
 	mov	%rdx,$hi1
 
 	xor	%rdx,%rdx
@@ -576,16 +432,7 @@ $code.=<<___;
 
 	mov	8(%rsp,$num,8),%rsi	# restore %rsp
 	mov	\$1,%rax
-<<<<<<< HEAD
 
-=======
-___
-$code.=<<___ if ($win64);
-	movaps	-88(%rsi),%xmm6
-	movaps	-72(%rsi),%xmm7
-___
-$code.=<<___;
->>>>>>> origin/master
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -604,7 +451,6 @@ $code.=<<___;
 .type	bn_mul4x_mont_gather5,\@function,6
 .align	32
 bn_mul4x_mont_gather5:
-<<<<<<< HEAD
 	.byte	0x67
 	mov	%rsp,%rax
 .Lmul4x_enter:
@@ -615,25 +461,12 @@ $code.=<<___ if ($addx);
 	je	.Lmulx4x_enter
 ___
 $code.=<<___;
-=======
-.Lmul4x_enter:
-___
-$code.=<<___ if ($addx);
-	and	\$0x80100,%r11d
-	cmp	\$0x80100,%r11d
-	je	.Lmulx4x_enter
-___
-$code.=<<___;
-	.byte	0x67
-	mov	%rsp,%rax
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 .Lmul4x_prologue:
 
 	.byte	0x67
@@ -658,40 +491,10 @@ $code.=<<___;
 	jb	.Lmul4xsp_alt
 	sub	%r11,%rbp		# align with $rp
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*num*8+256)
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	.byte	0x67
-	mov	${num}d,%r10d
-	shl	\$3,${num}d
-	shl	\$3+2,%r10d		# 4*$num
-	neg	$num			# -$num
-
-	##############################################################
-	# ensure that stack frame doesn't alias with $aptr+4*$num
-	# modulo 4096, which covers ret[num], am[num] and n[2*num]
-	# (see bn_exp.c). this is done to allow memory disambiguation
-	# logic do its magic. [excessive frame is allocated in order
-	# to allow bn_from_mont8x to clear it.]
-	#
-	lea	-64(%rsp,$num,2),%r11
-	sub	$ap,%r11
-	and	\$4095,%r11
-	cmp	%r11,%r10
-	jb	.Lmul4xsp_alt
-	sub	%r11,%rsp		# align with $ap
-	lea	-64(%rsp,$num,2),%rsp	# alloca(128+num*8)
->>>>>>> origin/master
 	jmp	.Lmul4xsp_done
 
 .align	32
 .Lmul4xsp_alt:
-<<<<<<< HEAD
 	lea	4096-320(,$num,2),%r10
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*num*8+256)
 	sub	%r10,%r11
@@ -716,16 +519,6 @@ $code.=<<___;
 	ja	.Lmul4x_page_walk
 .Lmul4x_page_walk_done:
 
-=======
-	lea	4096-64(,$num,2),%r10
-	lea	-64(%rsp,$num,2),%rsp	# alloca(128+num*8)
-	sub	%r10,%r11
-	mov	\$0,%r10
-	cmovc	%r10,%r11
-	sub	%r11,%rsp
-.Lmul4xsp_done:
-	and	\$-64,%rsp
->>>>>>> origin/master
 	neg	$num
 
 	mov	%rax,40(%rsp)
@@ -735,16 +528,7 @@ $code.=<<___;
 
 	mov	40(%rsp),%rsi		# restore %rsp
 	mov	\$1,%rax
-<<<<<<< HEAD
 
-=======
-___
-$code.=<<___ if ($win64);
-	movaps	-88(%rsi),%xmm6
-	movaps	-72(%rsi),%xmm7
-___
-$code.=<<___;
->>>>>>> origin/master
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -759,16 +543,10 @@ $code.=<<___;
 .type	mul4x_internal,\@abi-omnipotent
 .align	32
 mul4x_internal:
-<<<<<<< HEAD
 	shl	\$5,$num		# $num was in bytes
 	movd	`($win64?56:8)`(%rax),%xmm5	# load 7th argument, index
 	lea	.Linc(%rip),%rax
 	lea	128(%rdx,$num),%r13	# end of powers table (+size optimization)
-=======
-	shl	\$5,$num
-	mov	`($win64?56:8)`(%rax),%r10d	# load 7th argument
-	lea	256(%rdx,$num),%r13
->>>>>>> origin/master
 	shr	\$5,$num		# restore $num
 ___
 		$bp="%r12";
@@ -776,7 +554,6 @@ ___
 		$N=$STRIDE/4;		# should match cache line size
 		$tp=$i;
 $code.=<<___;
-<<<<<<< HEAD
 	movdqa	0(%rax),%xmm0		# 00000001000000010000000000000000
 	movdqa	16(%rax),%xmm1		# 00000002000000020000000200000002
 	lea	88-112(%rsp,$num),%r10	# place the mask after tp[num+1] (+ICache optimization)
@@ -863,46 +640,6 @@ $code.=<<___;
 	lea	$STRIDE($bp),$bp
 	movq	%xmm0,$m0		# m0=bp[0]
 
-=======
-	mov	%r10,%r11
-	shr	\$`log($N/8)/log(2)`,%r10
-	and	\$`$N/8-1`,%r11
-	not	%r10
-	lea	.Lmagic_masks(%rip),%rax
-	and	\$`2**5/($N/8)-1`,%r10	# 5 is "window size"
-	lea	96(%rdx,%r11,8),$bp	# pointer within 1st cache line
-	movq	0(%rax,%r10,8),%xmm4	# set of masks denoting which
-	movq	8(%rax,%r10,8),%xmm5	# cache line contains element
-	add	\$7,%r11
-	movq	16(%rax,%r10,8),%xmm6	# denoted by 7th argument
-	movq	24(%rax,%r10,8),%xmm7
-	and	\$7,%r11
-
-	movq	`0*$STRIDE/4-96`($bp),%xmm0
-	lea	$STRIDE($bp),$tp	# borrow $tp
-	movq	`1*$STRIDE/4-96`($bp),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bp),%xmm2
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-96`($bp),%xmm3
-	pand	%xmm6,%xmm2
-	.byte	0x67
-	por	%xmm1,%xmm0
-	movq	`0*$STRIDE/4-96`($tp),%xmm1
-	.byte	0x67
-	pand	%xmm7,%xmm3
-	.byte	0x67
-	por	%xmm2,%xmm0
-	movq	`1*$STRIDE/4-96`($tp),%xmm2
-	.byte	0x67
-	pand	%xmm4,%xmm1
-	.byte	0x67
-	por	%xmm3,%xmm0
-	movq	`2*$STRIDE/4-96`($tp),%xmm3
-
-	movq	%xmm0,$m0		# m0=bp[0]
-	movq	`3*$STRIDE/4-96`($tp),%xmm0
->>>>>>> origin/master
 	mov	%r13,16+8(%rsp)		# save end of b[num]
 	mov	$rp, 56+8(%rsp)		# save $rp
 
@@ -916,33 +653,10 @@ $code.=<<___;
 	mov	%rax,$A[0]
 	mov	($np),%rax
 
-<<<<<<< HEAD
 	imulq	$A[0],$m1		# "tp[0]"*n0
 	lea	64+8(%rsp),$tp
 	mov	%rdx,$A[1]
 
-=======
-	pand	%xmm5,%xmm2
-	pand	%xmm6,%xmm3
-	por	%xmm2,%xmm1
-
-	imulq	$A[0],$m1		# "tp[0]"*n0
-	##############################################################
-	# $tp is chosen so that writing to top-most element of the
-	# vector occurs just "above" references to powers table,
-	# "above" modulo cache-line size, which effectively precludes
-	# possibility of memory disambiguation logic failure when
-	# accessing the table.
-	# 
-	lea	64+8(%rsp,%r11,8),$tp
-	mov	%rdx,$A[1]
-
-	pand	%xmm7,%xmm0
-	por	%xmm3,%xmm1
-	lea	2*$STRIDE($bp),$bp
-	por	%xmm1,%xmm0
-
->>>>>>> origin/master
 	mulq	$m1			# np[0]*m1
 	add	%rax,$A[0]		# discarded
 	mov	8($ap,$num),%rax
@@ -951,11 +665,7 @@ $code.=<<___;
 
 	mulq	$m0
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	8*1($np),%rax
-=======
-	mov	16*1($np),%rax		# interleaved with 0, therefore 16*n
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$A[0]
 
@@ -965,11 +675,7 @@ $code.=<<___;
 	adc	\$0,%rdx
 	add	$A[1],$N[1]
 	lea	4*8($num),$j		# j=4
-<<<<<<< HEAD
 	lea	8*4($np),$np
-=======
-	lea	16*4($np),$np
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	$N[1],($tp)
 	mov	%rdx,$N[0]
@@ -979,11 +685,7 @@ $code.=<<___;
 .L1st4x:
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	-8*2($np),%rax
-=======
-	mov	-16*2($np),%rax
->>>>>>> origin/master
 	lea	32($tp),$tp
 	adc	\$0,%rdx
 	mov	%rdx,$A[1]
@@ -999,11 +701,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	-8*1($np),%rax
-=======
-	mov	-16*1($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$A[0]
 
@@ -1018,11 +716,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	8*0($np),%rax
-=======
-	mov	16*0($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$A[1]
 
@@ -1037,11 +731,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	8*1($np),%rax
-=======
-	mov	16*1($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$A[0]
 
@@ -1050,11 +740,7 @@ $code.=<<___;
 	mov	16($ap,$j),%rax
 	adc	\$0,%rdx
 	add	$A[1],$N[1]		# np[j]*m1+ap[j]*bp[0]
-<<<<<<< HEAD
 	lea	8*4($np),$np
-=======
-	lea	16*4($np),$np
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	$N[1],($tp)		# tp[j-1]
 	mov	%rdx,$N[0]
@@ -1064,11 +750,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	-8*2($np),%rax
-=======
-	mov	-16*2($np),%rax
->>>>>>> origin/master
 	lea	32($tp),$tp
 	adc	\$0,%rdx
 	mov	%rdx,$A[1]
@@ -1084,11 +766,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[0]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	-8*1($np),%rax
-=======
-	mov	-16*1($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$A[0]
 
@@ -1101,12 +779,7 @@ $code.=<<___;
 	mov	$N[1],-16($tp)		# tp[j-1]
 	mov	%rdx,$N[0]
 
-<<<<<<< HEAD
 	lea	($np,$num),$np		# rewind $np
-=======
-	movq	%xmm0,$m0		# bp[1]
-	lea	($np,$num,2),$np	# rewind $np
->>>>>>> origin/master
 
 	xor	$N[1],$N[1]
 	add	$A[0],$N[0]
@@ -1117,7 +790,6 @@ $code.=<<___;
 
 .align	32
 .Louter4x:
-<<<<<<< HEAD
 	lea	16+128($tp),%rdx	# where 256-byte mask is (+size optimization)
 	pxor	%xmm4,%xmm4
 	pxor	%xmm5,%xmm5
@@ -1145,8 +817,6 @@ $code.=<<___;
 	lea	$STRIDE($bp),$bp
 	movq	%xmm0,$m0		# m0=bp[i]
 
-=======
->>>>>>> origin/master
 	mov	($tp,$num),$A[0]
 	mov	$n0,$m1
 	mulq	$m0			# ap[0]*bp[i]
@@ -1154,33 +824,11 @@ $code.=<<___;
 	mov	($np),%rax
 	adc	\$0,%rdx
 
-<<<<<<< HEAD
 	imulq	$A[0],$m1		# tp[0]*n0
 	mov	%rdx,$A[1]
 	mov	$N[1],($tp)		# store upmost overflow bit
 
 	lea	($tp,$num),$tp		# rewind $tp
-=======
-	movq	`0*$STRIDE/4-96`($bp),%xmm0
-	movq	`1*$STRIDE/4-96`($bp),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bp),%xmm2
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-96`($bp),%xmm3
-
-	imulq	$A[0],$m1		# tp[0]*n0
-	.byte	0x67
-	mov	%rdx,$A[1]
-	mov	$N[1],($tp)		# store upmost overflow bit
-
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-	por	%xmm2,%xmm0
-	lea	($tp,$num),$tp		# rewind $tp
-	lea	$STRIDE($bp),$bp
-	por	%xmm3,%xmm0
->>>>>>> origin/master
 
 	mulq	$m1			# np[0]*m1
 	add	%rax,$A[0]		# "$N[0]", discarded
@@ -1190,11 +838,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	8*1($np),%rax
-=======
-	mov	16*1($np),%rax		# interleaved with 0, therefore 16*n
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	8($tp),$A[1]		# +tp[1]
 	adc	\$0,%rdx
@@ -1206,11 +850,7 @@ $code.=<<___;
 	adc	\$0,%rdx
 	add	$A[1],$N[1]		# np[j]*m1+ap[j]*bp[i]+tp[j]
 	lea	4*8($num),$j		# j=4
-<<<<<<< HEAD
 	lea	8*4($np),$np
-=======
-	lea	16*4($np),$np
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	%rdx,$N[0]
 	jmp	.Linner4x
@@ -1219,11 +859,7 @@ $code.=<<___;
 .Linner4x:
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	-8*2($np),%rax
-=======
-	mov	-16*2($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	16($tp),$A[0]		# ap[j]*bp[i]+tp[j]
 	lea	32($tp),$tp
@@ -1241,11 +877,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	-8*1($np),%rax
-=======
-	mov	-16*1($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	-8($tp),$A[1]
 	adc	\$0,%rdx
@@ -1262,11 +894,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	8*0($np),%rax
-=======
-	mov	16*0($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	($tp),$A[0]		# ap[j]*bp[i]+tp[j]
 	adc	\$0,%rdx
@@ -1283,11 +911,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[1]
-<<<<<<< HEAD
 	mov	8*1($np),%rax
-=======
-	mov	16*1($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	8($tp),$A[1]
 	adc	\$0,%rdx
@@ -1298,11 +922,7 @@ $code.=<<___;
 	mov	16($ap,$j),%rax
 	adc	\$0,%rdx
 	add	$A[1],$N[1]
-<<<<<<< HEAD
 	lea	8*4($np),$np
-=======
-	lea	16*4($np),$np
->>>>>>> origin/master
 	adc	\$0,%rdx
 	mov	$N[0],-8($tp)		# tp[j-1]
 	mov	%rdx,$N[0]
@@ -1312,11 +932,7 @@ $code.=<<___;
 
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[0]
-<<<<<<< HEAD
 	mov	-8*2($np),%rax
-=======
-	mov	-16*2($np),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	16($tp),$A[0]		# ap[j]*bp[i]+tp[j]
 	lea	32($tp),$tp
@@ -1335,11 +951,7 @@ $code.=<<___;
 	mulq	$m0			# ap[j]*bp[i]
 	add	%rax,$A[1]
 	mov	$m1,%rax
-<<<<<<< HEAD
 	mov	-8*1($np),$m1
-=======
-	mov	-16*1($np),$m1
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	-8($tp),$A[1]
 	adc	\$0,%rdx
@@ -1354,14 +966,8 @@ $code.=<<___;
 	mov	$N[0],-24($tp)		# tp[j-1]
 	mov	%rdx,$N[0]
 
-<<<<<<< HEAD
 	mov	$N[1],-16($tp)		# tp[j-1]
 	lea	($np,$num),$np		# rewind $np
-=======
-	movq	%xmm0,$m0		# bp[i+1]
-	mov	$N[1],-16($tp)		# tp[j-1]
-	lea	($np,$num,2),$np	# rewind $np
->>>>>>> origin/master
 
 	xor	$N[1],$N[1]
 	add	$A[0],$N[0]
@@ -1375,7 +981,6 @@ $code.=<<___;
 ___
 if (1) {
 $code.=<<___;
-<<<<<<< HEAD
 	xor	%rax,%rax
 	sub	$N[0],$m1		# compare top-most words
 	adc	$j,$j			# $j is zero
@@ -1393,18 +998,6 @@ $code.=<<___;
 	mov	8*2(%rbp),%r14
 	mov	8*3(%rbp),%r15
 	jmp	.Lsqr4x_sub_entry
-=======
-	sub	$N[0],$m1		# compare top-most words
-	adc	$j,$j			# $j is zero
-	or	$j,$N[1]
-	xor	\$1,$N[1]
-	lea	($tp,$num),%rbx		# tptr in .sqr4x_sub
-	lea	($np,$N[1],8),%rbp	# nptr in .sqr4x_sub
-	mov	%r9,%rcx
-	sar	\$3+2,%rcx		# cf=0
-	mov	56+8(%rsp),%rdi		# rptr in .sqr4x_sub
-	jmp	.Lsqr4x_sub
->>>>>>> origin/master
 ___
 } else {
 my @ri=("%rax",$bp,$m0,$m1);
@@ -1468,7 +1061,6 @@ $code.=<<___;
 .type	bn_power5,\@function,6
 .align	32
 bn_power5:
-<<<<<<< HEAD
 	mov	%rsp,%rax
 ___
 $code.=<<___ if ($addx);
@@ -1478,45 +1070,20 @@ $code.=<<___ if ($addx);
 	je	.Lpowerx5_enter
 ___
 $code.=<<___;
-=======
-___
-$code.=<<___ if ($addx);
-	mov	OPENSSL_ia32cap_P+8(%rip),%r11d
-	and	\$0x80100,%r11d
-	cmp	\$0x80100,%r11d
-	je	.Lpowerx5_enter
-___
-$code.=<<___;
-	mov	%rsp,%rax
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 .Lpower5_prologue:
 
 	shl	\$3,${num}d		# convert $num to bytes
 	lea	($num,$num,2),%r10d	# 3*$num
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	mov	${num}d,%r10d
-	shl	\$3,${num}d		# convert $num to bytes
-	shl	\$3+2,%r10d		# 4*$num
->>>>>>> origin/master
 	neg	$num
 	mov	($n0),$n0		# *n0
 
 	##############################################################
-<<<<<<< HEAD
 	# Ensure that stack frame doesn't alias with $rptr+3*$num
 	# modulo 4096, which covers ret[num], am[num] and n[num]
 	# (see bn_exp.c). This is done to allow memory disambiguation
@@ -1531,25 +1098,10 @@ $code.=<<___;
 	jb	.Lpwr_sp_alt
 	sub	%r11,%rbp		# align with $aptr
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*num*8+256)
-=======
-	# ensure that stack frame doesn't alias with $aptr+4*$num
-	# modulo 4096, which covers ret[num], am[num] and n[2*num]
-	# (see bn_exp.c). this is done to allow memory disambiguation
-	# logic do its magic.
-	#
-	lea	-64(%rsp,$num,2),%r11
-	sub	$aptr,%r11
-	and	\$4095,%r11
-	cmp	%r11,%r10
-	jb	.Lpwr_sp_alt
-	sub	%r11,%rsp		# align with $aptr
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
->>>>>>> origin/master
 	jmp	.Lpwr_sp_done
 
 .align	32
 .Lpwr_sp_alt:
-<<<<<<< HEAD
 	lea	4096-320(,$num,2),%r10
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*num*8+256)
 	sub	%r10,%r11
@@ -1574,16 +1126,6 @@ $code.=<<___;
 	ja	.Lpwr_page_walk
 .Lpwr_page_walk_done:
 
-=======
-	lea	4096-64(,$num,2),%r10	# 4096-frame-2*$num
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
-	sub	%r10,%r11
-	mov	\$0,%r10
-	cmovc	%r10,%r11
-	sub	%r11,%rsp
-.Lpwr_sp_done:
-	and	\$-64,%rsp
->>>>>>> origin/master
 	mov	$num,%r10	
 	neg	$num
 
@@ -1599,7 +1141,6 @@ $code.=<<___;
 	mov	$n0,  32(%rsp)
 	mov	%rax, 40(%rsp)		# save original %rsp
 .Lpower5_body:
-<<<<<<< HEAD
 	movq	$rptr,%xmm1		# save $rptr, used in sqr8x
 	movq	$nptr,%xmm2		# save $nptr
 	movq	%r10, %xmm3		# -$num, used in sqr8x
@@ -1615,18 +1156,6 @@ $code.=<<___;
 	call	__bn_post4x_internal
 	call	__bn_sqr8x_internal
 	call	__bn_post4x_internal
-=======
-	movq	$rptr,%xmm1		# save $rptr
-	movq	$nptr,%xmm2		# save $nptr
-	movq	%r10, %xmm3		# -$num
-	movq	$bptr,%xmm4
-
-	call	__bn_sqr8x_internal
-	call	__bn_sqr8x_internal
-	call	__bn_sqr8x_internal
-	call	__bn_sqr8x_internal
-	call	__bn_sqr8x_internal
->>>>>>> origin/master
 
 	movq	%xmm2,$nptr
 	movq	%xmm4,$bptr
@@ -2187,15 +1716,9 @@ my ($nptr,$tptr,$carry,$m0)=("%rbp","%rdi","%rsi","%rbx");
 
 $code.=<<___;
 	movq	%xmm2,$nptr
-<<<<<<< HEAD
 __bn_sqr8x_reduction:
 	xor	%rax,%rax
 	lea	($nptr,$num),%rcx	# end of n[]
-=======
-sqr8x_reduction:
-	xor	%rax,%rax
-	lea	($nptr,$num,2),%rcx	# end of n[]
->>>>>>> origin/master
 	lea	48+8(%rsp,$num,2),%rdx	# end of t[] buffer
 	mov	%rcx,0+8(%rsp)
 	lea	48+8(%rsp,$num),$tptr	# end of initial t[] window
@@ -2221,33 +1744,21 @@ sqr8x_reduction:
 	.byte	0x67
 	mov	$m0,%r8
 	imulq	32+8(%rsp),$m0		# n0*a[0]
-<<<<<<< HEAD
 	mov	8*0($nptr),%rax		# n[0]
-=======
-	mov	16*0($nptr),%rax	# n[0]
->>>>>>> origin/master
 	mov	\$8,%ecx
 	jmp	.L8x_reduce
 
 .align	32
 .L8x_reduce:
 	mulq	$m0
-<<<<<<< HEAD
 	 mov	8*1($nptr),%rax		# n[1]
-=======
-	 mov	16*1($nptr),%rax	# n[1]
->>>>>>> origin/master
 	neg	%r8
 	mov	%rdx,%r8
 	adc	\$0,%r8
 
 	mulq	$m0
 	add	%rax,%r9
-<<<<<<< HEAD
 	 mov	8*2($nptr),%rax
-=======
-	 mov	16*2($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r9,%r8
 	 mov	$m0,48-8+8(%rsp,%rcx,8)	# put aside n0*a[i]
@@ -2256,11 +1767,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r10
-<<<<<<< HEAD
 	 mov	8*3($nptr),%rax
-=======
-	 mov	16*3($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r10,%r9
 	 mov	32+8(%rsp),$carry	# pull n0, borrow $carry
@@ -2269,11 +1776,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r11
-<<<<<<< HEAD
 	 mov	8*4($nptr),%rax
-=======
-	 mov	16*4($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	 imulq	%r8,$carry		# modulo-scheduled
 	add	%r11,%r10
@@ -2282,11 +1785,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r12
-<<<<<<< HEAD
 	 mov	8*5($nptr),%rax
-=======
-	 mov	16*5($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r12,%r11
 	mov	%rdx,%r12
@@ -2294,11 +1793,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r13
-<<<<<<< HEAD
 	 mov	8*6($nptr),%rax
-=======
-	 mov	16*6($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r13,%r12
 	mov	%rdx,%r13
@@ -2306,11 +1801,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r14
-<<<<<<< HEAD
 	 mov	8*7($nptr),%rax
-=======
-	 mov	16*7($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r14,%r13
 	mov	%rdx,%r14
@@ -2319,11 +1810,7 @@ sqr8x_reduction:
 	mulq	$m0
 	 mov	$carry,$m0		# n0*a[i]
 	add	%rax,%r15
-<<<<<<< HEAD
 	 mov	8*0($nptr),%rax		# n[0]
-=======
-	 mov	16*0($nptr),%rax	# n[0]
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r15,%r14
 	mov	%rdx,%r15
@@ -2332,11 +1819,7 @@ sqr8x_reduction:
 	dec	%ecx
 	jnz	.L8x_reduce
 
-<<<<<<< HEAD
 	lea	8*8($nptr),$nptr
-=======
-	lea	16*8($nptr),$nptr
->>>>>>> origin/master
 	xor	%rax,%rax
 	mov	8+8(%rsp),%rdx		# pull end of t[]
 	cmp	0+8(%rsp),$nptr		# end of n[]?
@@ -2355,33 +1838,21 @@ sqr8x_reduction:
 
 	mov	48+56+8(%rsp),$m0	# pull n0*a[0]
 	mov	\$8,%ecx
-<<<<<<< HEAD
 	mov	8*0($nptr),%rax
-=======
-	mov	16*0($nptr),%rax
->>>>>>> origin/master
 	jmp	.L8x_tail
 
 .align	32
 .L8x_tail:
 	mulq	$m0
 	add	%rax,%r8
-<<<<<<< HEAD
 	 mov	8*1($nptr),%rax
-=======
-	 mov	16*1($nptr),%rax
->>>>>>> origin/master
 	 mov	%r8,($tptr)		# save result
 	mov	%rdx,%r8
 	adc	\$0,%r8
 
 	mulq	$m0
 	add	%rax,%r9
-<<<<<<< HEAD
 	 mov	8*2($nptr),%rax
-=======
-	 mov	16*2($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r9,%r8
 	 lea	8($tptr),$tptr		# $tptr++
@@ -2390,11 +1861,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r10
-<<<<<<< HEAD
 	 mov	8*3($nptr),%rax
-=======
-	 mov	16*3($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r10,%r9
 	mov	%rdx,%r10
@@ -2402,11 +1869,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r11
-<<<<<<< HEAD
 	 mov	8*4($nptr),%rax
-=======
-	 mov	16*4($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r11,%r10
 	mov	%rdx,%r11
@@ -2414,11 +1877,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r12
-<<<<<<< HEAD
 	 mov	8*5($nptr),%rax
-=======
-	 mov	16*5($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r12,%r11
 	mov	%rdx,%r12
@@ -2426,11 +1885,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r13
-<<<<<<< HEAD
 	 mov	8*6($nptr),%rax
-=======
-	 mov	16*6($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r13,%r12
 	mov	%rdx,%r13
@@ -2438,11 +1893,7 @@ sqr8x_reduction:
 
 	mulq	$m0
 	add	%rax,%r14
-<<<<<<< HEAD
 	 mov	8*7($nptr),%rax
-=======
-	 mov	16*7($nptr),%rax
->>>>>>> origin/master
 	adc	\$0,%rdx
 	add	%r14,%r13
 	mov	%rdx,%r14
@@ -2453,22 +1904,14 @@ sqr8x_reduction:
 	add	%rax,%r15
 	adc	\$0,%rdx
 	add	%r15,%r14
-<<<<<<< HEAD
 	 mov	8*0($nptr),%rax		# pull n[0]
-=======
-	 mov	16*0($nptr),%rax	# pull n[0]
->>>>>>> origin/master
 	mov	%rdx,%r15
 	adc	\$0,%r15
 
 	dec	%ecx
 	jnz	.L8x_tail
 
-<<<<<<< HEAD
 	lea	8*8($nptr),$nptr
-=======
-	lea	16*8($nptr),$nptr
->>>>>>> origin/master
 	mov	8+8(%rsp),%rdx		# pull end of t[]
 	cmp	0+8(%rsp),$nptr		# end of n[]?
 	jae	.L8x_tail_done		# break out of loop
@@ -2492,7 +1935,6 @@ sqr8x_reduction:
 .align	32
 .L8x_tail_done:
 	add	(%rdx),%r8		# can this overflow?
-<<<<<<< HEAD
 	adc	\$0,%r9
 	adc	\$0,%r10
 	adc	\$0,%r11
@@ -2502,8 +1944,6 @@ sqr8x_reduction:
 	adc	\$0,%r15		# can't overflow, because we
 					# started with "overhung" part
 					# of multiplication
-=======
->>>>>>> origin/master
 	xor	%rax,%rax
 
 	neg	$carry
@@ -2517,11 +1957,7 @@ sqr8x_reduction:
 	adc	8*6($tptr),%r14
 	adc	8*7($tptr),%r15
 	adc	\$0,%rax		# top-most carry
-<<<<<<< HEAD
 	 mov	-8($nptr),%rcx		# np[num-1]
-=======
-	 mov	-16($nptr),%rcx		# np[num-1]
->>>>>>> origin/master
 	 xor	$carry,$carry
 
 	movq	%xmm2,$nptr		# restore $nptr
@@ -2539,11 +1975,8 @@ sqr8x_reduction:
 
 	cmp	%rdx,$tptr		# end of t[]?
 	jb	.L8x_reduction_loop
-<<<<<<< HEAD
 	ret
 .size	bn_sqr8x_internal,.-bn_sqr8x_internal
-=======
->>>>>>> origin/master
 ___
 }
 ##############################################################
@@ -2552,7 +1985,6 @@ ___
 {
 my ($tptr,$nptr)=("%rbx","%rbp");
 $code.=<<___;
-<<<<<<< HEAD
 .type	__bn_post4x_internal,\@abi-omnipotent
 .align	32
 __bn_post4x_internal:
@@ -2596,43 +2028,12 @@ __bn_post4x_internal:
 	lea	8*4($tptr),$tptr
 	mov	%r13,8*1($rptr)
 	sbb	%r10,%r10		# mov %cf,%r10
-=======
-	#xor	%rsi,%rsi		# %rsi was $carry above
-	sub	%r15,%rcx		# compare top-most words
-	lea	(%rdi,$num),$tptr	# %rdi was $tptr above
-	adc	%rsi,%rsi
-	mov	$num,%rcx
-	or	%rsi,%rax
-	movq	%xmm1,$rptr		# restore $rptr
-	xor	\$1,%rax
-	movq	%xmm1,$aptr		# prepare for back-to-back call
-	lea	($nptr,%rax,8),$nptr
-	sar	\$3+2,%rcx		# cf=0
-	jmp	.Lsqr4x_sub
-
-.align	32
-.Lsqr4x_sub:
-	.byte	0x66
-	mov	8*0($tptr),%r12
-	mov	8*1($tptr),%r13
-	sbb	16*0($nptr),%r12
-	mov	8*2($tptr),%r14
-	sbb	16*1($nptr),%r13
-	mov	8*3($tptr),%r15
-	lea	8*4($tptr),$tptr
-	sbb	16*2($nptr),%r14
-	mov	%r12,8*0($rptr)
-	sbb	16*3($nptr),%r15
-	lea	16*4($nptr),$nptr
-	mov	%r13,8*1($rptr)
->>>>>>> origin/master
 	mov	%r14,8*2($rptr)
 	mov	%r15,8*3($rptr)
 	lea	8*4($rptr),$rptr
 
 	inc	%rcx			# pass %cf
 	jnz	.Lsqr4x_sub
-<<<<<<< HEAD
 
 	mov	$num,%r10		# prepare for back-to-back call
 	neg	$num			# restore $num	
@@ -2640,16 +2041,6 @@ __bn_post4x_internal:
 .size	__bn_post4x_internal,.-__bn_post4x_internal
 ___
 }
-=======
-___
-}
-$code.=<<___;
-	mov	$num,%r10		# prepare for back-to-back call
-	neg	$num			# restore $num	
-	ret
-.size	bn_sqr8x_internal,.-bn_sqr8x_internal
-___
->>>>>>> origin/master
 {
 $code.=<<___;
 .globl	bn_from_montgomery
@@ -2673,29 +2064,14 @@ bn_from_mont8x:
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 .Lfrom_prologue:
 
 	shl	\$3,${num}d		# convert $num to bytes
 	lea	($num,$num,2),%r10	# 3*$num in bytes
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	.byte	0x67
-	mov	${num}d,%r10d
-	shl	\$3,${num}d		# convert $num to bytes
-	shl	\$3+2,%r10d		# 4*$num
->>>>>>> origin/master
 	neg	$num
 	mov	($n0),$n0		# *n0
 
 	##############################################################
-<<<<<<< HEAD
 	# Ensure that stack frame doesn't alias with $rptr+3*$num
 	# modulo 4096, which covers ret[num], am[num] and n[num]
 	# (see bn_exp.c). The stack is allocated to aligned with
@@ -2710,25 +2086,10 @@ $code.=<<___;
 	jb	.Lfrom_sp_alt
 	sub	%r11,%rbp		# align with $aptr
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*$num*8+256)
-=======
-	# ensure that stack frame doesn't alias with $aptr+4*$num
-	# modulo 4096, which covers ret[num], am[num] and n[2*num]
-	# (see bn_exp.c). this is done to allow memory disambiguation
-	# logic do its magic.
-	#
-	lea	-64(%rsp,$num,2),%r11
-	sub	$aptr,%r11
-	and	\$4095,%r11
-	cmp	%r11,%r10
-	jb	.Lfrom_sp_alt
-	sub	%r11,%rsp		# align with $aptr
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
->>>>>>> origin/master
 	jmp	.Lfrom_sp_done
 
 .align	32
 .Lfrom_sp_alt:
-<<<<<<< HEAD
 	lea	4096-320(,$num,2),%r10
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*$num*8+256)
 	sub	%r10,%r11
@@ -2754,17 +2115,6 @@ $code.=<<___;
 .Lfrom_page_walk_done:
 
 	mov	$num,%r10
-=======
-	lea	4096-64(,$num,2),%r10	# 4096-frame-2*$num
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
-	sub	%r10,%r11
-	mov	\$0,%r10
-	cmovc	%r10,%r11
-	sub	%r11,%rsp
-.Lfrom_sp_done:
-	and	\$-64,%rsp
-	mov	$num,%r10	
->>>>>>> origin/master
 	neg	$num
 
 	##############################################################
@@ -2811,7 +2161,6 @@ $code.=<<___;
 ___
 $code.=<<___ if ($addx);
 	mov	OPENSSL_ia32cap_P+8(%rip),%r11d
-<<<<<<< HEAD
 	and	\$0x80108,%r11d
 	cmp	\$0x80108,%r11d		# check for AD*X+BMI2+BMI1
 	jne	.Lfrom_mont_nox
@@ -2819,14 +2168,6 @@ $code.=<<___ if ($addx);
 	lea	(%rax,$num),$rptr
 	call	__bn_sqrx8x_reduction
 	call	__bn_postx4x_internal
-=======
-	and	\$0x80100,%r11d
-	cmp	\$0x80100,%r11d
-	jne	.Lfrom_mont_nox
-
-	lea	(%rax,$num),$rptr
-	call	sqrx8x_reduction
->>>>>>> origin/master
 
 	pxor	%xmm0,%xmm0
 	lea	48(%rsp),%rax
@@ -2837,12 +2178,8 @@ $code.=<<___ if ($addx);
 .Lfrom_mont_nox:
 ___
 $code.=<<___;
-<<<<<<< HEAD
 	call	__bn_sqr8x_reduction
 	call	__bn_post4x_internal
-=======
-	call	sqr8x_reduction
->>>>>>> origin/master
 
 	pxor	%xmm0,%xmm0
 	lea	48(%rsp),%rax
@@ -2881,43 +2218,22 @@ $code.=<<___;
 .type	bn_mulx4x_mont_gather5,\@function,6
 .align	32
 bn_mulx4x_mont_gather5:
-<<<<<<< HEAD
 	mov	%rsp,%rax
 .Lmulx4x_enter:
-=======
-.Lmulx4x_enter:
-	.byte	0x67
-	mov	%rsp,%rax
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 .Lmulx4x_prologue:
 
 	shl	\$3,${num}d		# convert $num to bytes
 	lea	($num,$num,2),%r10	# 3*$num in bytes
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	.byte	0x67
-	mov	${num}d,%r10d
-	shl	\$3,${num}d		# convert $num to bytes
-	shl	\$3+2,%r10d		# 4*$num
->>>>>>> origin/master
 	neg	$num			# -$num
 	mov	($n0),$n0		# *n0
 
 	##############################################################
-<<<<<<< HEAD
 	# Ensure that stack frame doesn't alias with $rptr+3*$num
 	# modulo 4096, which covers ret[num], am[num] and n[num]
 	# (see bn_exp.c). This is done to allow memory disambiguation
@@ -2961,33 +2277,6 @@ $code.=<<___;
 	ja	.Lmulx4x_page_walk
 .Lmulx4x_page_walk_done:
 
-=======
-	# ensure that stack frame doesn't alias with $aptr+4*$num
-	# modulo 4096, which covers a[num], ret[num] and n[2*num]
-	# (see bn_exp.c). this is done to allow memory disambiguation
-	# logic do its magic. [excessive frame is allocated in order
-	# to allow bn_from_mont8x to clear it.]
-	#
-	lea	-64(%rsp,$num,2),%r11
-	sub	$ap,%r11
-	and	\$4095,%r11
-	cmp	%r11,%r10
-	jb	.Lmulx4xsp_alt
-	sub	%r11,%rsp		# align with $aptr
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+$num)
-	jmp	.Lmulx4xsp_done
-
-.align	32
-.Lmulx4xsp_alt:
-	lea	4096-64(,$num,2),%r10	# 4096-frame-$num
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+$num)
-	sub	%r10,%r11
-	mov	\$0,%r10
-	cmovc	%r10,%r11
-	sub	%r11,%rsp
-.Lmulx4xsp_done:	
-	and	\$-64,%rsp		# ensure alignment
->>>>>>> origin/master
 	##############################################################
 	# Stack layout
 	# +0	-num
@@ -3007,16 +2296,7 @@ $code.=<<___;
 
 	mov	40(%rsp),%rsi		# restore %rsp
 	mov	\$1,%rax
-<<<<<<< HEAD
 
-=======
-___
-$code.=<<___ if ($win64);
-	movaps	-88(%rsi),%xmm6
-	movaps	-72(%rsi),%xmm7
-___
-$code.=<<___;
->>>>>>> origin/master
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -3031,7 +2311,6 @@ $code.=<<___;
 .type	mulx4x_internal,\@abi-omnipotent
 .align	32
 mulx4x_internal:
-<<<<<<< HEAD
 	mov	$num,8(%rsp)		# save -$num (it was in bytes)
 	mov	$num,%r10
 	neg	$num			# restore $num
@@ -3042,16 +2321,6 @@ mulx4x_internal:
 	movd	`($win64?56:8)`(%rax),%xmm5	# load 7th argument
 	sub	\$1,$num
 	lea	.Linc(%rip),%rax
-=======
-	.byte	0x4c,0x89,0x8c,0x24,0x08,0x00,0x00,0x00	# mov	$num,8(%rsp)		# save -$num
-	.byte	0x67
-	neg	$num			# restore $num
-	shl	\$5,$num
-	lea	256($bp,$num),%r13
-	shr	\$5+5,$num
-	mov	`($win64?56:8)`(%rax),%r10d	# load 7th argument
-	sub	\$1,$num
->>>>>>> origin/master
 	mov	%r13,16+8(%rsp)		# end of b[num]
 	mov	$num,24+8(%rsp)		# inner counter
 	mov	$rp, 56+8(%rsp)		# save $rp
@@ -3062,7 +2331,6 @@ my $rptr=$bptr;
 my $STRIDE=2**5*8;		# 5 is "window size"
 my $N=$STRIDE/4;		# should match cache line size
 $code.=<<___;
-<<<<<<< HEAD
 	movdqa	0(%rax),%xmm0		# 00000001000000010000000000000000
 	movdqa	16(%rax),%xmm1		# 00000002000000020000000200000002
 	lea	88-112(%rsp,%r10),%r10	# place the mask after tp[num+1] (+ICache optimizaton)
@@ -3149,54 +2417,6 @@ $code.=<<___;
 	lea	$STRIDE($bptr),$bptr
 	movq	%xmm0,%rdx		# bp[0]
 	lea	64+8*4+8(%rsp),$tptr
-=======
-	mov	%r10,%r11
-	shr	\$`log($N/8)/log(2)`,%r10
-	and	\$`$N/8-1`,%r11
-	not	%r10
-	lea	.Lmagic_masks(%rip),%rax
-	and	\$`2**5/($N/8)-1`,%r10	# 5 is "window size"
-	lea	96($bp,%r11,8),$bptr	# pointer within 1st cache line
-	movq	0(%rax,%r10,8),%xmm4	# set of masks denoting which
-	movq	8(%rax,%r10,8),%xmm5	# cache line contains element
-	add	\$7,%r11
-	movq	16(%rax,%r10,8),%xmm6	# denoted by 7th argument
-	movq	24(%rax,%r10,8),%xmm7
-	and	\$7,%r11
-
-	movq	`0*$STRIDE/4-96`($bptr),%xmm0
-	lea	$STRIDE($bptr),$tptr	# borrow $tptr
-	movq	`1*$STRIDE/4-96`($bptr),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bptr),%xmm2
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-96`($bptr),%xmm3
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	movq	`0*$STRIDE/4-96`($tptr),%xmm1
-	pand	%xmm7,%xmm3
-	por	%xmm2,%xmm0
-	movq	`1*$STRIDE/4-96`($tptr),%xmm2
-	por	%xmm3,%xmm0
-	.byte	0x67,0x67
-	pand	%xmm4,%xmm1
-	movq	`2*$STRIDE/4-96`($tptr),%xmm3
-
-	movq	%xmm0,%rdx		# bp[0]
-	movq	`3*$STRIDE/4-96`($tptr),%xmm0
-	lea	2*$STRIDE($bptr),$bptr	# next &b[i]
-	pand	%xmm5,%xmm2
-	.byte	0x67,0x67
-	pand	%xmm6,%xmm3
-	##############################################################
-	# $tptr is chosen so that writing to top-most element of the
-	# vector occurs just "above" references to powers table,
-	# "above" modulo cache-line size, which effectively precludes
-	# possibility of memory disambiguation logic failure when
-	# accessing the table.
-	# 
-	lea	64+8*4+8(%rsp,%r11,8),$tptr
->>>>>>> origin/master
 
 	mov	%rdx,$bi
 	mulx	0*8($aptr),$mi,%rax	# a[0]*b[0]
@@ -3212,7 +2432,6 @@ $code.=<<___;
 	xor	$zero,$zero		# cf=0, of=0
 	mov	$mi,%rdx
 
-<<<<<<< HEAD
 	mov	$bptr,8+8(%rsp)		# off-load &b[i]
 
 	lea	4*8($aptr),$aptr
@@ -3231,45 +2450,13 @@ $code.=<<___;
 	adcx	%rax,%r11
 	adox	%r13,%r12
 	mulx	3*8($nptr),%rax,%r15
-=======
-	por	%xmm2,%xmm1
-	pand	%xmm7,%xmm0
-	por	%xmm3,%xmm1
-	mov	$bptr,8+8(%rsp)		# off-load &b[i]
-	por	%xmm1,%xmm0
-
-	.byte	0x48,0x8d,0xb6,0x20,0x00,0x00,0x00	# lea	4*8($aptr),$aptr
-	adcx	%rax,%r13
-	adcx	$zero,%r14		# cf=0
-
-	mulx	0*16($nptr),%rax,%r10
-	adcx	%rax,%r15		# discarded
-	adox	%r11,%r10
-	mulx	1*16($nptr),%rax,%r11
-	adcx	%rax,%r10
-	adox	%r12,%r11
-	mulx	2*16($nptr),%rax,%r12
-	mov	24+8(%rsp),$bptr	# counter value
-	.byte	0x66
-	mov	%r10,-8*4($tptr)
-	adcx	%rax,%r11
-	adox	%r13,%r12
-	mulx	3*16($nptr),%rax,%r15
-	 .byte	0x67,0x67
->>>>>>> origin/master
 	 mov	$bi,%rdx
 	mov	%r11,-8*3($tptr)
 	adcx	%rax,%r12
 	adox	$zero,%r15		# of=0
-<<<<<<< HEAD
 	lea	4*8($nptr),$nptr
 	mov	%r12,-8*2($tptr)
 	jmp	.Lmulx4x_1st
-=======
-	.byte	0x48,0x8d,0x89,0x40,0x00,0x00,0x00	# lea	4*16($nptr),$nptr
-	mov	%r12,-8*2($tptr)
-	#jmp	.Lmulx4x_1st
->>>>>>> origin/master
 
 .align	32
 .Lmulx4x_1st:
@@ -3289,7 +2476,6 @@ $code.=<<___;
 	lea	4*8($tptr),$tptr
 
 	adox	%r15,%r10
-<<<<<<< HEAD
 	mulx	0*8($nptr),%rax,%r15
 	adcx	%rax,%r10
 	adox	%r15,%r11
@@ -3297,43 +2483,22 @@ $code.=<<___;
 	adcx	%rax,%r11
 	adox	%r15,%r12
 	mulx	2*8($nptr),%rax,%r15
-=======
-	mulx	0*16($nptr),%rax,%r15
-	adcx	%rax,%r10
-	adox	%r15,%r11
-	mulx	1*16($nptr),%rax,%r15
-	adcx	%rax,%r11
-	adox	%r15,%r12
-	mulx	2*16($nptr),%rax,%r15
->>>>>>> origin/master
 	mov	%r10,-5*8($tptr)
 	adcx	%rax,%r12
 	mov	%r11,-4*8($tptr)
 	adox	%r15,%r13
-<<<<<<< HEAD
 	mulx	3*8($nptr),%rax,%r15
-=======
-	mulx	3*16($nptr),%rax,%r15
->>>>>>> origin/master
 	 mov	$bi,%rdx
 	mov	%r12,-3*8($tptr)
 	adcx	%rax,%r13
 	adox	$zero,%r15
-<<<<<<< HEAD
 	lea	4*8($nptr),$nptr
-=======
-	lea	4*16($nptr),$nptr
->>>>>>> origin/master
 	mov	%r13,-2*8($tptr)
 
 	dec	$bptr			# of=0, pass cf
 	jnz	.Lmulx4x_1st
 
 	mov	8(%rsp),$num		# load -num
-<<<<<<< HEAD
-=======
-	movq	%xmm0,%rdx		# bp[1]
->>>>>>> origin/master
 	adc	$zero,%r15		# modulo-scheduled
 	lea	($aptr,$num),$aptr	# rewind $aptr
 	add	%r15,%r14
@@ -3344,7 +2509,6 @@ $code.=<<___;
 
 .align	32
 .Lmulx4x_outer:
-<<<<<<< HEAD
 	lea	16-256($tptr),%r10	# where 256-byte mask is (+density control)
 	pxor	%xmm4,%xmm4
 	.byte	0x67,0x67
@@ -3373,8 +2537,6 @@ $code.=<<___;
 	lea	$STRIDE($bptr),$bptr
 	movq	%xmm0,%rdx		# m0=bp[i]
 
-=======
->>>>>>> origin/master
 	mov	$zero,($tptr)		# save top-most carry
 	lea	4*8($tptr,$num),$tptr	# rewind $tptr
 	mulx	0*8($aptr),$mi,%r11	# a[0]*b[i]
@@ -3389,17 +2551,12 @@ $code.=<<___;
 	mulx	3*8($aptr),%rdx,%r14
 	adox	-2*8($tptr),%r12
 	adcx	%rdx,%r13
-<<<<<<< HEAD
 	lea	($nptr,$num),$nptr	# rewind $nptr
-=======
-	lea	($nptr,$num,2),$nptr	# rewind $nptr
->>>>>>> origin/master
 	lea	4*8($aptr),$aptr
 	adox	-1*8($tptr),%r13
 	adcx	$zero,%r14
 	adox	$zero,%r14
 
-<<<<<<< HEAD
 	mov	$mi,%r15
 	imulq	32+8(%rsp),$mi		# "t[0]"*n0
 
@@ -3420,54 +2577,11 @@ $code.=<<___;
 	 mov	$bi,%rdx
 	mov	24+8(%rsp),$bptr	# counter value
 	mov	%r10,-8*4($tptr)
-=======
-	.byte	0x67
-	mov	$mi,%r15
-	imulq	32+8(%rsp),$mi		# "t[0]"*n0
-
-	movq	`0*$STRIDE/4-96`($bptr),%xmm0
-	.byte	0x67,0x67
-	mov	$mi,%rdx
-	movq	`1*$STRIDE/4-96`($bptr),%xmm1
-	.byte	0x67
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-96`($bptr),%xmm2
-	.byte	0x67
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-96`($bptr),%xmm3
-	add	\$$STRIDE,$bptr		# next &b[i]
-	.byte	0x67
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-	xor	$zero,$zero		# cf=0, of=0
-	mov	$bptr,8+8(%rsp)		# off-load &b[i]
-
-	mulx	0*16($nptr),%rax,%r10
-	adcx	%rax,%r15		# discarded
-	adox	%r11,%r10
-	mulx	1*16($nptr),%rax,%r11
-	adcx	%rax,%r10
-	adox	%r12,%r11
-	mulx	2*16($nptr),%rax,%r12
-	adcx	%rax,%r11
-	adox	%r13,%r12
-	mulx	3*16($nptr),%rax,%r15
-	 mov	$bi,%rdx
-	 por	%xmm2,%xmm0
-	mov	24+8(%rsp),$bptr	# counter value
-	mov	%r10,-8*4($tptr)
-	 por	%xmm3,%xmm0
->>>>>>> origin/master
 	adcx	%rax,%r12
 	mov	%r11,-8*3($tptr)
 	adox	$zero,%r15		# of=0
 	mov	%r12,-8*2($tptr)
-<<<<<<< HEAD
 	lea	4*8($nptr),$nptr
-=======
-	lea	4*16($nptr),$nptr
->>>>>>> origin/master
 	jmp	.Lmulx4x_inner
 
 .align	32
@@ -3492,7 +2606,6 @@ $code.=<<___;
 	adcx	$zero,%r14		# cf=0
 
 	adox	%r15,%r10
-<<<<<<< HEAD
 	mulx	0*8($nptr),%rax,%r15
 	adcx	%rax,%r10
 	adox	%r15,%r11
@@ -3500,28 +2613,13 @@ $code.=<<___;
 	adcx	%rax,%r11
 	adox	%r15,%r12
 	mulx	2*8($nptr),%rax,%r15
-=======
-	mulx	0*16($nptr),%rax,%r15
-	adcx	%rax,%r10
-	adox	%r15,%r11
-	mulx	1*16($nptr),%rax,%r15
-	adcx	%rax,%r11
-	adox	%r15,%r12
-	mulx	2*16($nptr),%rax,%r15
->>>>>>> origin/master
 	mov	%r10,-5*8($tptr)
 	adcx	%rax,%r12
 	adox	%r15,%r13
 	mov	%r11,-4*8($tptr)
-<<<<<<< HEAD
 	mulx	3*8($nptr),%rax,%r15
 	 mov	$bi,%rdx
 	lea	4*8($nptr),$nptr
-=======
-	mulx	3*16($nptr),%rax,%r15
-	 mov	$bi,%rdx
-	lea	4*16($nptr),$nptr
->>>>>>> origin/master
 	mov	%r12,-3*8($tptr)
 	adcx	%rax,%r13
 	adox	$zero,%r15
@@ -3531,10 +2629,6 @@ $code.=<<___;
 	jnz	.Lmulx4x_inner
 
 	mov	0+8(%rsp),$num		# load -num
-<<<<<<< HEAD
-=======
-	movq	%xmm0,%rdx		# bp[i+1]
->>>>>>> origin/master
 	adc	$zero,%r15		# modulo-scheduled
 	sub	0*8($tptr),$bptr	# pull top-most carry to %cf
 	mov	8+8(%rsp),$bptr		# re-load &b[i]
@@ -3547,7 +2641,6 @@ $code.=<<___;
 	cmp	%r10,$bptr
 	jb	.Lmulx4x_outer
 
-<<<<<<< HEAD
 	mov	-8($nptr),%r10
 	mov	$zero,%r8
 	mov	($nptr,$num),%r12
@@ -3568,22 +2661,6 @@ $code.=<<___;
 	mov	8*2(%rbp),%r14
 	mov	8*3(%rbp),%r15
 	jmp	.Lsqrx4x_sub_entry	# common post-condition
-=======
-	mov	-16($nptr),%r10
-	xor	%r15,%r15
-	sub	%r14,%r10		# compare top-most words
-	adc	%r15,%r15
-	or	%r15,$zero
-	xor	\$1,$zero
-	lea	($tptr,$num),%rdi	# rewind $tptr
-	lea	($nptr,$num,2),$nptr	# rewind $nptr
-	.byte	0x67,0x67
-	sar	\$3+2,$num		# cf=0
-	lea	($nptr,$zero,8),%rbp
-	mov	56+8(%rsp),%rdx		# restore rp
-	mov	$num,%rcx
-	jmp	.Lsqrx4x_sub		# common post-condition
->>>>>>> origin/master
 .size	mulx4x_internal,.-mulx4x_internal
 ___
 }{
@@ -3606,43 +2683,22 @@ $code.=<<___;
 .type	bn_powerx5,\@function,6
 .align	32
 bn_powerx5:
-<<<<<<< HEAD
 	mov	%rsp,%rax
 .Lpowerx5_enter:
-=======
-.Lpowerx5_enter:
-	.byte	0x67
-	mov	%rsp,%rax
->>>>>>> origin/master
 	push	%rbx
 	push	%rbp
 	push	%r12
 	push	%r13
 	push	%r14
 	push	%r15
-<<<<<<< HEAD
 .Lpowerx5_prologue:
 
 	shl	\$3,${num}d		# convert $num to bytes
 	lea	($num,$num,2),%r10	# 3*$num in bytes
-=======
-___
-$code.=<<___ if ($win64);
-	lea	-0x28(%rsp),%rsp
-	movaps	%xmm6,(%rsp)
-	movaps	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	.byte	0x67
-	mov	${num}d,%r10d
-	shl	\$3,${num}d		# convert $num to bytes
-	shl	\$3+2,%r10d		# 4*$num
->>>>>>> origin/master
 	neg	$num
 	mov	($n0),$n0		# *n0
 
 	##############################################################
-<<<<<<< HEAD
 	# Ensure that stack frame doesn't alias with $rptr+3*$num
 	# modulo 4096, which covers ret[num], am[num] and n[num]
 	# (see bn_exp.c). This is done to allow memory disambiguation
@@ -3657,25 +2713,10 @@ $code.=<<___;
 	jb	.Lpwrx_sp_alt
 	sub	%r11,%rbp		# align with $aptr
 	lea	-320(%rbp,$num,2),%rbp	# future alloca(frame+2*$num*8+256)
-=======
-	# ensure that stack frame doesn't alias with $aptr+4*$num
-	# modulo 4096, which covers ret[num], am[num] and n[2*num]
-	# (see bn_exp.c). this is done to allow memory disambiguation
-	# logic do its magic.
-	#
-	lea	-64(%rsp,$num,2),%r11
-	sub	$aptr,%r11
-	and	\$4095,%r11
-	cmp	%r11,%r10
-	jb	.Lpwrx_sp_alt
-	sub	%r11,%rsp		# align with $aptr
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
->>>>>>> origin/master
 	jmp	.Lpwrx_sp_done
 
 .align	32
 .Lpwrx_sp_alt:
-<<<<<<< HEAD
 	lea	4096-320(,$num,2),%r10
 	lea	-320(%rbp,$num,2),%rbp	# alloca(frame+2*$num*8+256)
 	sub	%r10,%r11
@@ -3700,16 +2741,6 @@ $code.=<<___;
 	ja	.Lpwrx_page_walk
 .Lpwrx_page_walk_done:
 
-=======
-	lea	4096-64(,$num,2),%r10	# 4096-frame-2*$num
-	lea	-64(%rsp,$num,2),%rsp	# alloca(frame+2*$num)
-	sub	%r10,%r11
-	mov	\$0,%r10
-	cmovc	%r10,%r11
-	sub	%r11,%rsp
-.Lpwrx_sp_done:
-	and	\$-64,%rsp
->>>>>>> origin/master
 	mov	$num,%r10	
 	neg	$num
 
@@ -3734,7 +2765,6 @@ $code.=<<___;
 .Lpowerx5_body:
 
 	call	__bn_sqrx8x_internal
-<<<<<<< HEAD
 	call	__bn_postx4x_internal
 	call	__bn_sqrx8x_internal
 	call	__bn_postx4x_internal
@@ -3744,12 +2774,6 @@ $code.=<<___;
 	call	__bn_postx4x_internal
 	call	__bn_sqrx8x_internal
 	call	__bn_postx4x_internal
-=======
-	call	__bn_sqrx8x_internal
-	call	__bn_sqrx8x_internal
-	call	__bn_sqrx8x_internal
-	call	__bn_sqrx8x_internal
->>>>>>> origin/master
 
 	mov	%r10,$num		# -num
 	mov	$aptr,$rptr
@@ -3761,16 +2785,7 @@ $code.=<<___;
 
 	mov	40(%rsp),%rsi		# restore %rsp
 	mov	\$1,%rax
-<<<<<<< HEAD
 
-=======
-___
-$code.=<<___ if ($win64);
-	movaps	-88(%rsi),%xmm6
-	movaps	-72(%rsi),%xmm7
-___
-$code.=<<___;
->>>>>>> origin/master
 	mov	-48(%rsi),%r15
 	mov	-40(%rsi),%r14
 	mov	-32(%rsi),%r13
@@ -4204,19 +3219,11 @@ my ($nptr,$carry,$m0)=("%rbp","%rsi","%rdx");
 
 $code.=<<___;
 	movq	%xmm2,$nptr
-<<<<<<< HEAD
 __bn_sqrx8x_reduction:
 	xor	%eax,%eax		# initial top-most carry bit
 	mov	32+8(%rsp),%rbx		# n0
 	mov	48+8(%rsp),%rdx		# "%r8", 8*0($tptr)
 	lea	-8*8($nptr,$num),%rcx	# end of n[]
-=======
-sqrx8x_reduction:
-	xor	%eax,%eax		# initial top-most carry bit
-	mov	32+8(%rsp),%rbx		# n0
-	mov	48+8(%rsp),%rdx		# "%r8", 8*0($tptr)
-	lea	-128($nptr,$num,2),%rcx	# end of n[]
->>>>>>> origin/master
 	#lea	48+8(%rsp,$num,2),$tptr	# end of t[] buffer
 	mov	%rcx, 0+8(%rsp)		# save end of n[]
 	mov	$tptr,8+8(%rsp)		# save end of t[]
@@ -4245,7 +3252,6 @@ sqrx8x_reduction:
 .align	32
 .Lsqrx8x_reduce:
 	mov	%r8, %rbx
-<<<<<<< HEAD
 	mulx	8*0($nptr),%rax,%r8	# n[0]
 	adcx	%rbx,%rax		# discarded
 	adox	%r9,%r8
@@ -4263,25 +3269,6 @@ sqrx8x_reduction:
 	adox	%r12,%r11
 
 	.byte	0xc4,0x62,0xe3,0xf6,0xa5,0x20,0x00,0x00,0x00	# mulx	8*4($nptr),%rbx,%r12
-=======
-	mulx	16*0($nptr),%rax,%r8	# n[0]
-	adcx	%rbx,%rax		# discarded
-	adox	%r9,%r8
-
-	mulx	16*1($nptr),%rbx,%r9	# n[1]
-	adcx	%rbx,%r8
-	adox	%r10,%r9
-
-	mulx	16*2($nptr),%rbx,%r10
-	adcx	%rbx,%r9
-	adox	%r11,%r10
-
-	mulx	16*3($nptr),%rbx,%r11
-	adcx	%rbx,%r10
-	adox	%r12,%r11
-
-	.byte	0xc4,0x62,0xe3,0xf6,0xa5,0x40,0x00,0x00,0x00	# mulx	16*4($nptr),%rbx,%r12
->>>>>>> origin/master
 	 mov	%rdx,%rax
 	 mov	%r8,%rdx
 	adcx	%rbx,%r11
@@ -4291,7 +3278,6 @@ sqrx8x_reduction:
 	 mov	%rax,%rdx
 	 mov	%rax,64+48+8(%rsp,%rcx,8)	# put aside n0*a[i]
 
-<<<<<<< HEAD
 	mulx	8*5($nptr),%rax,%r13
 	adcx	%rax,%r12
 	adox	%r14,%r13
@@ -4301,17 +3287,6 @@ sqrx8x_reduction:
 	adox	%r15,%r14
 
 	mulx	8*7($nptr),%rax,%r15
-=======
-	mulx	16*5($nptr),%rax,%r13
-	adcx	%rax,%r12
-	adox	%r14,%r13
-
-	mulx	16*6($nptr),%rax,%r14
-	adcx	%rax,%r13
-	adox	%r15,%r14
-
-	mulx	16*7($nptr),%rax,%r15
->>>>>>> origin/master
 	 mov	%rbx,%rdx
 	adcx	%rax,%r14
 	adox	$carry,%r15		# $carry is 0
@@ -4327,11 +3302,7 @@ sqrx8x_reduction:
 
 	mov	48+8(%rsp),%rdx		# pull n0*a[0]
 	add	8*0($tptr),%r8
-<<<<<<< HEAD
 	lea	8*8($nptr),$nptr
-=======
-	lea	16*8($nptr),$nptr
->>>>>>> origin/master
 	mov	\$-8,%rcx
 	adcx	8*1($tptr),%r9
 	adcx	8*2($tptr),%r10
@@ -4350,7 +3321,6 @@ sqrx8x_reduction:
 .align	32
 .Lsqrx8x_tail:
 	mov	%r8,%rbx
-<<<<<<< HEAD
 	mulx	8*0($nptr),%rax,%r8
 	adcx	%rax,%rbx
 	adox	%r9,%r8
@@ -4380,37 +3350,6 @@ sqrx8x_reduction:
 	adox	%r15,%r14
 
 	mulx	8*7($nptr),%rax,%r15
-=======
-	mulx	16*0($nptr),%rax,%r8
-	adcx	%rax,%rbx
-	adox	%r9,%r8
-
-	mulx	16*1($nptr),%rax,%r9
-	adcx	%rax,%r8
-	adox	%r10,%r9
-
-	mulx	16*2($nptr),%rax,%r10
-	adcx	%rax,%r9
-	adox	%r11,%r10
-
-	mulx	16*3($nptr),%rax,%r11
-	adcx	%rax,%r10
-	adox	%r12,%r11
-
-	.byte	0xc4,0x62,0xfb,0xf6,0xa5,0x40,0x00,0x00,0x00	# mulx	16*4($nptr),%rax,%r12
-	adcx	%rax,%r11
-	adox	%r13,%r12
-
-	mulx	16*5($nptr),%rax,%r13
-	adcx	%rax,%r12
-	adox	%r14,%r13
-
-	mulx	16*6($nptr),%rax,%r14
-	adcx	%rax,%r13
-	adox	%r15,%r14
-
-	mulx	16*7($nptr),%rax,%r15
->>>>>>> origin/master
 	 mov	72+48+8(%rsp,%rcx,8),%rdx	# pull n0*a[i]
 	adcx	%rax,%r14
 	adox	$carry,%r15
@@ -4426,11 +3365,7 @@ sqrx8x_reduction:
 
 	sub	16+8(%rsp),$carry	# mov 16(%rsp),%cf
 	 mov	48+8(%rsp),%rdx		# pull n0*a[0]
-<<<<<<< HEAD
 	 lea	8*8($nptr),$nptr
-=======
-	 lea	16*8($nptr),$nptr
->>>>>>> origin/master
 	adc	8*0($tptr),%r8
 	adc	8*1($tptr),%r9
 	adc	8*2($tptr),%r10
@@ -4450,7 +3385,6 @@ sqrx8x_reduction:
 .align	32
 .Lsqrx8x_tail_done:
 	add	24+8(%rsp),%r8		# can this overflow?
-<<<<<<< HEAD
 	adc	\$0,%r9
 	adc	\$0,%r10
 	adc	\$0,%r11
@@ -4460,8 +3394,6 @@ sqrx8x_reduction:
 	adc	\$0,%r15		# can't overflow, because we
 					# started with "overhung" part
 					# of multiplication
-=======
->>>>>>> origin/master
 	mov	$carry,%rax		# xor	%rax,%rax
 
 	sub	16+8(%rsp),$carry	# mov 16(%rsp),%cf
@@ -4469,11 +3401,7 @@ sqrx8x_reduction:
 	adc	8*0($tptr),%r8
 	 movq	%xmm3,%rcx
 	adc	8*1($tptr),%r9
-<<<<<<< HEAD
 	 mov	8*7($nptr),$carry
-=======
-	 mov	16*7($nptr),$carry
->>>>>>> origin/master
 	 movq	%xmm2,$nptr		# restore $nptr
 	adc	8*2($tptr),%r10
 	adc	8*3($tptr),%r11
@@ -4499,11 +3427,8 @@ sqrx8x_reduction:
 	lea	8*8($tptr,%rcx),$tptr	# start of current t[] window
 	cmp	8+8(%rsp),%r8		# end of t[]?
 	jb	.Lsqrx8x_reduction_loop
-<<<<<<< HEAD
 	ret
 .size	bn_sqrx8x_internal,.-bn_sqrx8x_internal
-=======
->>>>>>> origin/master
 ___
 }
 ##############################################################
@@ -4511,7 +3436,6 @@ ___
 #
 {
 my ($rptr,$nptr)=("%rdx","%rbp");
-<<<<<<< HEAD
 $code.=<<___;
 .align	32
 __bn_postx4x_internal:
@@ -4552,49 +3476,12 @@ __bn_postx4x_internal:
 	lea	8*4($tptr),$tptr
 	mov	%r13,8*1($rptr)
 	sbb	%r8,%r8			# mov %cf,%r8
-=======
-my @ri=map("%r$_",(10..13));
-my @ni=map("%r$_",(14..15));
-$code.=<<___;
-	xor	%rbx,%rbx
-	sub	%r15,%rsi		# compare top-most words
-	adc	%rbx,%rbx
-	mov	%rcx,%r10		# -$num
-	.byte	0x67
-	or	%rbx,%rax
-	.byte	0x67
-	mov	%rcx,%r9		# -$num
-	xor	\$1,%rax
-	sar	\$3+2,%rcx		# cf=0
-	#lea	48+8(%rsp,%r9),$tptr
-	lea	($nptr,%rax,8),$nptr
-	movq	%xmm1,$rptr		# restore $rptr
-	movq	%xmm1,$aptr		# prepare for back-to-back call
-	jmp	.Lsqrx4x_sub
-
-.align	32
-.Lsqrx4x_sub:
-	.byte	0x66
-	mov	8*0($tptr),%r12
-	mov	8*1($tptr),%r13
-	sbb	16*0($nptr),%r12
-	mov	8*2($tptr),%r14
-	sbb	16*1($nptr),%r13
-	mov	8*3($tptr),%r15
-	lea	8*4($tptr),$tptr
-	sbb	16*2($nptr),%r14
-	mov	%r12,8*0($rptr)
-	sbb	16*3($nptr),%r15
-	lea	16*4($nptr),$nptr
-	mov	%r13,8*1($rptr)
->>>>>>> origin/master
 	mov	%r14,8*2($rptr)
 	mov	%r15,8*3($rptr)
 	lea	8*4($rptr),$rptr
 
 	inc	%rcx
 	jnz	.Lsqrx4x_sub
-<<<<<<< HEAD
 
 	neg	%r9			# restore $num
 
@@ -4602,16 +3489,6 @@ $code.=<<___;
 .size	__bn_postx4x_internal,.-__bn_postx4x_internal
 ___
 }
-=======
-___
-}
-$code.=<<___;
-	neg	%r9			# restore $num
-
-	ret
-.size	bn_sqrx8x_internal,.-bn_sqrx8x_internal
-___
->>>>>>> origin/master
 }}}
 {
 my ($inp,$num,$tbl,$idx)=$win64?("%rcx","%edx","%r8", "%r9d") : # Win64 order
@@ -4660,7 +3537,6 @@ bn_scatter5:
 
 .globl	bn_gather5
 .type	bn_gather5,\@abi-omnipotent
-<<<<<<< HEAD
 .align	32
 bn_gather5:
 .LSEH_begin_bn_gather5:			# Win64 thing, but harmless in other cases
@@ -4740,63 +3616,12 @@ $code.=<<___;
 	lea	$STRIDE(%r11),%r11
 	pshufd	\$0x4e,%xmm4,%xmm0
 	por	%xmm4,%xmm0
-=======
-.align	16
-bn_gather5:
-___
-$code.=<<___ if ($win64);
-.LSEH_begin_bn_gather5:
-	# I can't trust assembler to use specific encoding:-(
-	.byte	0x48,0x83,0xec,0x28		#sub	\$0x28,%rsp
-	.byte	0x0f,0x29,0x34,0x24		#movaps	%xmm6,(%rsp)
-	.byte	0x0f,0x29,0x7c,0x24,0x10	#movdqa	%xmm7,0x10(%rsp)
-___
-$code.=<<___;
-	mov	$idx,%r11d
-	shr	\$`log($N/8)/log(2)`,$idx
-	and	\$`$N/8-1`,%r11
-	not	$idx
-	lea	.Lmagic_masks(%rip),%rax
-	and	\$`2**5/($N/8)-1`,$idx	# 5 is "window size"
-	lea	128($tbl,%r11,8),$tbl	# pointer within 1st cache line
-	movq	0(%rax,$idx,8),%xmm4	# set of masks denoting which
-	movq	8(%rax,$idx,8),%xmm5	# cache line contains element
-	movq	16(%rax,$idx,8),%xmm6	# denoted by 7th argument
-	movq	24(%rax,$idx,8),%xmm7
-	jmp	.Lgather
-.align	16
-.Lgather:
-	movq	`0*$STRIDE/4-128`($tbl),%xmm0
-	movq	`1*$STRIDE/4-128`($tbl),%xmm1
-	pand	%xmm4,%xmm0
-	movq	`2*$STRIDE/4-128`($tbl),%xmm2
-	pand	%xmm5,%xmm1
-	movq	`3*$STRIDE/4-128`($tbl),%xmm3
-	pand	%xmm6,%xmm2
-	por	%xmm1,%xmm0
-	pand	%xmm7,%xmm3
-	.byte	0x67,0x67
-	por	%xmm2,%xmm0
-	lea	$STRIDE($tbl),$tbl
-	por	%xmm3,%xmm0
-
->>>>>>> origin/master
 	movq	%xmm0,($out)		# m0=bp[0]
 	lea	8($out),$out
 	sub	\$1,$num
 	jnz	.Lgather
-<<<<<<< HEAD
 
 	lea	(%r10),%rsp
-=======
-___
-$code.=<<___ if ($win64);
-	movaps	(%rsp),%xmm6
-	movaps	0x10(%rsp),%xmm7
-	lea	0x28(%rsp),%rsp
-___
-$code.=<<___;
->>>>>>> origin/master
 	ret
 .LSEH_end_bn_gather5:
 .size	bn_gather5,.-bn_gather5
@@ -4804,15 +3629,9 @@ ___
 }
 $code.=<<___;
 .align	64
-<<<<<<< HEAD
 .Linc:
 	.long	0,0, 1,1
 	.long	2,2, 2,2
-=======
-.Lmagic_masks:
-	.long	0,0, 0,0, 0,0, -1,-1
-	.long	0,0, 0,0, 0,0,  0,0
->>>>>>> origin/master
 .asciz	"Montgomery Multiplication with scatter/gather for x86_64, CRYPTOGAMS by <appro\@openssl.org>"
 ___
 
@@ -4851,7 +3670,6 @@ mul_handler:
 	cmp	%r10,%rbx		# context->Rip<end of prologue label
 	jb	.Lcommon_seh_tail
 
-<<<<<<< HEAD
 	mov	4(%r11),%r10d		# HandlerData[1]
 	lea	(%rsi,%r10),%r10	# epilogue label
 	cmp	%r10,%rbx		# context->Rip>=epilogue label
@@ -4860,18 +3678,12 @@ mul_handler:
 	mov	152($context),%rax	# pull context->Rsp
 
 	mov	8(%r11),%r10d		# HandlerData[2]
-=======
-	mov	152($context),%rax	# pull context->Rsp
-
-	mov	4(%r11),%r10d		# HandlerData[1]
->>>>>>> origin/master
 	lea	(%rsi,%r10),%r10	# epilogue label
 	cmp	%r10,%rbx		# context->Rip>=epilogue label
 	jae	.Lcommon_seh_tail
 
 	lea	.Lmul_epilogue(%rip),%r10
 	cmp	%r10,%rbx
-<<<<<<< HEAD
 	ja	.Lbody_40
 
 	mov	192($context),%r10	# pull $num
@@ -4882,21 +3694,6 @@ mul_handler:
 .Lbody_40:
 	mov	40(%rax),%rax		# pull saved stack pointer
 .Lcommon_pop_regs:
-=======
-	jb	.Lbody_40
-
-	mov	192($context),%r10	# pull $num
-	mov	8(%rax,%r10,8),%rax	# pull saved stack pointer
-	jmp	.Lbody_proceed
-
-.Lbody_40:
-	mov	40(%rax),%rax		# pull saved stack pointer
-.Lbody_proceed:
-
-	movaps	-88(%rax),%xmm0
-	movaps	-72(%rax),%xmm1
-
->>>>>>> origin/master
 	mov	-8(%rax),%rbx
 	mov	-16(%rax),%rbp
 	mov	-24(%rax),%r12
@@ -4909,11 +3706,6 @@ mul_handler:
 	mov	%r13,224($context)	# restore context->R13
 	mov	%r14,232($context)	# restore context->R14
 	mov	%r15,240($context)	# restore context->R15
-<<<<<<< HEAD
-=======
-	movups	%xmm0,512($context)	# restore context->Xmm6
-	movups	%xmm1,528($context)	# restore context->Xmm7
->>>>>>> origin/master
 
 .Lcommon_seh_tail:
 	mov	8(%rax),%rdi
@@ -4992,72 +3784,41 @@ $code.=<<___;
 .LSEH_info_bn_mul_mont_gather5:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lmul_body,.Lmul_body,.Lmul_epilogue		# HandlerData[]
-=======
-	.rva	.Lmul_body,.Lmul_epilogue		# HandlerData[]
->>>>>>> origin/master
 .align	8
 .LSEH_info_bn_mul4x_mont_gather5:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lmul4x_prologue,.Lmul4x_body,.Lmul4x_epilogue		# HandlerData[]
-=======
-	.rva	.Lmul4x_body,.Lmul4x_epilogue		# HandlerData[]
->>>>>>> origin/master
 .align	8
 .LSEH_info_bn_power5:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lpower5_prologue,.Lpower5_body,.Lpower5_epilogue	# HandlerData[]
-=======
-	.rva	.Lpower5_body,.Lpower5_epilogue		# HandlerData[]
->>>>>>> origin/master
 .align	8
 .LSEH_info_bn_from_mont8x:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lfrom_prologue,.Lfrom_body,.Lfrom_epilogue		# HandlerData[]
-=======
-	.rva	.Lfrom_body,.Lfrom_epilogue		# HandlerData[]
->>>>>>> origin/master
 ___
 $code.=<<___ if ($addx);
 .align	8
 .LSEH_info_bn_mulx4x_mont_gather5:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lmulx4x_prologue,.Lmulx4x_body,.Lmulx4x_epilogue	# HandlerData[]
-=======
-	.rva	.Lmulx4x_body,.Lmulx4x_epilogue		# HandlerData[]
->>>>>>> origin/master
 .align	8
 .LSEH_info_bn_powerx5:
 	.byte	9,0,0,0
 	.rva	mul_handler
-<<<<<<< HEAD
 	.rva	.Lpowerx5_prologue,.Lpowerx5_body,.Lpowerx5_epilogue	# HandlerData[]
-=======
-	.rva	.Lpowerx5_body,.Lpowerx5_epilogue	# HandlerData[]
->>>>>>> origin/master
 ___
 $code.=<<___;
 .align	8
 .LSEH_info_bn_gather5:
-<<<<<<< HEAD
 	.byte	0x01,0x0b,0x03,0x0a
 	.byte	0x0b,0x01,0x21,0x00	# sub	rsp,0x108
 	.byte	0x04,0xa3,0x00,0x00	# lea	r10,(rsp)
-=======
-        .byte   0x01,0x0d,0x05,0x00
-        .byte   0x0d,0x78,0x01,0x00	#movaps	0x10(rsp),xmm7
-        .byte   0x08,0x68,0x00,0x00	#movaps	(rsp),xmm6
-        .byte   0x04,0x42,0x00,0x00	#sub	rsp,0x28
->>>>>>> origin/master
 .align	8
 ___
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 # void des_ncbc_encrypt(input, output, length, schedule, ivec, enc)
 # des_cblock (*input);

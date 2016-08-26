@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2013-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,8 +8,6 @@
  */
 
 #include <string.h>
-=======
->>>>>>> origin/master
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 #include <openssl/conf.h>
@@ -50,11 +47,7 @@ int main(int argc, char **argv)
         goto end;
     }
 
-<<<<<<< HEAD
     ctx = SSL_CTX_new(TLS_client_method());
-=======
-    ctx = SSL_CTX_new(SSLv23_client_method());
->>>>>>> origin/master
     cctx = SSL_CONF_CTX_new();
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_CLIENT);
     SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_FILE);
@@ -70,11 +63,7 @@ int main(int argc, char **argv)
             ERR_print_errors_fp(stderr);
             goto end;
         }
-<<<<<<< HEAD
         if (strcmp(cnf->name, "Connect") == 0) {
-=======
-        if (!strcmp(cnf->name, "Connect")) {
->>>>>>> origin/master
             connect_str = cnf->value;
         } else {
             fprintf(stderr, "Unknown configuration option %s\n", cnf->name);
@@ -85,11 +74,7 @@ int main(int argc, char **argv)
     if (!SSL_CONF_CTX_finish(cctx)) {
         fprintf(stderr, "Finish error\n");
         ERR_print_errors_fp(stderr);
-<<<<<<< HEAD
         goto end;
-=======
-        goto err;
->>>>>>> origin/master
     }
 
     /*

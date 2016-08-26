@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,32 +7,19 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/objects.h>
 #include <openssl/comp.h>
-<<<<<<< HEAD
 #include "comp_lcl.h"
-=======
->>>>>>> origin/master
 
 COMP_CTX *COMP_CTX_new(COMP_METHOD *meth)
 {
     COMP_CTX *ret;
 
-<<<<<<< HEAD
     if ((ret = OPENSSL_zalloc(sizeof(*ret))) == NULL)
         return (NULL);
-=======
-    if ((ret = (COMP_CTX *)OPENSSL_malloc(sizeof(COMP_CTX))) == NULL) {
-        /* ZZZZZZZZZZZZZZZZ */
-        return (NULL);
-    }
-    memset(ret, 0, sizeof(COMP_CTX));
->>>>>>> origin/master
     ret->meth = meth;
     if ((ret->meth->init != NULL) && !ret->meth->init(ret)) {
         OPENSSL_free(ret);
@@ -42,7 +28,6 @@ COMP_CTX *COMP_CTX_new(COMP_METHOD *meth)
     return (ret);
 }
 
-<<<<<<< HEAD
 const COMP_METHOD *COMP_CTX_get_method(const COMP_CTX *ctx)
 {
     return ctx->meth;
@@ -58,8 +43,6 @@ const char *COMP_get_name(const COMP_METHOD *meth)
     return meth->name;
 }
 
-=======
->>>>>>> origin/master
 void COMP_CTX_free(COMP_CTX *ctx)
 {
     if (ctx == NULL)
@@ -76,10 +59,6 @@ int COMP_compress_block(COMP_CTX *ctx, unsigned char *out, int olen,
 {
     int ret;
     if (ctx->meth->compress == NULL) {
-<<<<<<< HEAD
-=======
-        /* ZZZZZZZZZZZZZZZZZ */
->>>>>>> origin/master
         return (-1);
     }
     ret = ctx->meth->compress(ctx, out, olen, in, ilen);
@@ -96,10 +75,6 @@ int COMP_expand_block(COMP_CTX *ctx, unsigned char *out, int olen,
     int ret;
 
     if (ctx->meth->expand == NULL) {
-<<<<<<< HEAD
-=======
-        /* ZZZZZZZZZZZZZZZZZ */
->>>>>>> origin/master
         return (-1);
     }
     ret = ctx->meth->expand(ctx, out, olen, in, ilen);
@@ -109,11 +84,8 @@ int COMP_expand_block(COMP_CTX *ctx, unsigned char *out, int olen,
     }
     return (ret);
 }
-<<<<<<< HEAD
 
 int COMP_CTX_get_type(const COMP_CTX* comp)
 {
     return comp->meth ? comp->meth->type : NID_undef;
 }
-=======
->>>>>>> origin/master

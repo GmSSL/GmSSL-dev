@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 $flavour = shift;
 $output = shift;
@@ -142,7 +138,6 @@ L\$done
 ___
 }
 {
-<<<<<<< HEAD
 my ($in1,$in2,$len)=("%r26","%r25","%r24");
 
 $code.=<<___;
@@ -174,8 +169,6 @@ L\$no_data
 ___
 }
 {
-=======
->>>>>>> origin/master
 my ($out,$cnt,$max)=("%r26","%r25","%r24");
 my ($tick,$lasttick)=("%r23","%r22");
 my ($diff,$lastdiff)=("%r21","%r20");

@@ -10,15 +10,11 @@ SSL_COMP_add_compression_method, SSL_COMP_free_compression_methods - handle SSL/
 
  int SSL_COMP_add_compression_method(int id, COMP_METHOD *cm);
 
-<<<<<<< HEAD
 Deprecated:
 
  #if OPENSSL_API_COMPAT < 0x10100000L
  void SSL_COMP_free_compression_methods(void)
  #endif
-=======
- +void SSL_COMP_free_compression_methods(void);
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -27,18 +23,12 @@ the identifier B<id> to the list of available compression methods. This
 list is globally maintained for all SSL operations within this application.
 It cannot be set for specific SSL_CTX or SSL objects.
 
-<<<<<<< HEAD
 In versions of OpenSSL prior to 1.1.0 SSL_COMP_free_compression_methods() freed
 the internal table of compression methods that were built internally, and
 possibly augmented by adding SSL_COMP_add_compression_method(). However this is
 now unnecessary from version 1.1.0.  No explicit initialisation or
 de-initialisation is necessary. See L<OPENSSL_init_crypto(3)> and
 L<OPENSSL_init_ssl(3)>. From OpenSSL 1.1.0 calling this function does nothing.
-=======
-SSL_COMP_free_compression_methods() frees the internal table of
-compression methods that were built internally, and possibly
-augmented by adding SSL_COMP_add_compression_method().
->>>>>>> origin/master
 
 =head1 NOTES
 
@@ -88,7 +78,6 @@ The operation failed. Check the error queue to find out the reason.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<ssl(3)>
 
 =head1 HISTORY
@@ -103,8 +92,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<ssl(3)|ssl(3)>
->>>>>>> origin/master
 
 =cut

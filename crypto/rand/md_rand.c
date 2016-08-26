@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,134 +7,11 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
-/* crypto/rand/md_rand.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
- */
-/* ====================================================================
- * Copyright (c) 1998-2001 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@openssl.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#define OPENSSL_FIPSEVP
-
-#ifdef MD_RAND_DEBUG
-# ifndef NDEBUG
-#  define NDEBUG
-# endif
-#endif
-
-#include <assert.h>
->>>>>>> origin/master
 #include <stdio.h>
 #include <string.h>
 
 #include "e_os.h"
 
-<<<<<<< HEAD
 #if !(defined(OPENSSL_SYS_WIN32) || defined(OPENSSL_SYS_VXWORKS) || defined(OPENSSL_SYS_DSPBIOS))
 # include <sys/time.h>
 #endif
@@ -147,23 +23,16 @@
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
 #include <openssl/async.h>
-=======
-#include <openssl/crypto.h>
-#include <openssl/rand.h>
->>>>>>> origin/master
 #include "rand_lcl.h"
 
 #include <openssl/err.h>
 
-<<<<<<< HEAD
 #include <internal/thread_once.h>
 
 #ifdef OPENSSL_FIPS
 # include <openssl/fips.h>
 #endif
 
-=======
->>>>>>> origin/master
 #ifdef BN_DEBUG
 # define PREDICT
 #endif
@@ -171,11 +40,7 @@
 /* #define PREDICT      1 */
 
 #define STATE_SIZE      1023
-<<<<<<< HEAD
 static size_t state_num = 0, state_index = 0;
-=======
-static int state_num = 0, state_index = 0;
->>>>>>> origin/master
 static unsigned char state[STATE_SIZE + MD_DIGEST_LENGTH];
 static unsigned char md[MD_DIGEST_LENGTH];
 static long md_count[2] = { 0, 0 };
@@ -183,7 +48,6 @@ static long md_count[2] = { 0, 0 };
 static double entropy = 0;
 static int initialized = 0;
 
-<<<<<<< HEAD
 static CRYPTO_RWLOCK *rand_lock = NULL;
 static CRYPTO_RWLOCK *rand_tmp_lock = NULL;
 static CRYPTO_ONCE rand_lock_init = CRYPTO_ONCE_STATIC_INIT;
@@ -193,20 +57,11 @@ static unsigned int crypto_lock_rand = 0;
 /* access to locking_threadid is synchronized by rand_tmp_lock */
 /* valid iff crypto_lock_rand is set */
 static CRYPTO_THREAD_ID locking_threadid;
-=======
-static unsigned int crypto_lock_rand = 0; /* may be set only when a thread
-                                           * holds CRYPTO_LOCK_RAND (to
-                                           * prevent double locking) */
-/* access to lockin_thread is synchronized by CRYPTO_LOCK_RAND2 */
-/* valid iff crypto_lock_rand is set */
-static CRYPTO_THREADID locking_threadid;
->>>>>>> origin/master
 
 #ifdef PREDICT
 int rand_predictable = 0;
 #endif
 
-<<<<<<< HEAD
 static int rand_hw_seed(EVP_MD_CTX *ctx);
 
 static void rand_cleanup(void);
@@ -245,32 +100,6 @@ RAND_METHOD *RAND_OpenSSL(void)
 }
 
 static void rand_cleanup(void)
-=======
-const char RAND_version[] = "RAND" OPENSSL_VERSION_PTEXT;
-
-static void ssleay_rand_cleanup(void);
-static void ssleay_rand_seed(const void *buf, int num);
-static void ssleay_rand_add(const void *buf, int num, double add_entropy);
-static int ssleay_rand_nopseudo_bytes(unsigned char *buf, int num);
-static int ssleay_rand_pseudo_bytes(unsigned char *buf, int num);
-static int ssleay_rand_status(void);
-
-RAND_METHOD rand_ssleay_meth = {
-    ssleay_rand_seed,
-    ssleay_rand_nopseudo_bytes,
-    ssleay_rand_cleanup,
-    ssleay_rand_add,
-    ssleay_rand_pseudo_bytes,
-    ssleay_rand_status
-};
-
-RAND_METHOD *RAND_SSLeay(void)
-{
-    return (&rand_ssleay_meth);
-}
-
-static void ssleay_rand_cleanup(void)
->>>>>>> origin/master
 {
     OPENSSL_cleanse(state, sizeof(state));
     state_num = 0;
@@ -280,35 +109,21 @@ static void ssleay_rand_cleanup(void)
     md_count[1] = 0;
     entropy = 0;
     initialized = 0;
-<<<<<<< HEAD
     CRYPTO_THREAD_lock_free(rand_lock);
     CRYPTO_THREAD_lock_free(rand_tmp_lock);
 }
 
 static int rand_add(const void *buf, int num, double add)
-=======
-}
-
-static void ssleay_rand_add(const void *buf, int num, double add)
->>>>>>> origin/master
 {
     int i, j, k, st_idx;
     long md_c[2];
     unsigned char local_md[MD_DIGEST_LENGTH];
-<<<<<<< HEAD
     EVP_MD_CTX *m;
     int do_not_lock;
     int rv = 0;
 
     if (!num)
         return 1;
-=======
-    EVP_MD_CTX m;
-    int do_not_lock;
-
-    if (!num)
-        return;
->>>>>>> origin/master
 
     /*
      * (Based on the rand(3) manpage)
@@ -325,7 +140,6 @@ static void ssleay_rand_add(const void *buf, int num, double add)
      * hash function.
      */
 
-<<<<<<< HEAD
     m = EVP_MD_CTX_new();
     if (m == NULL)
         goto err;
@@ -339,24 +153,11 @@ static void ssleay_rand_add(const void *buf, int num, double add)
         CRYPTO_THREAD_read_lock(rand_tmp_lock);
         do_not_lock = CRYPTO_THREAD_compare_id(locking_threadid, cur);
         CRYPTO_THREAD_unlock(rand_tmp_lock);
-=======
-    /* check if we already have the lock */
-    if (crypto_lock_rand) {
-        CRYPTO_THREADID cur;
-        CRYPTO_THREADID_current(&cur);
-        CRYPTO_r_lock(CRYPTO_LOCK_RAND2);
-        do_not_lock = !CRYPTO_THREADID_cmp(&locking_threadid, &cur);
-        CRYPTO_r_unlock(CRYPTO_LOCK_RAND2);
->>>>>>> origin/master
     } else
         do_not_lock = 0;
 
     if (!do_not_lock)
-<<<<<<< HEAD
         CRYPTO_THREAD_write_lock(rand_lock);
-=======
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND);
->>>>>>> origin/master
     st_idx = state_index;
 
     /*
@@ -388,19 +189,12 @@ static void ssleay_rand_add(const void *buf, int num, double add)
     md_count[1] += (num / MD_DIGEST_LENGTH) + (num % MD_DIGEST_LENGTH > 0);
 
     if (!do_not_lock)
-<<<<<<< HEAD
         CRYPTO_THREAD_unlock(rand_lock);
 
-=======
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
-
-    EVP_MD_CTX_init(&m);
->>>>>>> origin/master
     for (i = 0; i < num; i += MD_DIGEST_LENGTH) {
         j = (num - i);
         j = (j > MD_DIGEST_LENGTH) ? MD_DIGEST_LENGTH : j;
 
-<<<<<<< HEAD
         if (!MD_Init(m))
             goto err;
         if (!MD_Update(m, local_md, MD_DIGEST_LENGTH))
@@ -417,19 +211,6 @@ static void ssleay_rand_add(const void *buf, int num, double add)
         /* DO NOT REMOVE THE FOLLOWING CALL TO MD_Update()! */
         if (!MD_Update(m, buf, j))
             goto err;
-=======
-        MD_Init(&m);
-        MD_Update(&m, local_md, MD_DIGEST_LENGTH);
-        k = (st_idx + j) - STATE_SIZE;
-        if (k > 0) {
-            MD_Update(&m, &(state[st_idx]), j - k);
-            MD_Update(&m, &(state[0]), k);
-        } else
-            MD_Update(&m, &(state[st_idx]), j);
-
-        /* DO NOT REMOVE THE FOLLOWING CALL TO MD_Update()! */
-        MD_Update(&m, buf, j);
->>>>>>> origin/master
         /*
          * We know that line may cause programs such as purify and valgrind
          * to complain about use of uninitialized data.  The problem is not,
@@ -438,15 +219,10 @@ static void ssleay_rand_add(const void *buf, int num, double add)
          * insecure keys.
          */
 
-<<<<<<< HEAD
         if (!MD_Update(m, (unsigned char *)&(md_c[0]), sizeof(md_c)))
             goto err;
         if (!MD_Final(m, local_md))
             goto err;
-=======
-        MD_Update(&m, (unsigned char *)&(md_c[0]), sizeof(md_c));
-        MD_Final(&m, local_md);
->>>>>>> origin/master
         md_c[1]++;
 
         buf = (const char *)buf + j;
@@ -455,11 +231,7 @@ static void ssleay_rand_add(const void *buf, int num, double add)
             /*
              * Parallel threads may interfere with this, but always each byte
              * of the new state is the XOR of some previous value of its and
-<<<<<<< HEAD
              * local_md (intermediate values may be lost). Alway using locking
-=======
-             * local_md (itermediate values may be lost). Alway using locking
->>>>>>> origin/master
              * could hurt performance more than necessary given that
              * conflicts occur only when the total seeding is longer than the
              * random state.
@@ -469,16 +241,9 @@ static void ssleay_rand_add(const void *buf, int num, double add)
                 st_idx = 0;
         }
     }
-<<<<<<< HEAD
 
     if (!do_not_lock)
         CRYPTO_THREAD_write_lock(rand_lock);
-=======
-    EVP_MD_CTX_cleanup(&m);
-
-    if (!do_not_lock)
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND);
->>>>>>> origin/master
     /*
      * Don't just copy back local_md into md -- this could mean that other
      * thread's seeding remains without effect (except for the incremented
@@ -491,7 +256,6 @@ static void ssleay_rand_add(const void *buf, int num, double add)
     if (entropy < ENTROPY_NEEDED) /* stop counting when we have enough */
         entropy += add;
     if (!do_not_lock)
-<<<<<<< HEAD
         CRYPTO_THREAD_unlock(rand_lock);
 
     rv = 1;
@@ -539,33 +303,6 @@ static int rand_bytes(unsigned char *buf, int num, int pseudo)
     struct timeval tv;
     gettimeofday(&tv, NULL);
 #endif
-=======
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
-
-#if !defined(OPENSSL_THREADS) && !defined(OPENSSL_SYS_WIN32)
-    assert(md_c[1] == md_count[1]);
-#endif
-}
-
-static void ssleay_rand_seed(const void *buf, int num)
-{
-    ssleay_rand_add(buf, num, (double)num);
-}
-
-int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
-{
-    static volatile int stirred_pool = 0;
-    int i, j, k, st_num, st_idx;
-    int num_ceil;
-    int ok;
-    long md_c[2];
-    unsigned char local_md[MD_DIGEST_LENGTH];
-    EVP_MD_CTX m;
-#ifndef GETPID_IS_MEANINGLESS
-    pid_t curr_pid = getpid();
-#endif
-    int do_stir_pool = 0;
->>>>>>> origin/master
 
 #ifdef PREDICT
     if (rand_predictable) {
@@ -580,14 +317,10 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
     if (num <= 0)
         return 1;
 
-<<<<<<< HEAD
     m = EVP_MD_CTX_new();
     if (m == NULL)
         goto err_mem;
 
-=======
-    EVP_MD_CTX_init(&m);
->>>>>>> origin/master
     /* round upwards to multiple of MD_DIGEST_LENGTH/2 */
     num_ceil =
         (1 + (num - 1) / (MD_DIGEST_LENGTH / 2)) * (MD_DIGEST_LENGTH / 2);
@@ -609,7 +342,6 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
      * are fed into the hash function and the results are kept in the
      * global 'md'.
      */
-<<<<<<< HEAD
 
     if (!RUN_ONCE(&rand_lock_init, do_rand_lock_init))
         goto err_mem;
@@ -625,15 +357,6 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
     CRYPTO_THREAD_write_lock(rand_tmp_lock);
     locking_threadid = CRYPTO_THREAD_get_current_id();
     CRYPTO_THREAD_unlock(rand_tmp_lock);
-=======
-    if (lock)
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND);
-
-    /* prevent ssleay_rand_bytes() from trying to obtain the lock again */
-    CRYPTO_w_lock(CRYPTO_LOCK_RAND2);
-    CRYPTO_THREADID_current(&locking_threadid);
-    CRYPTO_w_unlock(CRYPTO_LOCK_RAND2);
->>>>>>> origin/master
     crypto_lock_rand = 1;
 
     if (!initialized) {
@@ -667,11 +390,7 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
          * In the output function only half of 'md' remains secret, so we
          * better make sure that the required entropy gets 'evenly
          * distributed' through 'state', our randomness pool. The input
-<<<<<<< HEAD
          * function (rand_add) chains all of 'md', which makes it more
-=======
-         * function (ssleay_rand_add) chains all of 'md', which makes it more
->>>>>>> origin/master
          * suitable for this purpose.
          */
 
@@ -683,15 +402,9 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
 #define DUMMY_SEED "...................." /* at least MD_DIGEST_LENGTH */
             /*
              * Note that the seed does not matter, it's just that
-<<<<<<< HEAD
              * rand_add expects to have something to hash.
              */
             rand_add(DUMMY_SEED, MD_DIGEST_LENGTH, 0.0);
-=======
-             * ssleay_rand_add expects to have something to hash.
-             */
-            ssleay_rand_add(DUMMY_SEED, MD_DIGEST_LENGTH, 0.0);
->>>>>>> origin/master
             n -= MD_DIGEST_LENGTH;
         }
         if (ok)
@@ -717,19 +430,13 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
 
     /* before unlocking, we must clear 'crypto_lock_rand' */
     crypto_lock_rand = 0;
-<<<<<<< HEAD
     ASYNC_unblock_pause();
     CRYPTO_THREAD_unlock(rand_lock);
-=======
-    if (lock)
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
->>>>>>> origin/master
 
     while (num > 0) {
         /* num_ceil -= MD_DIGEST_LENGTH/2 */
         j = (num >= MD_DIGEST_LENGTH / 2) ? MD_DIGEST_LENGTH / 2 : num;
         num -= j;
-<<<<<<< HEAD
         if (!MD_Init(m))
             goto err;
 #ifndef GETPID_IS_MEANINGLESS
@@ -763,36 +470,6 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
             goto err;
         if (!MD_Final(m, local_md))
             goto err;
-=======
-        MD_Init(&m);
-#ifndef GETPID_IS_MEANINGLESS
-        if (curr_pid) {         /* just in the first iteration to save time */
-            MD_Update(&m, (unsigned char *)&curr_pid, sizeof curr_pid);
-            curr_pid = 0;
-        }
-#endif
-        MD_Update(&m, local_md, MD_DIGEST_LENGTH);
-        MD_Update(&m, (unsigned char *)&(md_c[0]), sizeof(md_c));
-
-#ifndef PURIFY                  /* purify complains */
-        /*
-         * The following line uses the supplied buffer as a small source of
-         * entropy: since this buffer is often uninitialised it may cause
-         * programs such as purify or valgrind to complain. So for those
-         * builds it is not used: the removal of such a small source of
-         * entropy has negligible impact on security.
-         */
-        MD_Update(&m, buf, j);
-#endif
-
-        k = (st_idx + MD_DIGEST_LENGTH / 2) - st_num;
-        if (k > 0) {
-            MD_Update(&m, &(state[st_idx]), MD_DIGEST_LENGTH / 2 - k);
-            MD_Update(&m, &(state[0]), k);
-        } else
-            MD_Update(&m, &(state[st_idx]), MD_DIGEST_LENGTH / 2);
-        MD_Final(&m, local_md);
->>>>>>> origin/master
 
         for (i = 0; i < MD_DIGEST_LENGTH / 2; i++) {
             /* may compete with other threads */
@@ -804,7 +481,6 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
         }
     }
 
-<<<<<<< HEAD
     if (!MD_Init(m)
         || !MD_Update(m, (unsigned char *)&(md_c[0]), sizeof(md_c))
         || !MD_Update(m, local_md, MD_DIGEST_LENGTH))
@@ -822,25 +498,11 @@ int ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)
     CRYPTO_THREAD_unlock(rand_lock);
 
     EVP_MD_CTX_free(m);
-=======
-    MD_Init(&m);
-    MD_Update(&m, (unsigned char *)&(md_c[0]), sizeof(md_c));
-    MD_Update(&m, local_md, MD_DIGEST_LENGTH);
-    if (lock)
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND);
-    MD_Update(&m, md, MD_DIGEST_LENGTH);
-    MD_Final(&m, md);
-    if (lock)
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
-
-    EVP_MD_CTX_cleanup(&m);
->>>>>>> origin/master
     if (ok)
         return (1);
     else if (pseudo)
         return 0;
     else {
-<<<<<<< HEAD
         RANDerr(RAND_F_RAND_BYTES, RAND_R_PRNG_NOT_SEEDED);
         ERR_add_error_data(1, "You need to read the OpenSSL FAQ, "
                            "https://www.openssl.org/docs/faq.html");
@@ -882,54 +544,18 @@ static int rand_status(void)
         return 0;
 
     cur = CRYPTO_THREAD_get_current_id();
-=======
-        RANDerr(RAND_F_SSLEAY_RAND_BYTES, RAND_R_PRNG_NOT_SEEDED);
-        ERR_add_error_data(1, "You need to read the OpenSSL FAQ, "
-                           "http://www.openssl.org/support/faq.html");
-        return (0);
-    }
-}
-
-static int ssleay_rand_nopseudo_bytes(unsigned char *buf, int num)
-{
-    return ssleay_rand_bytes(buf, num, 0, 1);
-}
-
-/*
- * pseudo-random bytes that are guaranteed to be unique but not unpredictable
- */
-static int ssleay_rand_pseudo_bytes(unsigned char *buf, int num)
-{
-    return ssleay_rand_bytes(buf, num, 1, 1);
-}
-
-static int ssleay_rand_status(void)
-{
-    CRYPTO_THREADID cur;
-    int ret;
-    int do_not_lock;
-
-    CRYPTO_THREADID_current(&cur);
->>>>>>> origin/master
     /*
      * check if we already have the lock (could happen if a RAND_poll()
      * implementation calls RAND_status())
      */
     if (crypto_lock_rand) {
-<<<<<<< HEAD
         CRYPTO_THREAD_read_lock(rand_tmp_lock);
         do_not_lock = CRYPTO_THREAD_compare_id(locking_threadid, cur);
         CRYPTO_THREAD_unlock(rand_tmp_lock);
-=======
-        CRYPTO_r_lock(CRYPTO_LOCK_RAND2);
-        do_not_lock = !CRYPTO_THREADID_cmp(&locking_threadid, &cur);
-        CRYPTO_r_unlock(CRYPTO_LOCK_RAND2);
->>>>>>> origin/master
     } else
         do_not_lock = 0;
 
     if (!do_not_lock) {
-<<<<<<< HEAD
         CRYPTO_THREAD_write_lock(rand_lock);
         /*
          * Prevent deadlocks in case we end up in an async engine
@@ -942,16 +568,6 @@ static int ssleay_rand_status(void)
         CRYPTO_THREAD_write_lock(rand_tmp_lock);
         locking_threadid = cur;
         CRYPTO_THREAD_unlock(rand_tmp_lock);
-=======
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND);
-
-        /*
-         * prevent ssleay_rand_bytes() from trying to obtain the lock again
-         */
-        CRYPTO_w_lock(CRYPTO_LOCK_RAND2);
-        CRYPTO_THREADID_cpy(&locking_threadid, &cur);
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND2);
->>>>>>> origin/master
         crypto_lock_rand = 1;
     }
 
@@ -966,17 +582,12 @@ static int ssleay_rand_status(void)
         /* before unlocking, we must clear 'crypto_lock_rand' */
         crypto_lock_rand = 0;
 
-<<<<<<< HEAD
         ASYNC_unblock_pause();
         CRYPTO_THREAD_unlock(rand_lock);
-=======
-        CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
->>>>>>> origin/master
     }
 
     return ret;
 }
-<<<<<<< HEAD
 
 /*
  * rand_hw_seed: get seed data from any available hardware RNG. only
@@ -1052,5 +663,3 @@ void rand_hw_xor(unsigned char *buf, size_t num)
 }
 
 #endif
-=======
->>>>>>> origin/master

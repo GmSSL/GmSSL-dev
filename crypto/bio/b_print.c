@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,88 +5,13 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* crypto/bio/b_print.c */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
- * All rights reserved.
- *
- * This package is an SSL implementation written
- * by Eric Young (eay@cryptsoft.com).
- * The implementation was written so as to conform with Netscapes SSL.
- *
- * This library is free for commercial and non-commercial use as long as
- * the following conditions are aheared to.  The following conditions
- * apply to all code found in this distribution, be it the RC4, RSA,
- * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
- * included with this distribution is covered by the same copyright terms
- * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- *
- * Copyright remains Eric Young's, and as such any Copyright notices in
- * the code are not to be removed.
- * If this package is used in a product, Eric Young should be given attribution
- * as the author of the parts of the library used.
- * This can be in the form of a textual message at program startup or
- * in documentation (online or textual) provided with the package.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *    "This product includes cryptographic software written by
- *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
- *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from
- *    the apps directory (application code) you must include an acknowledgement:
- *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * The licence and distribution terms for any publically available version or
- * derivative of this code cannot be changed.  i.e. this code cannot simply be
- * copied and put under another distribution licence
- * [including the GNU Public Licence.]
- */
-
-/* disable assert() unless BIO_DEBUG has been defined */
-#ifndef BIO_DEBUG
-# ifndef NDEBUG
-#  define NDEBUG
-# endif
-#endif
-
-/*
- * Stolen from tjh's ssl/ssl_trc.c stuff.
->>>>>>> origin/master
  */
 
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-<<<<<<< HEAD
 #include "internal/numbers.h"
 #include "internal/cryptlib.h"
-=======
-#include <assert.h>
-#include <limits.h>
-#include "cryptlib.h"
->>>>>>> origin/master
 #ifndef NO_SYS_TYPES_H
 # include <sys/types.h>
 #endif
@@ -100,11 +24,6 @@
 # endif
 #endif
 
-<<<<<<< HEAD
-=======
-/***************************************************************************/
-
->>>>>>> origin/master
 /*
  * Copyright Patrick Powell 1995
  * This code is based on code written by Patrick Powell <papowell@astart.com>
@@ -112,24 +31,6 @@
  * on all source code distributions.
  */
 
-<<<<<<< HEAD
-=======
-/*-
- * This code contains numerious changes and enhancements which were
- * made by lots of contributors over the last years to Patrick Powell's
- * original code:
- *
- * o Patrick Powell <papowell@astart.com>      (1995)
- * o Brandon Long <blong@fiction.net>          (1996, for Mutt)
- * o Thomas Roessler <roessler@guug.de>        (1998, for Mutt)
- * o Michael Elkins <me@cs.hmc.edu>            (1998, for Mutt)
- * o Andrew Tridgell <tridge@samba.org>        (1998, for Samba)
- * o Luke Mewburn <lukem@netbsd.org>           (1999, for LukemFTP)
- * o Ralf S. Engelschall <rse@engelschall.com> (1999, for Pth)
- * o ...                                       (for OpenSSL)
- */
-
->>>>>>> origin/master
 #ifdef HAVE_LONG_DOUBLE
 # define LDOUBLE long double
 #else
@@ -146,7 +47,6 @@
 # define LLONG long
 #endif
 
-<<<<<<< HEAD
 static int fmtstr(char **, char **, size_t *, size_t *,
                   const char *, int, int, int);
 static int fmtint(char **, char **, size_t *, size_t *,
@@ -157,18 +57,6 @@ static int doapr_outch(char **, char **, size_t *, size_t *, int);
 static int _dopr(char **sbuffer, char **buffer,
                  size_t *maxlen, size_t *retlen, int *truncated,
                  const char *format, va_list args);
-=======
-static void fmtstr(char **, char **, size_t *, size_t *,
-                   const char *, int, int, int);
-static void fmtint(char **, char **, size_t *, size_t *,
-                   LLONG, int, int, int, int);
-static void fmtfp(char **, char **, size_t *, size_t *,
-                  LDOUBLE, int, int, int);
-static void doapr_outch(char **, char **, size_t *, size_t *, int);
-static void _dopr(char **sbuffer, char **buffer,
-                  size_t *maxlen, size_t *retlen, int *truncated,
-                  const char *format, va_list args);
->>>>>>> origin/master
 
 /* format read states */
 #define DP_S_DEFAULT    0
@@ -181,7 +69,6 @@ static void _dopr(char **sbuffer, char **buffer,
 #define DP_S_DONE       7
 
 /* format flags - Bits */
-<<<<<<< HEAD
 /* left-aligned padding */
 #define DP_F_MINUS      (1 << 0)
 /* print an explicit '+' for a value with positive sign */
@@ -195,14 +82,6 @@ static void _dopr(char **sbuffer, char **buffer,
 /* print HEX in UPPPERcase */
 #define DP_F_UP         (1 << 5)
 /* treat value as unsigned */
-=======
-#define DP_F_MINUS      (1 << 0)
-#define DP_F_PLUS       (1 << 1)
-#define DP_F_SPACE      (1 << 2)
-#define DP_F_NUM        (1 << 3)
-#define DP_F_ZERO       (1 << 4)
-#define DP_F_UP         (1 << 5)
->>>>>>> origin/master
 #define DP_F_UNSIGNED   (1 << 6)
 
 /* conversion flags */
@@ -211,23 +90,16 @@ static void _dopr(char **sbuffer, char **buffer,
 #define DP_C_LDOUBLE    3
 #define DP_C_LLONG      4
 
-<<<<<<< HEAD
 /* Floating point formats */
 #define F_FORMAT        0
 #define E_FORMAT        1
 #define G_FORMAT        2
 
-=======
->>>>>>> origin/master
 /* some handy macros */
 #define char_to_int(p) (p - '0')
 #define OSSL_MAX(p,q) ((p >= q) ? p : q)
 
-<<<<<<< HEAD
 static int
-=======
-static void
->>>>>>> origin/master
 _dopr(char **sbuffer,
       char **buffer,
       size_t *maxlen,
@@ -258,12 +130,8 @@ _dopr(char **sbuffer,
             if (ch == '%')
                 state = DP_S_FLAGS;
             else
-<<<<<<< HEAD
                 if(!doapr_outch(sbuffer, buffer, &currlen, maxlen, ch))
                     return 0;
-=======
-                doapr_outch(sbuffer, buffer, &currlen, maxlen, ch);
->>>>>>> origin/master
             ch = *format++;
             break;
         case DP_S_FLAGS:
@@ -369,14 +237,9 @@ _dopr(char **sbuffer,
                     value = va_arg(args, int);
                     break;
                 }
-<<<<<<< HEAD
                 if (!fmtint(sbuffer, buffer, &currlen, maxlen, value, 10, min,
                             max, flags))
                     return 0;
-=======
-                fmtint(sbuffer, buffer, &currlen, maxlen,
-                       value, 10, min, max, flags);
->>>>>>> origin/master
                 break;
             case 'X':
                 flags |= DP_F_UP;
@@ -399,30 +262,19 @@ _dopr(char **sbuffer,
                     value = (LLONG) va_arg(args, unsigned int);
                     break;
                 }
-<<<<<<< HEAD
                 if (!fmtint(sbuffer, buffer, &currlen, maxlen, value,
                             ch == 'o' ? 8 : (ch == 'u' ? 10 : 16),
                             min, max, flags))
                     return 0;
-=======
-                fmtint(sbuffer, buffer, &currlen, maxlen, value,
-                       ch == 'o' ? 8 : (ch == 'u' ? 10 : 16),
-                       min, max, flags);
->>>>>>> origin/master
                 break;
             case 'f':
                 if (cflags == DP_C_LDOUBLE)
                     fvalue = va_arg(args, LDOUBLE);
                 else
                     fvalue = va_arg(args, double);
-<<<<<<< HEAD
                 if (!fmtfp(sbuffer, buffer, &currlen, maxlen, fvalue, min, max,
                            flags, F_FORMAT))
                     return 0;
-=======
-                fmtfp(sbuffer, buffer, &currlen, maxlen,
-                      fvalue, min, max, flags);
->>>>>>> origin/master
                 break;
             case 'E':
                 flags |= DP_F_UP;
@@ -431,12 +283,9 @@ _dopr(char **sbuffer,
                     fvalue = va_arg(args, LDOUBLE);
                 else
                     fvalue = va_arg(args, double);
-<<<<<<< HEAD
                 if (!fmtfp(sbuffer, buffer, &currlen, maxlen, fvalue, min, max,
                            flags, E_FORMAT))
                     return 0;
-=======
->>>>>>> origin/master
                 break;
             case 'G':
                 flags |= DP_F_UP;
@@ -445,7 +294,6 @@ _dopr(char **sbuffer,
                     fvalue = va_arg(args, LDOUBLE);
                 else
                     fvalue = va_arg(args, double);
-<<<<<<< HEAD
                 if (!fmtfp(sbuffer, buffer, &currlen, maxlen, fvalue, min, max,
                            flags, G_FORMAT))
                     return 0;
@@ -454,12 +302,6 @@ _dopr(char **sbuffer,
                 if(!doapr_outch(sbuffer, buffer, &currlen, maxlen,
                             va_arg(args, int)))
                     return 0;
-=======
-                break;
-            case 'c':
-                doapr_outch(sbuffer, buffer, &currlen, maxlen,
-                            va_arg(args, int));
->>>>>>> origin/master
                 break;
             case 's':
                 strvalue = va_arg(args, char *);
@@ -469,7 +311,6 @@ _dopr(char **sbuffer,
                     else
                         max = *maxlen;
                 }
-<<<<<<< HEAD
                 if (!fmtstr(sbuffer, buffer, &currlen, maxlen, strvalue,
                             flags, min, max))
                     return 0;
@@ -479,15 +320,6 @@ _dopr(char **sbuffer,
                 if (!fmtint(sbuffer, buffer, &currlen, maxlen,
                             value, 16, min, max, flags | DP_F_NUM))
                     return 0;
-=======
-                fmtstr(sbuffer, buffer, &currlen, maxlen, strvalue,
-                       flags, min, max);
-                break;
-            case 'p':
-                value = (long)va_arg(args, void *);
-                fmtint(sbuffer, buffer, &currlen, maxlen,
-                       value, 16, min, max, flags | DP_F_NUM);
->>>>>>> origin/master
                 break;
             case 'n':          /* XXX */
                 if (cflags == DP_C_SHORT) {
@@ -509,12 +341,8 @@ _dopr(char **sbuffer,
                 }
                 break;
             case '%':
-<<<<<<< HEAD
                 if(!doapr_outch(sbuffer, buffer, &currlen, maxlen, ch))
                     return 0;
-=======
-                doapr_outch(sbuffer, buffer, &currlen, maxlen, ch);
->>>>>>> origin/master
                 break;
             case 'w':
                 /* not supported yet, treat as next char */
@@ -535,7 +363,6 @@ _dopr(char **sbuffer,
             break;
         }
     }
-<<<<<<< HEAD
     /*
      * We have to truncate if there is no dynamic buffer and we have filled the
      * static buffer.
@@ -552,33 +379,17 @@ _dopr(char **sbuffer,
 }
 
 static int
-=======
-    *truncated = (currlen > *maxlen - 1);
-    if (*truncated)
-        currlen = *maxlen - 1;
-    doapr_outch(sbuffer, buffer, &currlen, maxlen, '\0');
-    *retlen = currlen - 1;
-    return;
-}
-
-static void
->>>>>>> origin/master
 fmtstr(char **sbuffer,
        char **buffer,
        size_t *currlen,
        size_t *maxlen, const char *value, int flags, int min, int max)
 {
-<<<<<<< HEAD
     int padlen;
     size_t strln;
-=======
-    int padlen, strln;
->>>>>>> origin/master
     int cnt = 0;
 
     if (value == 0)
         value = "<NULL>";
-<<<<<<< HEAD
 
     strln = OPENSSL_strnlen(value, max < 0 ? SIZE_MAX : (size_t)max);
 
@@ -620,32 +431,6 @@ fmtstr(char **sbuffer,
 }
 
 static int
-=======
-    for (strln = 0; value[strln]; ++strln) ;
-    padlen = min - strln;
-    if (padlen < 0)
-        padlen = 0;
-    if (flags & DP_F_MINUS)
-        padlen = -padlen;
-
-    while ((padlen > 0) && (cnt < max)) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
-        --padlen;
-        ++cnt;
-    }
-    while (*value && (cnt < max)) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, *value++);
-        ++cnt;
-    }
-    while ((padlen < 0) && (cnt < max)) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
-        ++padlen;
-        ++cnt;
-    }
-}
-
-static void
->>>>>>> origin/master
 fmtint(char **sbuffer,
        char **buffer,
        size_t *currlen,
@@ -666,11 +451,7 @@ fmtint(char **sbuffer,
     if (!(flags & DP_F_UNSIGNED)) {
         if (value < 0) {
             signvalue = '-';
-<<<<<<< HEAD
             uvalue = -(unsigned LLONG)value;
-=======
-            uvalue = -value;
->>>>>>> origin/master
         } else if (flags & DP_F_PLUS)
             signvalue = '+';
         else if (flags & DP_F_SPACE)
@@ -709,18 +490,13 @@ fmtint(char **sbuffer,
 
     /* spaces */
     while (spadlen > 0) {
-<<<<<<< HEAD
         if(!doapr_outch(sbuffer, buffer, currlen, maxlen, ' '))
             return 0;
-=======
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
->>>>>>> origin/master
         --spadlen;
     }
 
     /* sign */
     if (signvalue)
-<<<<<<< HEAD
         if(!doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue))
             return 0;
 
@@ -728,30 +504,18 @@ fmtint(char **sbuffer,
     while (*prefix) {
         if(!doapr_outch(sbuffer, buffer, currlen, maxlen, *prefix))
             return 0;
-=======
-        doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue);
-
-    /* prefix */
-    while (*prefix) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, *prefix);
->>>>>>> origin/master
         prefix++;
     }
 
     /* zeros */
     if (zpadlen > 0) {
         while (zpadlen > 0) {
-<<<<<<< HEAD
             if(!doapr_outch(sbuffer, buffer, currlen, maxlen, '0'))
                 return 0;
-=======
-            doapr_outch(sbuffer, buffer, currlen, maxlen, '0');
->>>>>>> origin/master
             --zpadlen;
         }
     }
     /* digits */
-<<<<<<< HEAD
     while (place > 0) {
         if (!doapr_outch(sbuffer, buffer, currlen, maxlen, convert[--place]))
             return 0;
@@ -764,17 +528,6 @@ fmtint(char **sbuffer,
         ++spadlen;
     }
     return 1;
-=======
-    while (place > 0)
-        doapr_outch(sbuffer, buffer, currlen, maxlen, convert[--place]);
-
-    /* left justified spaces */
-    while (spadlen < 0) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
-        ++spadlen;
-    }
-    return;
->>>>>>> origin/master
 }
 
 static LDOUBLE abs_val(LDOUBLE value)
@@ -805,7 +558,6 @@ static long roundv(LDOUBLE value)
     return intpart;
 }
 
-<<<<<<< HEAD
 static int
 fmtfp(char **sbuffer,
       char **buffer,
@@ -832,29 +584,6 @@ fmtfp(char **sbuffer,
     if (max < 0)
         max = 6;
 
-=======
-static void
-fmtfp(char **sbuffer,
-      char **buffer,
-      size_t *currlen,
-      size_t *maxlen, LDOUBLE fvalue, int min, int max, int flags)
-{
-    int signvalue = 0;
-    LDOUBLE ufvalue;
-    char iconvert[20];
-    char fconvert[20];
-    int iplace = 0;
-    int fplace = 0;
-    int padlen = 0;
-    int zpadlen = 0;
-    long intpart;
-    long fracpart;
-    long max10;
-
-    if (max < 0)
-        max = 6;
-    ufvalue = abs_val(fvalue);
->>>>>>> origin/master
     if (fvalue < 0)
         signvalue = '-';
     else if (flags & DP_F_PLUS)
@@ -862,7 +591,6 @@ fmtfp(char **sbuffer,
     else if (flags & DP_F_SPACE)
         signvalue = ' ';
 
-<<<<<<< HEAD
     /*
      * G_FORMAT sometimes prints like E_FORMAT and sometimes like F_FORMAT
      * depending on the number to be printed. Work out which one it is and use
@@ -930,9 +658,6 @@ fmtfp(char **sbuffer,
         return 0;
     }
     intpart = (unsigned long)ufvalue;
-=======
-    intpart = (long)ufvalue;
->>>>>>> origin/master
 
     /*
      * sorry, we only support 9 digits past the decimal because of our
@@ -963,7 +688,6 @@ fmtfp(char **sbuffer,
     iconvert[iplace] = 0;
 
     /* convert fractional part */
-<<<<<<< HEAD
     while (fplace < max) {
         if (style == G_FORMAT && fplace == 0 && (fracpart % 10) == 0) {
             /* We strip trailing zeros in G_FORMAT */
@@ -977,17 +701,10 @@ fmtfp(char **sbuffer,
         fracpart = (fracpart / 10);
     }
 
-=======
-    do {
-        fconvert[fplace++] = "0123456789"[fracpart % 10];
-        fracpart = (fracpart / 10);
-    } while (fplace < max);
->>>>>>> origin/master
     if (fplace == sizeof fconvert)
         fplace--;
     fconvert[fplace] = 0;
 
-<<<<<<< HEAD
     /* convert exponent part */
     if (realstyle == E_FORMAT) {
         int tmpexp;
@@ -1016,10 +733,6 @@ fmtfp(char **sbuffer,
     /* Take some off for exponent prefix "+e" and exponent */
     if (realstyle == E_FORMAT)
         padlen -= 2 + eplace;
-=======
-    /* -1 for decimal point, another -1 if we are printing a sign */
-    padlen = min - iplace - max - 1 - ((signvalue) ? 1 : 0);
->>>>>>> origin/master
     zpadlen = max - fplace;
     if (zpadlen < 0)
         zpadlen = 0;
@@ -1030,27 +743,18 @@ fmtfp(char **sbuffer,
 
     if ((flags & DP_F_ZERO) && (padlen > 0)) {
         if (signvalue) {
-<<<<<<< HEAD
             if (!doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue))
                 return 0;
-=======
-            doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue);
->>>>>>> origin/master
             --padlen;
             signvalue = 0;
         }
         while (padlen > 0) {
-<<<<<<< HEAD
             if (!doapr_outch(sbuffer, buffer, currlen, maxlen, '0'))
                 return 0;
-=======
-            doapr_outch(sbuffer, buffer, currlen, maxlen, '0');
->>>>>>> origin/master
             --padlen;
         }
     }
     while (padlen > 0) {
-<<<<<<< HEAD
         if (!doapr_outch(sbuffer, buffer, currlen, maxlen, ' '))
             return 0;
         --padlen;
@@ -1062,23 +766,12 @@ fmtfp(char **sbuffer,
         if (!doapr_outch(sbuffer, buffer, currlen, maxlen, iconvert[--iplace]))
             return 0;
     }
-=======
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
-        --padlen;
-    }
-    if (signvalue)
-        doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue);
-
-    while (iplace > 0)
-        doapr_outch(sbuffer, buffer, currlen, maxlen, iconvert[--iplace]);
->>>>>>> origin/master
 
     /*
      * Decimal point. This should probably use locale to find the correct
      * char to print out.
      */
     if (max > 0 || (flags & DP_F_NUM)) {
-<<<<<<< HEAD
         if (!doapr_outch(sbuffer, buffer, currlen, maxlen, '.'))
             return 0;
 
@@ -1127,30 +820,10 @@ fmtfp(char **sbuffer,
 #define BUFFER_INC  1024
 
 static int
-=======
-        doapr_outch(sbuffer, buffer, currlen, maxlen, '.');
-
-        while (fplace > 0)
-            doapr_outch(sbuffer, buffer, currlen, maxlen, fconvert[--fplace]);
-    }
-    while (zpadlen > 0) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, '0');
-        --zpadlen;
-    }
-
-    while (padlen < 0) {
-        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
-        ++padlen;
-    }
-}
-
-static void
->>>>>>> origin/master
 doapr_outch(char **sbuffer,
             char **buffer, size_t *currlen, size_t *maxlen, int c)
 {
     /* If we haven't at least one buffer, someone has doe a big booboo */
-<<<<<<< HEAD
     OPENSSL_assert(*sbuffer != NULL || buffer != NULL);
 
     /* |currlen| must always be <= |*maxlen| */
@@ -1167,40 +840,15 @@ doapr_outch(char **sbuffer,
                 return 0;
             if (*currlen > 0) {
                 OPENSSL_assert(*sbuffer != NULL);
-=======
-    assert(*sbuffer != NULL || buffer != NULL);
-
-    /* |currlen| must always be <= |*maxlen| */
-    assert(*currlen <= *maxlen);
-
-    if (buffer && *currlen == *maxlen) {
-        *maxlen += 1024;
-        if (*buffer == NULL) {
-            *buffer = OPENSSL_malloc(*maxlen);
-            if (!*buffer) {
-                /* Panic! Can't really do anything sensible. Just return */
-                return;
-            }
-            if (*currlen > 0) {
-                assert(*sbuffer != NULL);
->>>>>>> origin/master
                 memcpy(*buffer, *sbuffer, *currlen);
             }
             *sbuffer = NULL;
         } else {
-<<<<<<< HEAD
             char *tmpbuf;
             tmpbuf = OPENSSL_realloc(*buffer, *maxlen);
             if (tmpbuf == NULL)
                 return 0;
             *buffer = tmpbuf;
-=======
-            *buffer = OPENSSL_realloc(*buffer, *maxlen);
-            if (!*buffer) {
-                /* Panic! Can't really do anything sensible. Just return */
-                return;
-            }
->>>>>>> origin/master
         }
     }
 
@@ -1211,11 +859,7 @@ doapr_outch(char **sbuffer,
             (*buffer)[(*currlen)++] = (char)c;
     }
 
-<<<<<<< HEAD
     return 1;
-=======
-    return;
->>>>>>> origin/master
 }
 
 /***************************************************************************/
@@ -1246,26 +890,17 @@ int BIO_vprintf(BIO *bio, const char *format, va_list args)
     int ignored;
 
     dynbuf = NULL;
-<<<<<<< HEAD
     if (!_dopr(&hugebufp, &dynbuf, &hugebufsize, &retlen, &ignored, format,
                 args)) {
         OPENSSL_free(dynbuf);
         return -1;
     }
-=======
-    CRYPTO_push_info("doapr()");
-    _dopr(&hugebufp, &dynbuf, &hugebufsize, &retlen, &ignored, format, args);
->>>>>>> origin/master
     if (dynbuf) {
         ret = BIO_write(bio, dynbuf, (int)retlen);
         OPENSSL_free(dynbuf);
     } else {
         ret = BIO_write(bio, hugebuf, (int)retlen);
     }
-<<<<<<< HEAD
-=======
-    CRYPTO_pop_info();
->>>>>>> origin/master
     return (ret);
 }
 
@@ -1293,12 +928,8 @@ int BIO_vsnprintf(char *buf, size_t n, const char *format, va_list args)
     size_t retlen;
     int truncated;
 
-<<<<<<< HEAD
     if(!_dopr(&buf, NULL, &n, &retlen, &truncated, format, args))
         return -1;
-=======
-    _dopr(&buf, NULL, &n, &retlen, &truncated, format, args);
->>>>>>> origin/master
 
     if (truncated)
         /*

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2006-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -26,12 +22,9 @@
 # I.e. if you compare 1GHz 21264 and 2GHz Opteron, you'll observe ~2x
 # difference.
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 # int bn_mul_mont(
 $rp="a0";	# BN_ULONG *rp,
 $ap="a1";	# const BN_ULONG *ap,

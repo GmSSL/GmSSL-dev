@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -6,21 +5,15 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC, "${dir}perlasm", "perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open OUT,">$output";
 *STDOUT=*OUT;
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"x86cpuid");
 
 for (@ARGV) { $sse2=1 if (/-DOPENSSL_IA32_SSE2/); }
@@ -372,7 +365,6 @@ for (@ARGV) { $sse2=1 if (/-DOPENSSL_IA32_SSE2/); }
 	&ret	();
 &function_end_B("OPENSSL_cleanse");
 
-<<<<<<< HEAD
 &function_begin_B("CRYPTO_memcmp");
 	&push	("esi");
 	&push	("edi");
@@ -506,19 +498,12 @@ my $rdop = shift;
 	&mov	("ecx",8);
 &set_label("loop");
 	&${rdop}("eax");
-=======
-&function_begin_B("OPENSSL_ia32_rdrand");
-	&mov	("ecx",8);
-&set_label("loop");
-	&rdrand	("eax");
->>>>>>> origin/master
 	&jc	(&label("break"));
 	&loop	(&label("loop"));
 &set_label("break");
 	&cmp	("eax",0);
 	&cmove	("eax","ecx");
 	&ret	();
-<<<<<<< HEAD
 &function_end_B("OPENSSL_ia32_${rdop}");
 
 &function_begin_B("OPENSSL_ia32_${rdop}_bytes");
@@ -565,21 +550,6 @@ my $rdop = shift;
 }
 &gen_random("rdrand");
 &gen_random("rdseed");
-=======
-&function_end_B("OPENSSL_ia32_rdrand");
-
-&function_begin_B("OPENSSL_ia32_rdseed");
-	&mov	("ecx",8);
-&set_label("loop");
-	&rdseed	("eax");
-	&jc	(&label("break"));
-	&loop	(&label("loop"));
-&set_label("break");
-	&cmp	("eax",0);
-	&cmove	("eax","ecx");
-	&ret	();
-&function_end_B("OPENSSL_ia32_rdseed");
->>>>>>> origin/master
 
 &initseg("OPENSSL_cpuid_setup");
 
@@ -587,8 +557,5 @@ my $rdop = shift;
 &hidden("OPENSSL_ia32cap_P");
 
 &asm_finish();
-<<<<<<< HEAD
 
 close STDOUT;
-=======
->>>>>>> origin/master

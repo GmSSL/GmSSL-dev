@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,55 +5,6 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* ====================================================================
- * Copyright (c) 2011-2013 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
->>>>>>> origin/master
  */
 
 #include <openssl/opensslconf.h>
@@ -62,7 +12,6 @@
 #include <stdio.h>
 #include <string.h>
 
-<<<<<<< HEAD
 #include <openssl/evp.h>
 #include <openssl/objects.h>
 #include <openssl/aes.h>
@@ -87,32 +36,6 @@
 #endif
 
 #define TLS1_1_VERSION 0x0302
-=======
-#if !defined(OPENSSL_NO_AES) && !defined(OPENSSL_NO_SHA1)
-
-# include <openssl/evp.h>
-# include <openssl/objects.h>
-# include <openssl/aes.h>
-# include <openssl/sha.h>
-# include <openssl/rand.h>
-# include "modes_lcl.h"
-
-# ifndef EVP_CIPH_FLAG_AEAD_CIPHER
-#  define EVP_CIPH_FLAG_AEAD_CIPHER       0x200000
-#  define EVP_CTRL_AEAD_TLS1_AAD          0x16
-#  define EVP_CTRL_AEAD_SET_MAC_KEY       0x17
-# endif
-
-# if !defined(EVP_CIPH_FLAG_DEFAULT_ASN1)
-#  define EVP_CIPH_FLAG_DEFAULT_ASN1 0
-# endif
-
-# if !defined(EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK)
-#  define EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK 0
-# endif
-
-# define TLS1_1_VERSION 0x0302
->>>>>>> origin/master
 
 typedef struct {
     AES_KEY ks;
@@ -124,7 +47,6 @@ typedef struct {
     } aux;
 } EVP_AES_HMAC_SHA1;
 
-<<<<<<< HEAD
 #define NO_PAYLOAD_LENGTH       ((size_t)-1)
 
 #if     defined(AES_ASM) &&     ( \
@@ -133,17 +55,6 @@ typedef struct {
 
 extern unsigned int OPENSSL_ia32cap_P[];
 # define AESNI_CAPABLE   (1<<(57-32))
-=======
-# define NO_PAYLOAD_LENGTH       ((size_t)-1)
-
-# if     defined(AES_ASM) &&     ( \
-        defined(__x86_64)       || defined(__x86_64__)  || \
-        defined(_M_AMD64)       || defined(_M_X64)      || \
-        defined(__INTEL__)      )
-
-extern unsigned int OPENSSL_ia32cap_P[];
-#  define AESNI_CAPABLE   (1<<(57-32))
->>>>>>> origin/master
 
 int aesni_set_encrypt_key(const unsigned char *userKey, int bits,
                           AES_KEY *key);
@@ -163,11 +74,7 @@ void aesni256_cbc_sha1_dec(const void *inp, void *out, size_t blocks,
                            const AES_KEY *key, unsigned char iv[16],
                            SHA_CTX *ctx, const void *in0);
 
-<<<<<<< HEAD
 # define data(ctx) ((EVP_AES_HMAC_SHA1 *)EVP_CIPHER_CTX_get_cipher_data(ctx))
-=======
-#  define data(ctx) ((EVP_AES_HMAC_SHA1 *)(ctx)->cipher_data)
->>>>>>> origin/master
 
 static int aesni_cbc_hmac_sha1_init_key(EVP_CIPHER_CTX *ctx,
                                         const unsigned char *inkey,
@@ -177,7 +84,6 @@ static int aesni_cbc_hmac_sha1_init_key(EVP_CIPHER_CTX *ctx,
     int ret;
 
     if (enc)
-<<<<<<< HEAD
         ret = aesni_set_encrypt_key(inkey,
                                     EVP_CIPHER_CTX_key_length(ctx) * 8,
                                     &key->ks);
@@ -185,11 +91,6 @@ static int aesni_cbc_hmac_sha1_init_key(EVP_CIPHER_CTX *ctx,
         ret = aesni_set_decrypt_key(inkey,
                                     EVP_CIPHER_CTX_key_length(ctx) * 8,
                                     &key->ks);
-=======
-        ret = aesni_set_encrypt_key(inkey, ctx->key_len * 8, &key->ks);
-    else
-        ret = aesni_set_decrypt_key(inkey, ctx->key_len * 8, &key->ks);
->>>>>>> origin/master
 
     SHA1_Init(&key->head);      /* handy when benchmarking */
     key->tail = key->head;
@@ -200,21 +101,12 @@ static int aesni_cbc_hmac_sha1_init_key(EVP_CIPHER_CTX *ctx,
     return ret < 0 ? 0 : 1;
 }
 
-<<<<<<< HEAD
 # define STITCHED_CALL
 # undef  STITCHED_DECRYPT_CALL
 
 # if !defined(STITCHED_CALL)
 #  define aes_off 0
 # endif
-=======
-#  define STITCHED_CALL
-#  undef  STITCHED_DECRYPT_CALL
-
-#  if !defined(STITCHED_CALL)
-#   define aes_off 0
-#  endif
->>>>>>> origin/master
 
 void sha1_block_data_order(void *c, const void *p, size_t len);
 
@@ -249,21 +141,12 @@ static void sha1_update(SHA_CTX *c, const void *data, size_t len)
         SHA1_Update(c, ptr, res);
 }
 
-<<<<<<< HEAD
 # ifdef SHA1_Update
 #  undef SHA1_Update
 # endif
 # define SHA1_Update sha1_update
 
 # if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
-=======
-#  ifdef SHA1_Update
-#   undef SHA1_Update
-#  endif
-#  define SHA1_Update sha1_update
-
-#  if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
->>>>>>> origin/master
 
 typedef struct {
     unsigned int A[8], B[8], C[8], D[8], E[8];
@@ -302,15 +185,9 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         0;
     size_t ret = 0;
     u8 *IVs;
-<<<<<<< HEAD
 #  if defined(BSWAP8)
     u64 seqnum;
 #  endif
-=======
-#   if defined(BSWAP8)
-    u64 seqnum;
-#   endif
->>>>>>> origin/master
 
     /* ask for IVs in bulk */
     if (RAND_bytes((IVs = blocks[0].c), 16 * x4) <= 0)
@@ -344,7 +221,6 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         IVs += 16;
     }
 
-<<<<<<< HEAD
 #  if defined(BSWAP8)
     memcpy(blocks[0].c, key->md.data, 8);
     seqnum = BSWAP8(blocks[0].q[0]);
@@ -354,17 +230,6 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
 #  if !defined(BSWAP8)
         unsigned int carry, j;
 #  endif
-=======
-#   if defined(BSWAP8)
-    memcpy(blocks[0].c, key->md.data, 8);
-    seqnum = BSWAP8(blocks[0].q[0]);
-#   endif
-    for (i = 0; i < x4; i++) {
-        unsigned int len = (i == (x4 - 1) ? last : frag);
-#   if !defined(BSWAP8)
-        unsigned int carry, j;
-#   endif
->>>>>>> origin/master
 
         ctx->A[i] = key->md.h0;
         ctx->B[i] = key->md.h1;
@@ -373,24 +238,14 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         ctx->E[i] = key->md.h4;
 
         /* fix seqnum */
-<<<<<<< HEAD
 #  if defined(BSWAP8)
         blocks[i].q[0] = BSWAP8(seqnum + i);
 #  else
-=======
-#   if defined(BSWAP8)
-        blocks[i].q[0] = BSWAP8(seqnum + i);
-#   else
->>>>>>> origin/master
         for (carry = i, j = 8; j--;) {
             blocks[i].c[j] = ((u8 *)key->md.data)[j] + carry;
             carry = (blocks[i].c[j] - carry) >> (sizeof(carry) * 8 - 1);
         }
-<<<<<<< HEAD
 #  endif
-=======
-#   endif
->>>>>>> origin/master
         blocks[i].c[8] = ((u8 *)key->md.data)[8];
         blocks[i].c[9] = ((u8 *)key->md.data)[9];
         blocks[i].c[10] = ((u8 *)key->md.data)[10];
@@ -409,17 +264,10 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
     /* hash 13-byte headers and first 64-13 bytes of inputs */
     sha1_multi_block(ctx, edges, n4x);
     /* hash bulk inputs */
-<<<<<<< HEAD
 #  define MAXCHUNKSIZE    2048
 #  if     MAXCHUNKSIZE%64
 #   error  "MAXCHUNKSIZE is not divisible by 64"
 #  elif   MAXCHUNKSIZE
-=======
-#   define MAXCHUNKSIZE    2048
-#   if     MAXCHUNKSIZE%64
-#    error  "MAXCHUNKSIZE is not divisible by 64"
-#   elif   MAXCHUNKSIZE
->>>>>>> origin/master
     /*
      * goal is to minimize pressure on L1 cache by moving in shorter steps,
      * so that hashed data is still in the cache by the time we encrypt it
@@ -448,13 +296,8 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
             minblocks -= MAXCHUNKSIZE / 64;
         } while (minblocks > MAXCHUNKSIZE / 64);
     }
-<<<<<<< HEAD
 #  endif
 #  undef  MAXCHUNKSIZE
-=======
-#   endif
-#   undef  MAXCHUNKSIZE
->>>>>>> origin/master
     sha1_multi_block(ctx, hash_d, n4x);
 
     memset(blocks, 0, sizeof(blocks));
@@ -469,7 +312,6 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         len += 64 + 13;         /* 64 is HMAC header */
         len *= 8;               /* convert to bits */
         if (off < (64 - 8)) {
-<<<<<<< HEAD
 #  ifdef BSWAP4
             blocks[i].d[15] = BSWAP4(len);
 #  else
@@ -482,20 +324,6 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
 #  else
             PUTU32(blocks[i].c + 124, len);
 #  endif
-=======
-#   ifdef BSWAP4
-            blocks[i].d[15] = BSWAP4(len);
-#   else
-            PUTU32(blocks[i].c + 60, len);
-#   endif
-            edges[i].blocks = 1;
-        } else {
-#   ifdef BSWAP4
-            blocks[i].d[31] = BSWAP4(len);
-#   else
-            PUTU32(blocks[i].c + 124, len);
-#   endif
->>>>>>> origin/master
             edges[i].blocks = 2;
         }
         edges[i].ptr = blocks[i].c;
@@ -506,11 +334,7 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
 
     memset(blocks, 0, sizeof(blocks));
     for (i = 0; i < x4; i++) {
-<<<<<<< HEAD
 #  ifdef BSWAP4
-=======
-#   ifdef BSWAP4
->>>>>>> origin/master
         blocks[i].d[0] = BSWAP4(ctx->A[i]);
         ctx->A[i] = key->tail.h0;
         blocks[i].d[1] = BSWAP4(ctx->B[i]);
@@ -523,11 +347,7 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         ctx->E[i] = key->tail.h4;
         blocks[i].c[20] = 0x80;
         blocks[i].d[15] = BSWAP4((64 + 20) * 8);
-<<<<<<< HEAD
 #  else
-=======
-#   else
->>>>>>> origin/master
         PUTU32(blocks[i].c + 0, ctx->A[i]);
         ctx->A[i] = key->tail.h0;
         PUTU32(blocks[i].c + 4, ctx->B[i]);
@@ -540,11 +360,7 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
         ctx->E[i] = key->tail.h4;
         blocks[i].c[20] = 0x80;
         PUTU32(blocks[i].c + 60, (64 + 20) * 8);
-<<<<<<< HEAD
 #  endif
-=======
-#   endif
->>>>>>> origin/master
         edges[i].ptr = blocks[i].c;
         edges[i].blocks = 1;
     }
@@ -597,11 +413,7 @@ static size_t tls1_1_multi_block_encrypt(EVP_AES_HMAC_SHA1 *key,
 
     return ret;
 }
-<<<<<<< HEAD
 # endif
-=======
-#  endif
->>>>>>> origin/master
 
 static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                       const unsigned char *in, size_t len)
@@ -611,30 +423,18 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     size_t plen = key->payload_length, iv = 0, /* explicit IV in TLS 1.1 and
                                                 * later */
         sha_off = 0;
-<<<<<<< HEAD
 # if defined(STITCHED_CALL)
     size_t aes_off = 0, blocks;
 
     sha_off = SHA_CBLOCK - key->md.num;
 # endif
-=======
-#  if defined(STITCHED_CALL)
-    size_t aes_off = 0, blocks;
-
-    sha_off = SHA_CBLOCK - key->md.num;
-#  endif
->>>>>>> origin/master
 
     key->payload_length = NO_PAYLOAD_LENGTH;
 
     if (len % AES_BLOCK_SIZE)
         return 0;
 
-<<<<<<< HEAD
     if (EVP_CIPHER_CTX_encrypting(ctx)) {
-=======
-    if (ctx->encrypt) {
->>>>>>> origin/master
         if (plen == NO_PAYLOAD_LENGTH)
             plen = len;
         else if (len !=
@@ -644,22 +444,14 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
         else if (key->aux.tls_ver >= TLS1_1_VERSION)
             iv = AES_BLOCK_SIZE;
 
-<<<<<<< HEAD
 # if defined(STITCHED_CALL)
-=======
-#  if defined(STITCHED_CALL)
->>>>>>> origin/master
         if (plen > (sha_off + iv)
             && (blocks = (plen - (sha_off + iv)) / SHA_CBLOCK)) {
             SHA1_Update(&key->md, in + iv, sha_off);
 
             aesni_cbc_sha1_enc(in, out, blocks, &key->ks,
-<<<<<<< HEAD
                                EVP_CIPHER_CTX_iv_noconst(ctx),
                                &key->md, in + iv + sha_off);
-=======
-                               ctx->iv, &key->md, in + iv + sha_off);
->>>>>>> origin/master
             blocks *= SHA_CBLOCK;
             aes_off += blocks;
             sha_off += blocks;
@@ -670,11 +462,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
         } else {
             sha_off = 0;
         }
-<<<<<<< HEAD
 # endif
-=======
-#  endif
->>>>>>> origin/master
         sha_off += iv;
         SHA1_Update(&key->md, in + sha_off, plen - sha_off);
 
@@ -694,17 +482,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 out[plen] = l;
             /* encrypt HMAC|padding at once */
             aesni_cbc_encrypt(out + aes_off, out + aes_off, len - aes_off,
-<<<<<<< HEAD
                               &key->ks, EVP_CIPHER_CTX_iv_noconst(ctx), 1);
         } else {
             aesni_cbc_encrypt(in + aes_off, out + aes_off, len - aes_off,
                               &key->ks, EVP_CIPHER_CTX_iv_noconst(ctx), 1);
-=======
-                              &key->ks, ctx->iv, 1);
-        } else {
-            aesni_cbc_encrypt(in + aes_off, out + aes_off, len - aes_off,
-                              &key->ks, ctx->iv, 1);
->>>>>>> origin/master
         }
     } else {
         union {
@@ -723,17 +504,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 unsigned int u[SHA_LBLOCK];
                 unsigned char c[SHA_CBLOCK];
             } *data = (void *)key->md.data;
-<<<<<<< HEAD
 # if defined(STITCHED_DECRYPT_CALL)
             unsigned char tail_iv[AES_BLOCK_SIZE];
             int stitch = 0;
 # endif
-=======
-#  if defined(STITCHED_DECRYPT_CALL)
-            unsigned char tail_iv[AES_BLOCK_SIZE];
-            int stitch = 0;
-#  endif
->>>>>>> origin/master
 
             if ((key->aux.tls_aad[plen - 4] << 8 | key->aux.tls_aad[plen - 3])
                 >= TLS1_1_VERSION) {
@@ -741,23 +515,15 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                     return 0;
 
                 /* omit explicit iv */
-<<<<<<< HEAD
                 memcpy(EVP_CIPHER_CTX_iv_noconst(ctx), in, AES_BLOCK_SIZE);
 
-=======
-                memcpy(ctx->iv, in, AES_BLOCK_SIZE);
->>>>>>> origin/master
                 in += AES_BLOCK_SIZE;
                 out += AES_BLOCK_SIZE;
                 len -= AES_BLOCK_SIZE;
             } else if (len < (SHA_DIGEST_LENGTH + 1))
                 return 0;
 
-<<<<<<< HEAD
 # if defined(STITCHED_DECRYPT_CALL)
-=======
-#  if defined(STITCHED_DECRYPT_CALL)
->>>>>>> origin/master
             if (len >= 1024 && ctx->key_len == 32) {
                 /* decrypt last block */
                 memcpy(tail_iv, in + len - 2 * AES_BLOCK_SIZE,
@@ -767,16 +533,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                   &key->ks, tail_iv, 0);
                 stitch = 1;
             } else
-<<<<<<< HEAD
 # endif
                 /* decrypt HMAC|padding at once */
                 aesni_cbc_encrypt(in, out, len, &key->ks,
                                   EVP_CIPHER_CTX_iv_noconst(ctx), 0);
-=======
-#  endif
-                /* decrypt HMAC|padding at once */
-                aesni_cbc_encrypt(in, out, len, &key->ks, ctx->iv, 0);
->>>>>>> origin/master
 
             /* figure out payload length */
             pad = out[len - 1];
@@ -784,11 +544,8 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
             maxpad |= (255 - maxpad) >> (sizeof(maxpad) * 8 - 8);
             maxpad &= 255;
 
-<<<<<<< HEAD
             ret &= constant_time_ge(maxpad, pad);
 
-=======
->>>>>>> origin/master
             inp_len = len - (SHA_DIGEST_LENGTH + pad + 1);
             mask = (0 - ((inp_len - len) >> (sizeof(inp_len) * 8 - 1)));
             inp_len &= mask;
@@ -801,11 +558,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
             key->md = key->head;
             SHA1_Update(&key->md, key->aux.tls_aad, plen);
 
-<<<<<<< HEAD
 # if defined(STITCHED_DECRYPT_CALL)
-=======
-#  if defined(STITCHED_DECRYPT_CALL)
->>>>>>> origin/master
             if (stitch) {
                 blocks = (len - (256 + 32 + SHA_CBLOCK)) / SHA_CBLOCK;
                 aes_off = len - AES_BLOCK_SIZE - blocks * SHA_CBLOCK;
@@ -826,15 +579,9 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 key->md.Nl += (blocks << 3); /* at most 18 bits */
                 memcpy(ctx->iv, tail_iv, AES_BLOCK_SIZE);
             }
-<<<<<<< HEAD
 # endif
 
 # if 1
-=======
-#  endif
-
-#  if 1
->>>>>>> origin/master
             len -= SHA_DIGEST_LENGTH; /* amend mac */
             if (len >= (256 + SHA_CBLOCK)) {
                 j = (len - (256 + SHA_CBLOCK)) & (0 - SHA_CBLOCK);
@@ -847,25 +594,15 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 
             /* but pretend as if we hashed padded payload */
             bitlen = key->md.Nl + (inp_len << 3); /* at most 18 bits */
-<<<<<<< HEAD
 #  ifdef BSWAP4
             bitlen = BSWAP4(bitlen);
 #  else
-=======
-#   ifdef BSWAP4
-            bitlen = BSWAP4(bitlen);
-#   else
->>>>>>> origin/master
             mac.c[0] = 0;
             mac.c[1] = (unsigned char)(bitlen >> 16);
             mac.c[2] = (unsigned char)(bitlen >> 8);
             mac.c[3] = (unsigned char)bitlen;
             bitlen = mac.u[0];
-<<<<<<< HEAD
 #  endif
-=======
-#   endif
->>>>>>> origin/master
 
             pmac->u[0] = 0;
             pmac->u[1] = 0;
@@ -922,21 +659,13 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
             pmac->u[3] |= key->md.h3 & mask;
             pmac->u[4] |= key->md.h4 & mask;
 
-<<<<<<< HEAD
 #  ifdef BSWAP4
-=======
-#   ifdef BSWAP4
->>>>>>> origin/master
             pmac->u[0] = BSWAP4(pmac->u[0]);
             pmac->u[1] = BSWAP4(pmac->u[1]);
             pmac->u[2] = BSWAP4(pmac->u[2]);
             pmac->u[3] = BSWAP4(pmac->u[3]);
             pmac->u[4] = BSWAP4(pmac->u[4]);
-<<<<<<< HEAD
 #  else
-=======
-#   else
->>>>>>> origin/master
             for (i = 0; i < 5; i++) {
                 res = pmac->u[i];
                 pmac->c[4 * i + 0] = (unsigned char)(res >> 24);
@@ -944,15 +673,9 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 pmac->c[4 * i + 2] = (unsigned char)(res >> 8);
                 pmac->c[4 * i + 3] = (unsigned char)res;
             }
-<<<<<<< HEAD
 #  endif
             len += SHA_DIGEST_LENGTH;
 # else
-=======
-#   endif
-            len += SHA_DIGEST_LENGTH;
-#  else
->>>>>>> origin/master
             SHA1_Update(&key->md, out, inp_len);
             res = key->md.num;
             SHA1_Final(pmac->c, &key->md);
@@ -971,11 +694,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 for (; inp_blocks < pad_blocks; inp_blocks++)
                     sha1_block_data_order(&key->md, data, 1);
             }
-<<<<<<< HEAD
 # endif
-=======
-#  endif
->>>>>>> origin/master
             key->md = key->tail;
             SHA1_Update(&key->md, pmac->c, SHA_DIGEST_LENGTH);
             SHA1_Final(pmac->c, &key->md);
@@ -983,11 +702,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
             /* verify HMAC */
             out += inp_len;
             len -= inp_len;
-<<<<<<< HEAD
 # if 1
-=======
-#  if 1
->>>>>>> origin/master
             {
                 unsigned char *p = out + len - 1 - maxpad - SHA_DIGEST_LENGTH;
                 size_t off = out - p;
@@ -1009,11 +724,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 res = 0 - ((0 - res) >> (sizeof(res) * 8 - 1));
                 ret &= (int)~res;
             }
-<<<<<<< HEAD
 # else
-=======
-#  else
->>>>>>> origin/master
             for (res = 0, i = 0; i < SHA_DIGEST_LENGTH; i++)
                 res |= out[i] ^ pmac->c[i];
             res = 0 - ((0 - res) >> (sizeof(res) * 8 - 1));
@@ -1027,17 +738,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 
             res = (0 - res) >> (sizeof(res) * 8 - 1);
             ret &= (int)~res;
-<<<<<<< HEAD
 # endif
             return ret;
         } else {
 # if defined(STITCHED_DECRYPT_CALL)
-=======
-#  endif
-            return ret;
-        } else {
-#  if defined(STITCHED_DECRYPT_CALL)
->>>>>>> origin/master
             if (len >= 1024 && ctx->key_len == 32) {
                 if (sha_off %= SHA_CBLOCK)
                     blocks = (len - 3 * SHA_CBLOCK) / SHA_CBLOCK;
@@ -1060,16 +764,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 if (key->md.Nl < (unsigned int)blocks)
                     key->md.Nh++;
             } else
-<<<<<<< HEAD
 # endif
                 /* decrypt HMAC|padding at once */
                 aesni_cbc_encrypt(in, out, len, &key->ks,
                                   EVP_CIPHER_CTX_iv_noconst(ctx), 0);
-=======
-#  endif
-                /* decrypt HMAC|padding at once */
-                aesni_cbc_encrypt(in, out, len, &key->ks, ctx->iv, 0);
->>>>>>> origin/master
 
             SHA1_Update(&key->md, out, len);
         }
@@ -1120,17 +818,10 @@ static int aesni_cbc_hmac_sha1_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
 
             if (arg != EVP_AEAD_TLS1_AAD_LEN)
                 return -1;
-<<<<<<< HEAD
 
             len = p[arg - 2] << 8 | p[arg - 1];
 
             if (EVP_CIPHER_CTX_encrypting(ctx)) {
-=======
- 
-            len = p[arg - 2] << 8 | p[arg - 1];
-
-            if (ctx->encrypt) {
->>>>>>> origin/master
                 key->payload_length = len;
                 if ((key->aux.tls_ver =
                      p[arg - 4] << 8 | p[arg - 3]) >= TLS1_1_VERSION) {
@@ -1151,11 +842,7 @@ static int aesni_cbc_hmac_sha1_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
                 return SHA_DIGEST_LENGTH;
             }
         }
-<<<<<<< HEAD
 # if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
-=======
-#  if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
->>>>>>> origin/master
     case EVP_CTRL_TLS1_1_MULTIBLOCK_MAX_BUFSIZE:
         return (int)(5 + 16 + ((arg + 20 + 16) & -16));
     case EVP_CTRL_TLS1_1_MULTIBLOCK_AAD:
@@ -1170,11 +857,7 @@ static int aesni_cbc_hmac_sha1_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
 
             inp_len = param->inp[11] << 8 | param->inp[12];
 
-<<<<<<< HEAD
             if (EVP_CIPHER_CTX_encrypting(ctx)) {
-=======
-            if (ctx->encrypt) {
->>>>>>> origin/master
                 if ((param->inp[9] << 8 | param->inp[10]) < TLS1_1_VERSION)
                     return -1;
 
@@ -1222,32 +905,19 @@ static int aesni_cbc_hmac_sha1_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
                                                    param->interleave / 4);
         }
     case EVP_CTRL_TLS1_1_MULTIBLOCK_DECRYPT:
-<<<<<<< HEAD
 # endif
-=======
-#  endif
->>>>>>> origin/master
     default:
         return -1;
     }
 }
 
 static EVP_CIPHER aesni_128_cbc_hmac_sha1_cipher = {
-<<<<<<< HEAD
 # ifdef NID_aes_128_cbc_hmac_sha1
     NID_aes_128_cbc_hmac_sha1,
 # else
     NID_undef,
 # endif
     AES_BLOCK_SIZE, 16, AES_BLOCK_SIZE,
-=======
-#  ifdef NID_aes_128_cbc_hmac_sha1
-    NID_aes_128_cbc_hmac_sha1,
-#  else
-    NID_undef,
-#  endif
-    16, 16, 16,
->>>>>>> origin/master
     EVP_CIPH_CBC_MODE | EVP_CIPH_FLAG_DEFAULT_ASN1 |
         EVP_CIPH_FLAG_AEAD_CIPHER | EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK,
     aesni_cbc_hmac_sha1_init_key,
@@ -1261,21 +931,12 @@ static EVP_CIPHER aesni_128_cbc_hmac_sha1_cipher = {
 };
 
 static EVP_CIPHER aesni_256_cbc_hmac_sha1_cipher = {
-<<<<<<< HEAD
 # ifdef NID_aes_256_cbc_hmac_sha1
     NID_aes_256_cbc_hmac_sha1,
 # else
     NID_undef,
 # endif
     AES_BLOCK_SIZE, 32, AES_BLOCK_SIZE,
-=======
-#  ifdef NID_aes_256_cbc_hmac_sha1
-    NID_aes_256_cbc_hmac_sha1,
-#  else
-    NID_undef,
-#  endif
-    16, 32, 16,
->>>>>>> origin/master
     EVP_CIPH_CBC_MODE | EVP_CIPH_FLAG_DEFAULT_ASN1 |
         EVP_CIPH_FLAG_AEAD_CIPHER | EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK,
     aesni_cbc_hmac_sha1_init_key,
@@ -1299,11 +960,7 @@ const EVP_CIPHER *EVP_aes_256_cbc_hmac_sha1(void)
     return (OPENSSL_ia32cap_P[1] & AESNI_CAPABLE ?
             &aesni_256_cbc_hmac_sha1_cipher : NULL);
 }
-<<<<<<< HEAD
 #else
-=======
-# else
->>>>>>> origin/master
 const EVP_CIPHER *EVP_aes_128_cbc_hmac_sha1(void)
 {
     return NULL;
@@ -1313,8 +970,4 @@ const EVP_CIPHER *EVP_aes_256_cbc_hmac_sha1(void)
 {
     return NULL;
 }
-<<<<<<< HEAD
-=======
-# endif
->>>>>>> origin/master
 #endif

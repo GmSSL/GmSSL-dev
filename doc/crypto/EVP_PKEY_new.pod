@@ -2,27 +2,19 @@
 
 =head1 NAME
 
-<<<<<<< HEAD
 EVP_PKEY_new, EVP_PKEY_up_ref, EVP_PKEY_free - private key allocation functions
-=======
-EVP_PKEY_new, EVP_PKEY_free - private key allocation functions.
->>>>>>> origin/master
 
 =head1 SYNOPSIS
 
  #include <openssl/evp.h>
 
  EVP_PKEY *EVP_PKEY_new(void);
-<<<<<<< HEAD
  int EVP_PKEY_up_ref(EVP_PKEY *key);
-=======
->>>>>>> origin/master
  void EVP_PKEY_free(EVP_PKEY *key);
 
 
 =head1 DESCRIPTION
 
-<<<<<<< HEAD
 The EVP_PKEY_new() function allocates an empty B<EVP_PKEY> structure which is
 used by OpenSSL to store private keys. The reference count is set to B<1>.
 
@@ -65,36 +57,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-The EVP_PKEY_new() function allocates an empty B<EVP_PKEY> 
-structure which is used by OpenSSL to store private keys.
-
-EVP_PKEY_free() frees up the private key B<key>.
-
-=head1 NOTES
-
-The B<EVP_PKEY> structure is used by various OpenSSL functions
-which require a general private key without reference to any
-particular algorithm.
-
-The structure returned by EVP_PKEY_new() is empty. To add a
-private key to this empty structure the functions described in
-L<EVP_PKEY_set1_RSA(3)|EVP_PKEY_set1_RSA(3)> should be used.
-
-=head1 RETURN VALUES
-
-EVP_PKEY_new() returns either the newly allocated B<EVP_PKEY>
-structure of B<NULL> if an error occurred.
-
-EVP_PKEY_free() does not return a value.
-
-=head1 SEE ALSO
-
-L<EVP_PKEY_set1_RSA(3)|EVP_PKEY_set1_RSA(3)>
-
-=head1 HISTORY
-
-TBA
->>>>>>> origin/master
 
 =cut

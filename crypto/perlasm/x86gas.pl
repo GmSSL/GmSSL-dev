@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2007-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 package x86gas;
 
@@ -28,11 +24,7 @@ sub opsize()
 { my $reg=shift;
     if    ($reg =~ m/^%e/o)		{ "l"; }
     elsif ($reg =~ m/^%[a-d][hl]$/o)	{ "b"; }
-<<<<<<< HEAD
     elsif ($reg =~ m/^%[yxm]/o)		{ undef; }
-=======
-    elsif ($reg =~ m/^%[xm]/o)		{ undef; }
->>>>>>> origin/master
     else				{ "w"; }
 }
 

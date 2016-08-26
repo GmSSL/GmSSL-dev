@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2009-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -168,19 +164,15 @@
 # one byte out of 8KB with 128-bit key, Sandy Bridge - 0.90. Just like
 # in CTR mode AES instruction interleave factor was chosen to be 6x.
 
-<<<<<<< HEAD
 # November 2015
 #
 # Add aesni_ocb_[en|de]crypt. AES instruction interleave factor was
 # chosen to be 6x.
 
-=======
->>>>>>> origin/master
 ######################################################################
 # Current large-block performance in cycles per byte processed with
 # 128-bit key (less is better).
 #
-<<<<<<< HEAD
 #		CBC en-/decrypt	CTR	XTS	ECB	OCB
 # Westmere	3.77/1.25	1.25	1.25	1.26
 # * Bridge	5.07/0.74	0.75	0.90	0.85	0.98
@@ -188,14 +180,6 @@
 # Skylake	2.62/0.63	0.63	0.63	0.63
 # Silvermont	5.75/3.54	3.56	4.12	3.87(*)	4.11
 # Bulldozer	5.77/0.70	0.72	0.90	0.70	0.95
-=======
-#		CBC en-/decrypt	CTR	XTS	ECB
-# Westmere	3.77/1.25	1.25	1.25	1.26
-# * Bridge	5.07/0.74	0.75	0.90	0.85
-# Haswell	4.44/0.63	0.63	0.73	0.63
-# Silvermont	5.75/3.54	3.56	4.12	3.87(*)
-# Bulldozer	5.77/0.70	0.72	0.90	0.70
->>>>>>> origin/master
 #
 # (*)	Atom Silvermont ECB result is suboptimal because of penalties
 #	incurred by operations on %xmm8-15. As ECB is not considered
@@ -216,11 +200,7 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 ( $xlate="${dir}../../perlasm/x86_64-xlate.pl" and -f $xlate) or
 die "can't locate x86_64-xlate.pl";
 
-<<<<<<< HEAD
 open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\"";
-=======
-open OUT,"| \"$^X\" $xlate $flavour $output";
->>>>>>> origin/master
 *STDOUT=*OUT;
 
 $movkey = $PREFIX eq "aesni" ? "movups" : "movups";
@@ -2741,7 +2721,6 @@ $code.=<<___;
 	ret
 .size	aesni_xts_decrypt,.-aesni_xts_decrypt
 ___
-<<<<<<< HEAD
 }
 
 ######################################################################
@@ -3661,8 +3640,6 @@ __ocb_decrypt1:
 	ret
 .size	__ocb_decrypt1,.-__ocb_decrypt1
 ___
-=======
->>>>>>> origin/master
 } }}
 
 ########################################################################
@@ -4262,11 +4239,7 @@ ___
 #	Vinodh Gopal <vinodh.gopal@intel.com>
 #	Kahraman Akdemir
 #
-<<<<<<< HEAD
 # Aggressively optimized in respect to aeskeygenassist's critical path
-=======
-# Agressively optimized in respect to aeskeygenassist's critical path
->>>>>>> origin/master
 # and is contained in %xmm0-5 to meet Win64 ABI requirement.
 #
 # int ${PREFIX}_set_encrypt_key(const unsigned char *inp,
@@ -4778,7 +4751,6 @@ ctr_xts_se_handler:
 
 	jmp	.Lcommon_rbp_tail
 .size	ctr_xts_se_handler,.-ctr_xts_se_handler
-<<<<<<< HEAD
 
 .type	ocb_se_handler,\@abi-omnipotent
 .align	16
@@ -4838,8 +4810,6 @@ ocb_se_handler:
 
 	jmp	.Lcommon_seh_tail
 .size	ocb_se_handler,.-ocb_se_handler
-=======
->>>>>>> origin/master
 ___
 $code.=<<___;
 .type	cbc_se_handler,\@abi-omnipotent
@@ -4953,7 +4923,6 @@ $code.=<<___ if ($PREFIX eq "aesni");
 	.rva	.LSEH_begin_aesni_xts_decrypt
 	.rva	.LSEH_end_aesni_xts_decrypt
 	.rva	.LSEH_info_xts_dec
-<<<<<<< HEAD
 
 	.rva	.LSEH_begin_aesni_ocb_encrypt
 	.rva	.LSEH_end_aesni_ocb_encrypt
@@ -4962,8 +4931,6 @@ $code.=<<___ if ($PREFIX eq "aesni");
 	.rva	.LSEH_begin_aesni_ocb_decrypt
 	.rva	.LSEH_end_aesni_ocb_decrypt
 	.rva	.LSEH_info_ocb_dec
-=======
->>>>>>> origin/master
 ___
 $code.=<<___;
 	.rva	.LSEH_begin_${PREFIX}_cbc_encrypt
@@ -5005,7 +4972,6 @@ $code.=<<___ if ($PREFIX eq "aesni");
 	.byte	9,0,0,0
 	.rva	ctr_xts_se_handler
 	.rva	.Lxts_dec_body,.Lxts_dec_epilogue	# HandlerData[]
-<<<<<<< HEAD
 .LSEH_info_ocb_enc:
 	.byte	9,0,0,0
 	.rva	ocb_se_handler
@@ -5018,8 +4984,6 @@ $code.=<<___ if ($PREFIX eq "aesni");
 	.rva	.Locb_dec_body,.Locb_dec_epilogue	# HandlerData[]
 	.rva	.Locb_dec_pop
 	.long	0
-=======
->>>>>>> origin/master
 ___
 $code.=<<___;
 .LSEH_info_cbc:

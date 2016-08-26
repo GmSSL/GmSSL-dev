@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!{- $config{hashbangperl} -}
 
 # {- join("\n# ", @autowarntext) -}
@@ -8,23 +7,14 @@
 # this file except in compliance with the License.  You can obtain a copy
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 # Perl c_rehash script, scan all files in a directory
 # and add symbolic links to their hash values.
 
-<<<<<<< HEAD
 my $dir = {- quotify1($config{openssldir}) -};
 my $prefix = {- quotify1($config{prefix}) -};
 
 my $errorcount = 0;
-=======
-my $dir;
-my $prefix;
-
->>>>>>> origin/master
 my $openssl = $ENV{OPENSSL} || "openssl";
 my $pwd;
 my $x509hash = "-subject_hash";
@@ -73,41 +63,24 @@ if (defined(&Cwd::getcwd)) {
 my $path_delim = ($pwd =~ /^[a-z]\:/i) ? ';' : ':';
 $ENV{PATH} = "$prefix/bin" . ($ENV{PATH} ? $path_delim . $ENV{PATH} : "");
 
-<<<<<<< HEAD
 if (! -x $openssl) {
 	my $found = 0;
 	foreach (split /$path_delim/, $ENV{PATH}) {
 		if (-x "$_/$openssl") {
-=======
-if(! -x $openssl) {
-	my $found = 0;
-	foreach (split /$path_delim/, $ENV{PATH}) {
-		if(-x "$_/$openssl") {
->>>>>>> origin/master
 			$found = 1;
 			$openssl = "$_/$openssl";
 			last;
 		}	
 	}
-<<<<<<< HEAD
 	if ($found == 0) {
-=======
-	if($found == 0) {
->>>>>>> origin/master
 		print STDERR "c_rehash: rehashing skipped ('openssl' program not available)\n";
 		exit 0;
 	}
 }
 
-<<<<<<< HEAD
 if (@ARGV) {
 	@dirlist = @ARGV;
 } elsif ($ENV{SSL_CERT_DIR}) {
-=======
-if(@ARGV) {
-	@dirlist = @ARGV;
-} elsif($ENV{SSL_CERT_DIR}) {
->>>>>>> origin/master
 	@dirlist = split /$path_delim/, $ENV{SSL_CERT_DIR};
 } else {
 	$dirlist[0] = "$dir/certs";
@@ -120,7 +93,6 @@ if (-d $dirlist[0]) {
 }
 
 foreach (@dirlist) {
-<<<<<<< HEAD
 	if (-d $_ ) {
             if ( -w $_) {
 		hash_dir($_);
@@ -131,57 +103,32 @@ foreach (@dirlist) {
 	}
 }
 exit($errorcount);
-=======
-	if(-d $_ and -w $_) {
-		hash_dir($_);
-	}
-}
->>>>>>> origin/master
 
 sub hash_dir {
 	my %hashlist;
 	print "Doing $_[0]\n";
 	chdir $_[0];
 	opendir(DIR, ".");
-<<<<<<< HEAD
 	my @flist = sort readdir(DIR);
-=======
-	my @flist = readdir(DIR);
->>>>>>> origin/master
 	closedir DIR;
 	if ( $removelinks ) {
 		# Delete any existing symbolic links
 		foreach (grep {/^[\da-f]+\.r{0,1}\d+$/} @flist) {
-<<<<<<< HEAD
 			if (-l $_) {
 				print "unlink $_" if $verbose;
 				unlink $_ || warn "Can't unlink $_, $!\n";
-=======
-			if(-l $_) {
-				unlink $_;
-				print "unlink $_" if $verbose;
->>>>>>> origin/master
 			}
 		}
 	}
 	FILE: foreach $fname (grep {/\.(pem)|(crt)|(cer)|(crl)$/} @flist) {
 		# Check to see if certificates and/or CRLs present.
 		my ($cert, $crl) = check_file($fname);
-<<<<<<< HEAD
 		if (!$cert && !$crl) {
 			print STDERR "WARNING: $fname does not contain a certificate or CRL: skipping\n";
 			next;
 		}
 		link_hash_cert($fname) if ($cert);
 		link_hash_crl($fname) if ($crl);
-=======
-		if(!$cert && !$crl) {
-			print STDERR "WARNING: $fname does not contain a certificate or CRL: skipping\n";
-			next;
-		}
-		link_hash_cert($fname) if($cert);
-		link_hash_crl($fname) if($crl);
->>>>>>> origin/master
 	}
 }
 
@@ -190,7 +137,6 @@ sub check_file {
 	my $fname = $_[0];
 	open IN, $fname;
 	while(<IN>) {
-<<<<<<< HEAD
 		if (/^-----BEGIN (.*)-----/) {
 			my $hdr = $1;
 			if ($hdr =~ /^(X509 |TRUSTED |)CERTIFICATE$/) {
@@ -199,16 +145,6 @@ sub check_file {
 			} elsif ($hdr eq "X509 CRL") {
 				$is_crl = 1;
 				last if ($is_cert);
-=======
-		if(/^-----BEGIN (.*)-----/) {
-			my $hdr = $1;
-			if($hdr =~ /^(X509 |TRUSTED |)CERTIFICATE$/) {
-				$is_cert = 1;
-				last if($is_crl);
-			} elsif($hdr eq "X509 CRL") {
-				$is_crl = 1;
-				last if($is_cert);
->>>>>>> origin/master
 			}
 		}
 	}
@@ -235,11 +171,7 @@ sub link_hash_cert {
 		# Search for an unused hash filename
 		while(exists $hashlist{"$hash.$suffix"}) {
 			# Hash matches: if fingerprint matches its a duplicate cert
-<<<<<<< HEAD
 			if ($hashlist{"$hash.$suffix"} eq $fprint) {
-=======
-			if($hashlist{"$hash.$suffix"} eq $fprint) {
->>>>>>> origin/master
 				print STDERR "WARNING: Skipping duplicate certificate $fname\n";
 				return;
 			}
@@ -247,7 +179,6 @@ sub link_hash_cert {
 		}
 		$hash .= ".$suffix";
 		if ($symlink_exists) {
-<<<<<<< HEAD
 			print "link $fname -> $hash\n" if $verbose;
 			symlink $fname, $hash || warn "Can't symlink, $!";
 		} else {
@@ -263,17 +194,6 @@ sub link_hash_cert {
                         } else {
                             warn "can't open $fname for read, $!";
                         }
-=======
-			symlink $fname, $hash;
-			print "link $fname -> $hash\n" if $verbose;
-		} else {
-			open IN,"<$fname" or die "can't open $fname for read";
-			open OUT,">$hash" or die "can't open $hash for write";
-			print OUT <IN>;	# does the job for small text files
-			close OUT;
-			close IN;
-			print "copy $fname -> $hash\n" if $verbose;
->>>>>>> origin/master
 		}
 		$hashlist{$hash} = $fprint;
 }
@@ -292,11 +212,7 @@ sub link_hash_crl {
 		# Search for an unused hash filename
 		while(exists $hashlist{"$hash.r$suffix"}) {
 			# Hash matches: if fingerprint matches its a duplicate cert
-<<<<<<< HEAD
 			if ($hashlist{"$hash.r$suffix"} eq $fprint) {
-=======
-			if($hashlist{"$hash.r$suffix"} eq $fprint) {
->>>>>>> origin/master
 				print STDERR "WARNING: Skipping duplicate CRL $fname\n";
 				return;
 			}
@@ -304,7 +220,6 @@ sub link_hash_crl {
 		}
 		$hash .= ".r$suffix";
 		if ($symlink_exists) {
-<<<<<<< HEAD
 			print "link $fname -> $hash\n" if $verbose;
 			symlink $fname, $hash || warn "Can't symlink, $!";
 		} else {
@@ -314,14 +229,3 @@ sub link_hash_crl {
 		}
 		$hashlist{$hash} = $fprint;
 }
-=======
-			symlink $fname, $hash;
-			print "link $fname -> $hash\n" if $verbose;
-		} else {
-			system ("cp", $fname, $hash);
-			print "cp $fname -> $hash\n" if $verbose;
-		}
-		$hashlist{$hash} = $fprint;
-}
-
->>>>>>> origin/master

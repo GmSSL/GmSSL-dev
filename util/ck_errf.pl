@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,10 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
-#
->>>>>>> origin/master
 # This is just a quick script to scan for cases where the 'error'
 # function name in a XXXerr() macro is wrong.
 # 
@@ -32,11 +27,7 @@ foreach $file (@ARGV)
 	$func="";
 	while (<IN>)
 		{
-<<<<<<< HEAD
 		if (!/;$/ && /^\**([a-zA-Z_].*[\s*])?([A-Za-z_0-9]+)\(.*([),]|$)/)
-=======
-		if (!/;$/ && /^\**([a-zA-Z].*[\s*])?([A-Za-z_0-9]+)\(.*([),]|$)/)
->>>>>>> origin/master
 			{
 			/^([^()]*(\([^()]*\)[^()]*)*)\(/;
 			$1 =~ /([A-Za-z_0-9]*)$/;

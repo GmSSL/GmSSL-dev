@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 =pod
 
 =head1 NAME
@@ -11,41 +7,27 @@ s_time - SSL/TLS performance timing program
 =head1 SYNOPSIS
 
 B<openssl> B<s_time>
-<<<<<<< HEAD
 [B<-help>]
-=======
->>>>>>> origin/master
 [B<-connect host:port>]
 [B<-www page>]
 [B<-cert filename>]
 [B<-key filename>]
 [B<-CApath directory>]
 [B<-CAfile filename>]
-<<<<<<< HEAD
 [B<-no-CAfile>]
 [B<-no-CApath>]
-=======
->>>>>>> origin/master
 [B<-reuse>]
 [B<-new>]
 [B<-verify depth>]
 [B<-nbio>]
 [B<-time seconds>]
-<<<<<<< HEAD
-=======
-[B<-ssl2>]
->>>>>>> origin/master
 [B<-ssl3>]
 [B<-bugs>]
 [B<-cipher cipherlist>]
 
 =head1 DESCRIPTION
 
-<<<<<<< HEAD
 The B<s_time> command implements a generic SSL/TLS client which connects to a
-=======
-The B<s_client> command implements a generic SSL/TLS client which connects to a
->>>>>>> origin/master
 remote host using SSL/TLS. It can request a page from the server and includes
 the time to transfer the payload data in its timing measurements. It measures
 the number of connections within a given timeframe, the amount of data
@@ -55,13 +37,10 @@ transferred (if any), and calculates the average time spent for one connection.
 
 =over 4
 
-<<<<<<< HEAD
 =item B<-help>
 
 Print out a usage message.
 
-=======
->>>>>>> origin/master
 =item B<-connect host:port>
 
 This specifies the host and optional port to connect to.
@@ -102,7 +81,6 @@ also used when building the client certificate chain.
 A file containing trusted certificates to use during server authentication
 and to use when attempting to build the client certificate chain.
 
-<<<<<<< HEAD
 =item B<-no-CAfile>
 
 Do not load the trusted CA certificates from the default file location
@@ -111,8 +89,6 @@ Do not load the trusted CA certificates from the default file location
 
 Do not load the trusted CA certificates from the default directory location
 
-=======
->>>>>>> origin/master
 =item B<-new>
 
 performs the timing test using a new session ID for each connection.
@@ -129,7 +105,6 @@ specified, they are both on by default and executed in sequence.
 
 turns on non-blocking I/O.
 
-<<<<<<< HEAD
 =item B<-ssl3>
 
 these options disable the use of certain SSL or TLS protocols. By default
@@ -141,20 +116,6 @@ the L<s_client(1)> program and may not connect to all servers.
 Unfortunately there are a lot of ancient and broken servers in use which
 cannot handle this technique and will fail to connect. Some servers only
 work if TLS is turned off with the B<-ssl3> option.
-=======
-=item B<-ssl2>, B<-ssl3>
-
-these options disable the use of certain SSL or TLS protocols. By default
-the initial handshake uses a method which should be compatible with all
-servers and permit them to use SSL v3, SSL v2 or TLS as appropriate.
-The timing program is not as rich in options to turn protocols on and off as
-the L<s_client(1)|s_client(1)> program and may not connect to all servers.
-
-Unfortunately there are a lot of ancient and broken servers in use which
-cannot handle this technique and will fail to connect. Some servers only
-work if TLS is turned off with the B<-ssl3> option; others
-will only support SSL v2 and may need the B<-ssl2> option.
->>>>>>> origin/master
 
 =item B<-bugs>
 
@@ -166,11 +127,7 @@ option enables various workarounds.
 this allows the cipher list sent by the client to be modified. Although
 the server determines which cipher suite is used it should take the first
 supported cipher in the list sent by the client.
-<<<<<<< HEAD
 See the L<ciphers(1)> command for more information.
-=======
-See the L<ciphers(1)|ciphers(1)> command for more information.
->>>>>>> origin/master
 
 =item B<-time length>
 
@@ -182,29 +139,17 @@ and the link speed determine how many connections B<s_time> can establish.
 
 =head1 NOTES
 
-<<<<<<< HEAD
 B<s_time> can be used to measure the performance of an SSL connection.
-=======
-B<s_client> can be used to measure the performance of an SSL connection.
->>>>>>> origin/master
 To connect to an SSL HTTP server and get the default page the command
 
  openssl s_time -connect servername:443 -www / -CApath yourdir -CAfile yourfile.pem -cipher commoncipher [-ssl3]
 
 would typically be used (https uses port 443). 'commoncipher' is a cipher to
-<<<<<<< HEAD
 which both client and server can agree, see the L<ciphers(1)> command
 for details.
 
 If the handshake fails then there are several possible causes, if it is
 nothing obvious like no client certificate then the B<-bugs> and
-=======
-which both client and server can agree, see the L<ciphers(1)|ciphers(1)> command
-for details.
-
-If the handshake fails then there are several possible causes, if it is
-nothing obvious like no client certificate then the B<-bugs>, B<-ssl2>,
->>>>>>> origin/master
 B<-ssl3> options can be tried
 in case it is a buggy server. In particular you should play with these
 options B<before> submitting a bug report to an OpenSSL mailing list.
@@ -213,17 +158,10 @@ A frequent problem when attempting to get client certificates working
 is that a web client complains it has no certificates or gives an empty
 list to choose from. This is normally because the server is not sending
 the clients certificate authority in its "acceptable CA list" when it
-<<<<<<< HEAD
 requests a certificate. By using L<s_client(1)> the CA list can be
 viewed and checked. However some servers only request client authentication
 after a specific URL is requested. To obtain the list in this case it
 is necessary to use the B<-prexit> option of L<s_client(1)> and
-=======
-requests a certificate. By using L<s_client(1)|s_client(1)> the CA list can be
-viewed and checked. However some servers only request client authentication
-after a specific URL is requested. To obtain the list in this case it
-is necessary to use the B<-prexit> option of L<s_client(1)|s_client(1)> and
->>>>>>> origin/master
 send an HTTP request for an appropriate page.
 
 If a certificate is specified on the command line using the B<-cert>
@@ -234,11 +172,7 @@ on the command line is no guarantee that the certificate works.
 =head1 BUGS
 
 Because this program does not have all the options of the
-<<<<<<< HEAD
 L<s_client(1)> program to turn protocols on and off, you may not be
-=======
-L<s_client(1)|s_client(1)> program to turn protocols on and off, you may not be
->>>>>>> origin/master
 able to measure the performance of all protocols with all servers.
 
 The B<-verify> option should really exit if the server verification
@@ -246,7 +180,6 @@ fails.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<s_client(1)>, L<s_server(1)>, L<ciphers(1)>
 
 =head1 COPYRIGHT
@@ -257,8 +190,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<s_client(1)|s_client(1)>, L<s_server(1)|s_server(1)>, L<ciphers(1)|ciphers(1)>
->>>>>>> origin/master
 
 =cut

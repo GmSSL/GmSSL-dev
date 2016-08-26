@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -53,17 +49,10 @@
 # below and combine it with reduction algorithm from x86 module.
 # Performance improvement over previous version varies from 65% on
 # Snapdragon S4 to 110% on Cortex A9. In absolute terms Cortex A8
-<<<<<<< HEAD
 # processes one byte in 8.45 cycles, A9 - in 10.2, A15 - in 7.63,
 # Snapdragon S4 - in 9.33.
 #
 # CÃ¢mara, D.; GouvÃªa, C. P. L.; LÃ³pez, J. & Dahab, R.: Fast Software
-=======
-# processes one byte in 8.45 cycles, A9 - in 10.2, Snapdragon S4 -
-# in 9.33.
-#
-# Câmara, D.; Gouvêa, C. P. L.; López, J. & Dahab, R.: Fast Software
->>>>>>> origin/master
 # Polynomial Multiplication on ARM Processors using the NEON Engine.
 # 
 # http://conradoplg.cryptoland.net/files/2010/12/mocrysen13.pdf
@@ -89,7 +78,6 @@
 # *native* byte order on current platform. See gcm128.c for working
 # example...
 
-<<<<<<< HEAD
 $flavour = shift;
 if ($flavour=~/\w[\w\-]*\.\w+$/) { $output=$flavour; undef $flavour; }
 else { while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {} }
@@ -104,10 +92,6 @@ if ($flavour && $flavour ne "void") {
 } else {
     open STDOUT,">$output";
 }
-=======
-while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
-open STDOUT,">$output";
->>>>>>> origin/master
 
 $Xi="r0";	# argument block
 $Htbl="r1";
@@ -159,7 +143,6 @@ $code=<<___;
 #include "arm_arch.h"
 
 .text
-<<<<<<< HEAD
 #if defined(__thumb2__)
 .syntax	unified
 .thumb
@@ -171,9 +154,6 @@ $code=<<___;
 #define ldrplb  ldrbpl
 #define ldrneb  ldrbne
 #endif
-=======
-.code	32
->>>>>>> origin/master
 
 .type	rem_4bit,%object
 .align	5
@@ -186,7 +166,6 @@ rem_4bit:
 
 .type	rem_4bit_get,%function
 rem_4bit_get:
-<<<<<<< HEAD
 #if defined(__thumb2__)
 	adr	$rem_4bit,rem_4bit
 #else
@@ -195,17 +174,10 @@ rem_4bit_get:
 	b	.Lrem_4bit_got
 	nop
 	nop
-=======
-	sub	$rem_4bit,pc,#8
-	sub	$rem_4bit,$rem_4bit,#32	@ &rem_4bit
-	b	.Lrem_4bit_got
-	nop
->>>>>>> origin/master
 .size	rem_4bit_get,.-rem_4bit_get
 
 .global	gcm_ghash_4bit
 .type	gcm_ghash_4bit,%function
-<<<<<<< HEAD
 .align	4
 gcm_ghash_4bit:
 #if defined(__thumb2__)
@@ -215,13 +187,6 @@ gcm_ghash_4bit:
 #endif
 	add	$len,$inp,$len		@ $len to point at the end
 	stmdb	sp!,{r3-r11,lr}		@ save $len/end too
-=======
-gcm_ghash_4bit:
-	sub	r12,pc,#8
-	add	$len,$inp,$len		@ $len to point at the end
-	stmdb	sp!,{r3-r11,lr}		@ save $len/end too
-	sub	r12,r12,#48		@ &rem_4bit
->>>>>>> origin/master
 
 	ldmia	r12,{r4-r11}		@ copy rem_4bit ...
 	stmdb	sp!,{r4-r11}		@ ... to stack
@@ -268,12 +233,9 @@ gcm_ghash_4bit:
 	eor	$Zlh,$Zlh,$Zhl,lsl#28
 	ldrh	$Tll,[sp,$nlo]		@ rem_4bit[rem]
 	eor	$Zhl,$Thl,$Zhl,lsr#4
-<<<<<<< HEAD
 #ifdef	__thumb2__
 	it	pl
 #endif
-=======
->>>>>>> origin/master
 	ldrplb	$nlo,[$inp,$cnt]
 	eor	$Zhl,$Zhl,$Zhh,lsl#28
 	eor	$Zhh,$Thh,$Zhh,lsr#4
@@ -284,12 +246,9 @@ gcm_ghash_4bit:
 	add	$nhi,$nhi,$nhi
 	ldmia	$Thh,{$Tll-$Thh}	@ load Htbl[nhi]
 	eor	$Zll,$Tll,$Zll,lsr#4
-<<<<<<< HEAD
 #ifdef	__thumb2__
 	it	pl
 #endif
-=======
->>>>>>> origin/master
 	ldrplb	$Tll,[$Xi,$cnt]
 	eor	$Zll,$Zll,$Zlh,lsl#28
 	eor	$Zlh,$Tlh,$Zlh,lsr#4
@@ -297,7 +256,6 @@ gcm_ghash_4bit:
 	eor	$Zlh,$Zlh,$Zhl,lsl#28
 	eor	$Zhl,$Thl,$Zhl,lsr#4
 	eor	$Zhl,$Zhl,$Zhh,lsl#28
-<<<<<<< HEAD
 #ifdef	__thumb2__
 	it	pl
 #endif
@@ -306,10 +264,6 @@ gcm_ghash_4bit:
 #ifdef	__thumb2__
 	itt	pl
 #endif
-=======
-	eorpl	$nlo,$nlo,$Tll
-	eor	$Zhh,$Thh,$Zhh,lsr#4
->>>>>>> origin/master
 	andpl	$nhi,$nlo,#0xf0
 	andpl	$nlo,$nlo,#0x0f
 	eor	$Zhh,$Zhh,$Tlh,lsl#16	@ ^= rem_4bit[rem]
@@ -319,15 +273,11 @@ gcm_ghash_4bit:
 	add	$inp,$inp,#16
 	mov	$nhi,$Zll
 ___
-<<<<<<< HEAD
 	&Zsmash("cmp\t$inp,$len","\n".
 				 "#ifdef __thumb2__\n".
 				 "	it	ne\n".
 				 "#endif\n".
 				 "	ldrneb	$nlo,[$inp,#15]");
-=======
-	&Zsmash("cmp\t$inp,$len","ldrneb\t$nlo,[$inp,#15]");
->>>>>>> origin/master
 $code.=<<___;
 	bne	.Louter
 
@@ -385,12 +335,9 @@ gcm_gmult_4bit:
 	eor	$Zlh,$Zlh,$Zhl,lsl#28
 	ldrh	$Tll,[$rem_4bit,$nlo]	@ rem_4bit[rem]
 	eor	$Zhl,$Thl,$Zhl,lsr#4
-<<<<<<< HEAD
 #ifdef	__thumb2__
 	it	pl
 #endif
-=======
->>>>>>> origin/master
 	ldrplb	$nlo,[$Xi,$cnt]
 	eor	$Zhl,$Zhl,$Zhh,lsl#28
 	eor	$Zhh,$Thh,$Zhh,lsr#4
@@ -408,12 +355,9 @@ gcm_gmult_4bit:
 	eor	$Zhl,$Thl,$Zhl,lsr#4
 	eor	$Zhl,$Zhl,$Zhh,lsl#28
 	eor	$Zhh,$Thh,$Zhh,lsr#4
-<<<<<<< HEAD
 #ifdef	__thumb2__
 	itt	pl
 #endif
-=======
->>>>>>> origin/master
 	andpl	$nhi,$nlo,#0xf0
 	andpl	$nlo,$nlo,#0x0f
 	eor	$Zhh,$Zhh,$Tll,lsl#16	@ ^= rem_4bit[rem]
@@ -488,15 +432,9 @@ $code.=<<___;
 .type	gcm_init_neon,%function
 .align	4
 gcm_init_neon:
-<<<<<<< HEAD
 	vld1.64		$IN#hi,[r1]!		@ load H
 	vmov.i8		$t0,#0xe1
 	vld1.64		$IN#lo,[r1]
-=======
-	vld1.64		$IN#hi,[r1,:64]!	@ load H
-	vmov.i8		$t0,#0xe1
-	vld1.64		$IN#lo,[r1,:64]
->>>>>>> origin/master
 	vshl.i64	$t0#hi,#57
 	vshr.u64	$t0#lo,#63		@ t0=0xc2....01
 	vdup.8		$t1,$IN#hi[7]
@@ -515,13 +453,8 @@ gcm_init_neon:
 .type	gcm_gmult_neon,%function
 .align	4
 gcm_gmult_neon:
-<<<<<<< HEAD
 	vld1.64		$IN#hi,[$Xi]!		@ load Xi
 	vld1.64		$IN#lo,[$Xi]!
-=======
-	vld1.64		$IN#hi,[$Xi,:64]!	@ load Xi
-	vld1.64		$IN#lo,[$Xi,:64]!
->>>>>>> origin/master
 	vmov.i64	$k48,#0x0000ffffffffffff
 	vldmia		$Htbl,{$Hlo-$Hhi}	@ load twisted H
 	vmov.i64	$k32,#0x00000000ffffffff
@@ -538,13 +471,8 @@ gcm_gmult_neon:
 .type	gcm_ghash_neon,%function
 .align	4
 gcm_ghash_neon:
-<<<<<<< HEAD
 	vld1.64		$Xl#hi,[$Xi]!		@ load Xi
 	vld1.64		$Xl#lo,[$Xi]!
-=======
-	vld1.64		$Xl#hi,[$Xi,:64]!	@ load Xi
-	vld1.64		$Xl#lo,[$Xi,:64]!
->>>>>>> origin/master
 	vmov.i64	$k48,#0x0000ffffffffffff
 	vldmia		$Htbl,{$Hlo-$Hhi}	@ load twisted H
 	vmov.i64	$k32,#0x00000000ffffffff
@@ -563,21 +491,12 @@ gcm_ghash_neon:
 	veor		$IN,$Xl			@ inp^=Xi
 .Lgmult_neon:
 ___
-<<<<<<< HEAD
 	&clmul64x64	($Xl,$Hlo,"$IN#lo");	# H.loÂ·Xi.lo
 $code.=<<___;
 	veor		$IN#lo,$IN#lo,$IN#hi	@ Karatsuba pre-processing
 ___
 	&clmul64x64	($Xm,$Hhl,"$IN#lo");	# (H.lo+H.hi)Â·(Xi.lo+Xi.hi)
 	&clmul64x64	($Xh,$Hhi,"$IN#hi");	# H.hiÂ·Xi.hi
-=======
-	&clmul64x64	($Xl,$Hlo,"$IN#lo");	# H.lo·Xi.lo
-$code.=<<___;
-	veor		$IN#lo,$IN#lo,$IN#hi	@ Karatsuba pre-processing
-___
-	&clmul64x64	($Xm,$Hhl,"$IN#lo");	# (H.lo+H.hi)·(Xi.lo+Xi.hi)
-	&clmul64x64	($Xh,$Hhi,"$IN#hi");	# H.hi·Xi.hi
->>>>>>> origin/master
 $code.=<<___;
 	veor		$Xm,$Xm,$Xl		@ Karatsuba post-processing
 	veor		$Xm,$Xm,$Xh
@@ -608,13 +527,8 @@ $code.=<<___;
 	vrev64.8	$Xl,$Xl
 #endif
 	sub		$Xi,#16	
-<<<<<<< HEAD
 	vst1.64		$Xl#hi,[$Xi]!		@ write out Xi
 	vst1.64		$Xl#lo,[$Xi]
-=======
-	vst1.64		$Xl#hi,[$Xi,:64]!	@ write out Xi
-	vst1.64		$Xl#lo,[$Xi,:64]
->>>>>>> origin/master
 
 	ret					@ bx lr
 .size	gcm_ghash_neon,.-gcm_ghash_neon

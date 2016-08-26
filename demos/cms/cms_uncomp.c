@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 /* Simple S/MIME uncompression example */
 #include <openssl/pem.h>
 #include <openssl/cms.h>
@@ -54,21 +51,8 @@ int main(int argc, char **argv)
         ERR_print_errors_fp(stderr);
     }
 
-<<<<<<< HEAD
     CMS_ContentInfo_free(cms);
     BIO_free(in);
     BIO_free(out);
     return ret;
-=======
-    if (cms)
-        CMS_ContentInfo_free(cms);
-
-    if (in)
-        BIO_free(in);
-    if (out)
-        BIO_free(out);
-
-    return ret;
-
->>>>>>> origin/master
 }

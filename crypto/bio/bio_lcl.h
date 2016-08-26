@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -150,9 +149,6 @@ const struct sockaddr *BIO_ADDRINFO_sockaddr(const BIO_ADDRINFO *bai);
 extern CRYPTO_RWLOCK *bio_type_lock;
 
 void bio_sock_cleanup_int(void);
-=======
-#include <openssl/bio.h>
->>>>>>> origin/master
 
 #if BIO_FLAGS_UPLINK==0
 /* Shortcut UPLINK calls on most platforms... */
@@ -187,10 +183,6 @@ void bio_sock_cleanup_int(void);
 #  define UP_lseek        lseek
 #  define UP_close        close
 # endif
-<<<<<<< HEAD
 
 #endif
 
-=======
-#endif
->>>>>>> origin/master

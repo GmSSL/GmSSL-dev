@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # [Re]written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -54,12 +50,9 @@
 # Westmere	5.1/+94%(**)
 # Sandy Bridge	5.0/+8%
 # Atom		12.6/+6%
-<<<<<<< HEAD
 # VIA Nano	6.4/+9%
 # Ivy Bridge	4.9/±0%
 # Bulldozer	4.9/+15%
-=======
->>>>>>> origin/master
 #
 # (*)	PIII can actually deliver 6.6 cycles per byte with MMX code,
 #	but this specific code performs poorly on Core2. And vice
@@ -77,12 +70,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"rc4-586.pl",$x86only = $ARGV[$#ARGV] eq "386");
 
 $xx="eax";
@@ -167,11 +157,7 @@ if ($alt=0) {
 	&movd	($i>0?"mm1":"mm2",&DWP(0,$dat,$ty,4));
 
 	# (*)	This is the key to Core2 and Westmere performance.
-<<<<<<< HEAD
 	#	Without movz out-of-order execution logic confuses
-=======
-	#	Whithout movz out-of-order execution logic confuses
->>>>>>> origin/master
 	#	itself and fails to reorder loads and stores. Problem
 	#	appears to be fixed in Sandy Bridge...
   }
@@ -331,11 +317,7 @@ $ido="ecx";
 $idx="edx";
 
 # void RC4_set_key(RC4_KEY *key,int len,const unsigned char *data);
-<<<<<<< HEAD
 &function_begin("RC4_set_key");
-=======
-&function_begin("private_RC4_set_key");
->>>>>>> origin/master
 	&mov	($out,&wparam(0));		# load key
 	&mov	($idi,&wparam(1));		# load len
 	&mov	($inp,&wparam(2));		# load data
@@ -413,11 +395,7 @@ $idx="edx";
 	&xor	("eax","eax");
 	&mov	(&DWP(-8,$out),"eax");		# key->x=0;
 	&mov	(&DWP(-4,$out),"eax");		# key->y=0;
-<<<<<<< HEAD
 &function_end("RC4_set_key");
-=======
-&function_end("private_RC4_set_key");
->>>>>>> origin/master
 
 # const char *RC4_options(void);
 &function_begin_B("RC4_options");
@@ -447,7 +425,4 @@ $idx="edx";
 
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
-=======
->>>>>>> origin/master

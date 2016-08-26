@@ -2,7 +2,6 @@
 
 =head1 NAME
 
-<<<<<<< HEAD
 BIO_get_buffer_num_lines,
 BIO_set_read_buffer_size,
 BIO_set_write_buffer_size,
@@ -10,15 +9,11 @@ BIO_set_buffer_size,
 BIO_set_buffer_read_data,
 BIO_f_buffer
 - buffering BIO
-=======
-BIO_f_buffer - buffering BIO
->>>>>>> origin/master
 
 =head1 SYNOPSIS
 
  #include <openssl/bio.h>
 
-<<<<<<< HEAD
  const BIO_METHOD *BIO_f_buffer(void);
 
  long BIO_get_buffer_num_lines(BIO *b);
@@ -26,15 +21,6 @@ BIO_f_buffer - buffering BIO
  long BIO_set_write_buffer_size(BIO *b, long size);
  long BIO_set_buffer_size(BIO *b, long size);
  long BIO_set_buffer_read_data(BIO *b, void *buf, long num);
-=======
- BIO_METHOD * BIO_f_buffer(void);
-
- #define BIO_get_buffer_num_lines(b)	BIO_ctrl(b,BIO_C_GET_BUFF_NUM_LINES,0,NULL)
- #define BIO_set_read_buffer_size(b,size) BIO_int_ctrl(b,BIO_C_SET_BUFF_SIZE,size,0)
- #define BIO_set_write_buffer_size(b,size) BIO_int_ctrl(b,BIO_C_SET_BUFF_SIZE,size,1)
- #define BIO_set_buffer_size(b,size)	BIO_ctrl(b,BIO_C_SET_BUFF_SIZE,size,NULL)
- #define BIO_set_buffer_read_data(b,buf,num) BIO_ctrl(b,BIO_C_SET_BUFF_READ_DATA,num,buf)
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -61,11 +47,8 @@ is expanded.
 
 =head1 NOTES
 
-<<<<<<< HEAD
 These functions, other than BIO_f_buffer(), are implemented as macros.
 
-=======
->>>>>>> origin/master
 Buffering BIOs implement BIO_gets() by using BIO_read() operations on the
 next BIO in the chain. By prepending a buffering BIO to a chain it is therefore
 possible to provide BIO_gets() functionality if the following BIOs do not
@@ -91,7 +74,6 @@ there was an error.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<BIO(3)>,
 L<BIO_reset(3)>,
 L<BIO_flush(3)>,
@@ -108,11 +90,3 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
-=======
-L<BIO(3)|BIO(3)>,
-L<BIO_reset(3)|BIO_reset(3)>,
-L<BIO_flush(3)|BIO_flush(3)>,
-L<BIO_pop(3)|BIO_pop(3)>,
-L<BIO_ctrl(3)|BIO_ctrl(3)>,
-L<BIO_int_ctrl(3)|BIO_ctrl(3)>
->>>>>>> origin/master

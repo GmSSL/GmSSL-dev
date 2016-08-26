@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2003-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -14,72 +13,6 @@
 #include <openssl/conf.h>
 #include <openssl/x509v3.h>
 #include "ext_dat.h"
-=======
-/* v3_pmaps.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
- * project.
- */
-/* ====================================================================
- * Copyright (c) 2003 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
-#include <openssl/asn1t.h>
-#include <openssl/conf.h>
-#include <openssl/x509v3.h>
->>>>>>> origin/master
 
 static void *v2i_POLICY_MAPPINGS(const X509V3_EXT_METHOD *method,
                                  X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval);
@@ -131,7 +64,6 @@ static STACK_OF(CONF_VALUE) *i2v_POLICY_MAPPINGS(const X509V3_EXT_METHOD
 static void *v2i_POLICY_MAPPINGS(const X509V3_EXT_METHOD *method,
                                  X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval)
 {
-<<<<<<< HEAD
     POLICY_MAPPINGS *pmaps = NULL;
     POLICY_MAPPING *pmap = NULL;
     ASN1_OBJECT *obj1 = NULL, *obj2 = NULL;
@@ -139,15 +71,6 @@ static void *v2i_POLICY_MAPPINGS(const X509V3_EXT_METHOD *method,
     int i;
 
     if ((pmaps = sk_POLICY_MAPPING_new_null()) == NULL) {
-=======
-    POLICY_MAPPINGS *pmaps;
-    POLICY_MAPPING *pmap;
-    ASN1_OBJECT *obj1, *obj2;
-    CONF_VALUE *val;
-    int i;
-
-    if (!(pmaps = sk_POLICY_MAPPING_new_null())) {
->>>>>>> origin/master
         X509V3err(X509V3_F_V2I_POLICY_MAPPINGS, ERR_R_MALLOC_FAILURE);
         return NULL;
     }
@@ -155,23 +78,14 @@ static void *v2i_POLICY_MAPPINGS(const X509V3_EXT_METHOD *method,
     for (i = 0; i < sk_CONF_VALUE_num(nval); i++) {
         val = sk_CONF_VALUE_value(nval, i);
         if (!val->value || !val->name) {
-<<<<<<< HEAD
             X509V3err(X509V3_F_V2I_POLICY_MAPPINGS,
                       X509V3_R_INVALID_OBJECT_IDENTIFIER);
             X509V3_conf_err(val);
             goto err;
-=======
-            sk_POLICY_MAPPING_pop_free(pmaps, POLICY_MAPPING_free);
-            X509V3err(X509V3_F_V2I_POLICY_MAPPINGS,
-                      X509V3_R_INVALID_OBJECT_IDENTIFIER);
-            X509V3_conf_err(val);
-            return NULL;
->>>>>>> origin/master
         }
         obj1 = OBJ_txt2obj(val->name, 0);
         obj2 = OBJ_txt2obj(val->value, 0);
         if (!obj1 || !obj2) {
-<<<<<<< HEAD
             X509V3err(X509V3_F_V2I_POLICY_MAPPINGS,
                       X509V3_R_INVALID_OBJECT_IDENTIFIER);
             X509V3_conf_err(val);
@@ -193,23 +107,4 @@ static void *v2i_POLICY_MAPPINGS(const X509V3_EXT_METHOD *method,
     ASN1_OBJECT_free(obj2);
     sk_POLICY_MAPPING_pop_free(pmaps, POLICY_MAPPING_free);
     return NULL;
-=======
-            sk_POLICY_MAPPING_pop_free(pmaps, POLICY_MAPPING_free);
-            X509V3err(X509V3_F_V2I_POLICY_MAPPINGS,
-                      X509V3_R_INVALID_OBJECT_IDENTIFIER);
-            X509V3_conf_err(val);
-            return NULL;
-        }
-        pmap = POLICY_MAPPING_new();
-        if (!pmap) {
-            sk_POLICY_MAPPING_pop_free(pmaps, POLICY_MAPPING_free);
-            X509V3err(X509V3_F_V2I_POLICY_MAPPINGS, ERR_R_MALLOC_FAILURE);
-            return NULL;
-        }
-        pmap->issuerDomainPolicy = obj1;
-        pmap->subjectDomainPolicy = obj2;
-        sk_POLICY_MAPPING_push(pmaps, pmap);
-    }
-    return pmaps;
->>>>>>> origin/master
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -46,11 +42,7 @@ if ($flavour =~ /3[12]/) {
         $g="g";
 }
 
-<<<<<<< HEAD
 while (($output=shift) && ($output!~/\w[\w\-]*\.\w+$/)) {}
-=======
-while (($output=shift) && ($output!~/^\w[\w\-]*\.\w+$/)) {}
->>>>>>> origin/master
 open STDOUT,">$output";
 
 $stdframe=16*$SIZE_T+4*8;
@@ -187,31 +179,19 @@ ___
 if ($SIZE_T==8) {
 my @r=map("%r$_",(6..9));
 $code.=<<___;
-<<<<<<< HEAD
 	bras	$ra,_mul_1x1			# a1Â·b1
-=======
-	bras	$ra,_mul_1x1			# a1·b1
->>>>>>> origin/master
 	stmg	$lo,$hi,16($rp)
 
 	lg	$a,`$stdframe+128+4*$SIZE_T`($sp)
 	lg	$b,`$stdframe+128+6*$SIZE_T`($sp)
-<<<<<<< HEAD
 	bras	$ra,_mul_1x1			# a0Â·b0
-=======
-	bras	$ra,_mul_1x1			# a0·b0
->>>>>>> origin/master
 	stmg	$lo,$hi,0($rp)
 
 	lg	$a,`$stdframe+128+3*$SIZE_T`($sp)
 	lg	$b,`$stdframe+128+5*$SIZE_T`($sp)
 	xg	$a,`$stdframe+128+4*$SIZE_T`($sp)
 	xg	$b,`$stdframe+128+6*$SIZE_T`($sp)
-<<<<<<< HEAD
 	bras	$ra,_mul_1x1			# (a0+a1)Â·(b0+b1)
-=======
-	bras	$ra,_mul_1x1			# (a0+a1)·(b0+b1)
->>>>>>> origin/master
 	lmg	@r[0],@r[3],0($rp)
 
 	xgr	$lo,$hi

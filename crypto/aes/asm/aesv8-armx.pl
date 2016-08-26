@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2014-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 #
 # ====================================================================
 # Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
@@ -38,16 +34,12 @@
 # Cortex-A53	1.32		1.29		1.46
 # Cortex-A57(*)	1.95		0.85		0.93
 # Denver	1.96		0.86		0.80
-<<<<<<< HEAD
 # Mongoose	1.33		1.20		1.20
-=======
->>>>>>> origin/master
 #
 # (*)	original 3.64/1.34/1.32 results were for r0p0 revision
 #	and are still same even for updated module;
 
 $flavour = shift;
-<<<<<<< HEAD
 $output  = shift;
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
@@ -57,9 +49,6 @@ die "can't locate arm-xlate.pl";
 
 open OUT,"| \"$^X\" $xlate $flavour $output";
 *STDOUT=*OUT;
-=======
-open STDOUT,">".shift;
->>>>>>> origin/master
 
 $prefix="aes_v8";
 
@@ -87,11 +76,7 @@ my ($zero,$rcon,$mask,$in0,$in1,$tmp,$key)=
 
 $code.=<<___;
 .align	5
-<<<<<<< HEAD
 .Lrcon:
-=======
-rcon:
->>>>>>> origin/master
 .long	0x01,0x01,0x01,0x01
 .long	0x0c0f0e0d,0x0c0f0e0d,0x0c0f0e0d,0x0c0f0e0d	// rotate-n-splat
 .long	0x1b,0x1b,0x1b,0x1b
@@ -120,11 +105,7 @@ $code.=<<___;
 	tst	$bits,#0x3f
 	b.ne	.Lenc_key_abort
 
-<<<<<<< HEAD
 	adr	$ptr,.Lrcon
-=======
-	adr	$ptr,rcon
->>>>>>> origin/master
 	cmp	$bits,#192
 
 	veor	$zero,$zero,$zero

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2010-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -11,9 +10,6 @@
 $output = pop;
 open STDOUT,">$output";
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 print <<'___';
 .text
 
@@ -138,7 +134,6 @@ OPENSSL_cleanse:
 	bne	$17,.Little
 .Ldone: ret	($26)
 .end	OPENSSL_cleanse
-<<<<<<< HEAD
 
 .globl	CRYPTO_memcmp
 .ent	CRYPTO_memcmp
@@ -260,6 +255,3 @@ ___
 }
 
 close STDOUT;
-=======
-___
->>>>>>> origin/master

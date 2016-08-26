@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2012-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by David S. Miller <davem@devemloft.net> and Andy Polyakov
@@ -79,12 +75,8 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "sparcv9_modes.pl";
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
-=======
-&asm_init(@ARGV);
->>>>>>> origin/master
 
 $::evp=1;	# if $evp is set to 0, script generates module with
 # AES_[en|de]crypt, AES_set_[en|de]crypt_key and AES_cbc_encrypt entry
@@ -99,7 +91,6 @@ $::evp=1;	# if $evp is set to 0, script generates module with
 {
 my ($inp,$out,$key,$rounds,$tmp,$mask)=map("%o$_",(0..5));
 
-<<<<<<< HEAD
 $code.=<<___;
 #include "sparc_arch.h"
 
@@ -108,14 +99,6 @@ $code.=<<___;
 .register	%g3,#scratch
 #endif
 
-=======
-$code.=<<___ if ($::abibits==64);
-.register	%g2,#scratch
-.register	%g3,#scratch
-
-___
-$code.=<<___;
->>>>>>> origin/master
 .text
 
 .globl	aes_t4_encrypt

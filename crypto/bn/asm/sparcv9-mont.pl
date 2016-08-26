@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
->>>>>>> origin/master
 
 # ====================================================================
 # Written by Andy Polyakov <appro@fy.chalmers.se> for the OpenSSL
@@ -24,11 +20,7 @@
 # for undertaken effort are multiple. First of all, UltraSPARC is not
 # the whole SPARCv9 universe and other VIS-free implementations deserve
 # optimized code as much. Secondly, newly introduced UltraSPARC T1,
-<<<<<<< HEAD
 # a.k.a. Niagara, has shared FPU and concurrent FPU-intensive paths,
-=======
-# a.k.a. Niagara, has shared FPU and concurrent FPU-intensive pathes,
->>>>>>> origin/master
 # such as sparcv9a-mont, will simply sink it. Yes, T1 is equipped with
 # several integrated RSA/DSA accelerator circuits accessible through
 # kernel driver [only(*)], but having decent user-land software
@@ -57,12 +49,9 @@
 # module still have hidden potential [see TODO list there], which is
 # estimated to be larger than 20%...
 
-<<<<<<< HEAD
 $output = pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 # int bn_mul_mont(
 $rp="%i0";	# BN_ULONG *rp,
 $ap="%i1";	# const BN_ULONG *ap,
@@ -71,15 +60,8 @@ $np="%i3";	# const BN_ULONG *np,
 $n0="%i4";	# const BN_ULONG *n0,
 $num="%i5";	# int num);
 
-<<<<<<< HEAD
 $frame="STACK_FRAME";
 $bias="STACK_BIAS";
-=======
-$bits=32;
-for (@ARGV)	{ $bits=64 if (/\-m64/ || /\-xarch\=v9/); }
-if ($bits==64)	{ $bias=2047; $frame=192; }
-else		{ $bias=0;    $frame=128; }
->>>>>>> origin/master
 
 $car0="%o0";
 $car1="%o1";
@@ -102,11 +84,8 @@ $tpj="%l7";
 $fname="bn_mul_mont_int";
 
 $code=<<___;
-<<<<<<< HEAD
 #include "sparc_arch.h"
 
-=======
->>>>>>> origin/master
 .section	".text",#alloc,#execinstr
 
 .global	$fname
@@ -136,11 +115,7 @@ $fname:
 	ld	[$np],$car1		! np[0]
 	sub	%o7,$bias,%sp		! alloca
 	ld	[$np+4],$npj		! np[1]
-<<<<<<< HEAD
 	be,pt	SIZE_T_CC,.Lbn_sqr_mont
-=======
-	be,pt	`$bits==32?"%icc":"%xcc"`,.Lbn_sqr_mont
->>>>>>> origin/master
 	mov	12,$j
 
 	mulx	$car0,$mul0,$car0	! ap[0]*bp[0]

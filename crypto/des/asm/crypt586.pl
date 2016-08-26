@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -9,26 +8,14 @@
 
 # The inner loop instruction sequence and the IP/FP modifications are from
 # Svend Olaf Mikkelsen <svolaf@inet.uni-c.dk>
-=======
-#!/usr/local/bin/perl
-#
-# The inner loop instruction sequence and the IP/FP modifications are from
-# Svend Olaf Mikkelsen <svolaf@inet.uni-c.dk>
-# I've added the stuff needed for crypt() but I've not worried about making
-# things perfect.
-#
->>>>>>> origin/master
 
 $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],"crypt586.pl");
 
 $L="edi";
@@ -38,11 +25,8 @@ $R="esi";
 &fcrypt_body("fcrypt_body");
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
 
-=======
->>>>>>> origin/master
 sub fcrypt_body
 	{
 	local($name,$do_ip)=@_;

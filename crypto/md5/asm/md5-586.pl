@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,9 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/local/bin/perl
->>>>>>> origin/master
 
 # Normal is the
 # md5_block_x86(MD5_CTX *c, ULONG *X);
@@ -22,12 +18,9 @@ $0 =~ m/(.*[\/\\])[^\/\\]+$/; $dir=$1;
 push(@INC,"${dir}","${dir}../../perlasm");
 require "x86asm.pl";
 
-<<<<<<< HEAD
 $output=pop;
 open STDOUT,">$output";
 
-=======
->>>>>>> origin/master
 &asm_init($ARGV[0],$0);
 
 $A="eax";
@@ -50,11 +43,8 @@ $X="esi";
 &md5_block("md5_block_asm_data_order");
 &asm_finish();
 
-<<<<<<< HEAD
 close STDOUT;
 
-=======
->>>>>>> origin/master
 sub Np
 	{
 	local($p)=@_;
@@ -78,7 +68,6 @@ sub R0
 	&lea($a,&DWP($t,$a,$tmp2,1));
 
 	&xor($tmp1,$d); # F function - part 4
-<<<<<<< HEAD
 	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0)) if ($pos != 2);
 
 	&add($a,$tmp1);
@@ -87,16 +76,6 @@ sub R0
 
 	&mov($tmp1,&Np($c)) if $pos < 1;	# next tmp1 for R0
 	&mov($tmp1,&Np($c)) if $pos == 1;	# next tmp1 for R1
-=======
-
-	&add($a,$tmp1);
-	&mov($tmp1,&Np($c)) if $pos < 1;	# next tmp1 for R0
-	&mov($tmp1,&Np($c)) if $pos == 1;	# next tmp1 for R1
-
-	&rotl($a,$s);
-
-	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0)) if ($pos != 2);
->>>>>>> origin/master
 
 	&add($a,$b);
 	}
@@ -107,22 +86,12 @@ sub R1
 
 	&comment("R1 $ki");
 
-<<<<<<< HEAD
 	&xor($tmp1,$b); # G function - part 2
 	&and($tmp1,$d); # G function - part 3
 	&lea($a,&DWP($t,$a,$tmp2,1));
 
 	&xor($tmp1,$c);			# G function - part 4
 	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0)) if ($pos != 2);
-=======
-	&lea($a,&DWP($t,$a,$tmp2,1));
-
-	&xor($tmp1,$b); # G function - part 2
-	&and($tmp1,$d); # G function - part 3
-
-	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0)) if ($pos != 2);
-	&xor($tmp1,$c);			# G function - part 4
->>>>>>> origin/master
 
 	&add($a,$tmp1);
 	&mov($tmp1,&Np($c)) if $pos < 1;	# G function - part 1
@@ -150,17 +119,10 @@ if (($n & 1) == 0)
 	&lea($a,&DWP($t,$a,$tmp2,1));
 
 	&add($a,$tmp1);
-<<<<<<< HEAD
 	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0));
 
 	&rotl($a,$s);
 
-=======
-
-	&rotl($a,$s);
-
-	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0));
->>>>>>> origin/master
 	&mov($tmp1,&Np($c));
 	}
 else
@@ -169,19 +131,11 @@ else
 	# make sure to do 'D' first, not 'B', else we clash with
 	# the last add from the previous round.
 
-<<<<<<< HEAD
 	&add($b,$c);			# MOVED FORWARD
 	&xor($tmp1,$d); # H function - part 2
 
 	&lea($a,&DWP($t,$a,$tmp2,1));
 
-=======
-	&lea($a,&DWP($t,$a,$tmp2,1));
-
-	&add($b,$c);			# MOVED FORWARD
-	&xor($tmp1,$d); # H function - part 2
-
->>>>>>> origin/master
 	&xor($tmp1,$b); # H function - part 3
 	&mov($tmp2,&DWP($xo[$ki+1]*4,$K,"",0)) if ($pos != 2);
 

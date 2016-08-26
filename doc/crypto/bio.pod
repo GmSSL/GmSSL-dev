@@ -1,6 +1,5 @@
 =pod
 
-<<<<<<< HEAD
 =for comment openssl_manual_section 7
 
 =head1 NAME
@@ -8,22 +7,11 @@
 bio - Basic I/O abstraction
 
 =for comment generic
-=======
-=head1 NAME
-
-bio - I/O abstraction
->>>>>>> origin/master
 
 =head1 SYNOPSIS
 
  #include <openssl/bio.h>
 
-<<<<<<< HEAD
-=======
-TBA
-
-
->>>>>>> origin/master
 =head1 DESCRIPTION
 
 A BIO is an I/O abstraction, it hides many of the underlying I/O
@@ -50,7 +38,6 @@ BIO and one or more filter BIOs. Data read from or written to the
 first BIO then traverses the chain to the end (normally a source/sink
 BIO).
 
-<<<<<<< HEAD
 
 Some BIOs (such as memory BIOs) can be used immediately after calling
 BIO_new(). Others (such as file BIOs) need some additional initialization,
@@ -101,20 +88,3 @@ L<https://www.openssl.org/source/license.html>.
 
 =cut
 
-=======
-=head1 SEE ALSO
-
-L<BIO_ctrl(3)|BIO_ctrl(3)>,
-L<BIO_f_base64(3)|BIO_f_base64(3)>, L<BIO_f_buffer(3)|BIO_f_buffer(3)>,
-L<BIO_f_cipher(3)|BIO_f_cipher(3)>, L<BIO_f_md(3)|BIO_f_md(3)>,
-L<BIO_f_null(3)|BIO_f_null(3)>, L<BIO_f_ssl(3)|BIO_f_ssl(3)>,
-L<BIO_find_type(3)|BIO_find_type(3)>, L<BIO_new(3)|BIO_new(3)>,
-L<BIO_new_bio_pair(3)|BIO_new_bio_pair(3)>,
-L<BIO_push(3)|BIO_push(3)>, L<BIO_read(3)|BIO_read(3)>,
-L<BIO_s_accept(3)|BIO_s_accept(3)>, L<BIO_s_bio(3)|BIO_s_bio(3)>,
-L<BIO_s_connect(3)|BIO_s_connect(3)>, L<BIO_s_fd(3)|BIO_s_fd(3)>,
-L<BIO_s_file(3)|BIO_s_file(3)>, L<BIO_s_mem(3)|BIO_s_mem(3)>,
-L<BIO_s_null(3)|BIO_s_null(3)>, L<BIO_s_socket(3)|BIO_s_socket(3)>,
-L<BIO_set_callback(3)|BIO_set_callback(3)>,
-L<BIO_should_retry(3)|BIO_should_retry(3)>
->>>>>>> origin/master

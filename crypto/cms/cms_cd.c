@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2008-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -9,82 +8,15 @@
  */
 
 #include "internal/cryptlib.h"
-=======
-/* crypto/cms/cms_cd.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL
- * project.
- */
-/* ====================================================================
- * Copyright (c) 2008 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- */
-
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/asn1t.h>
 #include <openssl/pem.h>
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
 #include <openssl/cms.h>
 #include <openssl/bio.h>
-<<<<<<< HEAD
 #include <openssl/comp.h>
 #include "cms_lcl.h"
 
-=======
-#ifndef OPENSSL_NO_COMP
-# include <openssl/comp.h>
-#endif
-#include "cms_lcl.h"
-
-DECLARE_ASN1_ITEM(CMS_CompressedData)
-
->>>>>>> origin/master
 #ifdef ZLIB
 
 /* CMS CompressedData Utilities */
@@ -103,20 +35,12 @@ CMS_ContentInfo *cms_CompressedData_create(int comp_nid)
         return NULL;
     }
     cms = CMS_ContentInfo_new();
-<<<<<<< HEAD
     if (cms == NULL)
-=======
-    if (!cms)
->>>>>>> origin/master
         return NULL;
 
     cd = M_ASN1_new_of(CMS_CompressedData);
 
-<<<<<<< HEAD
     if (cd == NULL)
-=======
-    if (!cd)
->>>>>>> origin/master
         goto err;
 
     cms->contentType = OBJ_nid2obj(NID_id_smime_ct_compressedData);
@@ -132,25 +56,14 @@ CMS_ContentInfo *cms_CompressedData_create(int comp_nid)
     return cms;
 
  err:
-<<<<<<< HEAD
     CMS_ContentInfo_free(cms);
-=======
-
-    if (cms)
-        CMS_ContentInfo_free(cms);
-
->>>>>>> origin/master
     return NULL;
 }
 
 BIO *cms_CompressedData_init_bio(CMS_ContentInfo *cms)
 {
     CMS_CompressedData *cd;
-<<<<<<< HEAD
     const ASN1_OBJECT *compoid;
-=======
-    ASN1_OBJECT *compoid;
->>>>>>> origin/master
     if (OBJ_obj2nid(cms->contentType) != NID_id_smime_ct_compressedData) {
         CMSerr(CMS_F_CMS_COMPRESSEDDATA_INIT_BIO,
                CMS_R_CONTENT_TYPE_NOT_COMPRESSED_DATA);

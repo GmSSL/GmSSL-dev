@@ -12,10 +12,7 @@ ERR_put_error, ERR_add_error_data - record an error
          int line);
 
  void ERR_add_error_data(int num, ...);
-<<<<<<< HEAD
  void ERR_add_error_data(int num, va_list arg);
-=======
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -26,7 +23,6 @@ This function is usually called by a macro.
 
 ERR_add_error_data() associates the concatenation of its B<num> string
 arguments with the error code added last.
-<<<<<<< HEAD
 ERR_add_error_vdata() is similar except the argument is a B<va_list>.
 
 L<ERR_load_strings(3)> can be used to register
@@ -59,13 +55,6 @@ only done when a library wants to include ASN1 code which must use
 the ASN1err() macro.
 
 
-=======
-
-L<ERR_load_strings(3)|ERR_load_strings(3)> can be used to register
-error strings so that the application can a generate human-readable
-error messages for the error code.
-
->>>>>>> origin/master
 =head1 RETURN VALUES
 
 ERR_put_error() and ERR_add_error_data() return
@@ -73,7 +62,6 @@ no values.
 
 =head1 SEE ALSO
 
-<<<<<<< HEAD
 L<err(3)>, L<ERR_load_strings(3)>
 
 =head1 COPYRIGHT
@@ -84,13 +72,5 @@ Licensed under the OpenSSL license (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
-=======
-L<err(3)|err(3)>, L<ERR_load_strings(3)|ERR_load_strings(3)>
-
-=head1 HISTORY
-
-ERR_put_error() is available in all versions of SSLeay and OpenSSL.
-ERR_add_error_data() was added in SSLeay 0.9.0.
->>>>>>> origin/master
 
 =cut

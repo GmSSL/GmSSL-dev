@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -12,70 +11,6 @@
 #include "internal/cryptlib.h"
 #include <openssl/x509v3.h>
 #include "internal/x509_int.h"
-=======
-/* x509_trs.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 1999.
- */
-/* ====================================================================
- * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
-#include <openssl/x509v3.h>
->>>>>>> origin/master
 
 static int tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b);
 static void trtable_free(X509_TRUST *p);
@@ -110,13 +45,7 @@ static X509_TRUST trstandard[] = {
     {X509_TRUST_TSA, 0, trust_1oidany, "TSA server", NID_time_stamp, NULL}
 };
 
-<<<<<<< HEAD
 #define X509_TRUST_COUNT        OSSL_NELEM(trstandard)
-=======
-#define X509_TRUST_COUNT        (sizeof(trstandard)/sizeof(X509_TRUST))
-
-IMPLEMENT_STACK_OF(X509_TRUST)
->>>>>>> origin/master
 
 static STACK_OF(X509_TRUST) *trtable = NULL;
 
@@ -137,24 +66,11 @@ int X509_check_trust(X509 *x, int id, int flags)
 {
     X509_TRUST *pt;
     int idx;
-<<<<<<< HEAD
 
     /* We get this as a default value */
     if (id == X509_TRUST_DEFAULT)
         return obj_trust(NID_anyExtendedKeyUsage, x,
                          flags | X509_TRUST_DO_SS_COMPAT);
-=======
-    if (id == -1)
-        return 1;
-    /* We get this as a default value */
-    if (id == 0) {
-        int rv;
-        rv = obj_trust(NID_anyExtendedKeyUsage, x, 0);
-        if (rv != X509_TRUST_UNTRUSTED)
-            return rv;
-        return trust_compat(NULL, x, 0);
-    }
->>>>>>> origin/master
     idx = X509_TRUST_get_by_id(id);
     if (idx == -1)
         return default_trust(id, x, flags);
@@ -204,11 +120,7 @@ int X509_TRUST_set(int *t, int trust)
 }
 
 int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
-<<<<<<< HEAD
                    const char *name, int arg1, void *arg2)
-=======
-                   char *name, int arg1, void *arg2)
->>>>>>> origin/master
 {
     int idx;
     X509_TRUST *trtmp;
@@ -222,11 +134,7 @@ int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
     idx = X509_TRUST_get_by_id(id);
     /* Need a new entry */
     if (idx == -1) {
-<<<<<<< HEAD
         if ((trtmp = OPENSSL_malloc(sizeof(*trtmp))) == NULL) {
-=======
-        if (!(trtmp = OPENSSL_malloc(sizeof(X509_TRUST)))) {
->>>>>>> origin/master
             X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
             return 0;
         }
@@ -238,15 +146,9 @@ int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
     if (trtmp->flags & X509_TRUST_DYNAMIC_NAME)
         OPENSSL_free(trtmp->name);
     /* dup supplied name */
-<<<<<<< HEAD
     if ((trtmp->name = OPENSSL_strdup(name)) == NULL) {
         X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
         goto err;
-=======
-    if (!(trtmp->name = BUF_strdup(name))) {
-        X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
-        return 0;
->>>>>>> origin/master
     }
     /* Keep the dynamic flag of existing entry */
     trtmp->flags &= X509_TRUST_DYNAMIC;
@@ -260,7 +162,6 @@ int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
 
     /* If its a new entry manage the dynamic table */
     if (idx == -1) {
-<<<<<<< HEAD
         if (trtable == NULL
             && (trtable = sk_X509_TRUST_new(tr_cmp)) == NULL) {
             X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
@@ -278,18 +179,6 @@ int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
         OPENSSL_free(trtmp);
     }
     return 0;
-=======
-        if (!trtable && !(trtable = sk_X509_TRUST_new(tr_cmp))) {
-            X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
-            return 0;
-        }
-        if (!sk_X509_TRUST_push(trtable, trtmp)) {
-            X509err(X509_F_X509_TRUST_ADD, ERR_R_MALLOC_FAILURE);
-            return 0;
-        }
-    }
-    return 1;
->>>>>>> origin/master
 }
 
 static void trtable_free(X509_TRUST *p)
@@ -305,46 +194,27 @@ static void trtable_free(X509_TRUST *p)
 
 void X509_TRUST_cleanup(void)
 {
-<<<<<<< HEAD
-=======
-    unsigned int i;
-    for (i = 0; i < X509_TRUST_COUNT; i++)
-        trtable_free(trstandard + i);
->>>>>>> origin/master
     sk_X509_TRUST_pop_free(trtable, trtable_free);
     trtable = NULL;
 }
 
-<<<<<<< HEAD
 int X509_TRUST_get_flags(const X509_TRUST *xp)
-=======
-int X509_TRUST_get_flags(X509_TRUST *xp)
->>>>>>> origin/master
 {
     return xp->flags;
 }
 
-<<<<<<< HEAD
 char *X509_TRUST_get0_name(const X509_TRUST *xp)
-=======
-char *X509_TRUST_get0_name(X509_TRUST *xp)
->>>>>>> origin/master
 {
     return xp->name;
 }
 
-<<<<<<< HEAD
 int X509_TRUST_get_trust(const X509_TRUST *xp)
-=======
-int X509_TRUST_get_trust(X509_TRUST *xp)
->>>>>>> origin/master
 {
     return xp->trust;
 }
 
 static int trust_1oidany(X509_TRUST *trust, X509 *x, int flags)
 {
-<<<<<<< HEAD
     /*
      * Declare the chain verified if the desired trust OID is not rejected in
      * any auxiliary trust info for this certificate, and the OID is either
@@ -353,20 +223,10 @@ static int trust_1oidany(X509_TRUST *trust, X509 *x, int flags)
      */
     flags |= X509_TRUST_DO_SS_COMPAT | X509_TRUST_OK_ANY_EKU;
     return obj_trust(trust->arg1, x, flags);
-=======
-    if (x->aux && (x->aux->trust || x->aux->reject))
-        return obj_trust(trust->arg1, x, flags);
-    /*
-     * we don't have any trust settings: for compatibility we return trusted
-     * if it is self signed
-     */
-    return trust_compat(trust, x, flags);
->>>>>>> origin/master
 }
 
 static int trust_1oid(X509_TRUST *trust, X509 *x, int flags)
 {
-<<<<<<< HEAD
     /*
      * Declare the chain verified only if the desired trust OID is not
      * rejected and is expressly trusted.  Neither "anyEKU" nor "compat"
@@ -374,23 +234,13 @@ static int trust_1oid(X509_TRUST *trust, X509 *x, int flags)
      */
     flags &= ~(X509_TRUST_DO_SS_COMPAT | X509_TRUST_OK_ANY_EKU);
     return obj_trust(trust->arg1, x, flags);
-=======
-    if (x->aux)
-        return obj_trust(trust->arg1, x, flags);
-    return X509_TRUST_UNTRUSTED;
->>>>>>> origin/master
 }
 
 static int trust_compat(X509_TRUST *trust, X509 *x, int flags)
 {
-<<<<<<< HEAD
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, 0);
     if ((flags & X509_TRUST_NO_SS_COMPAT) == 0 && x->ex_flags & EXFLAG_SS)
-=======
-    X509_check_purpose(x, -1, 0);
-    if (x->ex_flags & EXFLAG_SS)
->>>>>>> origin/master
         return X509_TRUST_TRUSTED;
     else
         return X509_TRUST_UNTRUSTED;
@@ -398,7 +248,6 @@ static int trust_compat(X509_TRUST *trust, X509 *x, int flags)
 
 static int obj_trust(int id, X509 *x, int flags)
 {
-<<<<<<< HEAD
     X509_CERT_AUX *ax = x->aux;
     int i;
 
@@ -446,27 +295,4 @@ static int obj_trust(int id, X509 *x, int flags)
      * Not rejected, and there is no list of accepted uses, try compat.
      */
     return trust_compat(NULL, x, flags);
-=======
-    ASN1_OBJECT *obj;
-    int i;
-    X509_CERT_AUX *ax;
-    ax = x->aux;
-    if (!ax)
-        return X509_TRUST_UNTRUSTED;
-    if (ax->reject) {
-        for (i = 0; i < sk_ASN1_OBJECT_num(ax->reject); i++) {
-            obj = sk_ASN1_OBJECT_value(ax->reject, i);
-            if (OBJ_obj2nid(obj) == id)
-                return X509_TRUST_REJECTED;
-        }
-    }
-    if (ax->trust) {
-        for (i = 0; i < sk_ASN1_OBJECT_num(ax->trust); i++) {
-            obj = sk_ASN1_OBJECT_value(ax->trust, i);
-            if (OBJ_obj2nid(obj) == id)
-                return X509_TRUST_TRUSTED;
-        }
-    }
-    return X509_TRUST_UNTRUSTED;
->>>>>>> origin/master
 }

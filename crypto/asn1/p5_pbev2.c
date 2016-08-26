@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1999-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -10,69 +9,6 @@
 
 #include <stdio.h>
 #include "internal/cryptlib.h"
-=======
-/* p5_pbev2.c */
-/*
- * Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL project
- * 1999-2004.
- */
-/* ====================================================================
- * Copyright (c) 1999 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    licensing@OpenSSL.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
- */
-
-#include <stdio.h>
-#include "cryptlib.h"
->>>>>>> origin/master
 #include <openssl/asn1t.h>
 #include <openssl/x509.h>
 #include <openssl/rand.h>
@@ -107,11 +43,7 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
 {
     X509_ALGOR *scheme = NULL, *kalg = NULL, *ret = NULL;
     int alg_nid, keylen;
-<<<<<<< HEAD
     EVP_CIPHER_CTX *ctx = NULL;
-=======
-    EVP_CIPHER_CTX ctx;
->>>>>>> origin/master
     unsigned char iv[EVP_MAX_IV_LENGTH];
     PBE2PARAM *pbe2 = NULL;
     ASN1_OBJECT *obj;
@@ -124,30 +56,19 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
     }
     obj = OBJ_nid2obj(alg_nid);
 
-<<<<<<< HEAD
     if ((pbe2 = PBE2PARAM_new()) == NULL)
-=======
-    if (!(pbe2 = PBE2PARAM_new()))
->>>>>>> origin/master
         goto merr;
 
     /* Setup the AlgorithmIdentifier for the encryption scheme */
     scheme = pbe2->encryption;
-<<<<<<< HEAD
     scheme->algorithm = obj;
     if ((scheme->parameter = ASN1_TYPE_new()) == NULL)
-=======
-
-    scheme->algorithm = obj;
-    if (!(scheme->parameter = ASN1_TYPE_new()))
->>>>>>> origin/master
         goto merr;
 
     /* Create random IV */
     if (EVP_CIPHER_iv_length(cipher)) {
         if (aiv)
             memcpy(iv, aiv, EVP_CIPHER_iv_length(cipher));
-<<<<<<< HEAD
         else if (RAND_bytes(iv, EVP_CIPHER_iv_length(cipher)) <= 0)
             goto err;
     }
@@ -161,20 +82,6 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
         goto err;
     if (EVP_CIPHER_param_to_asn1(ctx, scheme->parameter) < 0) {
         ASN1err(ASN1_F_PKCS5_PBE2_SET_IV, ASN1_R_ERROR_SETTING_CIPHER_PARAMS);
-=======
-        else if (RAND_pseudo_bytes(iv, EVP_CIPHER_iv_length(cipher)) < 0)
-            goto err;
-    }
-
-    EVP_CIPHER_CTX_init(&ctx);
-
-    /* Dummy cipherinit to just setup the IV, and PRF */
-    if (!EVP_CipherInit_ex(&ctx, cipher, NULL, NULL, iv, 0))
-        goto err;
-    if (EVP_CIPHER_param_to_asn1(&ctx, scheme->parameter) < 0) {
-        ASN1err(ASN1_F_PKCS5_PBE2_SET_IV, ASN1_R_ERROR_SETTING_CIPHER_PARAMS);
-        EVP_CIPHER_CTX_cleanup(&ctx);
->>>>>>> origin/master
         goto err;
     }
     /*
@@ -182,20 +89,12 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
      * here: just means use default PRF.
      */
     if ((prf_nid == -1) &&
-<<<<<<< HEAD
         EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_PBE_PRF_NID, 0, &prf_nid) <= 0) {
         ERR_clear_error();
         prf_nid = NID_hmacWithSHA256;
     }
     EVP_CIPHER_CTX_free(ctx);
     ctx = NULL;
-=======
-        EVP_CIPHER_CTX_ctrl(&ctx, EVP_CTRL_PBE_PRF_NID, 0, &prf_nid) <= 0) {
-        ERR_clear_error();
-        prf_nid = NID_hmacWithSHA1;
-    }
-    EVP_CIPHER_CTX_cleanup(&ctx);
->>>>>>> origin/master
 
     /* If its RC2 then we'd better setup the key length */
 
@@ -215,29 +114,16 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
 
     /* Now set up top level AlgorithmIdentifier */
 
-<<<<<<< HEAD
     if ((ret = X509_ALGOR_new()) == NULL)
-=======
-    if (!(ret = X509_ALGOR_new()))
-        goto merr;
-    if (!(ret->parameter = ASN1_TYPE_new()))
->>>>>>> origin/master
         goto merr;
 
     ret->algorithm = OBJ_nid2obj(NID_pbes2);
 
     /* Encode PBE2PARAM into parameter */
 
-<<<<<<< HEAD
     if (!ASN1_TYPE_pack_sequence(ASN1_ITEM_rptr(PBE2PARAM), pbe2,
                                  &ret->parameter))
          goto merr;
-=======
-    if (!ASN1_item_pack(pbe2, ASN1_ITEM_rptr(PBE2PARAM),
-                        &ret->parameter->value.sequence))
-         goto merr;
-    ret->parameter->type = V_ASN1_SEQUENCE;
->>>>>>> origin/master
 
     PBE2PARAM_free(pbe2);
     pbe2 = NULL;
@@ -248,10 +134,7 @@ X509_ALGOR *PKCS5_pbe2_set_iv(const EVP_CIPHER *cipher, int iter,
     ASN1err(ASN1_F_PKCS5_PBE2_SET_IV, ERR_R_MALLOC_FAILURE);
 
  err:
-<<<<<<< HEAD
     EVP_CIPHER_CTX_free(ctx);
-=======
->>>>>>> origin/master
     PBE2PARAM_free(pbe2);
     /* Note 'scheme' is freed as part of pbe2 */
     X509_ALGOR_free(kalg);
@@ -274,40 +157,24 @@ X509_ALGOR *PKCS5_pbkdf2_set(int iter, unsigned char *salt, int saltlen,
     PBKDF2PARAM *kdf = NULL;
     ASN1_OCTET_STRING *osalt = NULL;
 
-<<<<<<< HEAD
     if ((kdf = PBKDF2PARAM_new()) == NULL)
         goto merr;
     if ((osalt = ASN1_OCTET_STRING_new()) == NULL)
-=======
-    if (!(kdf = PBKDF2PARAM_new()))
-        goto merr;
-    if (!(osalt = M_ASN1_OCTET_STRING_new()))
->>>>>>> origin/master
         goto merr;
 
     kdf->salt->value.octet_string = osalt;
     kdf->salt->type = V_ASN1_OCTET_STRING;
 
-<<<<<<< HEAD
     if (saltlen == 0)
         saltlen = PKCS5_SALT_LEN;
     if ((osalt->data = OPENSSL_malloc(saltlen)) == NULL)
-=======
-    if (!saltlen)
-        saltlen = PKCS5_SALT_LEN;
-    if (!(osalt->data = OPENSSL_malloc(saltlen)))
->>>>>>> origin/master
         goto merr;
 
     osalt->length = saltlen;
 
     if (salt)
         memcpy(osalt->data, salt, saltlen);
-<<<<<<< HEAD
     else if (RAND_bytes(osalt->data, saltlen) <= 0)
-=======
-    else if (RAND_pseudo_bytes(osalt->data, saltlen) < 0)
->>>>>>> origin/master
         goto merr;
 
     if (iter <= 0)
@@ -319,11 +186,7 @@ X509_ALGOR *PKCS5_pbkdf2_set(int iter, unsigned char *salt, int saltlen,
     /* If have a key len set it up */
 
     if (keylen > 0) {
-<<<<<<< HEAD
         if ((kdf->keylength = ASN1_INTEGER_new()) == NULL)
-=======
-        if (!(kdf->keylength = M_ASN1_INTEGER_new()))
->>>>>>> origin/master
             goto merr;
         if (!ASN1_INTEGER_set(kdf->keylength, keylen))
             goto merr;
@@ -332,11 +195,7 @@ X509_ALGOR *PKCS5_pbkdf2_set(int iter, unsigned char *salt, int saltlen,
     /* prf can stay NULL if we are using hmacWithSHA1 */
     if (prf_nid > 0 && prf_nid != NID_hmacWithSHA1) {
         kdf->prf = X509_ALGOR_new();
-<<<<<<< HEAD
         if (kdf->prf == NULL)
-=======
-        if (!kdf->prf)
->>>>>>> origin/master
             goto merr;
         X509_ALGOR_set0(kdf->prf, OBJ_nid2obj(prf_nid), V_ASN1_NULL, NULL);
     }
@@ -344,30 +203,16 @@ X509_ALGOR *PKCS5_pbkdf2_set(int iter, unsigned char *salt, int saltlen,
     /* Finally setup the keyfunc structure */
 
     keyfunc = X509_ALGOR_new();
-<<<<<<< HEAD
     if (keyfunc == NULL)
-=======
-    if (!keyfunc)
->>>>>>> origin/master
         goto merr;
 
     keyfunc->algorithm = OBJ_nid2obj(NID_id_pbkdf2);
 
     /* Encode PBKDF2PARAM into parameter of pbe2 */
 
-<<<<<<< HEAD
     if (!ASN1_TYPE_pack_sequence(ASN1_ITEM_rptr(PBKDF2PARAM), kdf,
                                  &keyfunc->parameter))
          goto merr;
-=======
-    if (!(keyfunc->parameter = ASN1_TYPE_new()))
-        goto merr;
-
-    if (!ASN1_item_pack(kdf, ASN1_ITEM_rptr(PBKDF2PARAM),
-                        &keyfunc->parameter->value.sequence))
-         goto merr;
-    keyfunc->parameter->type = V_ASN1_SEQUENCE;
->>>>>>> origin/master
 
     PBKDF2PARAM_free(kdf);
     return keyfunc;

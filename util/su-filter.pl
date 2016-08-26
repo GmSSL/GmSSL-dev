@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/env perl
 # Copyright 2015-2016 The OpenSSL Project Authors. All Rights Reserved.
 #
@@ -7,12 +6,6 @@
 # in the file LICENSE in the source distribution or at
 # https://www.openssl.org/source/license.html
 
-=======
-#!/usr/bin/env perl
-#
-# su-filter.pl
-#
->>>>>>> origin/master
 use strict;
 
 my $in_su = 0;
@@ -58,11 +51,7 @@ while(<>) {
             do_output($out);
             $in_su = 0;
         }
-<<<<<<< HEAD
     } elsif($incomm <= 0 && /( *)(static )?(const )?(union|struct) ([a-zA-Z_\$][\$0-9a-zA-Z_]+ )?\{/) {
-=======
-    } elsif($incomm <= 0 && /( *)(static )?(const )?(union|struct) ([^\s]+ )?\{/) {
->>>>>>> origin/master
         $in_su = 1;
         $indent = $1;
         $out = $_;

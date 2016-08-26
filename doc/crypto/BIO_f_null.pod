@@ -8,11 +8,7 @@ BIO_f_null - null filter
 
  #include <openssl/bio.h>
 
-<<<<<<< HEAD
  const BIO_METHOD *     BIO_f_null(void);
-=======
- BIO_METHOD *	BIO_f_null(void);
->>>>>>> origin/master
 
 =head1 DESCRIPTION
 
@@ -31,7 +27,6 @@ As may be apparent a null filter BIO is not particularly useful.
 
 BIO_f_null() returns the null filter BIO method.
 
-<<<<<<< HEAD
 =head1 COPYRIGHT
 
 Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
@@ -42,8 +37,3 @@ in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
 =cut
-=======
-=head1 SEE ALSO
-
-TBA
->>>>>>> origin/master

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 1998-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -8,8 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
->>>>>>> origin/master
 #include <stdio.h>
 
 unsigned char ebits_to_num[256] = {

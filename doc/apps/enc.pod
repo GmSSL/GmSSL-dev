@@ -7,11 +7,8 @@ enc - symmetric cipher routines
 =head1 SYNOPSIS
 
 B<openssl enc -ciphername>
-<<<<<<< HEAD
 [B<-help>]
 [B<-ciphers>]
-=======
->>>>>>> origin/master
 [B<-in filename>]
 [B<-out filename>]
 [B<-pass arg>]
@@ -27,11 +24,7 @@ B<openssl enc -ciphername>
 [B<-salt>]
 [B<-nosalt>]
 [B<-z>]
-<<<<<<< HEAD
 [B<-md digest>]
-=======
-[B<-md>]
->>>>>>> origin/master
 [B<-p>]
 [B<-P>]
 [B<-bufsize number>]
@@ -51,7 +44,6 @@ either by itself or in addition to the encryption or decryption.
 
 =over 4
 
-<<<<<<< HEAD
 =item B<-help>
 
 Print out a usage message.
@@ -60,8 +52,6 @@ Print out a usage message.
 
 List all supported ciphers.
 
-=======
->>>>>>> origin/master
 =item B<-in filename>
 
 the input filename, standard input by default.
@@ -73,21 +63,7 @@ the output filename, standard output by default.
 =item B<-pass arg>
 
 the password source. For more information about the format of B<arg>
-<<<<<<< HEAD
 see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)>.
-=======
-see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
-
-=item B<-salt>
-
-use a salt in the key derivation routines. This is the default.
-
-=item B<-nosalt>
-
-don't use a salt in the key derivation routines. This option B<SHOULD NOT> be
-used except for test purposes or compatibility with ancient versions of OpenSSL
-and SSLeay.
->>>>>>> origin/master
 
 =item B<-e>
 
@@ -122,7 +98,6 @@ read the password to derive the key from the first line of B<filename>.
 This is for compatibility with previous versions of OpenSSL. Superseded by
 the B<-pass> argument.
 
-<<<<<<< HEAD
 =item B<-md digest>
 
 Use the specified digest to create the key from the passphrase.
@@ -133,11 +108,6 @@ The default algorithm is sha-256.
 don't use a salt in the key derivation routines. This option B<SHOULD NOT> be
 used except for test purposes or compatibility with ancient versions of
 OpenSSL.
-=======
-=item B<-nosalt>
-
-do not use a salt 
->>>>>>> origin/master
 
 =item B<-salt>
 
@@ -207,11 +177,7 @@ configuration file is read and any ENGINEs loaded.
 Engines which provide entirely new encryption algorithms (such as ccgost
 engine which provides gost89 algorithm) should be configured in the
 configuration file. Engines, specified in the command line using -engine
-<<<<<<< HEAD
 options can only be used for hardware-assisted implementations of
-=======
-options can only be used for hadrware-assisted implementations of
->>>>>>> origin/master
 ciphers, which are supported by OpenSSL core or other engine, specified
 in the configuration file.
 
@@ -222,11 +188,7 @@ A password will be prompted for to derive the key and IV if necessary.
 
 The B<-salt> option should B<ALWAYS> be used if the key is being derived
 from a password unless you want compatibility with previous versions of
-<<<<<<< HEAD
 OpenSSL.
-=======
-OpenSSL and SSLeay.
->>>>>>> origin/master
 
 Without the B<-salt> option it is possible to perform efficient dictionary
 attacks on the password and to attack stream cipher encrypted data. The reason
@@ -257,11 +219,7 @@ Note that some of these ciphers can be disabled at compile time
 and some are available only if an appropriate engine is configured
 in the configuration file. The output of the B<enc> command run with
 unsupported options (for example B<openssl enc -help>) includes a
-<<<<<<< HEAD
 list of ciphers, supported by your version of OpenSSL, including
-=======
-list of ciphers, supported by your versesion of OpenSSL, including
->>>>>>> origin/master
 ones provided by configured engines.
 
 The B<enc> program does not support authenticated encryption modes
@@ -304,11 +262,7 @@ authentication tag.
  desx               DESX algorithm.
 
  gost89             GOST 28147-89 in CFB mode (provided by ccgost engine)
-<<<<<<< HEAD
  gost89-cnt        `GOST 28147-89 in CNT mode (provided by ccgost engine)
-=======
- gost89-cnt        `GOST 28147-89 in CNT mode (provided by ccgost engine) 
->>>>>>> origin/master
 
  idea-cbc           IDEA algorithm in CBC mode
  idea               same as idea-cbc
@@ -334,7 +288,6 @@ authentication tag.
  rc5-ecb            RC5 cipher in ECB mode
  rc5-ofb            RC5 cipher in OFB mode
 
-<<<<<<< HEAD
  aes-[128|192|256]-cbc  128/192/256 bit AES in CBC mode
  aes[128|192|256]       Alias for aes-[128|192|256]-cbc
  aes-[128|192|256]-cfb  128/192/256 bit AES in 128 bit CFB mode
@@ -342,15 +295,6 @@ authentication tag.
  aes-[128|192|256]-cfb8 128/192/256 bit AES in 8 bit CFB mode
  aes-[128|192|256]-ecb  128/192/256 bit AES in ECB mode
  aes-[128|192|256]-ofb  128/192/256 bit AES in OFB mode
-=======
- aes-[128|192|256]-cbc	128/192/256 bit AES in CBC mode
- aes-[128|192|256]	Alias for aes-[128|192|256]-cbc
- aes-[128|192|256]-cfb	128/192/256 bit AES in 128 bit CFB mode
- aes-[128|192|256]-cfb1	128/192/256 bit AES in 1 bit CFB mode
- aes-[128|192|256]-cfb8	128/192/256 bit AES in 8 bit CFB mode
- aes-[128|192|256]-ecb	128/192/256 bit AES in ECB mode
- aes-[128|192|256]-ofb	128/192/256 bit AES in OFB mode
->>>>>>> origin/master
 
 =head1 EXAMPLES
 
@@ -360,19 +304,11 @@ Just base64 encode a binary file:
 
 Decode the same file
 
-<<<<<<< HEAD
  openssl base64 -d -in file.b64 -out file.bin
 
 Encrypt a file using triple DES in CBC mode using a prompted password:
 
  openssl des3 -salt -in file.txt -out file.des3
-=======
- openssl base64 -d -in file.b64 -out file.bin 
-
-Encrypt a file using triple DES in CBC mode using a prompted password:
-
- openssl des3 -salt -in file.txt -out file.des3 
->>>>>>> origin/master
 
 Decrypt a file using a supplied password:
 
@@ -401,7 +337,6 @@ The B<enc> program only supports a fixed number of algorithms with
 certain parameters. So if, for example, you want to use RC2 with a
 76 bit key or RC4 with an 84 bit key you can't use this program.
 
-<<<<<<< HEAD
 =head1 HISTORY
 
 The default digest was changed from MD5 to SHA256 in Openssl 1.1.
@@ -415,6 +350,4 @@ this file except in compliance with the License.  You can obtain a copy
 in the file LICENSE in the source distribution or at
 L<https://www.openssl.org/source/license.html>.
 
-=======
->>>>>>> origin/master
 =cut

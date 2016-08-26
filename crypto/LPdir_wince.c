@@ -1,5 +1,4 @@
 /*
-<<<<<<< HEAD
  * Copyright 2004-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -8,11 +7,6 @@
  * https://www.openssl.org/source/license.html
  */
 
-=======
- * $LP: LPlib/source/LPdir_wince.c,v 1.3 2004/08/26 13:36:05 _cvs_levitte Exp
- * $
- */
->>>>>>> origin/master
 /*
  * Copyright (c) 2004, Richard Levitte <richard@levitte.org>
  * All rights reserved.

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ! Copyright 2005-2016 The OpenSSL Project Authors. All Rights Reserved.
 !
 ! Licensed under the OpenSSL license (the "License").  You may not use
@@ -10,8 +9,6 @@
 #include <openssl/fipssyms.h>
 #endif
 
-=======
->>>>>>> origin/master
 #if defined(__SUNPRO_C) && defined(__sparcv9)
 # define ABI64  /* They've said -xarch=v9 at command line */
 #elif defined(__GNUC__) && defined(__arch64__)
@@ -137,11 +134,7 @@ OPENSSL_wipe_cpu:
 			fmovs	%f1,%f3
 			fmovs	%f0,%f2
 
-<<<<<<< HEAD
 	add	%fp,BIAS,%i0	! return pointer to callerÂ´s top of stack
-=======
-	add	%fp,BIAS,%i0	! return pointer to caller´s top of stack
->>>>>>> origin/master
 
 	ret
 	restore
@@ -305,11 +298,7 @@ _sparcv9_vis1_instrument:
 	sub	%o3,%o2,%o2
 	sub	%o4,%o3,%o3
 
-<<<<<<< HEAD
 	! find minimum value
-=======
-	! find minumum value
->>>>>>> origin/master
 	cmp	%o0,%o1
 	.word	0x38680002	!bgu,a	%xcc,.+8
 	mov	%o1,%o0
@@ -367,7 +356,6 @@ _sparcv9_random:
 .type	_sparcv9_random,#function
 .size	_sparcv9_random,.-_sparcv9_vis3_probe
 
-<<<<<<< HEAD
 .global	_sparcv9_fjaesx_probe
 .align	8
 _sparcv9_fjaesx_probe:
@@ -376,8 +364,6 @@ _sparcv9_fjaesx_probe:
 	nop
 .size	_sparcv9_fjaesx_probe,.-_sparcv9_fjaesx_probe
 
-=======
->>>>>>> origin/master
 .global	OPENSSL_cleanse
 .align	32
 OPENSSL_cleanse:
@@ -461,7 +447,6 @@ OPENSSL_cleanse:
 .type	OPENSSL_cleanse,#function
 .size	OPENSSL_cleanse,.-OPENSSL_cleanse
 
-<<<<<<< HEAD
 .global	CRYPTO_memcmp
 .align	16
 CRYPTO_memcmp:
@@ -496,8 +481,6 @@ CRYPTO_memcmp:
 .type	CRYPTO_memcmp,#function
 .size	CRYPTO_memcmp,.-CRYPTO_memcmp
 
-=======
->>>>>>> origin/master
 .global	_sparcv9_vis1_instrument_bus
 .align	8
 _sparcv9_vis1_instrument_bus:

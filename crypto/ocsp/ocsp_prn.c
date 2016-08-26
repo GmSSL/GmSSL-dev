@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -6,82 +5,13 @@
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
-=======
-/* ocsp_prn.c */
-/*
- * Written by Tom Titchener <Tom_Titchener@groove.net> for the OpenSSL
- * project.
- */
-
-/*
- * History: This file was originally part of ocsp.c and was transfered to
- * Richard Levitte from CertCo by Kathy Weinhold in mid-spring 2000 to be
- * included in OpenSSL or released as a patch kit.
- */
-
-/* ====================================================================
- * Copyright (c) 1998-2000 The OpenSSL Project.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
- *
- * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
- *    endorse or promote products derived from this software without
- *    prior written permission. For written permission, please contact
- *    openssl-core@openssl.org.
- *
- * 5. Products derived from this software may not be called "OpenSSL"
- *    nor may "OpenSSL" appear in their names without prior written
- *    permission of the OpenSSL Project.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by the OpenSSL Project
- *    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
- *
- * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
- * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
- *
- * This product includes cryptographic software written by Eric Young
- * (eay@cryptsoft.com).  This product includes software written by Tim
- * Hudson (tjh@cryptsoft.com).
- *
->>>>>>> origin/master
  */
 
 #include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/ocsp.h>
-<<<<<<< HEAD
 #include "ocsp_lcl.h"
 #include "internal/cryptlib.h"
-=======
->>>>>>> origin/master
 #include <openssl/pem.h>
 
 static int ocsp_certid_print(BIO *bp, OCSP_CERTID *a, int indent)
@@ -89,7 +19,6 @@ static int ocsp_certid_print(BIO *bp, OCSP_CERTID *a, int indent)
     BIO_printf(bp, "%*sCertificate ID:\n", indent, "");
     indent += 2;
     BIO_printf(bp, "%*sHash Algorithm: ", indent, "");
-<<<<<<< HEAD
     i2a_ASN1_OBJECT(bp, a->hashAlgorithm.algorithm);
     BIO_printf(bp, "\n%*sIssuer Name Hash: ", indent, "");
     i2a_ASN1_STRING(bp, &a->issuerNameHash, 0);
@@ -97,15 +26,6 @@ static int ocsp_certid_print(BIO *bp, OCSP_CERTID *a, int indent)
     i2a_ASN1_STRING(bp, &a->issuerKeyHash, 0);
     BIO_printf(bp, "\n%*sSerial Number: ", indent, "");
     i2a_ASN1_INTEGER(bp, &a->serialNumber);
-=======
-    i2a_ASN1_OBJECT(bp, a->hashAlgorithm->algorithm);
-    BIO_printf(bp, "\n%*sIssuer Name Hash: ", indent, "");
-    i2a_ASN1_STRING(bp, a->issuerNameHash, V_ASN1_OCTET_STRING);
-    BIO_printf(bp, "\n%*sIssuer Key Hash: ", indent, "");
-    i2a_ASN1_STRING(bp, a->issuerKeyHash, V_ASN1_OCTET_STRING);
-    BIO_printf(bp, "\n%*sSerial Number: ", indent, "");
-    i2a_ASN1_INTEGER(bp, a->serialNumber);
->>>>>>> origin/master
     BIO_printf(bp, "\n");
     return 1;
 }
@@ -115,7 +35,6 @@ typedef struct {
     const char *m;
 } OCSP_TBLSTR;
 
-<<<<<<< HEAD
 static const char *do_table2string(long s, const OCSP_TBLSTR *ts, size_t len)
 {
     size_t i;
@@ -127,17 +46,6 @@ static const char *do_table2string(long s, const OCSP_TBLSTR *ts, size_t len)
 
 #define table2string(s, tbl) do_table2string(s, tbl, OSSL_NELEM(tbl))
 
-=======
-static const char *table2string(long s, const OCSP_TBLSTR *ts, int len)
-{
-    const OCSP_TBLSTR *p;
-    for (p = ts; p < ts + len; p++)
-        if (p->t == s)
-            return p->m;
-    return "(UNKNOWN)";
-}
-
->>>>>>> origin/master
 const char *OCSP_response_status_str(long s)
 {
     static const OCSP_TBLSTR rstat_tbl[] = {
@@ -148,11 +56,7 @@ const char *OCSP_response_status_str(long s)
         {OCSP_RESPONSE_STATUS_SIGREQUIRED, "sigrequired"},
         {OCSP_RESPONSE_STATUS_UNAUTHORIZED, "unauthorized"}
     };
-<<<<<<< HEAD
     return table2string(s, rstat_tbl);
-=======
-    return table2string(s, rstat_tbl, 6);
->>>>>>> origin/master
 }
 
 const char *OCSP_cert_status_str(long s)
@@ -162,11 +66,7 @@ const char *OCSP_cert_status_str(long s)
         {V_OCSP_CERTSTATUS_REVOKED, "revoked"},
         {V_OCSP_CERTSTATUS_UNKNOWN, "unknown"}
     };
-<<<<<<< HEAD
     return table2string(s, cstat_tbl);
-=======
-    return table2string(s, cstat_tbl, 3);
->>>>>>> origin/master
 }
 
 const char *OCSP_crl_reason_str(long s)
@@ -181,11 +81,7 @@ const char *OCSP_crl_reason_str(long s)
         {OCSP_REVOKED_STATUS_CERTIFICATEHOLD, "certificateHold"},
         {OCSP_REVOKED_STATUS_REMOVEFROMCRL, "removeFromCRL"}
     };
-<<<<<<< HEAD
     return table2string(s, reason_tbl);
-=======
-    return table2string(s, reason_tbl, 8);
->>>>>>> origin/master
 }
 
 int OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
@@ -194,11 +90,7 @@ int OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
     long l;
     OCSP_CERTID *cid = NULL;
     OCSP_ONEREQ *one = NULL;
-<<<<<<< HEAD
     OCSP_REQINFO *inf = &o->tbsRequest;
-=======
-    OCSP_REQINFO *inf = o->tbsRequest;
->>>>>>> origin/master
     OCSP_SIGNATURE *sig = o->optionalSignature;
 
     if (BIO_write(bp, "OCSP Request Data:\n", 19) <= 0)
@@ -226,11 +118,7 @@ int OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
                                  inf->requestExtensions, flags, 4))
         goto err;
     if (sig) {
-<<<<<<< HEAD
         X509_signature_print(bp, &sig->signatureAlgorithm, sig->signature);
-=======
-        X509_signature_print(bp, sig->signatureAlgorithm, sig->signature);
->>>>>>> origin/master
         for (i = 0; i < sk_X509_num(sig->certs); i++) {
             X509_print(bp, sk_X509_value(sig->certs, i));
             PEM_write_bio_X509(bp, sk_X509_value(sig->certs, i));
@@ -271,37 +159,22 @@ int OCSP_RESPONSE_print(BIO *bp, OCSP_RESPONSE *o, unsigned long flags)
         return 1;
     }
 
-<<<<<<< HEAD
     if ((br = OCSP_response_get1_basic(o)) == NULL)
         goto err;
     rd = &br->tbsResponseData;
-=======
-    i = ASN1_STRING_length(rb->response);
-    if (!(br = OCSP_response_get1_basic(o)))
-        goto err;
-    rd = br->tbsResponseData;
->>>>>>> origin/master
     l = ASN1_INTEGER_get(rd->version);
     if (BIO_printf(bp, "\n    Version: %lu (0x%lx)\n", l + 1, l) <= 0)
         goto err;
     if (BIO_puts(bp, "    Responder Id: ") <= 0)
         goto err;
 
-<<<<<<< HEAD
     rid = &rd->responderId;
-=======
-    rid = rd->responderId;
->>>>>>> origin/master
     switch (rid->type) {
     case V_OCSP_RESPID_NAME:
         X509_NAME_print_ex(bp, rid->value.byName, 0, XN_FLAG_ONELINE);
         break;
     case V_OCSP_RESPID_KEY:
-<<<<<<< HEAD
         i2a_ASN1_STRING(bp, rid->value.byKey, 0);
-=======
-        i2a_ASN1_STRING(bp, rid->value.byKey, V_ASN1_OCTET_STRING);
->>>>>>> origin/master
         break;
     }
 
@@ -358,11 +231,7 @@ int OCSP_RESPONSE_print(BIO *bp, OCSP_RESPONSE *o, unsigned long flags)
     if (!X509V3_extensions_print(bp, "Response Extensions",
                                  rd->responseExtensions, flags, 4))
         goto err;
-<<<<<<< HEAD
     if (X509_signature_print(bp, &br->signatureAlgorithm, br->signature) <= 0)
-=======
-    if (X509_signature_print(bp, br->signatureAlgorithm, br->signature) <= 0)
->>>>>>> origin/master
         goto err;
 
     for (i = 0; i < sk_X509_num(br->certs); i++) {

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Copyright 2000-2016 The OpenSSL Project Authors. All Rights Reserved.
  *
@@ -7,9 +6,6 @@
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
  */
-=======
-/* pkwrite.c */
->>>>>>> origin/master
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,15 +25,9 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: pkwrite infile password name p12file\n");
         exit(1);
     }
-<<<<<<< HEAD
     OpenSSL_add_all_algorithms();
     ERR_load_crypto_strings();
     if ((fp = fopen(argv[1], "r")) == NULL) {
-=======
-    SSLeay_add_all_algorithms();
-    ERR_load_crypto_strings();
-    if (!(fp = fopen(argv[1], "r"))) {
->>>>>>> origin/master
         fprintf(stderr, "Error opening file %s\n", argv[1]);
         exit(1);
     }
@@ -51,11 +41,7 @@ int main(int argc, char **argv)
         ERR_print_errors_fp(stderr);
         exit(1);
     }
-<<<<<<< HEAD
     if ((fp = fopen(argv[4], "wb")) == NULL) {
-=======
-    if (!(fp = fopen(argv[4], "wb"))) {
->>>>>>> origin/master
         fprintf(stderr, "Error opening file %s\n", argv[1]);
         ERR_print_errors_fp(stderr);
         exit(1);
